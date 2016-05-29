@@ -129,15 +129,15 @@ public class HourlyForecast implements Parcelable {
     }
 
     public void clearExtraValues() {
-        this.time = null;
-        this.temperature = null;
-        this.windSpeed = null;
-        this.windScale = null;
-        this.windDeg = null;
-        this.windDirection = null;
-        this.pcpnProb = null;
-        this.humidity = null;
-        this.pressure = null;
+        this.time = "";
+        this.temperature = "";
+        this.windSpeed = "";
+        this.windScale = "";
+        this.windDeg = "";
+        this.windDirection = "";
+        this.pcpnProb = "";
+        this.humidity = "";
+        this.pressure = "";
     }
 
     @Override
