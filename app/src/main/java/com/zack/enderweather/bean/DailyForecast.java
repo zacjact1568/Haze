@@ -10,28 +10,28 @@ public class DailyForecast implements Parcelable {
     private String date;
     private String sunriseTime;
     private String sunsetTime;
-    private int maxTemp;
-    private int minTemp;
-    private int windSpeed;
+    private String maxTemp;
+    private String minTemp;
+    private String windSpeed;
     private String windScale;
-    private int windDeg;
+    private String windDeg;
     private String windDirection;
     private String conditionDay;
     private String conditionNight;
-    private int precipitation;
-    private int pcpnProb;
-    private int humidity;
-    private int pressure;
-    private int visibility;
+    private String precipitation;
+    private String pcpnProb;
+    private String humidity;
+    private String pressure;
+    private String visibility;
 
     public DailyForecast(String cityId) {
         this.cityId = cityId;
     }
 
-    public DailyForecast(String cityId, String date, String sunriseTime, String sunsetTime, int maxTemp,
-                         int minTemp, int windSpeed, String windScale, int windDeg, String windDirection,
-                         String conditionDay, String conditionNight, int precipitation, int pcpnProb,
-                         int humidity, int pressure, int visibility) {
+    public DailyForecast(String cityId, String date, String sunriseTime, String sunsetTime, String maxTemp,
+                         String minTemp, String windSpeed, String windScale, String windDeg, String windDirection,
+                         String conditionDay, String conditionNight, String precipitation, String pcpnProb,
+                         String humidity, String pressure, String visibility) {
         this.cityId = cityId;
         this.date = date;
         this.sunriseTime = sunriseTime;
@@ -83,27 +83,27 @@ public class DailyForecast implements Parcelable {
         this.sunsetTime = sunsetTime;
     }
 
-    public int getMaxTemp() {
+    public String getMaxTemp() {
         return maxTemp;
     }
 
-    public void setMaxTemp(int maxTemp) {
+    public void setMaxTemp(String maxTemp) {
         this.maxTemp = maxTemp;
     }
 
-    public int getMinTemp() {
+    public String getMinTemp() {
         return minTemp;
     }
 
-    public void setMinTemp(int minTemp) {
+    public void setMinTemp(String minTemp) {
         this.minTemp = minTemp;
     }
 
-    public int getWindSpeed() {
+    public String getWindSpeed() {
         return windSpeed;
     }
 
-    public void setWindSpeed(int windSpeed) {
+    public void setWindSpeed(String windSpeed) {
         this.windSpeed = windSpeed;
     }
 
@@ -115,11 +115,11 @@ public class DailyForecast implements Parcelable {
         this.windScale = windScale;
     }
 
-    public int getWindDeg() {
+    public String getWindDeg() {
         return windDeg;
     }
 
-    public void setWindDeg(int windDeg) {
+    public void setWindDeg(String windDeg) {
         this.windDeg = windDeg;
     }
 
@@ -147,50 +147,50 @@ public class DailyForecast implements Parcelable {
         this.conditionNight = conditionNight;
     }
 
-    public int getPrecipitation() {
+    public String getPrecipitation() {
         return precipitation;
     }
 
-    public void setPrecipitation(int precipitation) {
+    public void setPrecipitation(String precipitation) {
         this.precipitation = precipitation;
     }
 
-    public int getPcpnProb() {
+    public String getPcpnProb() {
         return pcpnProb;
     }
 
-    public void setPcpnProb(int pcpnProb) {
+    public void setPcpnProb(String pcpnProb) {
         this.pcpnProb = pcpnProb;
     }
 
-    public int getHumidity() {
+    public String getHumidity() {
         return humidity;
     }
 
-    public void setHumidity(int humidity) {
+    public void setHumidity(String humidity) {
         this.humidity = humidity;
     }
 
-    public int getPressure() {
+    public String getPressure() {
         return pressure;
     }
 
-    public void setPressure(int pressure) {
+    public void setPressure(String pressure) {
         this.pressure = pressure;
     }
 
-    public int getVisibility() {
+    public String getVisibility() {
         return visibility;
     }
 
-    public void setVisibility(int visibility) {
+    public void setVisibility(String visibility) {
         this.visibility = visibility;
     }
 
-    public void setExtraValues(String date, String sunriseTime, String sunsetTime, int maxTemp,
-                               int minTemp, int windSpeed, String windScale, int windDeg, String windDirection,
-                               String conditionDay, String conditionNight, int precipitation, int pcpnProb,
-                               int humidity, int pressure, int visibility) {
+    public void setExtraValues(String date, String sunriseTime, String sunsetTime, String maxTemp,
+                               String minTemp, String windSpeed, String windScale, String windDeg, String windDirection,
+                               String conditionDay, String conditionNight, String precipitation, String pcpnProb,
+                               String humidity, String pressure, String visibility) {
         this.date = date;
         this.sunriseTime = sunriseTime;
         this.sunsetTime = sunsetTime;
@@ -220,19 +220,19 @@ public class DailyForecast implements Parcelable {
         dest.writeString(this.date);
         dest.writeString(this.sunriseTime);
         dest.writeString(this.sunsetTime);
-        dest.writeInt(this.maxTemp);
-        dest.writeInt(this.minTemp);
-        dest.writeInt(this.windSpeed);
+        dest.writeString(this.maxTemp);
+        dest.writeString(this.minTemp);
+        dest.writeString(this.windSpeed);
         dest.writeString(this.windScale);
-        dest.writeInt(this.windDeg);
+        dest.writeString(this.windDeg);
         dest.writeString(this.windDirection);
         dest.writeString(this.conditionDay);
         dest.writeString(this.conditionNight);
-        dest.writeInt(this.precipitation);
-        dest.writeInt(this.pcpnProb);
-        dest.writeInt(this.humidity);
-        dest.writeInt(this.pressure);
-        dest.writeInt(this.visibility);
+        dest.writeString(this.precipitation);
+        dest.writeString(this.pcpnProb);
+        dest.writeString(this.humidity);
+        dest.writeString(this.pressure);
+        dest.writeString(this.visibility);
     }
 
     protected DailyForecast(Parcel in) {
@@ -240,19 +240,19 @@ public class DailyForecast implements Parcelable {
         this.date = in.readString();
         this.sunriseTime = in.readString();
         this.sunsetTime = in.readString();
-        this.maxTemp = in.readInt();
-        this.minTemp = in.readInt();
-        this.windSpeed = in.readInt();
+        this.maxTemp = in.readString();
+        this.minTemp = in.readString();
+        this.windSpeed = in.readString();
         this.windScale = in.readString();
-        this.windDeg = in.readInt();
+        this.windDeg = in.readString();
         this.windDirection = in.readString();
         this.conditionDay = in.readString();
         this.conditionNight = in.readString();
-        this.precipitation = in.readInt();
-        this.pcpnProb = in.readInt();
-        this.humidity = in.readInt();
-        this.pressure = in.readInt();
-        this.visibility = in.readInt();
+        this.precipitation = in.readString();
+        this.pcpnProb = in.readString();
+        this.humidity = in.readString();
+        this.pressure = in.readString();
+        this.visibility = in.readString();
     }
 
     public static final Parcelable.Creator<DailyForecast> CREATOR = new Parcelable.Creator<DailyForecast>() {

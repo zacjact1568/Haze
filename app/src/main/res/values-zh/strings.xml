@@ -15,4 +15,25 @@
     <string name="text_empty_result">未找到城市</string>
     <string name="text_network_not_available">网络不可用</string>
     <string name="action_network_settings">设置</string>
+    <string name="text_air_quality">空气质量</string>
+    <string name="text_sensible_temp">体感温度</string>
+    <string name="text_temp_range">温度范围</string>
+    <string name="format_update_time">更新于 %s</string>
+    <string name="aqi_level_1">优</string>
+    <string name="aqi_level_2">良</string>
+    <string name="aqi_level_3">轻度污染</string>
+    <string name="aqi_level_4">中度污染</string>
+    <string name="aqi_level_5">重度污染</string>
+    <string name="aqi_level_6">严重污染</string>
+    <string name="text_tomorrow">明天</string>
+    <string name="text_saturday">星期六</string>
+    <string name="text_friday">星期五</string>
+    <string name="text_monday">星期一</string>
+    <string name="text_sunday">星期天</string>
+    <string name="text_thursday">星期四</string>
+    <string name="text_wednesday">星期三</string>
+    <string name="text_today">今天</string>
+    <string name="text_tuesday">星期二</string>
+    <string name="text_yesterday">昨天</string>
+    <string name="text_invalid_data">没有可用数据</string>
 </resources>

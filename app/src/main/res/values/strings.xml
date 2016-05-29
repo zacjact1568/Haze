@@ -16,6 +16,29 @@
     <!--HomeActivity-->
     <string name="title_activity_home">Home</string>
 
+    <!--WeatherFragment-->
+    <string name="format_update_time">Updated at %s</string>
+    <string name="text_invalid_data">No data available</string>
+    <string name="text_sensible_temp">Feels Like</string>
+    <string name="text_temp_range">Temperature</string>
+    <string name="text_air_quality">Air Quality</string>
+    <string name="aqi_level_1">Excellent</string>
+    <string name="aqi_level_2">Good</string>
+    <string name="aqi_level_3">Light Pollution</string>
+    <string name="aqi_level_4">Medium Pollution</string>
+    <string name="aqi_level_5">Heavy Pollution</string>
+    <string name="aqi_level_6">Severe Pollution</string>
+    <string name="text_yesterday">Yesterday</string>
+    <string name="text_today">Today</string>
+    <string name="text_tomorrow">Tomorrow</string>
+    <string name="text_monday">Monday</string>
+    <string name="text_tuesday">Tuesday</string>
+    <string name="text_wednesday">Wednesday</string>
+    <string name="text_thursday">Thursday</string>
+    <string name="text_friday">Friday</string>
+    <string name="text_saturday">Saturday</string>
+    <string name="text_sunday">Sunday</string>
+
     <!--AddCityActivity-->
     <string name="title_activity_add_city">Add A City</string>
     <string name="text_empty_result">No cities found</string>

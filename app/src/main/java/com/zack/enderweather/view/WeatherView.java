@@ -1,6 +1,8 @@
 package com.zack.enderweather.view;
 
+import com.zack.enderweather.bean.FormattedWeather;
+
 public interface WeatherView {
 
-    void showInitialView(String cityName, String updateTime, int temperature, String condition);
+    void showInitialView(FormattedWeather formattedWeather);
 }

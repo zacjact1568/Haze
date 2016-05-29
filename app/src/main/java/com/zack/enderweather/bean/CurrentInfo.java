@@ -8,24 +8,24 @@ public class CurrentInfo implements Parcelable {
 
     private String cityId;
     private String condition;
-    private int temperature;
-    private int sensibleTemp;
-    private int humidity;
-    private int precipitation;
-    private int pressure;
-    private int visibility;
-    private int windSpeed;
+    private String temperature;
+    private String sensibleTemp;
+    private String humidity;
+    private String precipitation;
+    private String pressure;
+    private String visibility;
+    private String windSpeed;
     private String windScale;
-    private int windDeg;
+    private String windDeg;
     private String windDirection;
 
     public CurrentInfo(String cityId) {
         this.cityId = cityId;
     }
 
-    public CurrentInfo(String cityId, String condition, int temperature, int sensibleTemp, int humidity,
-                       int precipitation, int pressure, int visibility, int windSpeed, String windScale,
-                       int windDeg, String windDirection) {
+    public CurrentInfo(String cityId, String condition, String temperature, String sensibleTemp, String humidity,
+                       String precipitation, String pressure, String visibility, String windSpeed, String windScale,
+                       String windDeg, String windDirection) {
         this.cityId = cityId;
         this.condition = condition;
         this.temperature = temperature;
@@ -56,59 +56,59 @@ public class CurrentInfo implements Parcelable {
         this.condition = condition;
     }
 
-    public int getTemperature() {
+    public String getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(int temperature) {
+    public void setTemperature(String temperature) {
         this.temperature = temperature;
     }
 
-    public int getSensibleTemp() {
+    public String getSensibleTemp() {
         return sensibleTemp;
     }
 
-    public void setSensibleTemp(int sensibleTemp) {
+    public void setSensibleTemp(String sensibleTemp) {
         this.sensibleTemp = sensibleTemp;
     }
 
-    public int getHumidity() {
+    public String getHumidity() {
         return humidity;
     }
 
-    public void setHumidity(int humidity) {
+    public void setHumidity(String humidity) {
         this.humidity = humidity;
     }
 
-    public int getPrecipitation() {
+    public String getPrecipitation() {
         return precipitation;
     }
 
-    public void setPrecipitation(int precipitation) {
+    public void setPrecipitation(String precipitation) {
         this.precipitation = precipitation;
     }
 
-    public int getPressure() {
+    public String getPressure() {
         return pressure;
     }
 
-    public void setPressure(int pressure) {
+    public void setPressure(String pressure) {
         this.pressure = pressure;
     }
 
-    public int getVisibility() {
+    public String getVisibility() {
         return visibility;
     }
 
-    public void setVisibility(int visibility) {
+    public void setVisibility(String visibility) {
         this.visibility = visibility;
     }
 
-    public int getWindSpeed() {
+    public String getWindSpeed() {
         return windSpeed;
     }
 
-    public void setWindSpeed(int windSpeed) {
+    public void setWindSpeed(String windSpeed) {
         this.windSpeed = windSpeed;
     }
 
@@ -120,11 +120,11 @@ public class CurrentInfo implements Parcelable {
         this.windScale = windScale;
     }
 
-    public int getWindDeg() {
+    public String getWindDeg() {
         return windDeg;
     }
 
-    public void setWindDeg(int windDeg) {
+    public void setWindDeg(String windDeg) {
         this.windDeg = windDeg;
     }
 
@@ -136,9 +136,9 @@ public class CurrentInfo implements Parcelable {
         this.windDirection = windDirection;
     }
 
-    public void setExtraValues(String condition, int temperature, int sensibleTemp, int humidity,
-                               int precipitation, int pressure, int visibility, int windSpeed,
-                               String windScale, int windDeg, String windDirection) {
+    public void setExtraValues(String condition, String temperature, String sensibleTemp, String humidity,
+                               String precipitation, String pressure, String visibility, String windSpeed,
+                               String windScale, String windDeg, String windDirection) {
         this.condition = condition;
         this.temperature = temperature;
         this.sensibleTemp = sensibleTemp;
@@ -161,30 +161,30 @@ public class CurrentInfo implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.cityId);
         dest.writeString(this.condition);
-        dest.writeInt(this.temperature);
-        dest.writeInt(this.sensibleTemp);
-        dest.writeInt(this.humidity);
-        dest.writeInt(this.precipitation);
-        dest.writeInt(this.pressure);
-        dest.writeInt(this.visibility);
-        dest.writeInt(this.windSpeed);
+        dest.writeString(this.temperature);
+        dest.writeString(this.sensibleTemp);
+        dest.writeString(this.humidity);
+        dest.writeString(this.precipitation);
+        dest.writeString(this.pressure);
+        dest.writeString(this.visibility);
+        dest.writeString(this.windSpeed);
         dest.writeString(this.windScale);
-        dest.writeInt(this.windDeg);
+        dest.writeString(this.windDeg);
         dest.writeString(this.windDirection);
     }
 
     protected CurrentInfo(Parcel in) {
         this.cityId = in.readString();
         this.condition = in.readString();
-        this.temperature = in.readInt();
-        this.sensibleTemp = in.readInt();
-        this.humidity = in.readInt();
-        this.precipitation = in.readInt();
-        this.pressure = in.readInt();
-        this.visibility = in.readInt();
-        this.windSpeed = in.readInt();
+        this.temperature = in.readString();
+        this.sensibleTemp = in.readString();
+        this.humidity = in.readString();
+        this.precipitation = in.readString();
+        this.pressure = in.readString();
+        this.visibility = in.readString();
+        this.windSpeed = in.readString();
         this.windScale = in.readString();
-        this.windDeg = in.readInt();
+        this.windDeg = in.readString();
         this.windDirection = in.readString();
     }
 

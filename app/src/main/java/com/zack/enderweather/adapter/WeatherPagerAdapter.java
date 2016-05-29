@@ -30,6 +30,6 @@ public class WeatherPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return super.getPageTitle(position);
+        return weatherList.get(position).getBasicInfo().getCityName();
     }
 }

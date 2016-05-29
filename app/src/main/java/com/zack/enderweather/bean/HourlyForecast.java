@@ -8,21 +8,21 @@ public class HourlyForecast implements Parcelable {
 
     private String cityId;
     private String time;
-    private int temperature;
-    private int windSpeed;
+    private String temperature;
+    private String windSpeed;
     private String windScale;
-    private int windDeg;
+    private String windDeg;
     private String windDirection;
-    private int pcpnProb;
-    private int humidity;
-    private int pressure;
+    private String pcpnProb;
+    private String humidity;
+    private String pressure;
 
     public HourlyForecast(String cityId) {
         this.cityId = cityId;
     }
 
-    public HourlyForecast(String cityId, String time, int temperature, int windSpeed, String windScale,
-                          int windDeg, String windDirection, int pcpnProb, int humidity, int pressure) {
+    public HourlyForecast(String cityId, String time, String temperature, String windSpeed, String windScale,
+                          String windDeg, String windDirection, String pcpnProb, String humidity, String pressure) {
         this.cityId = cityId;
         this.time = time;
         this.temperature = temperature;
@@ -51,19 +51,19 @@ public class HourlyForecast implements Parcelable {
         this.time = time;
     }
 
-    public int getTemperature() {
+    public String getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(int temperature) {
+    public void setTemperature(String temperature) {
         this.temperature = temperature;
     }
 
-    public int getWindSpeed() {
+    public String getWindSpeed() {
         return windSpeed;
     }
 
-    public void setWindSpeed(int windSpeed) {
+    public void setWindSpeed(String windSpeed) {
         this.windSpeed = windSpeed;
     }
 
@@ -75,11 +75,11 @@ public class HourlyForecast implements Parcelable {
         this.windScale = windScale;
     }
 
-    public int getWindDeg() {
+    public String getWindDeg() {
         return windDeg;
     }
 
-    public void setWindDeg(int windDeg) {
+    public void setWindDeg(String windDeg) {
         this.windDeg = windDeg;
     }
 
@@ -91,32 +91,32 @@ public class HourlyForecast implements Parcelable {
         this.windDirection = windDirection;
     }
 
-    public int getPcpnProb() {
+    public String getPcpnProb() {
         return pcpnProb;
     }
 
-    public void setPcpnProb(int pcpnProb) {
+    public void setPcpnProb(String pcpnProb) {
         this.pcpnProb = pcpnProb;
     }
 
-    public int getHumidity() {
+    public String getHumidity() {
         return humidity;
     }
 
-    public void setHumidity(int humidity) {
+    public void setHumidity(String humidity) {
         this.humidity = humidity;
     }
 
-    public int getPressure() {
+    public String getPressure() {
         return pressure;
     }
 
-    public void setPressure(int pressure) {
+    public void setPressure(String pressure) {
         this.pressure = pressure;
     }
 
-    public void setExtraValues(String time, int temperature, int windSpeed, String windScale, int windDeg,
-                               String windDirection, int pcpnProb, int humidity, int pressure) {
+    public void setExtraValues(String time, String temperature, String windSpeed, String windScale, String windDeg,
+                               String windDirection, String pcpnProb, String humidity, String pressure) {
         this.time = time;
         this.temperature = temperature;
         this.windSpeed = windSpeed;
@@ -130,14 +130,14 @@ public class HourlyForecast implements Parcelable {
 
     public void clearExtraValues() {
         this.time = null;
-        this.temperature = 0;
-        this.windSpeed = 0;
+        this.temperature = null;
+        this.windSpeed = null;
         this.windScale = null;
-        this.windDeg = 0;
+        this.windDeg = null;
         this.windDirection = null;
-        this.pcpnProb = 0;
-        this.humidity = 0;
-        this.pressure = 0;
+        this.pcpnProb = null;
+        this.humidity = null;
+        this.pressure = null;
     }
 
     @Override
@@ -149,27 +149,27 @@ public class HourlyForecast implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.cityId);
         dest.writeString(this.time);
-        dest.writeInt(this.temperature);
-        dest.writeInt(this.windSpeed);
+        dest.writeString(this.temperature);
+        dest.writeString(this.windSpeed);
         dest.writeString(this.windScale);
-        dest.writeInt(this.windDeg);
+        dest.writeString(this.windDeg);
         dest.writeString(this.windDirection);
-        dest.writeInt(this.pcpnProb);
-        dest.writeInt(this.humidity);
-        dest.writeInt(this.pressure);
+        dest.writeString(this.pcpnProb);
+        dest.writeString(this.humidity);
+        dest.writeString(this.pressure);
     }
 
     protected HourlyForecast(Parcel in) {
         this.cityId = in.readString();
         this.time = in.readString();
-        this.temperature = in.readInt();
-        this.windSpeed = in.readInt();
+        this.temperature = in.readString();
+        this.windSpeed = in.readString();
         this.windScale = in.readString();
-        this.windDeg = in.readInt();
+        this.windDeg = in.readString();
         this.windDirection = in.readString();
-        this.pcpnProb = in.readInt();
-        this.humidity = in.readInt();
-        this.pressure = in.readInt();
+        this.pcpnProb = in.readString();
+        this.humidity = in.readString();
+        this.pressure = in.readString();
     }
 
     public static final Parcelable.Creator<HourlyForecast> CREATOR = new Parcelable.Creator<HourlyForecast>() {

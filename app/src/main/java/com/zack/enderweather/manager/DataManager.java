@@ -99,15 +99,15 @@ public class DataManager {
 
         weather.getCurrentInfo().setExtraValues(
                 now.getCond().getTxt(),
-                Integer.parseInt(now.getTmp()),
-                Integer.parseInt(now.getFl()),
-                Integer.parseInt(now.getHum()),
-                Integer.parseInt(now.getPcpn()),
-                Integer.parseInt(now.getPres()),
-                Integer.parseInt(now.getVis()),
-                Integer.parseInt(now.getWind().getSpd()),
+                now.getTmp(),
+                now.getFl(),
+                now.getHum(),
+                now.getPcpn(),
+                now.getPres(),
+                now.getVis(),
+                now.getWind().getSpd(),
                 now.getWind().getSc(),
-                Integer.parseInt(now.getWind().getDeg()),
+                now.getWind().getDeg(),
                 now.getWind().getDir()
         );
 
@@ -119,14 +119,14 @@ public class DataManager {
                 HeWeather.HeWeatherAPI.HourlyForecast hourlyForecast = api.getHourlyForecastList().get(i - startIndex);
                 weather.getHourlyForecastList().get(i).setExtraValues(
                         hourlyForecast.getDate(),
-                        Integer.parseInt(hourlyForecast.getTmp()),
-                        Integer.parseInt(hourlyForecast.getWind().getSpd()),
+                        hourlyForecast.getTmp(),
+                        hourlyForecast.getWind().getSpd(),
                         hourlyForecast.getWind().getSc(),
-                        Integer.parseInt(hourlyForecast.getWind().getDeg()),
+                        hourlyForecast.getWind().getDeg(),
                         hourlyForecast.getWind().getDir(),
-                        Integer.parseInt(hourlyForecast.getPop()),
-                        Integer.parseInt(hourlyForecast.getHum()),
-                        Integer.parseInt(hourlyForecast.getPres())
+                        hourlyForecast.getPop(),
+                        hourlyForecast.getHum(),
+                        hourlyForecast.getPres()
                 );
             }
         }
@@ -137,26 +137,26 @@ public class DataManager {
                     dailyForecast.getDate(),
                     dailyForecast.getAstro().getSr(),
                     dailyForecast.getAstro().getSs(),
-                    Integer.parseInt(dailyForecast.getTmp().getMax()),
-                    Integer.parseInt(dailyForecast.getTmp().getMin()),
-                    Integer.parseInt(dailyForecast.getWind().getSpd()),
+                    dailyForecast.getTmp().getMax(),
+                    dailyForecast.getTmp().getMin(),
+                    dailyForecast.getWind().getSpd(),
                     dailyForecast.getWind().getSc(),
-                    Integer.parseInt(dailyForecast.getWind().getDeg()),
+                    dailyForecast.getWind().getDeg(),
                     dailyForecast.getWind().getDir(),
                     dailyForecast.getCond().getTxtD(),
                     dailyForecast.getCond().getTxtN(),
-                    Integer.parseInt(dailyForecast.getPcpn()),
-                    Integer.parseInt(dailyForecast.getPop()),
-                    Integer.parseInt(dailyForecast.getHum()),
-                    Integer.parseInt(dailyForecast.getPres()),
-                    Integer.parseInt(dailyForecast.getVis())
+                    dailyForecast.getPcpn(),
+                    dailyForecast.getPop(),
+                    dailyForecast.getHum(),
+                    dailyForecast.getPres(),
+                    dailyForecast.getVis()
             );
         }
 
         weather.getAirQuality().setExtraValues(
-                Integer.parseInt(cityAqi.getAqi()),
-                Integer.parseInt(cityAqi.getPm10()),
-                Integer.parseInt(cityAqi.getPm25())
+                cityAqi.getAqi(),
+                cityAqi.getPm10(),
+                cityAqi.getPm25()
         );
 
         weather.getLifeSuggestion().setExtraValues(

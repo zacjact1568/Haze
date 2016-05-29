@@ -8,12 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zack.enderweather.R;
+import com.zack.enderweather.bean.FormattedWeather;
 import com.zack.enderweather.bean.Weather;
 import com.zack.enderweather.presenter.WeatherPresenter;
 import com.zack.enderweather.view.WeatherView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class WeatherFragment extends Fragment implements WeatherView {
 
@@ -25,11 +27,18 @@ public class WeatherFragment extends Fragment implements WeatherView {
     TextView conditionText;
     @BindView(R.id.text_update_time)
     TextView updateTimeText;
+    @BindView(R.id.text_sensible_temp)
+    TextView sensibleTempText;
+    @BindView(R.id.text_temp_range)
+    TextView tempRangeText;
+    @BindView(R.id.text_air_quality)
+    TextView airQualityText;
 
     private static final String ARG_WEATHER = "weather";
 
     private Weather weather;
     private WeatherPresenter weatherPresenter;
+    private TextView[] weekTexts, dateTexts, conditionTexts, tempRangeTexts;
 
     public WeatherFragment() {
         // Required empty public constructor
@@ -64,6 +73,43 @@ public class WeatherFragment extends Fragment implements WeatherView {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
+        weekTexts = new TextView[]{
+                (TextView) view.findViewById(R.id.text_week0),
+                (TextView) view.findViewById(R.id.text_week1),
+                (TextView) view.findViewById(R.id.text_week2),
+                (TextView) view.findViewById(R.id.text_week3),
+                (TextView) view.findViewById(R.id.text_week4),
+                (TextView) view.findViewById(R.id.text_week5),
+                (TextView) view.findViewById(R.id.text_week6)
+        };
+        dateTexts = new TextView[]{
+                (TextView) view.findViewById(R.id.text_date0),
+                (TextView) view.findViewById(R.id.text_date1),
+                (TextView) view.findViewById(R.id.text_date2),
+                (TextView) view.findViewById(R.id.text_date3),
+                (TextView) view.findViewById(R.id.text_date4),
+                (TextView) view.findViewById(R.id.text_date5),
+                (TextView) view.findViewById(R.id.text_date6)
+        };
+        conditionTexts = new TextView[]{
+                (TextView) view.findViewById(R.id.text_condition0),
+                (TextView) view.findViewById(R.id.text_condition1),
+                (TextView) view.findViewById(R.id.text_condition2),
+                (TextView) view.findViewById(R.id.text_condition3),
+                (TextView) view.findViewById(R.id.text_condition4),
+                (TextView) view.findViewById(R.id.text_condition5),
+                (TextView) view.findViewById(R.id.text_condition6)
+        };
+        tempRangeTexts = new TextView[]{
+                (TextView) view.findViewById(R.id.text_temp_range0),
+                (TextView) view.findViewById(R.id.text_temp_range1),
+                (TextView) view.findViewById(R.id.text_temp_range2),
+                (TextView) view.findViewById(R.id.text_temp_range3),
+                (TextView) view.findViewById(R.id.text_temp_range4),
+                (TextView) view.findViewById(R.id.text_temp_range5),
+                (TextView) view.findViewById(R.id.text_temp_range6)
+        };
+
         weatherPresenter.setInitialView();
     }
 
@@ -74,10 +120,29 @@ public class WeatherFragment extends Fragment implements WeatherView {
     }
 
     @Override
-    public void showInitialView(String cityName, String updateTime, int temperature, String condition) {
-        cityNameText.setText(cityName);
-        updateTimeText.setText(updateTime == null ? "Not updated yet" : updateTime);
-        temperatureText.setText(updateTime == null ? "N/A°" : String.valueOf(temperature));
-        conditionText.setText(updateTime == null ? "N/A" : condition);
+    public void showInitialView(FormattedWeather formattedWeather) {
+        cityNameText.setText(formattedWeather.getCityName());
+        temperatureText.setText(formattedWeather.getTemperature());
+        conditionText.setText(formattedWeather.getCondition());
+        updateTimeText.setText(formattedWeather.getUpdateTime());
+
+        sensibleTempText.setText(formattedWeather.getSensibleTemp());
+        tempRangeText.setText(formattedWeather.getTempRange());
+        airQualityText.setText(formattedWeather.getAirQuality());
+
+        if (formattedWeather.getWeeks() != null && formattedWeather.getDates() != null
+                && formattedWeather.getConditions() != null && formattedWeather.getTempRanges() != null) {
+            for (int i = 0; i < Weather.DAILY_FORECAST_LENGTH; i++) {
+                weekTexts[i].setText(formattedWeather.getWeeks()[i]);
+                dateTexts[i].setText(formattedWeather.getDates()[i]);
+                conditionTexts[i].setText(formattedWeather.getConditions()[i]);
+                tempRangeTexts[i].setText(formattedWeather.getTempRanges()[i]);
+            }
+        }
+    }
+
+    @OnClick(R.id.layout_daily_forecast)
+    public void onClick() {
+        //TODO Daily forecast details
     }
 }

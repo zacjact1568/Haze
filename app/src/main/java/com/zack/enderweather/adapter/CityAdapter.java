@@ -32,7 +32,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
 
         holder.cityText.setText(weather.getBasicInfo().getCityName());
         holder.weatherText.setText(weather.getBasicInfo().getUpdateTime() == null ? "N/A" :
-                String.format(Locale.getDefault(), "%d°C | %s", weather.getCurrentInfo().getTemperature(),
+                String.format("%s°C | %s", weather.getCurrentInfo().getTemperature(),
                         weather.getCurrentInfo().getCondition()));
     }
 

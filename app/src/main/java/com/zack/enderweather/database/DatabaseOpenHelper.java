@@ -16,29 +16,29 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_CURRENT_INFO = "create table current_info (" +
             "city_id text primary key, " +
             "condition text, " +
-            "temperature integer, " +
-            "sensible_temp integer, " +
-            "humidity integer, " +
-            "precipitation integer, " +
-            "pressure integer, " +
-            "visibility integer, " +
-            "wind_speed integer, " +
+            "temperature text, " +
+            "sensible_temp text, " +
+            "humidity text, " +
+            "precipitation text, " +
+            "pressure text, " +
+            "visibility text, " +
+            "wind_speed text, " +
             "wind_scale text, " +
-            "wind_deg integer, " +
+            "wind_deg text, " +
             "wind_direction text)";
 
     /** 每小时天气预报 */
     private static final String CREATE_TABLE_HOURLY_FORECAST = "create table hourly_forecast (" +
             "city_id text, " +
             "time text, " +
-            "temperature integer, " +
-            "wind_speed integer, " +
+            "temperature text, " +
+            "wind_speed text, " +
             "wind_scale text, " +
-            "wind_deg integer, " +
+            "wind_deg text, " +
             "wind_direction text, " +
-            "pcpn_prob integer" +
-            "humidity integer, " +
-            "pressure integer)";
+            "pcpn_prob text" +
+            "humidity text, " +
+            "pressure text)";
 
     /** 每日天气预报 */
     private static final String CREATE_TABLE_DAILY_FORECAST = "create table daily_forecast (" +
@@ -46,26 +46,26 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
             "date text, " +
             "sunrise_time text, " +
             "sunset_time text, " +
-            "max_temp integer, " +
-            "min_temp integer, " +
-            "wind_speed integer, " +
+            "max_temp text, " +
+            "min_temp text, " +
+            "wind_speed text, " +
             "wind_scale text, " +
-            "wind_deg integer, " +
+            "wind_deg text, " +
             "wind_direction text, " +
             "condition_day text, " +
             "condition_night text, " +
-            "precipitation integer, " +
-            "pcpn_prob integer" +
-            "humidity integer, " +
-            "pressure integer, " +
-            "visibility integer)";
+            "precipitation text, " +
+            "pcpn_prob text" +
+            "humidity text, " +
+            "pressure text, " +
+            "visibility text)";
 
     /** 空气质量 */
     private static final String CREATE_TABLE_AIR_QUALITY = "create table air_quality (" +
             "city_id text primary key, " +
-            "aqi integer, " +
-            "pm10 integer, " +
-            "pm25 integer)";
+            "aqi text, " +
+            "pm10 text, " +
+            "pm25 text)";
 
     /** 生活建议 */
     private static final String CREATE_TABLE_LIFE_SUGGESTION = "create table life_suggestion (" +

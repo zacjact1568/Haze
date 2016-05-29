@@ -7,13 +7,13 @@ import android.os.Parcelable;
 public class AirQuality implements Parcelable {
 
     private String cityId;
-    private int aqi, pm10, pm25;
+    private String aqi, pm10, pm25;
 
     public AirQuality(String cityId) {
         this.cityId = cityId;
     }
 
-    public AirQuality(String cityId, int aqi, int pm10, int pm25) {
+    public AirQuality(String cityId, String aqi, String pm10, String pm25) {
         this.cityId = cityId;
         this.aqi = aqi;
         this.pm10 = pm10;
@@ -28,31 +28,31 @@ public class AirQuality implements Parcelable {
         this.cityId = cityId;
     }
 
-    public int getAqi() {
+    public String getAqi() {
         return aqi;
     }
 
-    public void setAqi(int aqi) {
+    public void setAqi(String aqi) {
         this.aqi = aqi;
     }
 
-    public int getPm10() {
+    public String getPm10() {
         return pm10;
     }
 
-    public void setPm10(int pm10) {
+    public void setPm10(String pm10) {
         this.pm10 = pm10;
     }
 
-    public int getPm25() {
+    public String getPm25() {
         return pm25;
     }
 
-    public void setPm25(int pm25) {
+    public void setPm25(String pm25) {
         this.pm25 = pm25;
     }
 
-    public void setExtraValues(int aqi, int pm10, int pm25) {
+    public void setExtraValues(String aqi, String pm10, String pm25) {
         this.aqi = aqi;
         this.pm10 = pm10;
         this.pm25 = pm25;
@@ -66,16 +66,16 @@ public class AirQuality implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.cityId);
-        dest.writeInt(this.aqi);
-        dest.writeInt(this.pm10);
-        dest.writeInt(this.pm25);
+        dest.writeString(this.aqi);
+        dest.writeString(this.pm10);
+        dest.writeString(this.pm25);
     }
 
     protected AirQuality(Parcel in) {
         this.cityId = in.readString();
-        this.aqi = in.readInt();
-        this.pm10 = in.readInt();
-        this.pm25 = in.readInt();
+        this.aqi = in.readString();
+        this.pm10 = in.readString();
+        this.pm25 = in.readString();
     }
 
     public static final Parcelable.Creator<AirQuality> CREATOR = new Parcelable.Creator<AirQuality>() {
