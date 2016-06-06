@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /** 每日天气预报 */
 public class DailyForecast implements Parcelable {
 
-    private String cityId;
+    private String cityDateId;
     private String date;
     private String sunriseTime;
     private String sunsetTime;
@@ -24,15 +24,16 @@ public class DailyForecast implements Parcelable {
     private String pressure;
     private String visibility;
 
-    public DailyForecast(String cityId) {
-        this.cityId = cityId;
+    public DailyForecast(String cityDateId) {
+        this.cityDateId = cityDateId;
+        setEmptyValues();
     }
 
-    public DailyForecast(String cityId, String date, String sunriseTime, String sunsetTime, String maxTemp,
+    public DailyForecast(String cityDateId, String date, String sunriseTime, String sunsetTime, String maxTemp,
                          String minTemp, String windSpeed, String windScale, String windDeg, String windDirection,
                          String conditionDay, String conditionNight, String precipitation, String pcpnProb,
                          String humidity, String pressure, String visibility) {
-        this.cityId = cityId;
+        this.cityDateId = cityDateId;
         this.date = date;
         this.sunriseTime = sunriseTime;
         this.sunsetTime = sunsetTime;
@@ -51,12 +52,12 @@ public class DailyForecast implements Parcelable {
         this.visibility = visibility;
     }
 
-    public String getCityId() {
-        return cityId;
+    public String getCityDateId() {
+        return cityDateId;
     }
 
-    public void setCityId(String cityId) {
-        this.cityId = cityId;
+    public void setCityDateId(String cityDateId) {
+        this.cityDateId = cityDateId;
     }
 
     public String getDate() {
@@ -209,6 +210,25 @@ public class DailyForecast implements Parcelable {
         this.visibility = visibility;
     }
 
+    public void setEmptyValues() {
+        this.date = "";
+        this.sunriseTime = "";
+        this.sunsetTime = "";
+        this.maxTemp = "";
+        this.minTemp = "";
+        this.windSpeed = "";
+        this.windScale = "";
+        this.windDeg = "";
+        this.windDirection = "";
+        this.conditionDay = "";
+        this.conditionNight = "";
+        this.precipitation = "";
+        this.pcpnProb = "";
+        this.humidity = "";
+        this.pressure = "";
+        this.visibility = "";
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -216,7 +236,7 @@ public class DailyForecast implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.cityId);
+        dest.writeString(this.cityDateId);
         dest.writeString(this.date);
         dest.writeString(this.sunriseTime);
         dest.writeString(this.sunsetTime);
@@ -236,7 +256,7 @@ public class DailyForecast implements Parcelable {
     }
 
     protected DailyForecast(Parcel in) {
-        this.cityId = in.readString();
+        this.cityDateId = in.readString();
         this.date = in.readString();
         this.sunriseTime = in.readString();
         this.sunsetTime = in.readString();

@@ -30,13 +30,13 @@ public class Weather implements Parcelable {
 
         List<HourlyForecast> hourlyForecastList = new ArrayList<>();
         for (int i = 0; i < HOURLY_FORECAST_LENGTH; i++) {
-            hourlyForecastList.add(new HourlyForecast(cityId));
+            hourlyForecastList.add(new HourlyForecast(String.format("%s-%s", cityId, i)));
         }
         setHourlyForecastList(hourlyForecastList);
 
         List<DailyForecast> dailyForecastList = new ArrayList<>();
         for (int i = 0; i < DAILY_FORECAST_LENGTH; i++) {
-            dailyForecastList.add(new DailyForecast(cityId));
+            dailyForecastList.add(new DailyForecast(String.format("%s-%s", cityId, i)));
         }
         setDailyForecastList(dailyForecastList);
     }

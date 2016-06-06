@@ -31,6 +31,7 @@ public class HomePresenter implements Presenter<HomeView> {
     }
 
     public void setInitialView(FragmentManager fragmentManager) {
+        dataManager.loadWeatherFromDatabase();
         weatherPagerAdapter = new WeatherPagerAdapter(fragmentManager, dataManager.getWeatherList());
         homeView.showInitialView(weatherPagerAdapter);
     }

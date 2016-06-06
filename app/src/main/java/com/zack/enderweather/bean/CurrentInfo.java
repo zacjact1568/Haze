@@ -21,6 +21,7 @@ public class CurrentInfo implements Parcelable {
 
     public CurrentInfo(String cityId) {
         this.cityId = cityId;
+        setEmptyValues();
     }
 
     public CurrentInfo(String cityId, String condition, String temperature, String sensibleTemp, String humidity,
@@ -150,6 +151,20 @@ public class CurrentInfo implements Parcelable {
         this.windScale = windScale;
         this.windDeg = windDeg;
         this.windDirection = windDirection;
+    }
+
+    public void setEmptyValues() {
+        this.condition = "";
+        this.temperature = "";
+        this.sensibleTemp = "";
+        this.humidity = "";
+        this.precipitation = "";
+        this.pressure = "";
+        this.visibility = "";
+        this.windSpeed = "";
+        this.windScale = "";
+        this.windDeg = "";
+        this.windDirection = "";
     }
 
     @Override

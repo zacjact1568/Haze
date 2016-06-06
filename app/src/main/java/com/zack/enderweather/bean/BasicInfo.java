@@ -11,6 +11,7 @@ public class BasicInfo implements Parcelable {
     public BasicInfo(String cityId, String cityName) {
         this.cityId = cityId;
         this.cityName = cityName;
+        this.updateTime = "";
     }
 
     public BasicInfo(String cityId, String cityName, String updateTime) {

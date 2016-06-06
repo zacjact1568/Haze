@@ -17,6 +17,7 @@ public class LifeSuggestion implements Parcelable {
 
     public LifeSuggestion(String cityId) {
         this.cityId = cityId;
+        setEmptyValues();
     }
 
     public LifeSuggestion(String cityId, String comfort, String dressing, String uvRay, String carWash,
@@ -104,6 +105,16 @@ public class LifeSuggestion implements Parcelable {
         this.travel = travel;
         this.flu = flu;
         this.sport = sport;
+    }
+
+    public void setEmptyValues() {
+        this.comfort = "";
+        this.dressing = "";
+        this.uvRay = "";
+        this.carWash = "";
+        this.travel = "";
+        this.flu = "";
+        this.sport = "";
     }
 
     @Override

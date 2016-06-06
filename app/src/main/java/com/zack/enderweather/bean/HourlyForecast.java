@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /** 每小时天气预报 */
 public class HourlyForecast implements Parcelable {
 
-    private String cityId;
+    private String cityTimeId;
     private String time;
     private String temperature;
     private String windSpeed;
@@ -17,13 +17,14 @@ public class HourlyForecast implements Parcelable {
     private String humidity;
     private String pressure;
 
-    public HourlyForecast(String cityId) {
-        this.cityId = cityId;
+    public HourlyForecast(String cityTimeId) {
+        this.cityTimeId = cityTimeId;
+        setEmptyValues();
     }
 
-    public HourlyForecast(String cityId, String time, String temperature, String windSpeed, String windScale,
+    public HourlyForecast(String cityTimeId, String time, String temperature, String windSpeed, String windScale,
                           String windDeg, String windDirection, String pcpnProb, String humidity, String pressure) {
-        this.cityId = cityId;
+        this.cityTimeId = cityTimeId;
         this.time = time;
         this.temperature = temperature;
         this.windSpeed = windSpeed;
@@ -35,12 +36,12 @@ public class HourlyForecast implements Parcelable {
         this.pressure = pressure;
     }
 
-    public String getCityId() {
-        return cityId;
+    public String getCityTimeId() {
+        return cityTimeId;
     }
 
-    public void setCityId(String cityId) {
-        this.cityId = cityId;
+    public void setCityTimeId(String cityTimeId) {
+        this.cityTimeId = cityTimeId;
     }
 
     public String getTime() {
@@ -128,7 +129,7 @@ public class HourlyForecast implements Parcelable {
         this.pressure = pressure;
     }
 
-    public void clearExtraValues() {
+    public void setEmptyValues() {
         this.time = "";
         this.temperature = "";
         this.windSpeed = "";
@@ -147,7 +148,7 @@ public class HourlyForecast implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.cityId);
+        dest.writeString(this.cityTimeId);
         dest.writeString(this.time);
         dest.writeString(this.temperature);
         dest.writeString(this.windSpeed);
@@ -160,7 +161,7 @@ public class HourlyForecast implements Parcelable {
     }
 
     protected HourlyForecast(Parcel in) {
-        this.cityId = in.readString();
+        this.cityTimeId = in.readString();
         this.time = in.readString();
         this.temperature = in.readString();
         this.windSpeed = in.readString();

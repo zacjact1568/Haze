@@ -29,20 +29,20 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     /** 每小时天气预报 */
     private static final String CREATE_TABLE_HOURLY_FORECAST = "create table hourly_forecast (" +
-            "city_id text, " +
+            "city_time_id text primary key, " +
             "time text, " +
             "temperature text, " +
             "wind_speed text, " +
             "wind_scale text, " +
             "wind_deg text, " +
             "wind_direction text, " +
-            "pcpn_prob text" +
+            "pcpn_prob text, " +
             "humidity text, " +
             "pressure text)";
 
     /** 每日天气预报 */
     private static final String CREATE_TABLE_DAILY_FORECAST = "create table daily_forecast (" +
-            "city_id text, " +
+            "city_date_id text primary key, " +
             "date text, " +
             "sunrise_time text, " +
             "sunset_time text, " +
@@ -55,7 +55,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
             "condition_day text, " +
             "condition_night text, " +
             "precipitation text, " +
-            "pcpn_prob text" +
+            "pcpn_prob text, " +
             "humidity text, " +
             "pressure text, " +
             "visibility text)";
@@ -64,8 +64,13 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_AIR_QUALITY = "create table air_quality (" +
             "city_id text primary key, " +
             "aqi text, " +
+            "co text, " +
+            "no2 text, " +
+            "o3 text, " +
             "pm10 text, " +
-            "pm25 text)";
+            "pm25 text, " +
+            "qlty text, " +
+            "so2 text)";
 
     /** 生活建议 */
     private static final String CREATE_TABLE_LIFE_SUGGESTION = "create table life_suggestion (" +

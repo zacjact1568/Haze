@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 
 import com.zack.enderweather.R;
 import com.zack.enderweather.application.EnderWeatherApp;
+import com.zack.enderweather.bean.HeWeather;
 import com.zack.enderweather.bean.Weather;
 
 import java.text.ParseException;
@@ -14,6 +15,8 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class Util {
+
+    private static final String LOG_TAG = "Util";
 
     /** 检测网络是否可用 */
     public static boolean isNetworkAvailable() {
@@ -88,6 +91,118 @@ public class Util {
                 return resources.getString(R.string.text_sunday);
             default:
                 return null;
+        }
+    }
+
+    /** 将和风天气bean中的内容解析到天气bean中 */
+    public static void parseHeWeatherData(HeWeather heWeather, Weather weather) {
+        HeWeather.HeWeatherAPI api = heWeather.getHeWeatherAPIList().get(0);
+
+        HeWeather.HeWeatherAPI.Basic basic = api.getBasic();
+        weather.getBasicInfo().setExtraValues(
+                basic.getCity(),
+                basic.getUpdate().getLoc()
+        );
+
+        HeWeather.HeWeatherAPI.Now now = api.getNow();
+        weather.getCurrentInfo().setExtraValues(
+                now.getCond().getTxt(),
+                now.getTmp(),
+                now.getFl(),
+                now.getHum(),
+                now.getPcpn(),
+                now.getPres(),
+                now.getVis(),
+                now.getWind().getSpd(),
+                now.getWind().getSc(),
+                now.getWind().getDeg(),
+                now.getWind().getDir()
+        );
+
+        int startIndex = Weather.HOURLY_FORECAST_LENGTH - api.getHourlyForecastList().size();
+        for (int i = 0; i < Weather.HOURLY_FORECAST_LENGTH; i++) {
+            if (i < startIndex) {
+                weather.getHourlyForecastList().get(i).setEmptyValues();
+            } else {
+                HeWeather.HeWeatherAPI.HourlyForecast hourlyForecast = api.getHourlyForecastList().get(i - startIndex);
+                weather.getHourlyForecastList().get(i).setExtraValues(
+                        hourlyForecast.getDate(),
+                        hourlyForecast.getTmp(),
+                        hourlyForecast.getWind().getSpd(),
+                        hourlyForecast.getWind().getSc(),
+                        hourlyForecast.getWind().getDeg(),
+                        hourlyForecast.getWind().getDir(),
+                        hourlyForecast.getPop(),
+                        hourlyForecast.getHum(),
+                        hourlyForecast.getPres()
+                );
+            }
+        }
+
+        for (int i = 0; i < Weather.DAILY_FORECAST_LENGTH; i++) {
+            HeWeather.HeWeatherAPI.DailyForecast dailyForecast = api.getDailyForecastList().get(i);
+            weather.getDailyForecastList().get(i).setExtraValues(
+                    dailyForecast.getDate(),
+                    dailyForecast.getAstro().getSr(),
+                    dailyForecast.getAstro().getSs(),
+                    dailyForecast.getTmp().getMax(),
+                    dailyForecast.getTmp().getMin(),
+                    dailyForecast.getWind().getSpd(),
+                    dailyForecast.getWind().getSc(),
+                    dailyForecast.getWind().getDeg(),
+                    dailyForecast.getWind().getDir(),
+                    dailyForecast.getCond().getTxtD(),
+                    dailyForecast.getCond().getTxtN(),
+                    dailyForecast.getPcpn(),
+                    dailyForecast.getPop(),
+                    dailyForecast.getHum(),
+                    dailyForecast.getPres(),
+                    dailyForecast.getVis()
+            );
+        }
+
+        if (api.getAqi() != null) {
+            HeWeather.HeWeatherAPI.Aqi.City cityAqi = api.getAqi().getCity();
+            if (cityAqi.getCo() == null) {
+                //部分城市只有三个数据
+                LogUtil.i(LOG_TAG, "AQI数据不全");
+                weather.getAirQuality().setPartValues(
+                        cityAqi.getAqi(),
+                        cityAqi.getPm10(),
+                        cityAqi.getPm25()
+                );
+            } else {
+                weather.getAirQuality().setExtraValues(
+                        cityAqi.getAqi(),
+                        cityAqi.getCo(),
+                        cityAqi.getNo2(),
+                        cityAqi.getO3(),
+                        cityAqi.getPm10(),
+                        cityAqi.getPm25(),
+                        cityAqi.getQlty(),
+                        cityAqi.getSo2()
+                );
+            }
+        } else {
+            //部分城市没有AQI数据
+            LogUtil.i(LOG_TAG, "没有AQI数据");
+            weather.getAirQuality().setEmptyValues();
+        }
+
+        if (api.getSuggestion() != null) {
+            HeWeather.HeWeatherAPI.Suggestion suggestion = api.getSuggestion();
+            weather.getLifeSuggestion().setExtraValues(
+                    suggestion.getComf().getBrf(),
+                    suggestion.getDrsg().getBrf(),
+                    suggestion.getUv().getBrf(),
+                    suggestion.getCw().getBrf(),
+                    suggestion.getTrav().getBrf(),
+                    suggestion.getFlu().getBrf(),
+                    suggestion.getSport().getBrf()
+            );
+        } else {
+            LogUtil.i(LOG_TAG, "没有Suggestion数据");
+            weather.getLifeSuggestion().setEmptyValues();
         }
     }
 }

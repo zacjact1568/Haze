@@ -61,7 +61,7 @@ public class WeatherPresenter implements Presenter<WeatherView> {
                     String.format(updateTimeFormat, weather.getBasicInfo().getUpdateTime()),
                     String.format("%s°C", weather.getCurrentInfo().getSensibleTemp()),
                     String.format("%s | %s", weather.getDailyForecastList().get(0).getMinTemp(), weather.getDailyForecastList().get(0).getMaxTemp()),
-                    Util.parseAqi(weather.getAirQuality().getAqi()),
+                    weather.getAirQuality().getQlty().equals("") ? weather.getAirQuality().getAqi().equals("") ? "--" : Util.parseAqi(weather.getAirQuality().getAqi()) : weather.getAirQuality().getQlty(),
                     Util.generateWeeks(weather.getDailyForecastList().get(0).getDate()),
                     dates,
                     conditions,

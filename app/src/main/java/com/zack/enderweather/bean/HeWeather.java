@@ -18,15 +18,6 @@ public class HeWeather {
         this.heWeatherAPIList = heWeatherAPIList;
     }
 
-    /**
-     * aqi : {"city":{"aqi":"65","pm10":"77","pm25":"29"}}
-     * basic : {"city":"德阳","cnty":"中国","id":"CN101272001","lat":"31.147000","lon":"104.375000","update":{"loc":"2016-05-17 15:52","utc":"2016-05-17 07:52"}}
-     * daily_forecast : [{"astro":{"sr":"06:05","ss":"19:52"},"cond":{"code_d":"104","code_n":"104","txt_d":"阴","txt_n":"阴"},"date":"2016-05-17","hum":"38","pcpn":"0.0","pop":"4","pres":"1007","tmp":{"max":"27","min":"16"},"vis":"10","wind":{"deg":"108","dir":"无持续风向","sc":"微风","spd":"1"}},{"astro":{"sr":"06:04","ss":"19:53"},"cond":{"code_d":"104","code_n":"300","txt_d":"阴","txt_n":"阵雨"},"date":"2016-05-18","hum":"37","pcpn":"0.2","pop":"84","pres":"1008","tmp":{"max":"26","min":"17"},"vis":"10","wind":{"deg":"87","dir":"无持续风向","sc":"微风","spd":"9"}},{"astro":{"sr":"06:04","ss":"19:53"},"cond":{"code_d":"104","code_n":"104","txt_d":"阴","txt_n":"阴"},"date":"2016-05-19","hum":"47","pcpn":"0.2","pop":"83","pres":"1007","tmp":{"max":"26","min":"18"},"vis":"10","wind":{"deg":"81","dir":"无持续风向","sc":"微风","spd":"9"}},{"astro":{"sr":"06:03","ss":"19:54"},"cond":{"code_d":"101","code_n":"104","txt_d":"多云","txt_n":"阴"},"date":"2016-05-20","hum":"43","pcpn":"0.0","pop":"5","pres":"1007","tmp":{"max":"29","min":"19"},"vis":"10","wind":{"deg":"108","dir":"无持续风向","sc":"微风","spd":"0"}},{"astro":{"sr":"06:03","ss":"19:55"},"cond":{"code_d":"300","code_n":"306","txt_d":"阵雨","txt_n":"中雨"},"date":"2016-05-21","hum":"46","pcpn":"1.4","pop":"65","pres":"1010","tmp":{"max":"23","min":"18"},"vis":"9","wind":{"deg":"15","dir":"无持续风向","sc":"微风","spd":"1"}},{"astro":{"sr":"06:02","ss":"19:55"},"cond":{"code_d":"306","code_n":"306","txt_d":"中雨","txt_n":"中雨"},"date":"2016-05-22","hum":"80","pcpn":"15.2","pop":"58","pres":"1012","tmp":{"max":"25","min":"18"},"vis":"9","wind":{"deg":"27","dir":"无持续风向","sc":"微风","spd":"0"}},{"astro":{"sr":"06:02","ss":"19:56"},"cond":{"code_d":"305","code_n":"307","txt_d":"小雨","txt_n":"大雨"},"date":"2016-05-23","hum":"61","pcpn":"4.4","pop":"50","pres":"1011","tmp":{"max":"26","min":"19"},"vis":"10","wind":{"deg":"94","dir":"无持续风向","sc":"微风","spd":"2"}}]
-     * hourly_forecast : [{"date":"2016-05-17 16:00","hum":"44","pop":"0","pres":"1006","tmp":"28","wind":{"deg":"54","dir":"东北风","sc":"微风","spd":"8"}},{"date":"2016-05-17 19:00","hum":"52","pop":"1","pres":"1007","tmp":"24","wind":{"deg":"248","dir":"西南风","sc":"微风","spd":"10"}},{"date":"2016-05-17 22:00","hum":"55","pop":"3","pres":"1009","tmp":"22","wind":{"deg":"352","dir":"北风","sc":"微风","spd":"8"}}]
-     * now : {"cond":{"code":"104","txt":"阴"},"fl":"26","hum":"38","pcpn":"0","pres":"1007","tmp":"27","vis":"10","wind":{"deg":"103","dir":"东风","sc":"4-5","spd":"21"}}
-     * status : ok
-     * suggestion : {"comf":{"brf":"较舒适","txt":"白天以阴或多云天气为主，但稍会让您感到有点儿热，但大部分人完全可以接受。"},"cw":{"brf":"较适宜","txt":"较适宜洗车，未来一天无雨，风力较小，擦洗一新的汽车至少能保持一天。"},"drsg":{"brf":"舒适","txt":"建议着长袖T恤、衬衫加单裤等服装。年老体弱者宜着针织长袖衬衫、马甲和长裤。"},"flu":{"brf":"少发","txt":"各项气象条件适宜，无明显降温过程，发生感冒机率较低。"},"sport":{"brf":"较适宜","txt":"阴天，较适宜进行各种户内外运动。"},"trav":{"brf":"适宜","txt":"天气较好，温度适宜，总体来说还是好天气哦，这样的天气适宜旅游，您可以尽情地享受大自然的风光。"},"uv":{"brf":"最弱","txt":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。"}}
-     */
     public static class HeWeatherAPI {
 
         @SerializedName("aqi")
@@ -102,7 +93,7 @@ public class HeWeather {
 
         /**
          * 空气质量指数<br>
-         * city : {"aqi":"65","pm10":"77","pm25":"29"}
+         * city : {"aqi":"65","co":"1","no2":"22","o3":"224","pm10":"77","pm25":"29","qlty":"轻度污染","so2":"11"}
          */
         public static class Aqi {
 
@@ -120,17 +111,32 @@ public class HeWeather {
             /**
              * 城市数据<br>
              * aqi : 65
+             * co : 1
+             * no2 : 22
+             * o3 : 224
              * pm10 : 77
              * pm25 : 29
+             * qlty : 轻度污染
+             * so2 : 11
              */
             public static class City {
 
                 @SerializedName("aqi")
                 private String aqi;
+                @SerializedName("co")
+                private String co;
+                @SerializedName("no2")
+                private String no2;
+                @SerializedName("o3")
+                private String o3;
                 @SerializedName("pm10")
                 private String pm10;
                 @SerializedName("pm25")
                 private String pm25;
+                @SerializedName("qlty")
+                private String qlty;
+                @SerializedName("so2")
+                private String so2;
 
                 public String getAqi() {
                     return aqi;
@@ -138,6 +144,30 @@ public class HeWeather {
 
                 public void setAqi(String aqi) {
                     this.aqi = aqi;
+                }
+
+                public String getCo() {
+                    return co;
+                }
+
+                public void setCo(String co) {
+                    this.co = co;
+                }
+
+                public String getNo2() {
+                    return no2;
+                }
+
+                public void setNo2(String no2) {
+                    this.no2 = no2;
+                }
+
+                public String getO3() {
+                    return o3;
+                }
+
+                public void setO3(String o3) {
+                    this.o3 = o3;
                 }
 
                 public String getPm10() {
@@ -154,6 +184,22 @@ public class HeWeather {
 
                 public void setPm25(String pm25) {
                     this.pm25 = pm25;
+                }
+
+                public String getQlty() {
+                    return qlty;
+                }
+
+                public void setQlty(String qlty) {
+                    this.qlty = qlty;
+                }
+
+                public String getSo2() {
+                    return so2;
+                }
+
+                public void setSo2(String so2) {
+                    this.so2 = so2;
                 }
             }
         }
