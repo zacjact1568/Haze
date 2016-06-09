@@ -56,8 +56,20 @@ public class DataManager {
         weatherList.add(new Weather(cityId, cityName));
     }
 
+    public void removeFromWeatherList(int location) {
+        weatherList.remove(location);
+    }
+
     public int getWeatherCount() {
         return weatherList.size();
+    }
+
+    public String getCityId(int location) {
+        return weatherList.get(location).getBasicInfo().getCityId();
+    }
+
+    public String getCityName(int location) {
+        return weatherList.get(location).getBasicInfo().getCityName();
     }
 
     /** 获取最近添加的天气（末尾）*/

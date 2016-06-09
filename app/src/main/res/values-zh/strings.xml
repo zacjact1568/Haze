@@ -36,4 +36,9 @@
     <string name="text_tuesday">星期二</string>
     <string name="text_yesterday">昨天</string>
     <string name="text_invalid_data">没有可用数据</string>
+    <string name="msg_dialog_delete_city_confirm_tail">”将会被立即删除</string>
+    <string name="btn_delete">删除</string>
+    <string name="btn_cancel">取消</string>
+    <string name="title_dialog_delete_city_confirm">你确定吗？</string>
+    <string name="msg_dialog_delete_city_confirm_head">城市“</string>
 </resources>

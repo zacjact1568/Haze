@@ -1,5 +1,7 @@
 package com.zack.enderweather.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -87,5 +89,20 @@ public class MyCitiesFragment extends Fragment implements MyCitiesView {
             }
         });
         snackbar.show();
+    }
+
+    @Override
+    public void showCityDeletionAlertDialog(String cityName, final int position) {
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.title_dialog_delete_city_confirm)
+                .setMessage(getResources().getString(R.string.msg_dialog_delete_city_confirm_head) + cityName + getResources().getString(R.string.msg_dialog_delete_city_confirm_tail))
+                .setPositiveButton(R.string.btn_delete, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        myCitiesPresenter.notifyCityDeleted(position);
+                    }
+                })
+                .setNegativeButton(R.string.btn_cancel, null)
+                .show();
     }
 }
