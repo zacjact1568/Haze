@@ -19,7 +19,7 @@ public class DataManager {
 
     private EnderWeatherDB enderWeatherDB;
     private List<Weather> weatherList;
-    private boolean isAlive = false;
+    private boolean isWeatherDataLoaded = false;
 
     private static DataManager ourInstance = new DataManager();
 
@@ -32,9 +32,10 @@ public class DataManager {
         return ourInstance;
     }
 
-    public void loadWeatherFromDatabase() {
-        if (!isAlive) {
-            isAlive = true;
+    /** 从数据库读取各个城市的天气数据<br>注：将来可能将其改造成异步读取 */
+    public void loadFromDatabase() {
+        if (!isWeatherDataLoaded) {
+            isWeatherDataLoaded = true;
             weatherList.addAll(enderWeatherDB.loadWeather());
         }
     }
@@ -59,9 +60,14 @@ public class DataManager {
         return weatherList.size();
     }
 
-    /** 获取最近添加的城市ID */
+    /** 获取最近添加的天气（末尾）*/
+    public Weather getRecentlyAddedWeather() {
+        return getWeather(getWeatherCount() - 1);
+    }
+
+    /** 获取最近添加的城市ID（末尾）*/
     public String getRecentlyAddedCityId() {
-        return getWeather(getWeatherCount() - 1).getBasicInfo().getCityId();
+        return getRecentlyAddedWeather().getBasicInfo().getCityId();
     }
 
     /** 发起网络访问，获取天气数据 */

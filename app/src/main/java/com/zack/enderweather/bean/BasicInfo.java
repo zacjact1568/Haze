@@ -11,7 +11,7 @@ public class BasicInfo implements Parcelable {
     public BasicInfo(String cityId, String cityName) {
         this.cityId = cityId;
         this.cityName = cityName;
-        this.updateTime = "";
+        setEmptyValues();
     }
 
     public BasicInfo(String cityId, String cityName, String updateTime) {
@@ -44,9 +44,12 @@ public class BasicInfo implements Parcelable {
         this.updateTime = updateTime;
     }
 
-    public void setExtraValues(String cityName, String updateTime) {
-        this.cityName = cityName;
+    public void setExtraValues(String updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public void setEmptyValues() {
+        this.updateTime = "";
     }
 
     @Override

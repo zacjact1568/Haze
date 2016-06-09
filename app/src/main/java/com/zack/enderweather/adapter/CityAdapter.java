@@ -31,7 +31,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
         Weather weather = weatherList.get(position);
 
         holder.cityText.setText(weather.getBasicInfo().getCityName());
-        holder.weatherText.setText(weather.getBasicInfo().getUpdateTime() == null ? "N/A" :
+        holder.weatherText.setText(weather.getBasicInfo().getUpdateTime().isEmpty() ? "--" :
                 String.format("%s°C | %s", weather.getCurrentInfo().getTemperature(),
                         weather.getCurrentInfo().getCondition()));
     }

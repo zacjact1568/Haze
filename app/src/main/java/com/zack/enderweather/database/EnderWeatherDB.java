@@ -125,7 +125,6 @@ public class EnderWeatherDB {
                         biCursor.getString(biCursor.getColumnIndex("city_name"))
                 );
                 weather.getBasicInfo().setExtraValues(
-                        biCursor.getString(biCursor.getColumnIndex("city_name")),
                         biCursor.getString(biCursor.getColumnIndex("update_time"))
                 );
                 weatherList.add(weather);

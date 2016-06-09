@@ -121,22 +121,32 @@ public class WeatherFragment extends Fragment implements WeatherView {
 
     @Override
     public void showInitialView(FormattedWeather formattedWeather) {
-        cityNameText.setText(formattedWeather.getCityName());
-        temperatureText.setText(formattedWeather.getTemperature());
-        conditionText.setText(formattedWeather.getCondition());
-        updateTimeText.setText(formattedWeather.getUpdateTime());
+        setView(formattedWeather);
+    }
 
-        sensibleTempText.setText(formattedWeather.getSensibleTemp());
-        tempRangeText.setText(formattedWeather.getTempRange());
-        airQualityText.setText(formattedWeather.getAirQuality());
+    @Override
+    public void onWeatherUpdated(FormattedWeather formattedWeather) {
+        setView(formattedWeather);
+    }
 
-        if (formattedWeather.getWeeks() != null && formattedWeather.getDates() != null
-                && formattedWeather.getConditions() != null && formattedWeather.getTempRanges() != null) {
+    private void setView(FormattedWeather fw) {
+        cityNameText.setText(fw.getCityName());
+        temperatureText.setText(fw.getTemperature());
+        conditionText.setText(fw.getCondition());
+        updateTimeText.setText(fw.getUpdateTime());
+
+        sensibleTempText.setText(fw.getSensibleTemp());
+        tempRangeText.setText(fw.getTempRange());
+        airQualityText.setText(fw.getAirQuality());
+
+        //当没有数据时，weeks等四个数组为null
+        if (fw.getWeeks() != null && fw.getDates() != null
+                && fw.getConditions() != null && fw.getTempRanges() != null) {
             for (int i = 0; i < Weather.DAILY_FORECAST_LENGTH; i++) {
-                weekTexts[i].setText(formattedWeather.getWeeks()[i]);
-                dateTexts[i].setText(formattedWeather.getDates()[i]);
-                conditionTexts[i].setText(formattedWeather.getConditions()[i]);
-                tempRangeTexts[i].setText(formattedWeather.getTempRanges()[i]);
+                weekTexts[i].setText(fw.getWeeks()[i]);
+                dateTexts[i].setText(fw.getDates()[i]);
+                conditionTexts[i].setText(fw.getConditions()[i]);
+                tempRangeTexts[i].setText(fw.getTempRanges()[i]);
             }
         }
     }

@@ -118,17 +118,6 @@ public class AirQuality implements Parcelable {
         this.so2 = so2;
     }
 
-    public void setPartValues(String aqi, String pm10, String pm25) {
-        this.aqi = aqi;
-        this.co = "";
-        this.no2 = "";
-        this.o3 = "";
-        this.pm10 = pm10;
-        this.pm25 = pm25;
-        this.qlty = "";
-        this.so2 = "";
-    }
-
     public void setEmptyValues() {
         this.aqi = "";
         this.co = "";

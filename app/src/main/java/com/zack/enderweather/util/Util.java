@@ -100,7 +100,6 @@ public class Util {
 
         HeWeather.HeWeatherAPI.Basic basic = api.getBasic();
         weather.getBasicInfo().setExtraValues(
-                basic.getCity(),
                 basic.getUpdate().getLoc()
         );
 
@@ -163,26 +162,16 @@ public class Util {
 
         if (api.getAqi() != null) {
             HeWeather.HeWeatherAPI.Aqi.City cityAqi = api.getAqi().getCity();
-            if (cityAqi.getCo() == null) {
-                //部分城市只有三个数据
-                LogUtil.i(LOG_TAG, "AQI数据不全");
-                weather.getAirQuality().setPartValues(
-                        cityAqi.getAqi(),
-                        cityAqi.getPm10(),
-                        cityAqi.getPm25()
-                );
-            } else {
-                weather.getAirQuality().setExtraValues(
-                        cityAqi.getAqi(),
-                        cityAqi.getCo(),
-                        cityAqi.getNo2(),
-                        cityAqi.getO3(),
-                        cityAqi.getPm10(),
-                        cityAqi.getPm25(),
-                        cityAqi.getQlty(),
-                        cityAqi.getSo2()
-                );
-            }
+            weather.getAirQuality().setExtraValues(
+                    cityAqi.getAqi(),
+                    cityAqi.getCo() == null ? "" : cityAqi.getCo(),
+                    cityAqi.getNo2() == null ? "" : cityAqi.getNo2(),
+                    cityAqi.getO3() == null ? "" : cityAqi.getO3(),
+                    cityAqi.getPm10(),
+                    cityAqi.getPm25(),
+                    cityAqi.getQlty() == null ? "" : cityAqi.getQlty(),
+                    cityAqi.getSo2() == null ? "" : cityAqi.getSo2()
+            );
         } else {
             //部分城市没有AQI数据
             LogUtil.i(LOG_TAG, "没有AQI数据");

@@ -53,8 +53,10 @@ public class AddCityPresenter implements Presenter<AddCityView> {
     }
 
     public void notifyCityListItemClicked(int position) {
+        //添加到weatherList
         dataManager.addToWeatherList(cityList.get(position).getCityId(), cityList.get(position).getCityName());
-        enderWeatherDB.saveWeather(dataManager.getWeather(cityList.get(position).getCityId()));
+        //存储数据到数据库（此时为空数据）
+        enderWeatherDB.saveWeather(dataManager.getRecentlyAddedWeather());
         addCityView.onCityListItemClicked();
     }
 }
