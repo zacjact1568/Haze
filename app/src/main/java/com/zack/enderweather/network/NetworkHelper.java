@@ -1,6 +1,7 @@
 package com.zack.enderweather.network;
 
 import com.zack.enderweather.bean.HeWeather;
+import com.zack.enderweather.util.LogUtil;
 
 import java.io.IOException;
 
@@ -11,6 +12,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkHelper {
+
+    private static final String LOG_TAG = "NetworkHelper";
 
     private static final String URL_HE_WEATHER_API = "https://api.heweather.com/x3/";
     private static final String KEY_HE_WEATHER_API = "b62ec297adac4f64a4aabdc2f86e1ce7";
@@ -31,22 +34,24 @@ public class NetworkHelper {
                     callback.onSuccess(response.body());
                 } else {
                     try {
-                        callback.onFailure(response.errorBody().string());
+                        LogUtil.e(LOG_TAG, response.errorBody().string());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    callback.onFailure(call.request().url().queryParameter("cityid"));
                 }
             }
 
             @Override
             public void onFailure(Call<HeWeather> call, Throwable t) {
-                callback.onFailure(t.getMessage());
+                LogUtil.e(LOG_TAG, t.getMessage());
+                callback.onFailure(call.request().url().queryParameter("cityid"));
             }
         });
     }
 
     public interface HeWeatherDataCallback {
         void onSuccess(HeWeather heWeather);
-        void onFailure(String msg);
+        void onFailure(String cityId);
     }
 }

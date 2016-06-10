@@ -5,7 +5,6 @@ import com.zack.enderweather.bean.Weather;
 import com.zack.enderweather.database.EnderWeatherDB;
 import com.zack.enderweather.event.WeatherUpdatedEvent;
 import com.zack.enderweather.network.NetworkHelper;
-import com.zack.enderweather.util.LogUtil;
 import com.zack.enderweather.util.Util;
 
 import org.greenrobot.eventbus.EventBus;
@@ -65,21 +64,46 @@ public class DataManager {
     }
 
     public String getCityId(int location) {
-        return weatherList.get(location).getBasicInfo().getCityId();
+        return getWeather(location).getBasicInfo().getCityId();
     }
 
     public String getCityName(int location) {
-        return weatherList.get(location).getBasicInfo().getCityName();
+        return getWeather(location).getBasicInfo().getCityName();
+    }
+
+    /** 获取天气数据的更新状态 */
+    public boolean getWeatherDataUpdateStatus(int location) {
+        return getWeather(location).getIsOnUpdate();
+    }
+
+    /** 设定天气数据的更新状态 */
+    public void setWeatherDataUpdateStatus(int location, boolean isOnUpdate) {
+        getWeather(location).setIsOnUpdate(isOnUpdate);
+    }
+
+    /** 获取最近添加的位置（末尾）*/
+    public int getRecentlyAddedLocation() {
+        return getWeatherCount() - 1;
     }
 
     /** 获取最近添加的天气（末尾）*/
     public Weather getRecentlyAddedWeather() {
-        return getWeather(getWeatherCount() - 1);
+        return getWeather(getRecentlyAddedLocation());
     }
 
     /** 获取最近添加的城市ID（末尾）*/
     public String getRecentlyAddedCityId() {
         return getRecentlyAddedWeather().getBasicInfo().getCityId();
+    }
+
+    /** 检测城市是否已存在 */
+    public boolean isCityExists(String cityId) {
+        for (Weather weather : weatherList) {
+            if (weather.getBasicInfo().getCityId().equals(cityId)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /** 发起网络访问，获取天气数据 */
@@ -91,12 +115,12 @@ public class DataManager {
                 Weather weather = getWeather(cityId);
                 Util.parseHeWeatherData(heWeather, weather);
                 enderWeatherDB.updateWeather(weather);
-                EventBus.getDefault().post(new WeatherUpdatedEvent(cityId));
+                EventBus.getDefault().post(new WeatherUpdatedEvent(cityId, true));
             }
 
             @Override
-            public void onFailure(String msg) {
-                LogUtil.e(LOG_TAG, msg);
+            public void onFailure(String cityId) {
+                EventBus.getDefault().post(new WeatherUpdatedEvent(cityId, false));
             }
         });
     }

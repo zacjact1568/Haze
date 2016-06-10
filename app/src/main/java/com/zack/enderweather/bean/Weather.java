@@ -14,6 +14,7 @@ public class Weather implements Parcelable {
     private List<DailyForecast> dailyForecastList;
     private AirQuality airQuality;
     private LifeSuggestion lifeSuggestion;
+    private boolean isOnUpdate;
 
     public static final int HOURLY_FORECAST_LENGTH = 8;
     public static final int DAILY_FORECAST_LENGTH = 7;
@@ -49,6 +50,7 @@ public class Weather implements Parcelable {
         this.dailyForecastList = dailyForecastList;
         this.airQuality = airQuality;
         this.lifeSuggestion = lifeSuggestion;
+        this.isOnUpdate = false;
     }
 
     public BasicInfo getBasicInfo() {
@@ -99,6 +101,14 @@ public class Weather implements Parcelable {
         this.lifeSuggestion = lifeSuggestion;
     }
 
+    public boolean getIsOnUpdate() {
+        return isOnUpdate;
+    }
+
+    public void setIsOnUpdate(boolean isOnUpdate) {
+        this.isOnUpdate = isOnUpdate;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -112,6 +122,7 @@ public class Weather implements Parcelable {
         dest.writeTypedList(this.dailyForecastList);
         dest.writeParcelable(this.airQuality, flags);
         dest.writeParcelable(this.lifeSuggestion, flags);
+        dest.writeByte((byte) (isOnUpdate ? 1 : 0));
     }
 
     protected Weather(Parcel in) {
@@ -121,6 +132,7 @@ public class Weather implements Parcelable {
         this.dailyForecastList = in.createTypedArrayList(DailyForecast.CREATOR);
         this.airQuality = in.readParcelable(AirQuality.class.getClassLoader());
         this.lifeSuggestion = in.readParcelable(LifeSuggestion.class.getClassLoader());
+        this.isOnUpdate = in.readByte() != 0;
     }
 
     public static final Parcelable.Creator<Weather> CREATOR = new Parcelable.Creator<Weather>() {

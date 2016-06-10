@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zack.enderweather.R;
 import com.zack.enderweather.adapter.CitySearchResultAdapter;
@@ -102,8 +103,13 @@ public class AddCityActivity extends BaseActivity implements AddCityView {
     }
 
     @Override
-    public void onCityListItemClicked() {
+    public void onCityAdded() {
         setResult(RESULT_OK);
         finish();
+    }
+
+    @Override
+    public void onDetectCityExists() {
+        Toast.makeText(this, R.string.toast_city_exists, Toast.LENGTH_SHORT).show();
     }
 }

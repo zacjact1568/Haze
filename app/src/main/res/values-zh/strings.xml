@@ -41,4 +41,8 @@
     <string name="btn_cancel">取消</string>
     <string name="title_dialog_delete_city_confirm">你确定吗？</string>
     <string name="msg_dialog_delete_city_confirm_head">城市“</string>
+    <string name="toast_weather_update_successfully">天气更新成功</string>
+    <string name="toast_weather_update_failed">天气更新失败</string>
+    <string name="toast_weather_update_requested">已请求更新天气</string>
+    <string name="toast_city_exists">城市已存在</string>
 </resources>

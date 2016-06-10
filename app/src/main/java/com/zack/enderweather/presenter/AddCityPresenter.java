@@ -53,10 +53,14 @@ public class AddCityPresenter implements Presenter<AddCityView> {
     }
 
     public void notifyCityListItemClicked(int position) {
-        //添加到weatherList
-        dataManager.addToWeatherList(cityList.get(position).getCityId(), cityList.get(position).getCityName());
-        //存储数据到数据库（此时为空数据）
-        enderWeatherDB.saveWeather(dataManager.getRecentlyAddedWeather());
-        addCityView.onCityListItemClicked();
+        if (dataManager.isCityExists(cityList.get(position).getCityId())) {
+            addCityView.onDetectCityExists();
+        } else {
+            //添加到weatherList
+            dataManager.addToWeatherList(cityList.get(position).getCityId(), cityList.get(position).getCityName());
+            //存储数据到数据库（此时为空数据）
+            enderWeatherDB.saveWeather(dataManager.getRecentlyAddedWeather());
+            addCityView.onCityAdded();
+        }
     }
 }

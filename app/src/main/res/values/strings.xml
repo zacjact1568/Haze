@@ -45,10 +45,14 @@
     <string name="msg_dialog_delete_city_confirm_tail">\" will be deleted immediately</string>
     <string name="btn_delete">Delete</string>
     <string name="btn_cancel">Cancel</string>
+    <string name="toast_weather_update_requested">Weather updating requested</string>
+    <string name="toast_weather_update_successfully">Weather updated successfully</string>
+    <string name="toast_weather_update_failed">Weather updating failed</string>
 
     <!--AddCityActivity-->
     <string name="title_activity_add_city">Add A City</string>
     <string name="text_empty_result">No cities found</string>
+    <string name="toast_city_exists">City exists</string>
 
     <string name="text_network_not_available">Network is not available</string>
     <string name="action_network_settings">Settings</string>

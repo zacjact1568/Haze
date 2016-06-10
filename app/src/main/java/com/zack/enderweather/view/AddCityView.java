@@ -6,5 +6,7 @@ public interface AddCityView {
 
     void showInitialView(CitySearchResultAdapter citySearchResultAdapter);
 
-    void onCityListItemClicked();
+    void onCityAdded();
+
+    void onDetectCityExists();
 }

@@ -98,9 +98,10 @@ public class WeatherPresenter implements Presenter<WeatherView> {
 
     @Subscribe
     public void onWeatherUpdated(WeatherUpdatedEvent event) {
+        //TODO 这里也要设置更新的状态
         if (weather.getBasicInfo().getCityId().equals(event.cityId)) {
             //说明更新的是当前城市
-            LogUtil.d(LOG_TAG, "更新天气：" + weather.getBasicInfo().getCityName());
+            LogUtil.i(LOG_TAG, "更新天气：" + weather.getBasicInfo().getCityName());
             notifyWeatherUpdated();
         }
     }
