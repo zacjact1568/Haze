@@ -7,6 +7,7 @@ import com.zack.enderweather.R;
 import com.zack.enderweather.adapter.WeatherPagerAdapter;
 import com.zack.enderweather.application.EnderWeatherApp;
 import com.zack.enderweather.event.CityAddedEvent;
+import com.zack.enderweather.event.CityClickedEvent;
 import com.zack.enderweather.event.CityDeletedEvent;
 import com.zack.enderweather.event.WeatherUpdatedEvent;
 import com.zack.enderweather.manager.DataManager;
@@ -68,5 +69,10 @@ public class HomePresenter implements Presenter<HomeView> {
         dataManager.setWeatherDataUpdateStatus(event.position, false);
         //显示toast，提示更新成功或更新失败
         homeView.showToast(event.isSuc ? updateSucStr : updateFaiStr);
+    }
+
+    @Subscribe
+    public void onCityClicked(CityClickedEvent event) {
+        homeView.onSwitchPage(event.position);
     }
 }

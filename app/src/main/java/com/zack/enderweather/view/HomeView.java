@@ -7,4 +7,6 @@ public interface HomeView {
     void showInitialView(WeatherPagerAdapter weatherPagerAdapter);
 
     void showToast(String message);
+
+    void onSwitchPage(int position);
 }

@@ -1,16 +1,12 @@
 package com.zack.enderweather.presenter;
 
-import android.content.res.Resources;
-
-import com.zack.enderweather.R;
 import com.zack.enderweather.adapter.CityAdapter;
-import com.zack.enderweather.application.EnderWeatherApp;
 import com.zack.enderweather.database.EnderWeatherDB;
 import com.zack.enderweather.event.CityAddedEvent;
+import com.zack.enderweather.event.CityClickedEvent;
 import com.zack.enderweather.event.CityDeletedEvent;
 import com.zack.enderweather.event.WeatherUpdatedEvent;
 import com.zack.enderweather.manager.DataManager;
-import com.zack.enderweather.util.LogUtil;
 import com.zack.enderweather.util.Util;
 import com.zack.enderweather.view.MyCitiesView;
 
@@ -49,7 +45,8 @@ public class MyCitiesPresenter implements Presenter<MyCitiesView> {
         cityAdapter.setOnCityItemClickListener(new CityAdapter.OnCityItemClickListener() {
             @Override
             public void onCityItemClick(int position) {
-                LogUtil.d(LOG_TAG, "Click at " + position);
+                myCitiesView.onBack();
+                EventBus.getDefault().post(new CityClickedEvent(position));
             }
         });
         cityAdapter.setOnUpdateButtonClickListener(new CityAdapter.OnUpdateButtonClickListener() {

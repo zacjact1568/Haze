@@ -9,4 +9,6 @@ public interface MyCitiesView {
     void onDetectNetworkNotAvailable();
 
     void showCityDeletionAlertDialog(String cityName, int position);
+
+    void onBack();
 }

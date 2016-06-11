@@ -106,4 +106,9 @@ public class MyCitiesFragment extends Fragment implements MyCitiesView {
                 .setNegativeButton(R.string.btn_cancel, null)
                 .show();
     }
+
+    @Override
+    public void onBack() {
+        getFragmentManager().popBackStack();
+    }
 }

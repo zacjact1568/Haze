@@ -2,6 +2,7 @@ package com.zack.enderweather.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -34,6 +36,8 @@ public class HomeActivity extends BaseActivity implements HomeView,
     NavigationView navView;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
     @BindView(R.id.frame_layout)
     FrameLayout frameLayout;
     @BindView(R.id.pager_weather)
@@ -116,12 +120,14 @@ public class HomeActivity extends BaseActivity implements HomeView,
                 break;
             case R.id.nav_my_cities:
                 if (getSupportFragmentManager().findFragmentByTag(TAG_MY_CITIES) == null) {
+                    fab.setVisibility(View.VISIBLE);
                     MyCitiesFragment myCitiesFragment = new MyCitiesFragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, myCitiesFragment, TAG_MY_CITIES).addToBackStack(null).commit();
                     getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
                         @Override
                         public void onBackStackChanged() {
                             if (getSupportFragmentManager().findFragmentByTag(TAG_MY_CITIES) == null) {
+                                fab.setVisibility(View.INVISIBLE);
                                 navView.setCheckedItem(R.id.nav_weather);
                                 getSupportFragmentManager().removeOnBackStackChangedListener(this);
                             }
@@ -159,6 +165,11 @@ public class HomeActivity extends BaseActivity implements HomeView,
     @Override
     public void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSwitchPage(int position) {
+        weatherPager.setCurrentItem(position);
     }
 
     @OnClick(R.id.fab)

@@ -161,11 +161,8 @@
             </LinearLayout>
 
             <GridLayout
-                android:id="@+id/layout_daily_forecast"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
                 android:columnCount="2"
                 android:padding="12dp">
 

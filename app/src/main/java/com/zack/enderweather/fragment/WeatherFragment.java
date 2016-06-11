@@ -196,9 +196,4 @@ public class WeatherFragment extends Fragment implements WeatherView {
             }
         }
     }
-
-    @OnClick(R.id.layout_daily_forecast)
-    public void onClick() {
-        //TODO Daily forecast details
-    }
 }
