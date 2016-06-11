@@ -25,18 +25,12 @@ public class MyCitiesPresenter implements Presenter<MyCitiesView> {
     private DataManager dataManager;
     private EnderWeatherDB enderWeatherDB;
     private CityAdapter cityAdapter;
-    private String updateReqStr, updateSucStr, updateFaiStr;
 
     public MyCitiesPresenter(MyCitiesView myCitiesView) {
         attachView(myCitiesView);
         dataManager = DataManager.getInstance();
         enderWeatherDB = EnderWeatherDB.getInstance();
         cityAdapter = new CityAdapter(dataManager.getWeatherList());
-
-        Resources resources = EnderWeatherApp.getGlobalContext().getResources();
-        updateReqStr = resources.getString(R.string.toast_weather_update_requested);
-        updateSucStr = resources.getString(R.string.toast_weather_update_successfully);
-        updateFaiStr = resources.getString(R.string.toast_weather_update_failed);
     }
 
     @Override
@@ -94,8 +88,6 @@ public class MyCitiesPresenter implements Presenter<MyCitiesView> {
             dataManager.setWeatherDataUpdateStatus(position, true);
             //刷新适配器（显示出正在更新的状态）
             cityAdapter.notifyItemChanged(position);
-            //显示toast，提示正在更新
-            myCitiesView.showToast(updateReqStr);
             //开始更新数据
             dataManager.getWeatherDataFromInternet(dataManager.getCityId(position));
         } else {
@@ -113,12 +105,7 @@ public class MyCitiesPresenter implements Presenter<MyCitiesView> {
 
     @Subscribe
     public void onWeatherUpdated(WeatherUpdatedEvent event) {
-        int position = dataManager.getLocationInWeatherList(event.cityId);
-        //标记weather为未请求更新
-        dataManager.setWeatherDataUpdateStatus(position, false);
         //刷新适配器（若成功更新则表现为刷新数据且取消正在更新的状态，若更新失败则表现为仅取消正在更新的状态）
-        cityAdapter.notifyItemChanged(position);
-        //显示toast，提示更新成功或更新失败
-        myCitiesView.showToast(event.isSuc ? updateSucStr : updateFaiStr);
+        cityAdapter.notifyItemChanged(event.position);
     }
 }

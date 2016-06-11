@@ -5,4 +5,6 @@ import com.zack.enderweather.adapter.WeatherPagerAdapter;
 public interface HomeView {
 
     void showInitialView(WeatherPagerAdapter weatherPagerAdapter);
+
+    void showToast(String message);
 }

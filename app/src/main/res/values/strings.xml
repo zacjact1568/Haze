@@ -38,6 +38,7 @@
     <string name="text_friday">Friday</string>
     <string name="text_saturday">Saturday</string>
     <string name="text_sunday">Sunday</string>
+    <string name="text_updating">Updating</string>
     
     <!--MyCitiesFragment-->
     <string name="title_dialog_delete_city_confirm">Are you sure?</string>

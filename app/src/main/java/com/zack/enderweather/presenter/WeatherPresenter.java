@@ -1,6 +1,6 @@
 package com.zack.enderweather.presenter;
 
-import android.content.Context;
+import android.content.res.Resources;
 
 import com.zack.enderweather.R;
 import com.zack.enderweather.application.EnderWeatherApp;
@@ -8,7 +8,7 @@ import com.zack.enderweather.bean.DailyForecast;
 import com.zack.enderweather.bean.FormattedWeather;
 import com.zack.enderweather.bean.Weather;
 import com.zack.enderweather.event.WeatherUpdatedEvent;
-import com.zack.enderweather.util.LogUtil;
+import com.zack.enderweather.manager.DataManager;
 import com.zack.enderweather.util.Util;
 import com.zack.enderweather.view.WeatherView;
 
@@ -20,16 +20,18 @@ public class WeatherPresenter implements Presenter<WeatherView> {
     private static final String LOG_TAG = "WeatherPresenter";
 
     private WeatherView weatherView;
+    private DataManager dataManager;
     private Weather weather;
     private String updateTimeFormat, invalidDataStr;
 
     public WeatherPresenter(WeatherView weatherView, Weather weather) {
         attachView(weatherView);
+        dataManager = DataManager.getInstance();
         this.weather = weather;
 
-        Context context = EnderWeatherApp.getGlobalContext();
-        updateTimeFormat = context.getResources().getString(R.string.format_update_time);
-        invalidDataStr = context.getResources().getString(R.string.text_invalid_data);
+        Resources resources = EnderWeatherApp.getGlobalContext().getResources();
+        updateTimeFormat = resources.getString(R.string.format_update_time);
+        invalidDataStr = resources.getString(R.string.text_invalid_data);
     }
 
     @Override
@@ -67,8 +69,20 @@ public class WeatherPresenter implements Presenter<WeatherView> {
         weatherView.showInitialView(fw);
     }
 
-    public void notifyWeatherUpdated() {
-        weatherView.onWeatherUpdated(assembleFormattedWeather());
+    public void notifyWeatherUpdating() {
+        if (Util.isNetworkAvailable()) {
+            String cityId = weather.getBasicInfo().getCityId();
+            dataManager.setWeatherDataUpdateStatus(dataManager.getLocationInWeatherList(cityId), true);
+            dataManager.getWeatherDataFromInternet(cityId);
+        } else {
+            //不会和MyCitiesFragment中的SnackBar同时出现
+            weatherView.onDetectNetworkNotAvailable();
+        }
+    }
+
+    public void notifyVisibilityChanged(boolean isVisible) {
+        //如果当前fragment变为不可见，直接隐藏下拉刷新图标；如果当前fragment变为可见，且又是在刷新状态时，显示下拉刷新图标
+        weatherView.onChangeSwipeRefreshingStatus(isVisible && weather.getIsOnUpdate());
     }
 
     private FormattedWeather assembleFormattedWeather() {
@@ -98,11 +112,14 @@ public class WeatherPresenter implements Presenter<WeatherView> {
 
     @Subscribe
     public void onWeatherUpdated(WeatherUpdatedEvent event) {
-        //TODO 这里也要设置更新的状态
+        //当WeatherUpdated事件发生时，这个方法总会被调用，但MyCitiesPresenter中的订阅方法不一定被执行
         if (weather.getBasicInfo().getCityId().equals(event.cityId)) {
             //说明更新的是当前城市
-            LogUtil.i(LOG_TAG, "更新天气：" + weather.getBasicInfo().getCityName());
-            notifyWeatherUpdated();
+            if (event.isSuc) {
+                weatherView.onWeatherUpdatedSuccessfully(assembleFormattedWeather());
+            } else {
+                weatherView.onWeatherUpdatedAbortively();
+            }
         }
     }
 }

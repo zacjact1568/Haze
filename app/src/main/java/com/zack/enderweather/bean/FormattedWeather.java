@@ -14,10 +14,6 @@ public class FormattedWeather {
     private String[] conditions;
     private String[] tempRanges;
 
-    public FormattedWeather(String cityName) {
-        this.cityName = cityName;
-    }
-
     public FormattedWeather(String cityName, String condition, String temperature, String updateTime,
                             String sensibleTemp, String tempRange, String airQuality, String[] weeks,
                             String[] dates, String[] conditions, String[] tempRanges) {
@@ -119,21 +115,6 @@ public class FormattedWeather {
     }
 
     public void setTempRanges(String[] tempRanges) {
-        this.tempRanges = tempRanges;
-    }
-
-    public void setExtraValues(String condition, String temperature, String updateTime, String sensibleTemp,
-                               String tempRange, String airQuality, String[] weeks, String[] dates,
-                               String[] conditions, String[] tempRanges) {
-        this.condition = condition;
-        this.temperature = temperature;
-        this.updateTime = updateTime;
-        this.sensibleTemp = sensibleTemp;
-        this.tempRange = tempRange;
-        this.airQuality = airQuality;
-        this.weeks = weeks;
-        this.dates = dates;
-        this.conditions = conditions;
         this.tempRanges = tempRanges;
     }
 }

@@ -112,15 +112,16 @@ public class DataManager {
             @Override
             public void onSuccess(HeWeather heWeather) {
                 String cityId = heWeather.getHeWeatherAPIList().get(0).getBasic().getId();
-                Weather weather = getWeather(cityId);
+                int position = getLocationInWeatherList(cityId);
+                Weather weather = getWeather(position);
                 Util.parseHeWeatherData(heWeather, weather);
                 enderWeatherDB.updateWeather(weather);
-                EventBus.getDefault().post(new WeatherUpdatedEvent(cityId, true));
+                EventBus.getDefault().post(new WeatherUpdatedEvent(position, cityId, true));
             }
 
             @Override
             public void onFailure(String cityId) {
-                EventBus.getDefault().post(new WeatherUpdatedEvent(cityId, false));
+                EventBus.getDefault().post(new WeatherUpdatedEvent(getLocationInWeatherList(cityId), cityId, false));
             }
         });
     }

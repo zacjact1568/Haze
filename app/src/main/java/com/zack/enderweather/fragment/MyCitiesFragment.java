@@ -106,9 +106,4 @@ public class MyCitiesFragment extends Fragment implements MyCitiesView {
                 .setNegativeButton(R.string.btn_cancel, null)
                 .show();
     }
-
-    @Override
-    public void showToast(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-    }
 }

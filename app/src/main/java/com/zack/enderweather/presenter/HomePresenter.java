@@ -1,10 +1,14 @@
 package com.zack.enderweather.presenter;
 
+import android.content.res.Resources;
 import android.support.v4.app.FragmentManager;
 
+import com.zack.enderweather.R;
 import com.zack.enderweather.adapter.WeatherPagerAdapter;
+import com.zack.enderweather.application.EnderWeatherApp;
 import com.zack.enderweather.event.CityAddedEvent;
 import com.zack.enderweather.event.CityDeletedEvent;
+import com.zack.enderweather.event.WeatherUpdatedEvent;
 import com.zack.enderweather.manager.DataManager;
 import com.zack.enderweather.view.HomeView;
 
@@ -16,10 +20,15 @@ public class HomePresenter implements Presenter<HomeView> {
     private HomeView homeView;
     private DataManager dataManager;
     private WeatherPagerAdapter weatherPagerAdapter;
+    private String updateSucStr, updateFaiStr;
 
     public HomePresenter(HomeView homeView) {
         attachView(homeView);
         dataManager = DataManager.getInstance();
+
+        Resources resources = EnderWeatherApp.getGlobalContext().getResources();
+        updateSucStr = resources.getString(R.string.toast_weather_update_successfully);
+        updateFaiStr = resources.getString(R.string.toast_weather_update_failed);
     }
 
     @Override
@@ -50,5 +59,14 @@ public class HomePresenter implements Presenter<HomeView> {
     @Subscribe
     public void onCityDeleted(CityDeletedEvent event) {
         weatherPagerAdapter.notifyDataSetChanged();
+    }
+
+    @Subscribe
+    public void onWeatherUpdated(WeatherUpdatedEvent event) {
+        //这里，处理MyCitiesPresenter和WeatherPresenter的onWeatherUpdated中可能出现冲突或重复的语句
+        //标记weather为未请求更新
+        dataManager.setWeatherDataUpdateStatus(event.position, false);
+        //显示toast，提示更新成功或更新失败
+        homeView.showToast(event.isSuc ? updateSucStr : updateFaiStr);
     }
 }

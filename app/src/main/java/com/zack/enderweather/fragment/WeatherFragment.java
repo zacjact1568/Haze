@@ -1,7 +1,11 @@
 package com.zack.enderweather.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +23,8 @@ import butterknife.OnClick;
 
 public class WeatherFragment extends Fragment implements WeatherView {
 
+    @BindView(R.id.layout_swipe_refresh)
+    SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.text_city_name)
     TextView cityNameText;
     @BindView(R.id.text_temperature)
@@ -120,16 +126,56 @@ public class WeatherFragment extends Fragment implements WeatherView {
     }
 
     @Override
-    public void showInitialView(FormattedWeather formattedWeather) {
-        setView(formattedWeather);
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isResumed()) {
+            //当进入resume状态时，weatherPresenter一定不为null
+            weatherPresenter.notifyVisibilityChanged(isVisibleToUser);
+        }
     }
 
     @Override
-    public void onWeatherUpdated(FormattedWeather formattedWeather) {
-        setView(formattedWeather);
+    public void showInitialView(FormattedWeather formattedWeather) {
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                weatherPresenter.notifyWeatherUpdating();
+            }
+        });
+        setWeatherOnView(formattedWeather);
     }
 
-    private void setView(FormattedWeather fw) {
+    @Override
+    public void onDetectNetworkNotAvailable() {
+        swipeRefreshLayout.setRefreshing(false);
+        Snackbar snackbar = Snackbar.make(swipeRefreshLayout, R.string.text_network_not_available, Snackbar.LENGTH_LONG);
+        snackbar.setAction(R.string.action_network_settings, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
+            }
+        });
+        snackbar.show();
+    }
+
+    @Override
+    public void onWeatherUpdatedSuccessfully(FormattedWeather formattedWeather) {
+        setWeatherOnView(formattedWeather);
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onWeatherUpdatedAbortively() {
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onChangeSwipeRefreshingStatus(boolean isRefreshing) {
+        swipeRefreshLayout.setRefreshing(isRefreshing);
+    }
+
+    private void setWeatherOnView(FormattedWeather fw) {
         cityNameText.setText(fw.getCityName());
         temperatureText.setText(fw.getTemperature());
         conditionText.setText(fw.getCondition());

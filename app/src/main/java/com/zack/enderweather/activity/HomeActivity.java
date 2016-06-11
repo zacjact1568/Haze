@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.zack.enderweather.R;
 import com.zack.enderweather.adapter.WeatherPagerAdapter;
@@ -153,6 +154,11 @@ public class HomeActivity extends BaseActivity implements HomeView,
         navView.setNavigationItemSelectedListener(this);
 
         weatherPager.setAdapter(weatherPagerAdapter);
+    }
+
+    @Override
+    public void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.fab)
