@@ -9,14 +9,16 @@ public class FormattedWeather {
     private String sensibleTemp;
     private String tempRange;
     private String airQuality;
+    private int[] maxTemps;
+    private int[] minTemps;
     private String[] weeks;
     private String[] dates;
     private String[] conditions;
     private String[] tempRanges;
 
     public FormattedWeather(String cityName, String condition, String temperature, String updateTime,
-                            String sensibleTemp, String tempRange, String airQuality, String[] weeks,
-                            String[] dates, String[] conditions, String[] tempRanges) {
+                            String sensibleTemp, String tempRange, String airQuality, int[] maxTemps,
+                            int[] minTemps, String[] weeks, String[] dates, String[] conditions, String[] tempRanges) {
         this.cityName = cityName;
         this.condition = condition;
         this.temperature = temperature;
@@ -24,6 +26,8 @@ public class FormattedWeather {
         this.sensibleTemp = sensibleTemp;
         this.tempRange = tempRange;
         this.airQuality = airQuality;
+        this.maxTemps = maxTemps;
+        this.minTemps = minTemps;
         this.weeks = weeks;
         this.dates = dates;
         this.conditions = conditions;
@@ -84,6 +88,22 @@ public class FormattedWeather {
 
     public void setAirQuality(String airQuality) {
         this.airQuality = airQuality;
+    }
+
+    public int[] getMaxTemps() {
+        return maxTemps;
+    }
+
+    public void setMaxTemps(int[] maxTemps) {
+        this.maxTemps = maxTemps;
+    }
+
+    public int[] getMinTemps() {
+        return minTemps;
+    }
+
+    public void setMinTemps(int[] minTemps) {
+        this.minTemps = minTemps;
     }
 
     public String[] getWeeks() {

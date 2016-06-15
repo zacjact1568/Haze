@@ -16,6 +16,7 @@ import com.zack.enderweather.bean.FormattedWeather;
 import com.zack.enderweather.bean.Weather;
 import com.zack.enderweather.presenter.WeatherPresenter;
 import com.zack.enderweather.view.WeatherView;
+import com.zack.enderweather.widget.TempTrendChartView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +40,8 @@ public class WeatherFragment extends Fragment implements WeatherView {
     TextView tempRangeText;
     @BindView(R.id.text_air_quality)
     TextView airQualityText;
+    @BindView(R.id.chart_temp_trend)
+    TempTrendChartView tempTrendChart;
 
     private static final String ARG_WEATHER = "weather";
 
@@ -184,6 +187,10 @@ public class WeatherFragment extends Fragment implements WeatherView {
         sensibleTempText.setText(fw.getSensibleTemp());
         tempRangeText.setText(fw.getTempRange());
         airQualityText.setText(fw.getAirQuality());
+
+        if (fw.getMaxTemps() != null && fw.getMinTemps() != null) {
+            tempTrendChart.setTempArray(fw.getMaxTemps(), fw.getMinTemps());
+        }
 
         //当没有数据时，weeks等四个数组为null
         if (fw.getWeeks() != null && fw.getDates() != null

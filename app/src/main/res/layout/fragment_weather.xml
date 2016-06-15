@@ -1,5 +1,6 @@
 <android.support.v4.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_swipe_refresh"
     android:layout_width="match_parent"
@@ -159,6 +160,16 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+            <com.zack.enderweather.widget.TempTrendChartView
+                android:id="@+id/chart_temp_trend"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/temp_trend_chart_height"
+                app:temp_point_color="@color/colorPrimary"
+                app:temp_point_edge_color="@color/colorPrimaryLight"
+                app:temp_trend_line_color="@color/colorPrimary"/>
+
+            <include layout="@layout/divider_h"/>
 
             <GridLayout
                 android:layout_width="match_parent"
