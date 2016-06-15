@@ -3,8 +3,9 @@
         <attr name="temp_point_color" format="color"/>
         <attr name="temp_point_edge_color" format="color"/>
         <attr name="temp_trend_line_color" format="color"/>
+        <attr name="temp_text_size" format="dimension" />
+        <attr name="temp_text_color" format="color" />
         <!--<attr name="exampleString" format="string" />-->
-        <!--<attr name="exampleDimension" format="dimension" />-->
         <!--<attr name="exampleColor" format="color" />-->
         <!--<attr name="exampleDrawable" format="color|reference" />-->
     </declare-styleable>

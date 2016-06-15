@@ -18,11 +18,13 @@ import com.zack.enderweather.util.LogUtil;
 public class TempTrendChartView extends View {
 
     private static final int PADDING_HORIZONTAL = 10;
-    private static final int PADDING_VERTICAL = 50;
+    private static final int PADDING_VERTICAL = 80;
 
     private static final float STROKE_WIDTH_POINT = 15f;
     private static final float STROKE_WIDTH_POINT_EDGE = 25f;
     private static final float STROKE_WIDTH_LINE = 5f;
+
+    private static final float TEXT_BASE_OFFSET = 40f;
 
     /** 温度最大值的数组 */
     private int[] mMaxTempArray;
@@ -39,14 +41,16 @@ public class TempTrendChartView extends View {
     private int mTempPointEdgeColor = Color.GRAY;
     private int mTempTrendLineColor = Color.BLACK;
 
+    private TextPaint mTextPaint;
+    private float mTempTextSize = 0f;
+    private int mTempTextColor = Color.BLACK;
+    /*private float mTextWidth;*/
+    private float mMaxTempTextOffset;
+    private float mMinTempTextOffset;
+
     /*private String mExampleString;
     private int mExampleColor = Color.RED;
-    private float mExampleDimension = 0;
-    private Drawable mExampleDrawable;
-
-    private TextPaint mTextPaint;
-    private float mTextWidth;
-    private float mTextHeight;*/
+    private Drawable mExampleDrawable;*/
 
     public TempTrendChartView(Context context) {
         super(context);
@@ -70,6 +74,9 @@ public class TempTrendChartView extends View {
         mTempPointColor = ta.getColor(R.styleable.TempTrendChartView_temp_point_color, mTempPointColor);
         mTempPointEdgeColor = ta.getColor(R.styleable.TempTrendChartView_temp_point_edge_color, mTempPointEdgeColor);
         mTempTrendLineColor = ta.getColor(R.styleable.TempTrendChartView_temp_trend_line_color, mTempTrendLineColor);
+        // Use getDimensionPixelSize or getDimensionPixelOffset when dealing with values that should fall on pixel boundaries.
+        mTempTextSize = ta.getDimension(R.styleable.TempTrendChartView_temp_text_size, mTempTextSize);
+        mTempTextColor = ta.getColor(R.styleable.TempTrendChartView_temp_text_color, mTempTextColor);
         ta.recycle();
 
         mPaint = new Paint();
@@ -80,34 +87,39 @@ public class TempTrendChartView extends View {
         //设置抗锯齿
         mPaint.setAntiAlias(true);
 
-        /*// Use getDimensionPixelSize or getDimensionPixelOffset when dealing with values that should fall on pixel boundaries.
-        mExampleDimension = ta.getDimension(
-                R.styleable.TempTrendChartView_exampleDimension,
-                mExampleDimension);
+        mTextPaint = new TextPaint();
+        //设置画笔模式为填充
+        mTextPaint.setStyle(Paint.Style.FILL);
+        //设置字体大小
+        mTextPaint.setTextSize(mTempTextSize);
+        //设置字体颜色
+        mTextPaint.setColor(mTempTextColor);
+        //设置抗锯齿
+        mTextPaint.setAntiAlias(true);
+        //设置对齐方式为中心对齐
+        mTextPaint.setTextAlign(Paint.Align.CENTER);
+
+        //文本高度
+        float textHeight = mTextPaint.descent() - mTextPaint.ascent();
+        //高、低温文本相对点的偏移（文本是以基线为准的）
+        mMaxTempTextOffset = TEXT_BASE_OFFSET - textHeight / 2 + mTextPaint.descent();
+        mMinTempTextOffset = TEXT_BASE_OFFSET + textHeight / 2 - mTextPaint.descent();
+
+        /*// Update TextPaint and text measurements from attributes
+        invalidateTextPaintAndMeasurements();
 
         if (ta.hasValue(R.styleable.TempTrendChartView_exampleDrawable)) {
             mExampleDrawable = ta.getDrawable(R.styleable.TempTrendChartView_exampleDrawable);
             if (mExampleDrawable != null) {
                 mExampleDrawable.setCallback(this);
             }
-        }
-
-        //设置默认的TextPaint
-        mTextPaint = new TextPaint();
-        mTextPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
-        mTextPaint.setTextAlign(Paint.Align.LEFT);
-
-        // Update TextPaint and text measurements from attributes
-        invalidateTextPaintAndMeasurements();*/
+        }*/
     }
 
     /*private void invalidateTextPaintAndMeasurements() {
-        mTextPaint.setTextSize(mExampleDimension);
-        mTextPaint.setColor(mExampleColor);
+
         mTextWidth = mTextPaint.measureText(mExampleString);
 
-        Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
-        mTextHeight = fontMetrics.bottom;
     }*/
 
     @Override
@@ -146,13 +158,29 @@ public class TempTrendChartView extends View {
         //画温度连线
         canvas.drawLines(mLineCoords, mPaint);
 
-        /*// Draw the text.
-        canvas.drawText(mExampleString,
-                paddingLeft + (contentWidth - mTextWidth) / 2,
-                paddingTop + (contentHeight + mTextHeight) / 2,
-                mTextPaint);
+        //画温度值
+        for (int i = 0; i < mMaxTempArray.length; i++) {
+            //高温
+            canvas.drawText(
+                    String.valueOf(mMaxTempArray[i]),
+                    mPointCoords[i * 2],
+                    //paddingLeft + (contentWidth - mTextWidth) / 2,
+                    mPointCoords[i * 2 + 1] - mMaxTempTextOffset,
+                    //paddingTop + (contentHeight + mTextHeight) / 2,
+                    mTextPaint
+            );
+        }
+        for (int i = 0; i < mMinTempArray.length; i++) {
+            //低温
+            canvas.drawText(
+                    String.valueOf(mMinTempArray[i]),
+                    mPointCoords[mMaxTempArray.length * 2 + i * 2],
+                    mPointCoords[mMaxTempArray.length * 2 + i * 2 + 1] + mMinTempTextOffset,
+                    mTextPaint
+            );
+        }
 
-        // Draw the example drawable on top of the text.
+        /*// Draw the example drawable on top of the text.
         if (mExampleDrawable != null) {
             mExampleDrawable.setBounds(paddingLeft, paddingTop,
                     paddingLeft + contentWidth, paddingTop + contentHeight);
@@ -216,17 +244,17 @@ public class TempTrendChartView extends View {
         for (int i = 0; i < mPointCoords.length; i++) {
             if (i % 2 == 0) {
                 //偶数：x坐标
-                if (i < mPointCoords.length / 2) {
+                if (i < mMaxTempArray.length * 2) {
                     //高温部分
                     mPointCoords[i] = startX + sectionWidth / 2 + sectionWidth * (i / 2);
                 } else {
                     //低温部分，数值和高温部分相同
-                    mPointCoords[i] = mPointCoords[i - mPointCoords.length / 2];
+                    mPointCoords[i] = mPointCoords[i - mMaxTempArray.length * 2];
                 }
             } else {
                 //奇数：y坐标（在屏幕上由上至下遍历）
                 for (int j = 0; j < rowCount; j++) {
-                    if (i < mPointCoords.length / 2) {
+                    if (i < mMaxTempArray.length * 2) {
                         //高温部分
                         if (maxTemp - j == mMaxTempArray[(i - 1) / 2]) {
                             //说明通过mMaxTempArray取出的温度在第j个区间
@@ -235,7 +263,7 @@ public class TempTrendChartView extends View {
                         }
                     } else {
                         //低温部分
-                        if (maxTemp - j == mMinTempArray[(i - mPointCoords.length / 2 - 1) / 2]) {
+                        if (maxTemp - j == mMinTempArray[(i - mMaxTempArray.length * 2 - 1) / 2]) {
                             //说明通过mMinTempArray取出的温度在第j个区间
                             mPointCoords[i] = startY + sectionHeight / 2 + sectionHeight * j;
                             break;

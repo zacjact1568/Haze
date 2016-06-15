@@ -167,7 +167,9 @@
                 android:layout_height="@dimen/temp_trend_chart_height"
                 app:temp_point_color="@color/colorPrimary"
                 app:temp_point_edge_color="@color/colorPrimaryLight"
-                app:temp_trend_line_color="@color/colorPrimary"/>
+                app:temp_trend_line_color="@color/colorPrimary"
+                app:temp_text_size="12sp"
+                app:temp_text_color="@color/colorPrimary"/>
 
             <include layout="@layout/divider_h"/>
 
