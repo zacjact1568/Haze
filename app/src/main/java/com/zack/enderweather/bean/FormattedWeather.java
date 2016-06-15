@@ -9,16 +9,14 @@ public class FormattedWeather {
     private String sensibleTemp;
     private String tempRange;
     private String airQuality;
+    private String[] weeks;
+    private String[] conditions;
     private int[] maxTemps;
     private int[] minTemps;
-    private String[] weeks;
-    private String[] dates;
-    private String[] conditions;
-    private String[] tempRanges;
 
     public FormattedWeather(String cityName, String condition, String temperature, String updateTime,
-                            String sensibleTemp, String tempRange, String airQuality, int[] maxTemps,
-                            int[] minTemps, String[] weeks, String[] dates, String[] conditions, String[] tempRanges) {
+                            String sensibleTemp, String tempRange, String airQuality, String[] weeks,
+                            String[] conditions, int[] maxTemps, int[] minTemps) {
         this.cityName = cityName;
         this.condition = condition;
         this.temperature = temperature;
@@ -26,12 +24,10 @@ public class FormattedWeather {
         this.sensibleTemp = sensibleTemp;
         this.tempRange = tempRange;
         this.airQuality = airQuality;
+        this.weeks = weeks;
+        this.conditions = conditions;
         this.maxTemps = maxTemps;
         this.minTemps = minTemps;
-        this.weeks = weeks;
-        this.dates = dates;
-        this.conditions = conditions;
-        this.tempRanges = tempRanges;
     }
 
     public String getCityName() {
@@ -90,6 +86,22 @@ public class FormattedWeather {
         this.airQuality = airQuality;
     }
 
+    public String[] getWeeks() {
+        return weeks;
+    }
+
+    public void setWeeks(String[] weeks) {
+        this.weeks = weeks;
+    }
+
+    public String[] getConditions() {
+        return conditions;
+    }
+
+    public void setConditions(String[] conditions) {
+        this.conditions = conditions;
+    }
+
     public int[] getMaxTemps() {
         return maxTemps;
     }
@@ -104,37 +116,5 @@ public class FormattedWeather {
 
     public void setMinTemps(int[] minTemps) {
         this.minTemps = minTemps;
-    }
-
-    public String[] getWeeks() {
-        return weeks;
-    }
-
-    public void setWeeks(String[] weeks) {
-        this.weeks = weeks;
-    }
-
-    public String[] getDates() {
-        return dates;
-    }
-
-    public void setDates(String[] dates) {
-        this.dates = dates;
-    }
-
-    public String[] getConditions() {
-        return conditions;
-    }
-
-    public void setConditions(String[] conditions) {
-        this.conditions = conditions;
-    }
-
-    public String[] getTempRanges() {
-        return tempRanges;
-    }
-
-    public void setTempRanges(String[] tempRanges) {
-        this.tempRanges = tempRanges;
     }
 }

@@ -17,7 +17,7 @@ import com.zack.enderweather.util.LogUtil;
 
 public class TempTrendChartView extends View {
 
-    private static final int PADDING_HORIZONTAL = 10;
+    //private static final int PADDING_HORIZONTAL = 0;
     private static final int PADDING_VERTICAL = 80;
 
     private static final float STROKE_WIDTH_POINT = 15f;
@@ -131,9 +131,9 @@ public class TempTrendChartView extends View {
             return;
         }
 
-        int contentWidth = getWidth() - getPaddingLeft() - getPaddingRight() - PADDING_HORIZONTAL * 2;
+        int contentWidth = getWidth() - getPaddingLeft() - getPaddingRight();
         int contentHeight = getHeight() - getPaddingTop() - getPaddingBottom() - PADDING_VERTICAL * 2;
-        int contentStartX = getPaddingLeft() + PADDING_HORIZONTAL;
+        int contentStartX = getPaddingLeft();
         int contentStartY = getPaddingTop() + PADDING_VERTICAL;
 
         //计算温度点坐标

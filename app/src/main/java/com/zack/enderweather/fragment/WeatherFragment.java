@@ -47,7 +47,7 @@ public class WeatherFragment extends Fragment implements WeatherView {
 
     private Weather weather;
     private WeatherPresenter weatherPresenter;
-    private TextView[] weekTexts, dateTexts, conditionTexts, tempRangeTexts;
+    private TextView[] weekTexts, conditionTexts;
 
     public WeatherFragment() {
         // Required empty public constructor
@@ -91,15 +91,6 @@ public class WeatherFragment extends Fragment implements WeatherView {
                 (TextView) view.findViewById(R.id.text_week5),
                 (TextView) view.findViewById(R.id.text_week6)
         };
-        dateTexts = new TextView[]{
-                (TextView) view.findViewById(R.id.text_date0),
-                (TextView) view.findViewById(R.id.text_date1),
-                (TextView) view.findViewById(R.id.text_date2),
-                (TextView) view.findViewById(R.id.text_date3),
-                (TextView) view.findViewById(R.id.text_date4),
-                (TextView) view.findViewById(R.id.text_date5),
-                (TextView) view.findViewById(R.id.text_date6)
-        };
         conditionTexts = new TextView[]{
                 (TextView) view.findViewById(R.id.text_condition0),
                 (TextView) view.findViewById(R.id.text_condition1),
@@ -108,15 +99,6 @@ public class WeatherFragment extends Fragment implements WeatherView {
                 (TextView) view.findViewById(R.id.text_condition4),
                 (TextView) view.findViewById(R.id.text_condition5),
                 (TextView) view.findViewById(R.id.text_condition6)
-        };
-        tempRangeTexts = new TextView[]{
-                (TextView) view.findViewById(R.id.text_temp_range0),
-                (TextView) view.findViewById(R.id.text_temp_range1),
-                (TextView) view.findViewById(R.id.text_temp_range2),
-                (TextView) view.findViewById(R.id.text_temp_range3),
-                (TextView) view.findViewById(R.id.text_temp_range4),
-                (TextView) view.findViewById(R.id.text_temp_range5),
-                (TextView) view.findViewById(R.id.text_temp_range6)
         };
 
         weatherPresenter.setInitialView();
@@ -188,19 +170,16 @@ public class WeatherFragment extends Fragment implements WeatherView {
         tempRangeText.setText(fw.getTempRange());
         airQualityText.setText(fw.getAirQuality());
 
-        if (fw.getMaxTemps() != null && fw.getMinTemps() != null) {
-            tempTrendChart.setTempArray(fw.getMaxTemps(), fw.getMinTemps());
-        }
-
-        //当没有数据时，weeks等四个数组为null
-        if (fw.getWeeks() != null && fw.getDates() != null
-                && fw.getConditions() != null && fw.getTempRanges() != null) {
+        //当没有数据时，weeks等三个数组为null
+        if (fw.getWeeks() != null && fw.getConditions() != null) {
             for (int i = 0; i < Weather.DAILY_FORECAST_LENGTH; i++) {
                 weekTexts[i].setText(fw.getWeeks()[i]);
-                dateTexts[i].setText(fw.getDates()[i]);
                 conditionTexts[i].setText(fw.getConditions()[i]);
-                tempRangeTexts[i].setText(fw.getTempRanges()[i]);
             }
+        }
+
+        if (fw.getMaxTemps() != null && fw.getMinTemps() != null) {
+            tempTrendChart.setTempArray(fw.getMaxTemps(), fw.getMinTemps());
         }
     }
 }

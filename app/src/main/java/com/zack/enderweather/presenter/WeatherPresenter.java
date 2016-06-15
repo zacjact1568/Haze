@@ -61,8 +61,6 @@ public class WeatherPresenter implements Presenter<WeatherView> {
                     null,
                     null,
                     null,
-                    null,
-                    null,
                     null
             );
         } else {
@@ -88,18 +86,18 @@ public class WeatherPresenter implements Presenter<WeatherView> {
     }
 
     private FormattedWeather assembleFormattedWeather() {
+        //String[] dates = new String[Weather.DAILY_FORECAST_LENGTH];
+        String[] conditions = new String[Weather.DAILY_FORECAST_LENGTH];
+        //String[] tempRanges = new String[Weather.DAILY_FORECAST_LENGTH];
         int[] maxTemps = new int[Weather.DAILY_FORECAST_LENGTH];
         int[] minTemps = new int[Weather.DAILY_FORECAST_LENGTH];
-        String[] dates = new String[Weather.DAILY_FORECAST_LENGTH];
-        String[] conditions = new String[Weather.DAILY_FORECAST_LENGTH];
-        String[] tempRanges = new String[Weather.DAILY_FORECAST_LENGTH];
         for (int i = 0; i < Weather.DAILY_FORECAST_LENGTH; i++) {
             DailyForecast df = weather.getDailyForecastList().get(i);
+            //dates[i] = df.getDate();
+            conditions[i] = df.getConditionDay();
+            //tempRanges[i] = String.format("%s | %s", df.getMinTemp(), df.getMaxTemp());
             maxTemps[i] = Integer.parseInt(df.getMaxTemp());
             minTemps[i] = Integer.parseInt(df.getMinTemp());
-            dates[i] = df.getDate();
-            conditions[i] = df.getConditionDay();
-            tempRanges[i] = String.format("%s | %s", df.getMinTemp(), df.getMaxTemp());
         }
         return new FormattedWeather(
                 weather.getBasicInfo().getCityName(),
@@ -109,12 +107,10 @@ public class WeatherPresenter implements Presenter<WeatherView> {
                 String.format("%s°C", weather.getCurrentInfo().getSensibleTemp()),
                 String.format("%s | %s", weather.getDailyForecastList().get(0).getMinTemp(), weather.getDailyForecastList().get(0).getMaxTemp()),
                 weather.getAirQuality().getAqi().isEmpty() ? "--" : weather.getAirQuality().getAqi(),
-                maxTemps,
-                minTemps,
                 Util.generateWeeks(weather.getDailyForecastList().get(0).getDate()),
-                dates,
                 conditions,
-                tempRanges
+                maxTemps,
+                minTemps
         );
     }
 
