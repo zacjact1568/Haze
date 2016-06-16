@@ -47,7 +47,6 @@ public class WeatherFragment extends Fragment implements WeatherView {
 
     private Weather weather;
     private WeatherPresenter weatherPresenter;
-    private TextView[] weekTexts, conditionTexts;
 
     public WeatherFragment() {
         // Required empty public constructor
@@ -81,25 +80,6 @@ public class WeatherFragment extends Fragment implements WeatherView {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-
-        weekTexts = new TextView[]{
-                (TextView) view.findViewById(R.id.text_week0),
-                (TextView) view.findViewById(R.id.text_week1),
-                (TextView) view.findViewById(R.id.text_week2),
-                (TextView) view.findViewById(R.id.text_week3),
-                (TextView) view.findViewById(R.id.text_week4),
-                (TextView) view.findViewById(R.id.text_week5),
-                (TextView) view.findViewById(R.id.text_week6)
-        };
-        conditionTexts = new TextView[]{
-                (TextView) view.findViewById(R.id.text_condition0),
-                (TextView) view.findViewById(R.id.text_condition1),
-                (TextView) view.findViewById(R.id.text_condition2),
-                (TextView) view.findViewById(R.id.text_condition3),
-                (TextView) view.findViewById(R.id.text_condition4),
-                (TextView) view.findViewById(R.id.text_condition5),
-                (TextView) view.findViewById(R.id.text_condition6)
-        };
 
         weatherPresenter.setInitialView();
     }
@@ -170,16 +150,9 @@ public class WeatherFragment extends Fragment implements WeatherView {
         tempRangeText.setText(fw.getTempRange());
         airQualityText.setText(fw.getAirQuality());
 
-        //当没有数据时，weeks等三个数组为null
-        if (fw.getWeeks() != null && fw.getConditions() != null) {
-            for (int i = 0; i < Weather.DAILY_FORECAST_LENGTH; i++) {
-                weekTexts[i].setText(fw.getWeeks()[i]);
-                conditionTexts[i].setText(fw.getConditions()[i]);
-            }
-        }
-
-        if (fw.getMaxTemps() != null && fw.getMinTemps() != null) {
-            tempTrendChart.setTempArray(fw.getMaxTemps(), fw.getMinTemps());
+        //当没有数据时，weeks等四个数组为null
+        if (fw.getWeeks() != null && fw.getConditions() != null && fw.getMaxTemps() != null && fw.getMinTemps() != null) {
+            tempTrendChart.setTempArray(fw.getWeeks(), fw.getConditions(), fw.getMaxTemps(), fw.getMinTemps());
         }
     }
 }

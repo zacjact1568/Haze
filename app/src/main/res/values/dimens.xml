@@ -7,11 +7,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
-    <dimen name="temp_trend_chart_height">180dp</dimen>
-
-    <dimen name="daily_forecast_date_text_size">8sp</dimen>
-    <dimen name="daily_forecast_week_text_size">8sp</dimen>
-    <dimen name="daily_forecast_condition_text_size">12sp</dimen>
-
-    <dimen name="daily_forecast_vertical_padding">8dp</dimen>
+    <dimen name="temp_trend_chart_height">200dp</dimen>
 </resources>
