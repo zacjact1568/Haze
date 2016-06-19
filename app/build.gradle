@@ -8,8 +8,8 @@ android {
         applicationId "com.zack.enderweather"
         minSdkVersion 21
         targetSdkVersion 23
-        versionCode 40
-        versionName "20160616"
+        versionCode 43
+        versionName "20160619"
     }
     buildTypes {
         release {
@@ -39,4 +39,5 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.5'
     compile 'io.reactivex:rxandroid:1.2.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
+    compile files('libs/AMap_Location_V2.5.0_20160526.jar')
 }

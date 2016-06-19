@@ -4,6 +4,12 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".application.EnderWeatherApp"
@@ -12,6 +18,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="25ed9016e64d4518d422cf4ee39451e7"/>
+
         <activity
             android:name=".activity.HomeActivity"
             android:label="@string/app_name"
@@ -28,6 +39,9 @@
             android:name=".activity.AddCityActivity"
             android:label="@string/title_activity_add_city"
             android:theme="@style/AppTheme"/>
+        
+        <service android:name="com.amap.api.location.APSService"/>
+        
     </application>
 
 </manifest>

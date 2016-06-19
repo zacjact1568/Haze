@@ -51,6 +51,10 @@ public class HomePresenter implements Presenter<HomeView> {
         homeView.showInitialView(weatherPagerAdapter);
     }
 
+    public void getLocationData() {
+        //TODO ...
+    }
+
     public void notifyCityAdded() {
         //通知该Activity的各个Fragment更新状态
         EventBus.getDefault().post(new CityAddedEvent());

@@ -57,6 +57,8 @@ public class HomeActivity extends BaseActivity implements HomeView,
         homePresenter = new HomePresenter(this);
 
         homePresenter.setInitialView(getSupportFragmentManager());
+
+        //TODO homePresenter.getLocationData();
     }
 
     @Override
