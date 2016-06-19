@@ -46,4 +46,19 @@
     <string name="toast_weather_update_requested">已请求更新天气</string>
     <string name="toast_city_exists">城市已存在</string>
     <string name="text_updating">正在刷新</string>
+    <string name="developer">开发者</string>
+    <string name="me">全杰是也</string>
+    <string name="pref_category_title_others">其他</string>
+    <string name="pref_category_title_theme">主题</string>
+    <string name="pref_category_title_weather">天气</string>
+    <string name="pref_summary_location_service_off">高德定位服务已关闭</string>
+    <string name="pref_summary_location_service_on">高德定位服务已开启</string>
+    <string name="pref_title_language">语言</string>
+    <string name="pref_title_location_service">定位服务</string>
+    <string name="pref_title_night_mode">夜间模式</string>
+    <string name="pref_title_theme">主题</string>
+    <string name="title_activity_about">关于</string>
+    <string name="title_activity_settings">设置</string>
+    <string name="version">版本</string>
+    <string name="title_fragment_my_cities">我的城市</string>
 </resources>

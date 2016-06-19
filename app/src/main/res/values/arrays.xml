@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="pref_language_titles">
+        <item>Follow System</item>
+        <item>English</item>
+        <item>中文（简体）</item>
+    </string-array>
+    <string-array name="pref_language_values" translatable="false">
+        <item>def</item>
+        <item>en</item>
+        <item>zh</item>
+    </string-array>
+    <string-array name="pref_night_mode_titles">
+        <item>Off</item>
+        <item>On</item>
+        <item>Auto</item>
+        <item>Follow System</item>
+    </string-array>
+    <string-array name="pref_night_mode_values" translatable="false">
+        <item>off</item>
+        <item>on</item>
+        <item>auto</item>
+        <item>def</item>
+    </string-array>
+
+    <!--<array name="type_marks">-->
+        <!--<item>@color/red</item>-->
+        <!--<item>@color/pink</item>-->
+        <!--<item>@color/purple</item>-->
+        <!--<item>@color/indigo</item>-->
+        <!--<item>@color/blue</item>-->
+        <!--<item>@color/cyan</item>-->
+        <!--<item>@color/teal</item>-->
+        <!--<item>@color/green</item>-->
+        <!--<item>@color/lime</item>-->
+        <!--<item>@color/yellow</item>-->
+        <!--<item>@color/orange</item>-->
+        <!--<item>@color/brown</item>-->
+    <!--</array>-->
+
+</resources>

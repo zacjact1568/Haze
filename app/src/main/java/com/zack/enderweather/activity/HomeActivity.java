@@ -102,11 +102,17 @@ public class HomeActivity extends BaseActivity implements HomeView,
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent intentSettings = new Intent(this, SettingsActivity.class);
+                startActivity(intentSettings);
+                break;
+            case R.id.action_about:
+                Intent intentAbout = new Intent(this, AboutActivity.class);
+                startActivity(intentAbout);
+                break;
+            default:
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -123,6 +129,7 @@ public class HomeActivity extends BaseActivity implements HomeView,
             case R.id.nav_my_cities:
                 if (getSupportFragmentManager().findFragmentByTag(TAG_MY_CITIES) == null) {
                     fab.setVisibility(View.VISIBLE);
+                    toolbar.setTitle(R.string.title_fragment_my_cities);
                     MyCitiesFragment myCitiesFragment = new MyCitiesFragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, myCitiesFragment, TAG_MY_CITIES).addToBackStack(null).commit();
                     getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
@@ -130,6 +137,7 @@ public class HomeActivity extends BaseActivity implements HomeView,
                         public void onBackStackChanged() {
                             if (getSupportFragmentManager().findFragmentByTag(TAG_MY_CITIES) == null) {
                                 fab.setVisibility(View.INVISIBLE);
+                                toolbar.setTitle(" ");
                                 navView.setCheckedItem(R.id.nav_weather);
                                 getSupportFragmentManager().removeOnBackStackChangedListener(this);
                             }
@@ -137,11 +145,13 @@ public class HomeActivity extends BaseActivity implements HomeView,
                     });
                 }
                 break;
-            case R.id.nav_city_list:
-                break;
             case R.id.nav_settings:
+                Intent intentSettings = new Intent(this, SettingsActivity.class);
+                startActivity(intentSettings);
                 break;
             case R.id.nav_about:
+                Intent intentAbout = new Intent(this, AboutActivity.class);
+                startActivity(intentAbout);
                 break;
             default:
                 break;
