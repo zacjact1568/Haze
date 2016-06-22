@@ -78,4 +78,20 @@
     <string name="text_network_not_available">Network is not available</string>
     <string name="action_network_settings">Settings</string>
 
+    <!--权限 (NOTE: rps == request permissions, ac == add city)-->
+    <string name="title_dialog_pre_rps">Enable Location Service?</string>
+    <string name="msg_dialog_pre_rps">
+        If you want us to show you the weather of the city you are currently in, you can enable the location service.\n
+        The location service is provided by AMap, and some essential permissions were needed.\n\n
+        NOTE: If you click \"No\", you can enable it in Settings anytime.
+    </string>
+    <string name="btn_pos_pre_rps">Sure</string>
+    <string name="btn_neg_pre_rps">No</string>
+    <string name="title_dialog_ac_req">Add a City?</string>
+    <string name="msg_dialog_ac_req">
+        Since you has rejected to grant us the permissions, you should add a city first.
+    </string>
+    <string name="btn_pos_ac_req">OK</string>
+    <string name="btn_neg_ac_req">Later</string>
+
 </resources>

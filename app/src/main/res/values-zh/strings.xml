@@ -61,4 +61,12 @@
     <string name="title_activity_settings">设置</string>
     <string name="version">版本</string>
     <string name="title_fragment_my_cities">我的城市</string>
+    <string name="btn_neg_ac_req">稍后</string>
+    <string name="btn_neg_pre_rps">不</string>
+    <string name="btn_pos_ac_req">好的</string>
+    <string name="btn_pos_pre_rps">当然</string>
+    <string name="msg_dialog_ac_req">因为你拒绝授予权限，你应该先添加一个城市。</string>
+    <string name="msg_dialog_pre_rps">如果你想让我们向你展示你当前所在城市的天气，你可以开启位置服务。\n位置服务由高德提供，它需要一些必要的权限。\n\n注意：如果你选择了“不”，你可以随时在设置中开启它。</string>
+    <string name="title_dialog_ac_req">要添加城市吗？</string>
+    <string name="title_dialog_pre_rps">要开启位置服务吗？</string>
 </resources>

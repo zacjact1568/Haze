@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatDelegate;
 
 import com.zack.enderweather.R;
 import com.zack.enderweather.database.EnderWeatherDB;
+import com.zack.enderweather.preference.PreferenceHelper;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -42,11 +43,11 @@ public class EnderWeatherApp extends Application {
 
     /** 通过Preference中的数据初始化某些设置 */
     private void initFromPreferences() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        PreferenceHelper helper = PreferenceHelper.getInstance();
         //设定运行时的默认语言
-        initLocale(sharedPreferences.getString("language", ""));
+        initLocale(helper.getStringPref(PreferenceHelper.KEY_PREF_LANGUAGE));
         //设定白天夜间模式
-        initNightMode(sharedPreferences.getString("night_mode", ""));
+        initNightMode(helper.getStringPref(PreferenceHelper.KEY_PREF_NIGHT_MODE));
     }
 
     /** 初始化城市数据库 */

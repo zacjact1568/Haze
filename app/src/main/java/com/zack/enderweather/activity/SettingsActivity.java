@@ -13,15 +13,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.zack.enderweather.R;
+import com.zack.enderweather.location.LocationHelper;
+import com.zack.enderweather.preference.PreferenceHelper;
+import com.zack.enderweather.presenter.SettingsPresenter;
 import com.zack.enderweather.util.LogUtil;
+import com.zack.enderweather.view.SettingsView;
 
 import java.util.Locale;
 
 public class SettingsActivity extends BaseActivity {
-
-    private static final String KEY_PREF_LOCATION_SERVICE = "location_service";
-    private static final String KEY_PREF_LANGUAGE = "language";
-    private static final String KEY_PREF_NIGHT_MODE = "night_mode";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +49,10 @@ public class SettingsActivity extends BaseActivity {
     }
 
     public static class SettingsFragment extends PreferenceFragment
-            implements SharedPreferences.OnSharedPreferenceChangeListener {
+            implements SettingsView, SharedPreferences.OnSharedPreferenceChangeListener,
+            LocationHelper.PermissionDelegate {
 
+        private SettingsPresenter settingsPresenter;
         private SwitchPreference locationServicePref;
         private ListPreference languagePref, nightModePref;
 
@@ -59,11 +61,11 @@ public class SettingsActivity extends BaseActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.preferences);
 
-            locationServicePref = (SwitchPreference) findPreference(KEY_PREF_LOCATION_SERVICE);
-            languagePref = (ListPreference) findPreference(KEY_PREF_LANGUAGE);
-            nightModePref = (ListPreference) findPreference(KEY_PREF_NIGHT_MODE);
+            settingsPresenter = new SettingsPresenter(this);
 
-            initPreferenceSummary();
+            settingsPresenter.setInitialView();
+
+            settingsPresenter.setPermissionDelegate(this);
         }
 
         @Override
@@ -79,10 +81,34 @@ public class SettingsActivity extends BaseActivity {
         }
 
         @Override
+        public void showInitialView() {
+            locationServicePref = (SwitchPreference) findPreference(PreferenceHelper.KEY_PREF_LOCATION_SERVICE);
+            languagePref = (ListPreference) findPreference(PreferenceHelper.KEY_PREF_LANGUAGE);
+            nightModePref = (ListPreference) findPreference(PreferenceHelper.KEY_PREF_NIGHT_MODE);
+
+            initPreferenceSummary();
+        }
+
+        @Override
+        public void showPreviouslyRequestPermissionsDialog() {
+            //TODO start
+        }
+
+        @Override
+        public void onRequestPermissions() {
+
+        }
+
+        @Override
+        public void showAddCityRequestDialog() {
+
+        }
+
+        @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             switch (key) {
-                case KEY_PREF_LOCATION_SERVICE:
-                    if (sharedPreferences.getBoolean(KEY_PREF_LOCATION_SERVICE, false)) {
+                case PreferenceHelper.KEY_PREF_LOCATION_SERVICE:
+                    if (sharedPreferences.getBoolean(PreferenceHelper.KEY_PREF_LOCATION_SERVICE, false)) {
                         //已打开定位服务
                         LogUtil.d("已打开定位服务");
                     } else {
@@ -90,8 +116,8 @@ public class SettingsActivity extends BaseActivity {
                         LogUtil.d("已关闭定位服务");
                     }
                     break;
-                case KEY_PREF_LANGUAGE:
-                    String languageValue = sharedPreferences.getString(KEY_PREF_LANGUAGE, "");
+                case PreferenceHelper.KEY_PREF_LANGUAGE:
+                    String languageValue = sharedPreferences.getString(PreferenceHelper.KEY_PREF_LANGUAGE, "");
                     languagePref.setSummary(languagePref.getEntries()[languagePref.findIndexOfValue(languageValue)]);
 
                     Configuration config = getResources().getConfiguration();
@@ -109,8 +135,8 @@ public class SettingsActivity extends BaseActivity {
                     getResources().updateConfiguration(config, null);
                     recreate();
                     break;
-                case KEY_PREF_NIGHT_MODE:
-                    String nightModeValue = sharedPreferences.getString(KEY_PREF_NIGHT_MODE, "");
+                case PreferenceHelper.KEY_PREF_NIGHT_MODE:
+                    String nightModeValue = sharedPreferences.getString(PreferenceHelper.KEY_PREF_NIGHT_MODE, "");
                     nightModePref.setSummary(nightModePref.getEntries()[nightModePref.findIndexOfValue(nightModeValue)]);
 
                     int mode = AppCompatDelegate.MODE_NIGHT_NO;
@@ -143,9 +169,9 @@ public class SettingsActivity extends BaseActivity {
             //Location Service
             //No need to set summary
             //Language
-            languagePref.setSummary(languagePref.getEntries()[languagePref.findIndexOfValue(sharedPreferences.getString(KEY_PREF_LANGUAGE, ""))]);
+            languagePref.setSummary(languagePref.getEntries()[languagePref.findIndexOfValue(sharedPreferences.getString(PreferenceHelper.KEY_PREF_LANGUAGE, ""))]);
             //Night Mode
-            nightModePref.setSummary(nightModePref.getEntries()[nightModePref.findIndexOfValue(sharedPreferences.getString(KEY_PREF_NIGHT_MODE, ""))]);
+            nightModePref.setSummary(nightModePref.getEntries()[nightModePref.findIndexOfValue(sharedPreferences.getString(PreferenceHelper.KEY_PREF_NIGHT_MODE, ""))]);
         }
 
         /** 返回并重新创建HomeActivity */

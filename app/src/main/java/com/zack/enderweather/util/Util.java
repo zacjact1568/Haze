@@ -1,8 +1,12 @@
 package com.zack.enderweather.util;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
 
 import com.zack.enderweather.R;
 import com.zack.enderweather.application.EnderWeatherApp;
@@ -17,6 +21,19 @@ import java.util.Locale;
 public class Util {
 
     private static final String LOG_TAG = "Util";
+
+    /** 检测Android版本是否低于6.0 */
+    public static boolean isVersionBelowMarshmallow() {
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M;
+    }
+
+    /** 检查是否拥有所有权限 */
+    public static boolean isPermissionsGranted() {
+        Context context = EnderWeatherApp.getGlobalContext();
+        return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
 
     /** 检测网络是否可用 */
     public static boolean isNetworkAvailable() {

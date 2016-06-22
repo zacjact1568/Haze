@@ -10,7 +10,11 @@ import com.zack.enderweather.event.CityAddedEvent;
 import com.zack.enderweather.event.CityClickedEvent;
 import com.zack.enderweather.event.CityDeletedEvent;
 import com.zack.enderweather.event.WeatherUpdatedEvent;
+import com.zack.enderweather.location.LocationHelper;
 import com.zack.enderweather.manager.DataManager;
+import com.zack.enderweather.preference.PreferenceHelper;
+import com.zack.enderweather.util.LogUtil;
+import com.zack.enderweather.util.Util;
 import com.zack.enderweather.view.HomeView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -20,12 +24,15 @@ public class HomePresenter implements Presenter<HomeView> {
 
     private HomeView homeView;
     private DataManager dataManager;
+    private PreferenceHelper preferenceHelper;
     private WeatherPagerAdapter weatherPagerAdapter;
+    private LocationHelper.PermissionDelegate mPermissionDelegate;
     private String updateSucStr, updateFaiStr;
 
     public HomePresenter(HomeView homeView) {
         attachView(homeView);
         dataManager = DataManager.getInstance();
+        preferenceHelper = PreferenceHelper.getInstance();
 
         Resources resources = EnderWeatherApp.getGlobalContext().getResources();
         updateSucStr = resources.getString(R.string.toast_weather_update_successfully);
@@ -51,6 +58,35 @@ public class HomePresenter implements Presenter<HomeView> {
         homeView.showInitialView(weatherPagerAdapter);
     }
 
+    public void setPermissionDelegate(LocationHelper.PermissionDelegate delegate) {
+        mPermissionDelegate = delegate;
+    }
+
+    public void notifyStartingUpCompleted() {
+        if (preferenceHelper.getBooleanPref(PreferenceHelper.KEY_PREF_NEED_GUIDE)) {
+            preferenceHelper.setPref(PreferenceHelper.KEY_PREF_NEED_GUIDE, false);
+            if (mPermissionDelegate != null) {
+                mPermissionDelegate.showPreviouslyRequestPermissionsDialog();
+            } else {
+                throw new RuntimeException("No delegate for permission request");
+            }
+        }
+    }
+
+    public void notifyPermissionsPreviouslyGranted() {
+        if (Util.isVersionBelowMarshmallow()) {
+            //说明不需要动态授权
+            preferenceHelper.setPref(PreferenceHelper.KEY_PREF_LOCATION_SERVICE, true);
+        } else {
+            //需要动态授权，弹系统授权窗口
+            mPermissionDelegate.onRequestPermissions();
+        }
+    }
+
+    public void notifyPermissionsDenied() {
+        mPermissionDelegate.showAddCityRequestDialog();
+    }
+
     public void getLocationData() {
         //TODO ...
     }
@@ -59,6 +95,11 @@ public class HomePresenter implements Presenter<HomeView> {
         //通知该Activity的各个Fragment更新状态
         EventBus.getDefault().post(new CityAddedEvent());
         weatherPagerAdapter.notifyDataSetChanged();
+    }
+
+    public void notifyPermissionsGranted() {
+        preferenceHelper.setPref(PreferenceHelper.KEY_PREF_LOCATION_SERVICE, true);
+        //TODO 开始获取位置
     }
 
     @Subscribe
