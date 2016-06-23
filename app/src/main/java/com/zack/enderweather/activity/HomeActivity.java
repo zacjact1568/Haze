@@ -286,10 +286,17 @@ public class HomeActivity extends BaseActivity implements HomeView,
         weatherPager.setCurrentItem(position);
     }
 
-    @OnClick(R.id.fab)
-    public void onClick() {
-        if (getSupportFragmentManager().findFragmentByTag(TAG_MY_CITIES) != null) {
-            startAddCityActivity();
+    @OnClick({R.id.fab, R.id.btn_add_city})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.fab:
+                startAddCityActivity();
+                break;
+            case R.id.btn_add_city:
+                startAddCityActivity();
+                break;
+            default:
+                break;
         }
     }
 

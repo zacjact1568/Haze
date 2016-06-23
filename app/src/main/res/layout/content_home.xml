@@ -9,6 +9,36 @@
     tools:context=".activity.HomeActivity"
     tools:showIn="@layout/app_bar_home">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/text_empty_city"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/btn_add_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="4dp"
+            android:text="@string/btn_add_city"
+            android:textColor="@color/colorPrimary"
+            android:clickable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"/>
+
+    </LinearLayout>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/pager_weather"
         android:layout_width="match_parent"

@@ -69,4 +69,6 @@
     <string name="msg_dialog_pre_rps">如果你想让我们向你展示你当前所在城市的天气，你可以开启位置服务。\n位置服务由高德提供，它需要一些必要的权限。\n\n注意：如果你选择了“不”，你可以随时在设置中开启它。</string>
     <string name="title_dialog_ac_req">要添加城市吗？</string>
     <string name="title_dialog_pre_rps">要开启位置服务吗？</string>
+    <string name="btn_add_city">添加城市</string>
+    <string name="text_empty_city">这里没有城市</string>
 </resources>

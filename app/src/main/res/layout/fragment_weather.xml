@@ -5,6 +5,7 @@
     android:id="@+id/layout_swipe_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?android:attr/colorBackground"
     tools:context="com.zack.enderweather.fragment.WeatherFragment">
 
     <ScrollView

@@ -92,6 +92,7 @@ public class HomePresenter implements Presenter<HomeView> {
     }
 
     public void notifyCityAdded() {
+        //TODO 不会刷新
         //通知该Activity的各个Fragment更新状态
         EventBus.getDefault().post(new CityAddedEvent());
         weatherPagerAdapter.notifyDataSetChanged();
@@ -105,6 +106,7 @@ public class HomePresenter implements Presenter<HomeView> {
     @Subscribe
     public void onCityDeleted(CityDeletedEvent event) {
         weatherPagerAdapter.notifyDataSetChanged();
+        //TODO 当要删除的页面属于已加载的三个中的一个时，不会删除
     }
 
     @Subscribe
