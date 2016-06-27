@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.zack.enderweather.adapter.CitySearchResultAdapter;
 import com.zack.enderweather.bean.City;
-import com.zack.enderweather.database.EnderWeatherDB;
+import com.zack.enderweather.database.DatabaseDispatcher;
 import com.zack.enderweather.manager.DataManager;
 import com.zack.enderweather.view.AddCityView;
 
@@ -15,14 +15,14 @@ public class AddCityPresenter implements Presenter<AddCityView> {
 
     private AddCityView addCityView;
     private DataManager dataManager;
-    private EnderWeatherDB enderWeatherDB;
+    private DatabaseDispatcher databaseDispatcher;
     private CitySearchResultAdapter citySearchResultAdapter;
     private List<City> cityList;
 
     public AddCityPresenter(AddCityView addCityView) {
         attachView(addCityView);
         dataManager = DataManager.getInstance();
-        enderWeatherDB = EnderWeatherDB.getInstance();
+        databaseDispatcher = DatabaseDispatcher.getInstance();
         cityList = new ArrayList<>();
         citySearchResultAdapter = new CitySearchResultAdapter(cityList);
     }
@@ -46,7 +46,7 @@ public class AddCityPresenter implements Presenter<AddCityView> {
         cityList.clear();
         if (!TextUtils.isEmpty(input)) {
             //若查询关键词不为空才执行查询
-            enderWeatherDB.queryCityLike(input, cityList);
+            databaseDispatcher.queryCityLike(input, cityList);
         }
         //刷新适配器
         citySearchResultAdapter.notifyDataSetChanged();
@@ -59,7 +59,7 @@ public class AddCityPresenter implements Presenter<AddCityView> {
             //添加到weatherList
             dataManager.addToWeatherList(cityList.get(position).getCityId(), cityList.get(position).getCityName());
             //存储数据到数据库（此时为空数据）
-            enderWeatherDB.saveWeather(dataManager.getRecentlyAddedWeather());
+            databaseDispatcher.saveWeather(dataManager.getRecentlyAddedWeather());
             addCityView.onCityAdded();
         }
     }

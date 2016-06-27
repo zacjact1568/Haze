@@ -29,6 +29,11 @@ public class WeatherPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
+    public int getItemPosition(Object object) {
+        return ((WeatherFragment) object).isDeleted() ? POSITION_NONE : super.getItemPosition(object);
+    }
+
+    @Override
     public CharSequence getPageTitle(int position) {
         return weatherList.get(position).getBasicInfo().getCityName();
     }

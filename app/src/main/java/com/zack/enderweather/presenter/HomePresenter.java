@@ -9,11 +9,10 @@ import com.zack.enderweather.application.EnderWeatherApp;
 import com.zack.enderweather.event.CityAddedEvent;
 import com.zack.enderweather.event.CityClickedEvent;
 import com.zack.enderweather.event.CityDeletedEvent;
-import com.zack.enderweather.event.WeatherUpdatedEvent;
+import com.zack.enderweather.event.WeatherUpdateStatusChangedEvent;
 import com.zack.enderweather.location.LocationHelper;
 import com.zack.enderweather.manager.DataManager;
-import com.zack.enderweather.preference.PreferenceHelper;
-import com.zack.enderweather.util.LogUtil;
+import com.zack.enderweather.preference.PreferenceDispatcher;
 import com.zack.enderweather.util.Util;
 import com.zack.enderweather.view.HomeView;
 
@@ -24,7 +23,7 @@ public class HomePresenter implements Presenter<HomeView> {
 
     private HomeView homeView;
     private DataManager dataManager;
-    private PreferenceHelper preferenceHelper;
+    private PreferenceDispatcher preferenceDispatcher;
     private WeatherPagerAdapter weatherPagerAdapter;
     private LocationHelper.PermissionDelegate mPermissionDelegate;
     private String updateSucStr, updateFaiStr;
@@ -32,7 +31,7 @@ public class HomePresenter implements Presenter<HomeView> {
     public HomePresenter(HomeView homeView) {
         attachView(homeView);
         dataManager = DataManager.getInstance();
-        preferenceHelper = PreferenceHelper.getInstance();
+        preferenceDispatcher = PreferenceDispatcher.getInstance();
 
         Resources resources = EnderWeatherApp.getGlobalContext().getResources();
         updateSucStr = resources.getString(R.string.toast_weather_update_successfully);
@@ -63,8 +62,8 @@ public class HomePresenter implements Presenter<HomeView> {
     }
 
     public void notifyStartingUpCompleted() {
-        if (preferenceHelper.getBooleanPref(PreferenceHelper.KEY_PREF_NEED_GUIDE)) {
-            preferenceHelper.setPref(PreferenceHelper.KEY_PREF_NEED_GUIDE, false);
+        if (preferenceDispatcher.getBooleanPref(PreferenceDispatcher.KEY_PREF_NEED_GUIDE)) {
+            preferenceDispatcher.setPref(PreferenceDispatcher.KEY_PREF_NEED_GUIDE, false);
             if (mPermissionDelegate != null) {
                 mPermissionDelegate.showPreviouslyRequestPermissionsDialog();
             } else {
@@ -76,7 +75,7 @@ public class HomePresenter implements Presenter<HomeView> {
     public void notifyPermissionsPreviouslyGranted() {
         if (Util.isVersionBelowMarshmallow()) {
             //说明不需要动态授权
-            preferenceHelper.setPref(PreferenceHelper.KEY_PREF_LOCATION_SERVICE, true);
+            preferenceDispatcher.setPref(PreferenceDispatcher.KEY_PREF_LOCATION_SERVICE, true);
         } else {
             //需要动态授权，弹系统授权窗口
             mPermissionDelegate.onRequestPermissions();
@@ -92,30 +91,46 @@ public class HomePresenter implements Presenter<HomeView> {
     }
 
     public void notifyCityAdded() {
-        //TODO 不会刷新
-        //通知该Activity的各个Fragment更新状态
-        EventBus.getDefault().post(new CityAddedEvent());
+        //刷新pager，先将无天气数据的城市放到界面上
         weatherPagerAdapter.notifyDataSetChanged();
+        if (Util.isNetworkAvailable()) {
+            //如果网络可用，发起网络访问
+            dataManager.getWeatherDataFromInternet(dataManager.getRecentlyAddedCityId());
+        } else {
+            //如果网络不可用，用SnackBar提示
+            homeView.onDetectNetworkNotAvailable();
+        }
+        //通知MyCitiesFragment刷新列表（如果有的话）
+        EventBus.getDefault().post(new CityAddedEvent());
     }
 
     public void notifyPermissionsGranted() {
-        preferenceHelper.setPref(PreferenceHelper.KEY_PREF_LOCATION_SERVICE, true);
+        preferenceDispatcher.setPref(PreferenceDispatcher.KEY_PREF_LOCATION_SERVICE, true);
         //TODO 开始获取位置
     }
 
     @Subscribe
     public void onCityDeleted(CityDeletedEvent event) {
         weatherPagerAdapter.notifyDataSetChanged();
-        //TODO 当要删除的页面属于已加载的三个中的一个时，不会删除
     }
 
     @Subscribe
-    public void onWeatherUpdated(WeatherUpdatedEvent event) {
+    public void onWeatherUpdateStatusChanged(WeatherUpdateStatusChangedEvent event) {
         //这里，处理MyCitiesPresenter和WeatherPresenter的onWeatherUpdated中可能出现冲突或重复的语句
-        //标记weather为未请求更新
-        dataManager.setWeatherDataUpdateStatus(event.position, false);
-        //显示toast，提示更新成功或更新失败
-        homeView.showToast(event.isSuc ? updateSucStr : updateFaiStr);
+        switch (event.status) {
+            case WeatherUpdateStatusChangedEvent.STATUS_ON_UPDATING:
+                //TODO 可以在这里处理开始更新的事件
+                break;
+            case WeatherUpdateStatusChangedEvent.STATUS_UPDATED_SUCCESSFUL:
+                //显示toast，提示更新成功或更新失败
+                homeView.showToast(updateSucStr);
+                break;
+            case WeatherUpdateStatusChangedEvent.STATUS_UPDATED_FAILED:
+                homeView.showToast(updateFaiStr);
+                break;
+            default:
+                break;
+        }
     }
 
     @Subscribe

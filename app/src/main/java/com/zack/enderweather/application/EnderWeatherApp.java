@@ -2,14 +2,13 @@ package com.zack.enderweather.application;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.zack.enderweather.R;
-import com.zack.enderweather.database.EnderWeatherDB;
-import com.zack.enderweather.preference.PreferenceHelper;
+import com.zack.enderweather.database.DatabaseDispatcher;
+import com.zack.enderweather.preference.PreferenceDispatcher;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -43,16 +42,16 @@ public class EnderWeatherApp extends Application {
 
     /** 通过Preference中的数据初始化某些设置 */
     private void initFromPreferences() {
-        PreferenceHelper helper = PreferenceHelper.getInstance();
+        PreferenceDispatcher dispatcher = PreferenceDispatcher.getInstance();
         //设定运行时的默认语言
-        initLocale(helper.getStringPref(PreferenceHelper.KEY_PREF_LANGUAGE));
+        initLocale(dispatcher.getStringPref(PreferenceDispatcher.KEY_PREF_LANGUAGE));
         //设定白天夜间模式
-        initNightMode(helper.getStringPref(PreferenceHelper.KEY_PREF_NIGHT_MODE));
+        initNightMode(dispatcher.getStringPref(PreferenceDispatcher.KEY_PREF_NIGHT_MODE));
     }
 
     /** 初始化城市数据库 */
     private void initCityDB() {
-        File cityDBFile = getDatabasePath(EnderWeatherDB.DB_CITY_CN);
+        File cityDBFile = getDatabasePath(DatabaseDispatcher.DB_CITY_CN);
         if (cityDBFile.exists()) {
             return;
         }

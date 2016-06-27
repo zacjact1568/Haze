@@ -5,7 +5,7 @@ import android.preference.PreferenceManager;
 
 import com.zack.enderweather.application.EnderWeatherApp;
 
-public class PreferenceHelper {
+public class PreferenceDispatcher {
 
     public static final String KEY_PREF_NEED_GUIDE = "need_guide";
     public static final String KEY_PREF_LOCATION_SERVICE = "location_service";
@@ -14,13 +14,13 @@ public class PreferenceHelper {
 
     private SharedPreferences sharedPreferences;
 
-    private static PreferenceHelper ourInstance = new PreferenceHelper();
+    private static PreferenceDispatcher ourInstance = new PreferenceDispatcher();
 
-    private PreferenceHelper() {
+    private PreferenceDispatcher() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(EnderWeatherApp.getGlobalContext());
     }
 
-    public static PreferenceHelper getInstance() {
+    public static PreferenceDispatcher getInstance() {
         return ourInstance;
     }
 

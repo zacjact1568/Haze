@@ -44,7 +44,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
                 String.format("%s°C | %s", weather.getCurrentInfo().getTemperature(),
                         weather.getCurrentInfo().getCondition()));
 
-        if (weather.getIsOnUpdate()) {
+        if (weather.getStatus() == Weather.STATUS_ON_UPDATING) {
             holder.updateButton.startAnimation(updateAnim);
         }
 

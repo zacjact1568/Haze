@@ -5,17 +5,13 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
 
 import com.zack.enderweather.R;
-import com.zack.enderweather.util.LogUtil;
 
-public class TempTrendChartView extends View {
+public class TemperatureTrendChartView extends View {
 
     private static final int MARGIN_TOP = 30;
     private static final int SPACING_WEEK_CONDITION = 10;
@@ -65,17 +61,17 @@ public class TempTrendChartView extends View {
     private int mExampleColor = Color.RED;
     private Drawable mExampleDrawable;*/
 
-    public TempTrendChartView(Context context) {
+    public TemperatureTrendChartView(Context context) {
         super(context);
         init(null, 0);
     }
 
-    public TempTrendChartView(Context context, AttributeSet attrs) {
+    public TemperatureTrendChartView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs, 0);
     }
 
-    public TempTrendChartView(Context context, AttributeSet attrs, int defStyle) {
+    public TemperatureTrendChartView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(attrs, defStyle);
     }
@@ -119,17 +115,17 @@ public class TempTrendChartView extends View {
 
     /** 加载自定义的属性 */
     private void loadAttrs(AttributeSet attrs, int defStyle) {
-        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.TempTrendChartView, defStyle, 0);
+        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.TemperatureTrendChartView, defStyle, 0);
         // Use getDimensionPixelSize or getDimensionPixelOffset when dealing with values that should fall on pixel boundaries.
-        mWeekTextSize = ta.getDimension(R.styleable.TempTrendChartView_week_text_size, mWeekTextSize);
-        mWeekTextColor = ta.getColor(R.styleable.TempTrendChartView_week_text_color, mWeekTextColor);
-        mConditionTextSize = ta.getDimension(R.styleable.TempTrendChartView_condition_text_size, mConditionTextSize);
-        mConditionTextColor = ta.getColor(R.styleable.TempTrendChartView_condition_text_color, mConditionTextColor);
-        mTempTextSize = ta.getDimension(R.styleable.TempTrendChartView_temp_text_size, mTempTextSize);
-        mTempTextColor = ta.getColor(R.styleable.TempTrendChartView_temp_text_color, mTempTextColor);
-        mTempPointColor = ta.getColor(R.styleable.TempTrendChartView_temp_point_color, mTempPointColor);
-        mTempPointEdgeColor = ta.getColor(R.styleable.TempTrendChartView_temp_point_edge_color, mTempPointEdgeColor);
-        mTempTrendLineColor = ta.getColor(R.styleable.TempTrendChartView_temp_trend_line_color, mTempTrendLineColor);
+        mWeekTextSize = ta.getDimension(R.styleable.TemperatureTrendChartView_week_text_size, mWeekTextSize);
+        mWeekTextColor = ta.getColor(R.styleable.TemperatureTrendChartView_week_text_color, mWeekTextColor);
+        mConditionTextSize = ta.getDimension(R.styleable.TemperatureTrendChartView_condition_text_size, mConditionTextSize);
+        mConditionTextColor = ta.getColor(R.styleable.TemperatureTrendChartView_condition_text_color, mConditionTextColor);
+        mTempTextSize = ta.getDimension(R.styleable.TemperatureTrendChartView_temp_text_size, mTempTextSize);
+        mTempTextColor = ta.getColor(R.styleable.TemperatureTrendChartView_temp_text_color, mTempTextColor);
+        mTempPointColor = ta.getColor(R.styleable.TemperatureTrendChartView_temp_point_color, mTempPointColor);
+        mTempPointEdgeColor = ta.getColor(R.styleable.TemperatureTrendChartView_temp_point_edge_color, mTempPointEdgeColor);
+        mTempTrendLineColor = ta.getColor(R.styleable.TemperatureTrendChartView_temp_trend_line_color, mTempTrendLineColor);
         ta.recycle();
     }
 

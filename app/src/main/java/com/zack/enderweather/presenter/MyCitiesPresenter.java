@@ -1,11 +1,11 @@
 package com.zack.enderweather.presenter;
 
 import com.zack.enderweather.adapter.CityAdapter;
-import com.zack.enderweather.database.EnderWeatherDB;
+import com.zack.enderweather.database.DatabaseDispatcher;
 import com.zack.enderweather.event.CityAddedEvent;
 import com.zack.enderweather.event.CityClickedEvent;
 import com.zack.enderweather.event.CityDeletedEvent;
-import com.zack.enderweather.event.WeatherUpdatedEvent;
+import com.zack.enderweather.event.WeatherUpdateStatusChangedEvent;
 import com.zack.enderweather.manager.DataManager;
 import com.zack.enderweather.util.Util;
 import com.zack.enderweather.view.MyCitiesView;
@@ -19,13 +19,13 @@ public class MyCitiesPresenter implements Presenter<MyCitiesView> {
 
     private MyCitiesView myCitiesView;
     private DataManager dataManager;
-    private EnderWeatherDB enderWeatherDB;
+    private DatabaseDispatcher databaseDispatcher;
     private CityAdapter cityAdapter;
 
     public MyCitiesPresenter(MyCitiesView myCitiesView) {
         attachView(myCitiesView);
         dataManager = DataManager.getInstance();
-        enderWeatherDB = EnderWeatherDB.getInstance();
+        databaseDispatcher = DatabaseDispatcher.getInstance();
         cityAdapter = new CityAdapter(dataManager.getWeatherList());
     }
 
@@ -76,17 +76,15 @@ public class MyCitiesPresenter implements Presenter<MyCitiesView> {
         //更新天气的ViewPager
         EventBus.getDefault().post(new CityDeletedEvent());
 
-        enderWeatherDB.deleteWeather(cityId);
+        databaseDispatcher.deleteWeather(cityId);
     }
 
     private void updateWeather(int position) {
         if (Util.isNetworkAvailable()) {
-            //标记weather为已请求更新
-            dataManager.setWeatherDataUpdateStatus(position, true);
-            //刷新适配器（显示出正在更新的状态）
-            cityAdapter.notifyItemChanged(position);
             //开始更新数据
             dataManager.getWeatherDataFromInternet(dataManager.getCityId(position));
+            //刷新适配器（显示出正在更新的状态）
+            cityAdapter.notifyItemChanged(position);
         } else {
             //显示网络不可用的SnackBar
             myCitiesView.onDetectNetworkNotAvailable();
@@ -95,14 +93,15 @@ public class MyCitiesPresenter implements Presenter<MyCitiesView> {
 
     @Subscribe
     public void onCityAdded(CityAddedEvent event) {
-        int position = dataManager.getRecentlyAddedLocation();
-        cityAdapter.notifyItemInserted(position);
-        updateWeather(position);
+        cityAdapter.notifyItemInserted(dataManager.getRecentlyAddedLocation());
     }
 
     @Subscribe
-    public void onWeatherUpdated(WeatherUpdatedEvent event) {
-        //刷新适配器（若成功更新则表现为刷新数据且取消正在更新的状态，若更新失败则表现为仅取消正在更新的状态）
+    public void onWeatherUpdateStatusChanged(WeatherUpdateStatusChangedEvent event) {
+        //刷新适配器：
+        //1. 正在更新，表现为添加正在更新的状态（旋转箭头）
+        //2. 成功更新，表现为刷新数据且取消正在更新的状态
+        //3. 更新失败，表现为仅取消正在更新的状态
         cityAdapter.notifyItemChanged(event.position);
     }
 }

@@ -2,8 +2,8 @@ package com.zack.enderweather.manager;
 
 import com.zack.enderweather.bean.HeWeather;
 import com.zack.enderweather.bean.Weather;
-import com.zack.enderweather.database.EnderWeatherDB;
-import com.zack.enderweather.event.WeatherUpdatedEvent;
+import com.zack.enderweather.database.DatabaseDispatcher;
+import com.zack.enderweather.event.WeatherUpdateStatusChangedEvent;
 import com.zack.enderweather.network.NetworkHelper;
 import com.zack.enderweather.util.Util;
 
@@ -16,14 +16,14 @@ public class DataManager {
 
     private static final String LOG_TAG = "DataManager";
 
-    private EnderWeatherDB enderWeatherDB;
+    private DatabaseDispatcher databaseDispatcher;
     private List<Weather> weatherList;
     private boolean isWeatherDataLoaded = false;
 
     private static DataManager ourInstance = new DataManager();
 
     private DataManager() {
-        enderWeatherDB = EnderWeatherDB.getInstance();
+        databaseDispatcher = DatabaseDispatcher.getInstance();
         weatherList = new ArrayList<>();
     }
 
@@ -35,7 +35,7 @@ public class DataManager {
     public void loadFromDatabase() {
         if (!isWeatherDataLoaded) {
             isWeatherDataLoaded = true;
-            weatherList.addAll(enderWeatherDB.loadWeather());
+            weatherList.addAll(databaseDispatcher.loadWeather());
         }
     }
 
@@ -56,6 +56,7 @@ public class DataManager {
     }
 
     public void removeFromWeatherList(int location) {
+        markWeatherDataAsDeleted(location);
         weatherList.remove(location);
     }
 
@@ -73,12 +74,17 @@ public class DataManager {
 
     /** 获取天气数据的更新状态 */
     public boolean getWeatherDataUpdateStatus(int location) {
-        return getWeather(location).getIsOnUpdate();
+        return getWeather(location).getStatus() == Weather.STATUS_ON_UPDATING;
     }
 
     /** 设定天气数据的更新状态 */
-    public void setWeatherDataUpdateStatus(int location, boolean isOnUpdate) {
-        getWeather(location).setIsOnUpdate(isOnUpdate);
+    public void setWeatherDataUpdateStatus(int location, boolean isOnUpdating) {
+        getWeather(location).setStatus(isOnUpdating ? Weather.STATUS_ON_UPDATING : Weather.STATUS_GENERAL);
+    }
+
+    /** 将天气数据标记为已删除 */
+    public void markWeatherDataAsDeleted(int location) {
+        getWeather(location).setStatus(Weather.STATUS_DELETED);
     }
 
     /** 获取最近添加的位置（末尾）*/
@@ -108,6 +114,16 @@ public class DataManager {
 
     /** 发起网络访问，获取天气数据 */
     public void getWeatherDataFromInternet(String cityId) {
+        int position = getLocationInWeatherList(cityId);
+        //标记刷新状态
+        setWeatherDataUpdateStatus(position, true);
+        //发送开始更新的事件，通知presenters更新
+        EventBus.getDefault().post(new WeatherUpdateStatusChangedEvent(
+                position,
+                cityId,
+                WeatherUpdateStatusChangedEvent.STATUS_ON_UPDATING
+        ));
+        //异步发起网络访问
         new NetworkHelper().getHeWeatherDataAsync(cityId, new NetworkHelper.HeWeatherDataCallback() {
             @Override
             public void onSuccess(HeWeather heWeather) {
@@ -115,13 +131,26 @@ public class DataManager {
                 int position = getLocationInWeatherList(cityId);
                 Weather weather = getWeather(position);
                 Util.parseHeWeatherData(heWeather, weather);
-                enderWeatherDB.updateWeather(weather);
-                EventBus.getDefault().post(new WeatherUpdatedEvent(position, cityId, true));
+                databaseDispatcher.updateWeather(weather);
+                //取消刷新状态
+                setWeatherDataUpdateStatus(position, false);
+                //发送更新完成的事件，通知presenters更新
+                EventBus.getDefault().post(new WeatherUpdateStatusChangedEvent(
+                        position,
+                        cityId,
+                        WeatherUpdateStatusChangedEvent.STATUS_UPDATED_SUCCESSFUL
+                ));
             }
 
             @Override
             public void onFailure(String cityId) {
-                EventBus.getDefault().post(new WeatherUpdatedEvent(getLocationInWeatherList(cityId), cityId, false));
+                int position = getLocationInWeatherList(cityId);
+                setWeatherDataUpdateStatus(position, false);
+                EventBus.getDefault().post(new WeatherUpdateStatusChangedEvent(
+                        position,
+                        cityId,
+                        WeatherUpdateStatusChangedEvent.STATUS_UPDATED_FAILED
+                ));
             }
         });
     }

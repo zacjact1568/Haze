@@ -19,9 +19,9 @@ import com.zack.enderweather.util.LogUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnderWeatherDB {
+public class DatabaseDispatcher {
 
-    private static final String LOG_TAG = "EnderWeatherDB";
+    private static final String LOG_TAG = "DatabaseDispatcher";
 
     public static final String DB_NAME = "com.zack.enderweather.db";
     public static final String DB_CITY_CN = "city_cn.db";
@@ -32,9 +32,9 @@ public class EnderWeatherDB {
 
     private SQLiteDatabase database, cityDB;
 
-    private static EnderWeatherDB ourInstance = new EnderWeatherDB();
+    private static DatabaseDispatcher ourInstance = new DatabaseDispatcher();
 
-    private EnderWeatherDB() {
+    private DatabaseDispatcher() {
         Context context = EnderWeatherApp.getGlobalContext();
 
         DatabaseOpenHelper dbHelper = new DatabaseOpenHelper(context, DB_NAME, null, DB_VERSION);
@@ -43,7 +43,7 @@ public class EnderWeatherDB {
         cityDB = SQLiteDatabase.openDatabase(context.getDatabasePath(DB_CITY_CN).getPath(), null, SQLiteDatabase.OPEN_READONLY);
     }
 
-    public static EnderWeatherDB getInstance() {
+    public static DatabaseDispatcher getInstance() {
         return ourInstance;
     }
 

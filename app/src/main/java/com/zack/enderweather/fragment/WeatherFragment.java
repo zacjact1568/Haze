@@ -16,11 +16,10 @@ import com.zack.enderweather.bean.FormattedWeather;
 import com.zack.enderweather.bean.Weather;
 import com.zack.enderweather.presenter.WeatherPresenter;
 import com.zack.enderweather.view.WeatherView;
-import com.zack.enderweather.widget.TempTrendChartView;
+import com.zack.enderweather.widget.TemperatureTrendChartView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class WeatherFragment extends Fragment implements WeatherView {
 
@@ -41,7 +40,7 @@ public class WeatherFragment extends Fragment implements WeatherView {
     @BindView(R.id.text_air_quality)
     TextView airQualityText;
     @BindView(R.id.chart_temp_trend)
-    TempTrendChartView tempTrendChart;
+    TemperatureTrendChartView temperatureTrendChart;
 
     private static final String ARG_WEATHER = "weather";
 
@@ -152,7 +151,11 @@ public class WeatherFragment extends Fragment implements WeatherView {
 
         //当没有数据时，weeks等四个数组为null
         if (fw.getWeeks() != null && fw.getConditions() != null && fw.getMaxTemps() != null && fw.getMinTemps() != null) {
-            tempTrendChart.setTempArray(fw.getWeeks(), fw.getConditions(), fw.getMaxTemps(), fw.getMinTemps());
+            temperatureTrendChart.setTempArray(fw.getWeeks(), fw.getConditions(), fw.getMaxTemps(), fw.getMinTemps());
         }
+    }
+
+    public boolean isDeleted() {
+        return weather.getStatus() == Weather.STATUS_DELETED;
     }
 }

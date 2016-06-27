@@ -156,7 +156,7 @@
 
             </LinearLayout>
 
-            <com.zack.enderweather.widget.TempTrendChartView
+            <com.zack.enderweather.widget.TemperatureTrendChartView
                 android:id="@+id/chart_temp_trend"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/temp_trend_chart_height"

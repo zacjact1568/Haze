@@ -7,7 +7,7 @@ import com.zack.enderweather.application.EnderWeatherApp;
 import com.zack.enderweather.bean.DailyForecast;
 import com.zack.enderweather.bean.FormattedWeather;
 import com.zack.enderweather.bean.Weather;
-import com.zack.enderweather.event.WeatherUpdatedEvent;
+import com.zack.enderweather.event.WeatherUpdateStatusChangedEvent;
 import com.zack.enderweather.manager.DataManager;
 import com.zack.enderweather.util.Util;
 import com.zack.enderweather.view.WeatherView;
@@ -23,6 +23,7 @@ public class WeatherPresenter implements Presenter<WeatherView> {
     private DataManager dataManager;
     private Weather weather;
     private String updateTimeFormat, invalidDataStr;
+    //private boolean isVisible;
 
     public WeatherPresenter(WeatherView weatherView, Weather weather) {
         attachView(weatherView);
@@ -71,18 +72,17 @@ public class WeatherPresenter implements Presenter<WeatherView> {
 
     public void notifyWeatherUpdating() {
         if (Util.isNetworkAvailable()) {
-            String cityId = weather.getBasicInfo().getCityId();
-            dataManager.setWeatherDataUpdateStatus(dataManager.getLocationInWeatherList(cityId), true);
-            dataManager.getWeatherDataFromInternet(cityId);
+            dataManager.getWeatherDataFromInternet(weather.getBasicInfo().getCityId());
         } else {
-            //不会和MyCitiesFragment中的SnackBar同时出现
+            //不会和HomeActivity、MyCitiesFragment中的SnackBar同时出现
             weatherView.onDetectNetworkNotAvailable();
         }
     }
 
     public void notifyVisibilityChanged(boolean isVisible) {
+        //this.isVisible = isVisible;
         //如果当前fragment变为不可见，直接隐藏下拉刷新图标；如果当前fragment变为可见，且又是在刷新状态时，显示下拉刷新图标
-        weatherView.onChangeSwipeRefreshingStatus(isVisible && weather.getIsOnUpdate());
+        weatherView.onChangeSwipeRefreshingStatus(isVisible && weather.getStatus() == Weather.STATUS_ON_UPDATING);
     }
 
     private FormattedWeather assembleFormattedWeather() {
@@ -115,14 +115,22 @@ public class WeatherPresenter implements Presenter<WeatherView> {
     }
 
     @Subscribe
-    public void onWeatherUpdated(WeatherUpdatedEvent event) {
+    public void onWeatherUpdateStatusChanged(WeatherUpdateStatusChangedEvent event) {
         //当WeatherUpdated事件发生时，这个方法总会被调用，但MyCitiesPresenter中的订阅方法不一定被执行
         if (weather.getBasicInfo().getCityId().equals(event.cityId)) {
             //说明更新的是当前城市
-            if (event.isSuc) {
-                weatherView.onWeatherUpdatedSuccessfully(assembleFormattedWeather());
-            } else {
-                weatherView.onWeatherUpdatedAbortively();
+            switch (event.status) {
+                case WeatherUpdateStatusChangedEvent.STATUS_ON_UPDATING:
+                    //weatherView.onChangeSwipeRefreshingStatus(isVisible); TODO 未触发，isVisible为false
+                    break;
+                case WeatherUpdateStatusChangedEvent.STATUS_UPDATED_SUCCESSFUL:
+                    weatherView.onWeatherUpdatedSuccessfully(assembleFormattedWeather());
+                    break;
+                case WeatherUpdateStatusChangedEvent.STATUS_UPDATED_FAILED:
+                    weatherView.onWeatherUpdatedAbortively();
+                    break;
+                default:
+                    break;
             }
         }
     }

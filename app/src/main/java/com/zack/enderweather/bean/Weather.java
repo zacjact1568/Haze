@@ -14,10 +14,14 @@ public class Weather implements Parcelable {
     private List<DailyForecast> dailyForecastList;
     private AirQuality airQuality;
     private LifeSuggestion lifeSuggestion;
-    private boolean isOnUpdate;
+    private int status;
 
     public static final int HOURLY_FORECAST_LENGTH = 8;
     public static final int DAILY_FORECAST_LENGTH = 7;
+
+    public static final int STATUS_ON_UPDATING = 1;
+    public static final int STATUS_GENERAL = 0;
+    public static final int STATUS_DELETED = -1;
 
     public Weather(String cityId, String cityName) {
         this(
@@ -50,7 +54,7 @@ public class Weather implements Parcelable {
         this.dailyForecastList = dailyForecastList;
         this.airQuality = airQuality;
         this.lifeSuggestion = lifeSuggestion;
-        this.isOnUpdate = false;
+        this.status = STATUS_GENERAL;
     }
 
     public BasicInfo getBasicInfo() {
@@ -101,12 +105,12 @@ public class Weather implements Parcelable {
         this.lifeSuggestion = lifeSuggestion;
     }
 
-    public boolean getIsOnUpdate() {
-        return isOnUpdate;
+    public int getStatus() {
+        return status;
     }
 
-    public void setIsOnUpdate(boolean isOnUpdate) {
-        this.isOnUpdate = isOnUpdate;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     @Override
@@ -122,7 +126,7 @@ public class Weather implements Parcelable {
         dest.writeTypedList(this.dailyForecastList);
         dest.writeParcelable(this.airQuality, flags);
         dest.writeParcelable(this.lifeSuggestion, flags);
-        dest.writeByte((byte) (isOnUpdate ? 1 : 0));
+        dest.writeInt(this.status);
     }
 
     protected Weather(Parcel in) {
@@ -132,7 +136,7 @@ public class Weather implements Parcelable {
         this.dailyForecastList = in.createTypedArrayList(DailyForecast.CREATOR);
         this.airQuality = in.readParcelable(AirQuality.class.getClassLoader());
         this.lifeSuggestion = in.readParcelable(LifeSuggestion.class.getClassLoader());
-        this.isOnUpdate = in.readByte() != 0;
+        this.status = in.readInt();
     }
 
     public static final Parcelable.Creator<Weather> CREATOR = new Parcelable.Creator<Weather>() {

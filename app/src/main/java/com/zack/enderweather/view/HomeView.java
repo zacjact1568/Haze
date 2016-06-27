@@ -8,5 +8,7 @@ public interface HomeView {
 
     void showToast(String message);
 
+    void onDetectNetworkNotAvailable();
+
     void onSwitchPage(int position);
 }

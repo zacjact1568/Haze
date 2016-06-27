@@ -1,5 +1,5 @@
 <resources>
-    <declare-styleable name="TempTrendChartView">
+    <declare-styleable name="TemperatureTrendChartView">
         <attr name="week_text_size" format="dimension" />
         <attr name="week_text_color" format="color" />
         <attr name="condition_text_size" format="dimension" />
