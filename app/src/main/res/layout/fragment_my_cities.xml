@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/colorBackground"
-    tools:context="com.zack.enderweather.fragment.MyCitiesFragment">
+    tools:context=".domain.fragment.MyCitiesFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"

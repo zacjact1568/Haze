@@ -10,8 +10,8 @@ import android.support.v4.content.ContextCompat;
 
 import com.zack.enderweather.R;
 import com.zack.enderweather.application.EnderWeatherApp;
-import com.zack.enderweather.bean.HeWeather;
-import com.zack.enderweather.bean.Weather;
+import com.zack.enderweather.model.bean.HeWeather;
+import com.zack.enderweather.model.bean.Weather;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

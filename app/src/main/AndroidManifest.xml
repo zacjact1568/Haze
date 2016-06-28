@@ -24,7 +24,7 @@
             android:value="25ed9016e64d4518d422cf4ee39451e7"/>
 
         <activity
-            android:name=".activity.HomeActivity"
+            android:name=".domain.activity.HomeActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustNothing"
             android:theme="@style/AppTheme.TransparentStatusBar">
@@ -36,17 +36,17 @@
         </activity>
 
         <activity
-            android:name=".activity.AddCityActivity"
+            android:name=".domain.activity.AddCityActivity"
             android:label="@string/title_activity_add_city"
             android:theme="@style/AppTheme"/>
 
         <activity
-            android:name=".activity.SettingsActivity"
+            android:name=".domain.activity.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:theme="@style/AppTheme"/>
 
         <activity
-            android:name=".activity.AboutActivity"
+            android:name=".domain.activity.AboutActivity"
             android:label="@string/title_activity_about"
             android:theme="@style/AppTheme.TransparentStatusBar"/>
         

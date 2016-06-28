@@ -7,8 +7,8 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.zack.enderweather.R;
-import com.zack.enderweather.database.DatabaseDispatcher;
-import com.zack.enderweather.preference.PreferenceDispatcher;
+import com.zack.enderweather.model.database.DatabaseDispatcher;
+import com.zack.enderweather.model.preference.PreferenceDispatcher;
 
 import java.io.File;
 import java.io.FileOutputStream;
