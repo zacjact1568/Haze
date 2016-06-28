@@ -87,11 +87,11 @@ public class WeatherPresenter implements Presenter<WeatherView> {
 
     private FormattedWeather assembleFormattedWeather() {
         //String[] dates = new String[Weather.DAILY_FORECAST_LENGTH];
-        String[] conditions = new String[Weather.DAILY_FORECAST_LENGTH];
+        String[] conditions = new String[Weather.DAILY_FORECAST_LENGTH_DISPLAY];
         //String[] tempRanges = new String[Weather.DAILY_FORECAST_LENGTH];
-        int[] maxTemps = new int[Weather.DAILY_FORECAST_LENGTH];
-        int[] minTemps = new int[Weather.DAILY_FORECAST_LENGTH];
-        for (int i = 0; i < Weather.DAILY_FORECAST_LENGTH; i++) {
+        int[] maxTemps = new int[Weather.DAILY_FORECAST_LENGTH_DISPLAY];
+        int[] minTemps = new int[Weather.DAILY_FORECAST_LENGTH_DISPLAY];
+        for (int i = 0; i < Weather.DAILY_FORECAST_LENGTH_DISPLAY; i++) {
             DailyForecast df = weather.getDailyForecastList().get(i);
             //dates[i] = df.getDate();
             conditions[i] = df.getConditionDay();
@@ -107,7 +107,7 @@ public class WeatherPresenter implements Presenter<WeatherView> {
                 String.format("%s°C", weather.getCurrentInfo().getSensibleTemp()),
                 String.format("%s | %s", weather.getDailyForecastList().get(0).getMinTemp(), weather.getDailyForecastList().get(0).getMaxTemp()),
                 weather.getAirQuality().getAqi().isEmpty() ? "--" : weather.getAirQuality().getAqi(),
-                Util.generateWeeks(weather.getDailyForecastList().get(0).getDate()),
+                Util.generateWeeks(weather.getDailyForecastList().get(0).getDate(), Weather.DAILY_FORECAST_LENGTH_DISPLAY),
                 conditions,
                 maxTemps,
                 minTemps

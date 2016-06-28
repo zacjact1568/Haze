@@ -64,7 +64,7 @@ public class Util {
     }
 
     /** 产生表示星期的字符串数组 */
-    public static String[] generateWeeks(String firstDate) {
+    public static String[] generateWeeks(String firstDate, int length) {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         try {
@@ -72,7 +72,7 @@ public class Util {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        String[] weeks = new String[Weather.DAILY_FORECAST_LENGTH];
+        String[] weeks = new String[length];
         Resources resources = EnderWeatherApp.getGlobalContext().getResources();
         for (int i = 0; i < weeks.length; i++) {
             if (i == 0) {

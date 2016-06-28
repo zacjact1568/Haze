@@ -18,6 +18,8 @@ public class Weather implements Parcelable {
 
     public static final int HOURLY_FORECAST_LENGTH = 8;
     public static final int DAILY_FORECAST_LENGTH = 7;
+    /** 温度趋势图中只显示5个 */
+    public static final int DAILY_FORECAST_LENGTH_DISPLAY = 5;
 
     public static final int STATUS_ON_UPDATING = 1;
     public static final int STATUS_GENERAL = 0;
