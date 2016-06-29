@@ -47,9 +47,13 @@ public class AddCityPresenter implements Presenter<AddCityView> {
         if (!TextUtils.isEmpty(input)) {
             //若查询关键词不为空才执行查询
             databaseDispatcher.queryCityLike(input, cityList);
+            //刷新适配器
+            citySearchResultAdapter.notifyDataSetChanged();
+        } else {
+            //需要先刷新适配器（清空列表上显示的内容）
+            citySearchResultAdapter.notifyDataSetChanged();
+            addCityView.onSearchTextEmptied();
         }
-        //刷新适配器
-        citySearchResultAdapter.notifyDataSetChanged();
     }
 
     public void notifyCityListItemClicked(int position) {

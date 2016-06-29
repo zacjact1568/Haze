@@ -33,7 +33,7 @@ public class SettingsActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         setupActionBar();
 
-        getFragmentManager().beginTransaction().add(R.id.frame_layout, new SettingsFragment()).commit();
+        getFragmentManager().beginTransaction().replace(R.id.frame_layout, new SettingsFragment()).commit();
     }
 
     @Override

@@ -9,4 +9,6 @@ public interface AddCityView {
     void onCityAdded();
 
     void onDetectCityExists();
+
+    void onSearchTextEmptied();
 }

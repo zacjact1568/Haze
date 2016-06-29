@@ -156,7 +156,7 @@ public class HomeActivity extends BaseActivity implements HomeView,
                         @Override
                         public void onBackStackChanged() {
                             if (getSupportFragmentManager().findFragmentByTag(TAG_MY_CITIES) == null) {
-                                fab.setVisibility(View.INVISIBLE);
+                                fab.setVisibility(View.GONE);
                                 toolbar.setTitle(" ");
                                 navView.setCheckedItem(R.id.nav_weather);
                                 getSupportFragmentManager().removeOnBackStackChangedListener(this);

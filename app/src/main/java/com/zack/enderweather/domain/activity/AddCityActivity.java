@@ -53,8 +53,9 @@ public class AddCityActivity extends BaseActivity implements AddCityView {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_add_city, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
+        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setIconified(false);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -107,6 +108,9 @@ public class AddCityActivity extends BaseActivity implements AddCityView {
                 addCityPresenter.notifyCityListItemClicked(position);
             }
         });
+
+        //初始隐藏没搜索到城市的提示（必须在setEmptyView后设置才有效）
+        emptyText.setVisibility(View.GONE);
     }
 
     @Override
@@ -118,5 +122,10 @@ public class AddCityActivity extends BaseActivity implements AddCityView {
     @Override
     public void onDetectCityExists() {
         Toast.makeText(this, R.string.toast_city_exists, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSearchTextEmptied() {
+        emptyText.setVisibility(View.GONE);
     }
 }
