@@ -9,4 +9,12 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="temp_trend_chart_height">200dp</dimen>
+
+    <!--guide-->
+    <dimen name="guide_cnb_margin">16dp</dimen>
+
+    <!--CircleNavigationButton-->
+    <dimen name="cnb_circle_size">56dp</dimen>
+    <dimen name="cnb_icon_size">24dp</dimen>
+
 </resources>

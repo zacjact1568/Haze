@@ -71,4 +71,15 @@
     <string name="title_dialog_pre_rps">要开启位置服务吗？</string>
     <string name="btn_add_city">添加城市</string>
     <string name="text_empty_city">这里没有城市</string>
+    <string name="dscpt_page_welcome">触摸右箭头以继续</string>
+    <string name="title_activity_guide">欢迎</string>
+    <string name="title_page_welcome">欢迎</string>
+    <string name="btn_page_location">启用</string>
+    <string name="dscpt_page_result">享受Ender天气吧</string>
+    <string name="btn_page_permission">授予权限</string>
+    <string name="dscpt_page_permission">高德位置服务需要一些必要的权限。</string>
+    <string name="title_page_result">向导结束</string>
+    <string name="title_page_location">位置服务</string>
+    <string name="title_page_permission">权限</string>
+    <string name="dscpt_page_location">启用高德位置服务？</string>
 </resources>

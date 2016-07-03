@@ -65,7 +65,7 @@ public class WeatherPresenter implements Presenter<WeatherView> {
                     null
             );
         } else {
-            fw = assembleFormattedWeather();
+            fw = getFormattedWeather();
         }
         weatherView.showInitialView(fw);
     }
@@ -85,7 +85,7 @@ public class WeatherPresenter implements Presenter<WeatherView> {
         weatherView.onChangeSwipeRefreshingStatus(isVisible && weather.getStatus() == Weather.STATUS_ON_UPDATING);
     }
 
-    private FormattedWeather assembleFormattedWeather() {
+    private FormattedWeather getFormattedWeather() {
         //String[] dates = new String[Weather.DAILY_FORECAST_LENGTH];
         String[] conditions = new String[Weather.DAILY_FORECAST_LENGTH_DISPLAY];
         //String[] tempRanges = new String[Weather.DAILY_FORECAST_LENGTH];
@@ -124,7 +124,7 @@ public class WeatherPresenter implements Presenter<WeatherView> {
                     //weatherView.onChangeSwipeRefreshingStatus(isVisible); TODO 未触发，isVisible为false
                     break;
                 case WeatherUpdateStatusChangedEvent.STATUS_UPDATED_SUCCESSFUL:
-                    weatherView.onWeatherUpdatedSuccessfully(assembleFormattedWeather());
+                    weatherView.onWeatherUpdatedSuccessfully(getFormattedWeather());
                     break;
                 case WeatherUpdateStatusChangedEvent.STATUS_UPDATED_FAILED:
                     weatherView.onWeatherUpdatedAbortively();

@@ -299,6 +299,11 @@ public class HomeActivity extends BaseActivity implements HomeView,
         weatherPager.setCurrentItem(position);
     }
 
+    @Override
+    public void showGuide() {
+        startActivity(new Intent(this, GuideActivity.class));
+    }
+
     @OnClick({R.id.fab, R.id.btn_add_city})
     public void onClick(View view) {
         switch (view.getId()) {

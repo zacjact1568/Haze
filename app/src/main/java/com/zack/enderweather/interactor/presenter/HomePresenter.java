@@ -63,12 +63,14 @@ public class HomePresenter implements Presenter<HomeView> {
 
     public void notifyStartingUpCompleted() {
         if (preferenceDispatcher.getBooleanPref(PreferenceDispatcher.KEY_PREF_NEED_GUIDE)) {
-            preferenceDispatcher.setPref(PreferenceDispatcher.KEY_PREF_NEED_GUIDE, false);
-            if (mPermissionDelegate != null) {
-                mPermissionDelegate.showPreviouslyRequestPermissionsDialog();
-            } else {
-                throw new RuntimeException("No delegate for permission request");
-            }
+            //TODO 更改下面这条语句的位置，考虑放到guide的最后
+            //preferenceDispatcher.setPref(PreferenceDispatcher.KEY_PREF_NEED_GUIDE, false);
+            homeView.showGuide();
+//            if (mPermissionDelegate != null) {
+//                mPermissionDelegate.showPreviouslyRequestPermissionsDialog();
+//            } else {
+//                throw new RuntimeException("No delegate for permission request");
+//            }
         }
     }
 

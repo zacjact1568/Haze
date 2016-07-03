@@ -11,4 +11,6 @@ public interface HomeView {
     void onDetectNetworkNotAvailable();
 
     void onSwitchPage(int position);
+
+    void showGuide();
 }
