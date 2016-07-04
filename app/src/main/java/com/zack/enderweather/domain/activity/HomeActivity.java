@@ -28,10 +28,7 @@ import android.widget.Toast;
 import com.zack.enderweather.R;
 import com.zack.enderweather.domain.fragment.MyCitiesFragment;
 import com.zack.enderweather.interactor.adapter.WeatherPagerAdapter;
-import com.zack.enderweather.location.LocationHelper;
 import com.zack.enderweather.interactor.presenter.HomePresenter;
-import com.zack.enderweather.util.LogUtil;
-import com.zack.enderweather.util.Util;
 import com.zack.enderweather.domain.view.HomeView;
 
 import butterknife.BindView;
@@ -39,7 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class HomeActivity extends BaseActivity implements HomeView,
-        NavigationView.OnNavigationItemSelectedListener, LocationHelper.PermissionDelegate {
+        NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -72,8 +69,6 @@ public class HomeActivity extends BaseActivity implements HomeView,
         homePresenter = new HomePresenter(this);
 
         homePresenter.setInitialView(getSupportFragmentManager());
-
-        homePresenter.setPermissionDelegate(this);
     }
 
     @Override
@@ -186,34 +181,6 @@ public class HomeActivity extends BaseActivity implements HomeView,
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case REQ_CODE_PERMISSIONS:
-                if (grantResults.length > 0) {
-                    int grantedPermissionCount = 0;
-                    for (int result : grantResults) {
-                        if (result == PackageManager.PERMISSION_GRANTED) {
-                            grantedPermissionCount++;
-                        }
-                    }
-                    if (grantedPermissionCount == permissions.length) {
-                        //说明全部权限都已授予
-                        homePresenter.notifyPermissionsGranted();
-                    } else {
-                        //存在权限未授予
-                        homePresenter.notifyPermissionsDenied();
-                    }
-                } else {
-                    LogUtil.i(LOG_TAG, "授权被打断");
-                }
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-                break;
-        }
-    }
-
-    @Override
     public void showInitialView(WeatherPagerAdapter weatherPagerAdapter) {
         setSupportActionBar(toolbar);
 
@@ -224,61 +191,6 @@ public class HomeActivity extends BaseActivity implements HomeView,
         navView.setNavigationItemSelectedListener(this);
 
         weatherPager.setAdapter(weatherPagerAdapter);
-    }
-
-    @Override
-    public void showPreviouslyRequestPermissionsDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.title_dialog_pre_rps)
-                .setMessage(R.string.msg_dialog_pre_rps)
-                .setPositiveButton(R.string.btn_pos_pre_rps, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        homePresenter.notifyPermissionsPreviouslyGranted();
-                    }
-                })
-                .setNegativeButton(R.string.btn_neg_pre_rps, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        homePresenter.notifyPermissionsDenied();
-                    }
-                })
-                .setCancelable(false)
-                .show();
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    @Override
-    public void onRequestPermissions() {
-        if (Util.isPermissionsGranted()) {
-            //开启app前已给了所有权限（打开app之前手动开启的）
-            homePresenter.notifyPermissionsGranted();
-        } else {
-            //开启app前没给权限（默认）
-            //NOTE：此处不需要shouldShowRequestPermissionRationale，因为引导窗口只会弹出一次
-            String[] permissions = {
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.READ_PHONE_STATE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-            };
-            requestPermissions(permissions, REQ_CODE_PERMISSIONS);
-        }
-    }
-
-    @Override
-    public void showAddCityRequestDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.title_dialog_ac_req)
-                .setMessage(R.string.msg_dialog_ac_req)
-                .setPositiveButton(R.string.btn_pos_ac_req, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        startAddCityActivity();
-                    }
-                })
-                .setNegativeButton(R.string.btn_neg_ac_req, null)
-                .setCancelable(false)
-                .show();
     }
 
     @Override
@@ -309,22 +221,14 @@ public class HomeActivity extends BaseActivity implements HomeView,
         startActivityForResult(intent, REQ_CODE_GUIDE);
     }
 
-    @OnClick({R.id.fab, R.id.btn_add_city})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.fab:
-                startAddCityActivity();
-                break;
-            case R.id.btn_add_city:
-                startAddCityActivity();
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void startAddCityActivity() {
+    @Override
+    public void onAddCity() {
         Intent intent = new Intent(this, AddCityActivity.class);
         startActivityForResult(intent, REQ_CODE_ADD_CITY);
+    }
+
+    @OnClick({R.id.fab, R.id.btn_add_city})
+    public void onClick(View view) {
+        homePresenter.notifyViewClicked(view.getId());
     }
 }

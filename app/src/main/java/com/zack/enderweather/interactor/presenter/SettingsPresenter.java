@@ -6,7 +6,6 @@ import com.zack.enderweather.domain.view.SettingsView;
 public class SettingsPresenter implements Presenter<SettingsView> {
 
     private SettingsView settingsView;
-    private LocationHelper.PermissionDelegate mPermissionDelegate;
 
     public SettingsPresenter(SettingsView settingsView) {
         attachView(settingsView);
@@ -24,9 +23,5 @@ public class SettingsPresenter implements Presenter<SettingsView> {
 
     public void setInitialView() {
         settingsView.showInitialView();
-    }
-
-    public void setPermissionDelegate(LocationHelper.PermissionDelegate delegate) {
-        mPermissionDelegate = delegate;
     }
 }

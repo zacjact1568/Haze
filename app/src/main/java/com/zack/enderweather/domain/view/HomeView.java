@@ -13,4 +13,6 @@ public interface HomeView {
     void onSwitchPage(int position);
 
     void showGuide();
+
+    void onAddCity();
 }

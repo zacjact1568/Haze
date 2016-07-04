@@ -10,7 +10,6 @@ import com.zack.enderweather.event.CityAddedEvent;
 import com.zack.enderweather.event.CityClickedEvent;
 import com.zack.enderweather.event.CityDeletedEvent;
 import com.zack.enderweather.event.WeatherUpdateStatusChangedEvent;
-import com.zack.enderweather.location.LocationHelper;
 import com.zack.enderweather.model.ram.DataManager;
 import com.zack.enderweather.model.preference.PreferenceDispatcher;
 import com.zack.enderweather.util.Util;
@@ -25,7 +24,6 @@ public class HomePresenter implements Presenter<HomeView> {
     private DataManager dataManager;
     private PreferenceDispatcher preferenceDispatcher;
     private WeatherPagerAdapter weatherPagerAdapter;
-    private LocationHelper.PermissionDelegate mPermissionDelegate;
     private String updateSucStr, updateFaiStr;
 
     public HomePresenter(HomeView homeView) {
@@ -57,39 +55,10 @@ public class HomePresenter implements Presenter<HomeView> {
         homeView.showInitialView(weatherPagerAdapter);
     }
 
-    public void setPermissionDelegate(LocationHelper.PermissionDelegate delegate) {
-        mPermissionDelegate = delegate;
-    }
-
     public void notifyStartingUpCompleted() {
         if (preferenceDispatcher.getBooleanPref(PreferenceDispatcher.KEY_PREF_NEED_GUIDE)) {
-            //TODO 更改下面这条语句的位置，考虑放到guide的最后
-            //preferenceDispatcher.setPref(PreferenceDispatcher.KEY_PREF_NEED_GUIDE, false);
             homeView.showGuide();
-//            if (mPermissionDelegate != null) {
-//                mPermissionDelegate.showPreviouslyRequestPermissionsDialog();
-//            } else {
-//                throw new RuntimeException("No delegate for permission request");
-//            }
         }
-    }
-
-    public void notifyPermissionsPreviouslyGranted() {
-        if (Util.isVersionBelowMarshmallow()) {
-            //说明不需要动态授权
-            preferenceDispatcher.setPref(PreferenceDispatcher.KEY_PREF_LOCATION_SERVICE, true);
-        } else {
-            //需要动态授权，弹系统授权窗口
-            mPermissionDelegate.onRequestPermissions();
-        }
-    }
-
-    public void notifyPermissionsDenied() {
-        mPermissionDelegate.showAddCityRequestDialog();
-    }
-
-    public void getLocationData() {
-        //TODO ...
     }
 
     public void notifyCityAdded() {
@@ -106,9 +75,10 @@ public class HomePresenter implements Presenter<HomeView> {
         EventBus.getDefault().post(new CityAddedEvent());
     }
 
-    public void notifyPermissionsGranted() {
-        preferenceDispatcher.setPref(PreferenceDispatcher.KEY_PREF_LOCATION_SERVICE, true);
-        //TODO 开始获取位置
+    public void notifyViewClicked(int viewId) {
+        if (viewId == R.id.fab || viewId == R.id.btn_add_city) {
+            homeView.onAddCity();
+        }
     }
 
     @Subscribe

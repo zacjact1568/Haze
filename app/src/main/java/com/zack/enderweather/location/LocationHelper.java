@@ -43,13 +43,4 @@ public class LocationHelper {
                 throw new RuntimeException("Invalid location mode");
         }
     }
-
-    public interface PermissionDelegate {
-
-        void showPreviouslyRequestPermissionsDialog();
-
-        void onRequestPermissions();
-
-        void showAddCityRequestDialog();
-    }
 }

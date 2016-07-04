@@ -97,6 +97,7 @@
     <string name="text_network_not_available">Network is not available</string>
     <string name="action_network_settings">Settings</string>
 
+    <!--NOTE：已废弃-->
     <!--权限 (NOTE: rps == request permissions, ac == add city)-->
     <string name="title_dialog_pre_rps">Enable Location Service?</string>
     <string name="msg_dialog_pre_rps">

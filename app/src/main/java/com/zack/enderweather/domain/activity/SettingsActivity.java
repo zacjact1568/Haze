@@ -13,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.zack.enderweather.R;
-import com.zack.enderweather.location.LocationHelper;
 import com.zack.enderweather.model.preference.PreferenceDispatcher;
 import com.zack.enderweather.interactor.presenter.SettingsPresenter;
 import com.zack.enderweather.util.LogUtil;
@@ -49,8 +48,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
     public static class SettingsFragment extends PreferenceFragment
-            implements SettingsView, SharedPreferences.OnSharedPreferenceChangeListener,
-            LocationHelper.PermissionDelegate {
+            implements SettingsView, SharedPreferences.OnSharedPreferenceChangeListener {
 
         private SettingsPresenter settingsPresenter;
         private SwitchPreference locationServicePref;
@@ -64,8 +62,6 @@ public class SettingsActivity extends BaseActivity {
             settingsPresenter = new SettingsPresenter(this);
 
             settingsPresenter.setInitialView();
-
-            settingsPresenter.setPermissionDelegate(this);
         }
 
         @Override
@@ -87,21 +83,6 @@ public class SettingsActivity extends BaseActivity {
             nightModePref = (ListPreference) findPreference(PreferenceDispatcher.KEY_PREF_NIGHT_MODE);
 
             initPreferenceSummary();
-        }
-
-        @Override
-        public void showPreviouslyRequestPermissionsDialog() {
-            //TODO start
-        }
-
-        @Override
-        public void onRequestPermissions() {
-
-        }
-
-        @Override
-        public void showAddCityRequestDialog() {
-
         }
 
         @Override
