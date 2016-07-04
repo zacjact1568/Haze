@@ -17,6 +17,7 @@
     <string name="title_activity_home">Home</string>
     <string name="text_empty_city">No cities here</string>
     <string name="btn_add_city">Add a city</string>
+    <string name="toast_double_click_exit">Click once again to exit EnderWeather</string>
 
     <!--WeatherFragment-->
     <string name="format_update_time">Updated at %s</string>
@@ -81,13 +82,16 @@
     <string name="title_page_welcome">Welcome</string>
     <string name="dscpt_page_welcome">Touch the right arrow to continue</string>
     <string name="title_page_location">Location Service</string>
-    <string name="dscpt_page_location">Enable AMap Location Service?</string>
+    <string name="dscpt_disabled_page_location">Enable AMap Location Service?</string>
+    <string name="dscpt_enabled_page_location">AMap Location Service Enabled.</string>
     <string name="btn_page_location">Enable</string>
-    <string name="title_page_permission">Permissions</string>
-    <string name="dscpt_page_permission">AMap Location Service needs some essential permissions.</string>
-    <string name="btn_page_permission">Grant Permissions</string>
-    <string name="title_page_result">Guide Ends</string>
-    <string name="dscpt_page_result">Enjoy EnderWeather</string>
+    <string name="toast_ls_success">Location service enabled successfully</string>
+    <string name="toast_ls_failure">Failure</string>
+    <string name="title_dialog_ls_failure">Failed to enable location service</string>
+    <string name="msg_dialog_ls_failure">Without the essential permissions, we cannot enable the location service.</string>
+    <string name="btn_pos_dialog_ls_failure">OK</string>
+    <string name="title_page_ready">Guide Ends</string>
+    <string name="dscpt_page_ready">Enjoy EnderWeather</string>
 
     <!--通用-->
     <string name="text_network_not_available">Network is not available</string>
@@ -108,8 +112,5 @@
     </string>
     <string name="btn_pos_ac_req">OK</string>
     <string name="btn_neg_ac_req">Later</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

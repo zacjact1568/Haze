@@ -75,11 +75,15 @@
     <string name="title_activity_guide">欢迎</string>
     <string name="title_page_welcome">欢迎</string>
     <string name="btn_page_location">启用</string>
-    <string name="dscpt_page_result">享受Ender天气吧</string>
-    <string name="btn_page_permission">授予权限</string>
-    <string name="dscpt_page_permission">高德位置服务需要一些必要的权限。</string>
-    <string name="title_page_result">向导结束</string>
+    <string name="dscpt_page_ready">享受Ender天气吧</string>
+    <string name="title_page_ready">向导结束</string>
     <string name="title_page_location">位置服务</string>
-    <string name="title_page_permission">权限</string>
-    <string name="dscpt_page_location">启用高德位置服务？</string>
+    <string name="dscpt_disabled_page_location">启用高德位置服务？</string>
+    <string name="dscpt_enabled_page_location">高德位置服务已启用。</string>
+    <string name="toast_ls_failure">失败</string>
+    <string name="toast_ls_success">位置服务成功开启</string>
+    <string name="btn_pos_dialog_ls_failure">好的</string>
+    <string name="msg_dialog_ls_failure">缺少必要的权限，我们不能开启位置服务。</string>
+    <string name="title_dialog_ls_failure">开启位置服务失败</string>
+    <string name="toast_double_click_exit">再次点击退出Ender天气</string>
 </resources>

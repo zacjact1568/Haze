@@ -13,4 +13,8 @@ public interface GuideView {
     void onFinishButtonClicked();
 
     void onPageSelected(boolean isFirstPage, boolean isLastPage);
+
+    void onPressBackKey();
+
+    void onShowDoubleClickToast();
 }

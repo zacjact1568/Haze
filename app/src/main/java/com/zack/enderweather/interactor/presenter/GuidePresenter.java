@@ -4,9 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.zack.enderweather.R;
-import com.zack.enderweather.domain.fragment.GuideFragment;
+import com.zack.enderweather.domain.fragment.GuidePageFragment;
 import com.zack.enderweather.domain.view.GuideView;
 import com.zack.enderweather.interactor.adapter.GuidePagerAdapter;
+import com.zack.enderweather.model.preference.PreferenceDispatcher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +16,12 @@ public class GuidePresenter implements Presenter<GuideView> {
 
     private GuideView guideView;
     private GuidePagerAdapter guidePagerAdapter;
+    private PreferenceDispatcher mPreferenceDispatcher;
+    private long lastBackKeyPressedTime;
 
     public GuidePresenter(GuideView guideView) {
         attachView(guideView);
+        mPreferenceDispatcher = PreferenceDispatcher.getInstance();
     }
 
     @Override
@@ -48,6 +52,7 @@ public class GuidePresenter implements Presenter<GuideView> {
                     guideView.onNextPageButtonClicked(currentPage + 1);
                 } else {
                     //最后一页
+                    mPreferenceDispatcher.setPref(PreferenceDispatcher.KEY_PREF_NEED_GUIDE, false);
                     guideView.onFinishButtonClicked();
                 }
                 break;
@@ -58,14 +63,24 @@ public class GuidePresenter implements Presenter<GuideView> {
         guideView.onPageSelected(selectedPage == 0, selectedPage == guidePagerAdapter.getCount() - 1);
     }
 
+    public void notifyBackPressed() {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastBackKeyPressedTime < 1500) {
+            guideView.onPressBackKey();
+        } else {
+            lastBackKeyPressedTime = currentTime;
+            guideView.onShowDoubleClickToast();
+        }
+    }
+
     private List<Fragment> getGuidePages() {
         List<Fragment> fragmentList = new ArrayList<>();
         //欢迎页
-        fragmentList.add(GuideFragment.newInstance(GuideFragment.PAGE_TYPE_WELCOME));
+        fragmentList.add(GuidePageFragment.newInstance(GuidePageFragment.PAGE_TYPE_WELCOME));
         //位置服务页（包括权限请求）
-        fragmentList.add(GuideFragment.newInstance(GuideFragment.PAGE_TYPE_LOCATION));
+        fragmentList.add(GuidePageFragment.newInstance(GuidePageFragment.PAGE_TYPE_LOCATION));
         //引导结束页
-        fragmentList.add(GuideFragment.newInstance(GuideFragment.PAGE_TYPE_RESULT));
+        fragmentList.add(GuidePageFragment.newInstance(GuidePageFragment.PAGE_TYPE_READY));
         return fragmentList;
     }
 }

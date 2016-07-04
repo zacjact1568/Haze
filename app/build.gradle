@@ -8,8 +8,8 @@ android {
         applicationId "com.zack.enderweather"
         minSdkVersion 21
         targetSdkVersion 23
-        versionCode 57
-        versionName "20160703"
+        versionCode 58
+        versionName "20160704"
     }
     buildTypes {
         release {

@@ -3,6 +3,7 @@ package com.zack.enderweather.domain.activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.Toast;
 
 import com.zack.enderweather.R;
 import com.zack.enderweather.domain.view.GuideView;
@@ -29,8 +30,6 @@ public class GuideActivity extends BaseActivity implements GuideView {
 
     private GuidePresenter guidePresenter;
 
-    private static final int REQ_CODE_PERMISSIONS = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +45,11 @@ public class GuideActivity extends BaseActivity implements GuideView {
     protected void onDestroy() {
         super.onDestroy();
         guidePresenter.detachView();
+    }
+
+    @Override
+    public void onBackPressed() {
+        guidePresenter.notifyBackPressed();
     }
 
     @Override
@@ -90,6 +94,17 @@ public class GuideActivity extends BaseActivity implements GuideView {
         startButton.setVisibility(isFirstPage ? View.GONE : View.VISIBLE);
         endButton.setIcon(isLastPage ? R.drawable.ic_check_white_24dp
                 : R.drawable.ic_arrow_forward_white_24dp);
+    }
+
+    @Override
+    public void onPressBackKey() {
+        setResult(RESULT_OK);
+        super.onBackPressed();
+    }
+
+    @Override
+    public void onShowDoubleClickToast() {
+        Toast.makeText(this, R.string.toast_double_click_exit, Toast.LENGTH_SHORT).show();
     }
 
     @OnClick({R.id.btn_start, R.id.btn_end})

@@ -60,6 +60,7 @@ public class HomeActivity extends BaseActivity implements HomeView,
 
     private static final String TAG_MY_CITIES = "my_cities";
     private static final int REQ_CODE_ADD_CITY = 0;
+    private static final int REQ_CODE_GUIDE = 1;
     private static final int REQ_CODE_PERMISSIONS = 0;
 
     @Override
@@ -104,6 +105,9 @@ public class HomeActivity extends BaseActivity implements HomeView,
         switch (requestCode) {
             case REQ_CODE_ADD_CITY:
                 homePresenter.notifyCityAdded();
+                break;
+            case REQ_CODE_GUIDE:
+                finish();
                 break;
             default:
                 break;
@@ -301,7 +305,8 @@ public class HomeActivity extends BaseActivity implements HomeView,
 
     @Override
     public void showGuide() {
-        startActivity(new Intent(this, GuideActivity.class));
+        Intent intent = new Intent(this, GuideActivity.class);
+        startActivityForResult(intent, REQ_CODE_GUIDE);
     }
 
     @OnClick({R.id.fab, R.id.btn_add_city})
