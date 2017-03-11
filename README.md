@@ -1,11 +1,7 @@
 # EnderWeather
 
-**_A simple weather app._**
+EnderWeather is a simple weather app, written by Zack Zhang.
 
-Developed by Zack Zhang
+The name of this app is inspired by [Enderman](http://minecraft.gamepedia.com/Enderman) in [Minecraft](https://minecraft.net/).
 
-# Ender天气
-
-**_一个简单的天气app。_**
-
-由 全杰是也 开发
+*NOTE: This app is still under development, not a release version.*
