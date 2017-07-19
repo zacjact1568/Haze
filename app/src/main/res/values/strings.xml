@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EnderWeather</string>
+    <string name="app_name" translatable="false">Cold</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -17,7 +17,7 @@
     <string name="title_activity_home">Home</string>
     <string name="text_empty_city">No cities here</string>
     <string name="btn_add_city">Add a city</string>
-    <string name="toast_double_click_exit">Click once again to exit EnderWeather</string>
+    <string name="toast_double_click_exit">Click once again to exit Cold</string>
 
     <!--WeatherFragment-->
     <string name="format_update_time">Updated at %s</string>
@@ -91,7 +91,7 @@
     <string name="msg_dialog_ls_failure">Without the essential permissions, we cannot enable the location service.</string>
     <string name="btn_pos_dialog_ls_failure">OK</string>
     <string name="title_page_ready">Guide Ends</string>
-    <string name="dscpt_page_ready">Enjoy EnderWeather</string>
+    <string name="dscpt_page_ready">Enjoy Cold</string>
 
     <!--通用-->
     <string name="text_network_not_available">Network is not available</string>
