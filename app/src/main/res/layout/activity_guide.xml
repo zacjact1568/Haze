@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
-    <com.zack.enderweather.widget.EnhancedViewPager
+    <me.imzack.app.cold.widget.EnhancedViewPager
         android:id="@+id/pager_guide"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <com.zack.enderweather.widget.CircleNavigationButton
+    <me.imzack.app.cold.widget.CircleNavigationButton
         android:id="@+id/btn_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
         app:circle_color="@color/colorPrimaryDark"
         tools:visibility="visible"/>
 
-    <com.zack.enderweather.widget.CircleNavigationButton
+    <me.imzack.app.cold.widget.CircleNavigationButton
         android:id="@+id/btn_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

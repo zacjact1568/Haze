@@ -5,11 +5,11 @@ android {
     buildToolsVersion "25.0.2"
 
     defaultConfig {
-        applicationId "com.zack.enderweather"
+        applicationId "me.imzack.app.cold"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 308
-        versionName "20170311"
+        versionCode 438
+        versionName "20170719"
     }
     buildTypes {
         release {
