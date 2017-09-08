@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Light Blue -->
-    <color name="colorPrimaryLight">#FFB3E5FC</color>
-    <color name="colorPrimary">#FF03A9F4</color>
-    <color name="colorPrimaryLightDark">#FF039BE5</color>
-    <color name="colorPrimaryDark">#FF0288D1</color>
-    <color name="colorPrimarySuperDark">#FF01579B</color>
-
-    <!-- Light Green -->
-    <color name="colorAccent">#FF8BC34A</color>
+    <color name="colorPrimaryLight">#FFC8E6C9</color>
+    <color name="colorPrimary">#FF4CAF50</color>
+    <color name="colorPrimaryLightDark">#FF0A8F08</color>
+    <color name="colorPrimaryDark">#FF388E3C</color>
+    <color name="colorPrimarySuperDark">#FF0D5302</color>
+    <color name="colorAccent">#FFCDDC39</color>
     
 </resources>
