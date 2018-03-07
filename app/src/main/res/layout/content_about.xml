@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".domain.activity.AboutActivity"
+    tools:context=".view.activity.AboutActivity"
     tools:showIn="@layout/activity_about">
 
     <LinearLayout
@@ -22,7 +22,7 @@
             android:textColor="?attr/colorPrimary"/>
 
         <TextView
-            android:id="@+id/text_version_name"
+            android:id="@+id/vVersionNameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="20160429"/>

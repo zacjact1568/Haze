@@ -12,7 +12,11 @@
 
     </style>
 
-    <style name="AppTheme.TransparentStatusBar">
+    <style name="AppTheme.Transparent">
+
+    </style>
+
+    <style name="AppTheme.Transparent.StatusBar">
 
         <item name="android:statusBarColor">@android:color/transparent</item>
 

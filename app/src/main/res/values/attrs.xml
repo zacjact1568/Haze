@@ -1,4 +1,5 @@
 <resources>
+
     <declare-styleable name="TemperatureTrendChartView">
         <attr name="week_text_size" format="dimension" />
         <attr name="week_text_color" format="color" />
@@ -9,13 +10,6 @@
         <attr name="temp_point_color" format="color"/>
         <attr name="temp_point_edge_color" format="color"/>
         <attr name="temp_trend_line_color" format="color"/>
-        <!--<attr name="exampleString" format="string" />-->
-        <!--<attr name="exampleColor" format="color" />-->
-        <!--<attr name="exampleDrawable" format="color|reference" />-->
     </declare-styleable>
-    
-    <declare-styleable name="CircleNavigationButton">
-        <attr name="icon_src" format="reference"/>
-        <attr name="circle_color" format="color"/>
-    </declare-styleable>
+
 </resources>

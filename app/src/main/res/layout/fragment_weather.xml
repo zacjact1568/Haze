@@ -1,179 +1,44 @@
-<android.support.v4.widget.SwipeRefreshLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_swipe_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground"
-    tools:context=".domain.fragment.WeatherFragment">
+    tools:context=".view.fragment.WeatherFragment">
 
-    <ScrollView
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vWeatherPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:layout_height="match_parent"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/vEmptyLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="@string/text_empty_city"
+            android:textSize="20sp"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
-                android:orientation="vertical">
+        <TextView
+            android:id="@+id/vAddCityButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/btn_add_city"
+            android:textColor="@color/colorPrimary"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"/>
 
-                <TextView
-                    android:id="@+id/text_city_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:textColor="@android:color/white"
-                    android:layout_gravity="center"
-                    tools:text="Deyang"/>
+    </LinearLayout>
 
-                <TextView
-                    android:id="@+id/text_condition"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="@android:color/white"
-                    android:layout_gravity="center"
-                    tools:text="Shower"/>
-
-                <TextView
-                    android:id="@+id/text_temperature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="100sp"
-                    android:textColor="@android:color/white"
-                    android:typeface="monospace"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="24dp"
-                    tools:text="22"/>
-
-                <TextView
-                    android:id="@+id/text_update_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:textColor="@android:color/white"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginBottom="12dp"
-                    tools:text="Updated at 2016-5-22 20:44"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryLightDark"
-                android:baselineAligned="false">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:id="@+id/text_sensible_temp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:textColor="@android:color/white"
-                        android:layout_gravity="center"
-                        tools:text="18°C"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/text_sensible_temp"
-                        android:textColor="@android:color/white"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="4dp"/>
-
-                </LinearLayout>
-
-                <include layout="@layout/divider_v_color_p_dark"/>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:id="@+id/text_temp_range"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:textColor="@android:color/white"
-                        android:layout_gravity="center"
-                        tools:text="15 | 30"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/text_temp_range"
-                        android:textColor="@android:color/white"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="4dp"/>
-
-                </LinearLayout>
-
-                <include layout="@layout/divider_v_color_p_dark"/>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:id="@+id/text_air_quality"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:textColor="@android:color/white"
-                        android:layout_gravity="center"
-                        tools:text="Good"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/text_air_quality"
-                        android:textColor="@android:color/white"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="4dp"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <me.imzack.app.cold.widget.TemperatureTrendChartView
-                android:id="@+id/chart_temp_trend"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/temp_trend_chart_height"
-                app:week_text_size="8sp"
-                app:week_text_color="@color/colorPrimary"
-                app:condition_text_size="12sp"
-                app:condition_text_color="@color/colorPrimary"
-                app:temp_text_size="12sp"
-                app:temp_text_color="@color/colorPrimary"
-                app:temp_point_color="@color/colorPrimary"
-                app:temp_point_edge_color="@color/colorPrimaryLight"
-                app:temp_trend_line_color="@color/colorPrimary"/>
-
-            <include layout="@layout/divider_h"/>
-
-        </LinearLayout>
-
-    </ScrollView>
-
-</android.support.v4.widget.SwipeRefreshLayout>
+</FrameLayout>

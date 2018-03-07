@@ -13,8 +13,6 @@
     <!--guide-->
     <dimen name="guide_cnb_margin">16dp</dimen>
 
-    <!--CircleNavigationButton-->
-    <dimen name="cnb_circle_size">56dp</dimen>
-    <dimen name="cnb_icon_size">24dp</dimen>
+    <dimen name="toolbar_elevation">3dp</dimen>
 
 </resources>
