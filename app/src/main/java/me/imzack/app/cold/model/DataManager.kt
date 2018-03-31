@@ -5,6 +5,7 @@ import me.imzack.app.cold.event.DataLoadedEvent
 import me.imzack.app.cold.event.WeatherUpdateStatusChangedEvent
 import me.imzack.app.cold.model.bean.Weather
 import me.imzack.app.cold.model.database.DatabaseHelper
+import me.imzack.app.cold.model.location.LocationHelper
 import me.imzack.app.cold.model.network.NetworkHelper
 import me.imzack.app.cold.model.preference.PreferenceHelper
 import me.imzack.app.cold.util.WeatherUtil
@@ -12,6 +13,7 @@ import me.imzack.app.cold.util.WeatherUtil
 object DataManager {
 
     val databaseHelper = DatabaseHelper()
+    val locationHelper = LocationHelper()
     val networkHelper = NetworkHelper()
     val preferenceHelper = PreferenceHelper()
 

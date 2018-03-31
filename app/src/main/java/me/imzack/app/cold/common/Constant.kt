@@ -73,4 +73,10 @@ object Constant {
     const val NAME_ZH_CN = "name_zh_cn"
     const val PROVINCE_ZH_CN = "province_zh_cn"
     const val PREFECTURE_ZH_CN = "prefecture_zh_cn"
+
+    // 定位模式
+    const val LOCATION_MODE_NONE = 0
+    const val LOCATION_MODE_HIGH_ACCURACY = 1
+    const val LOCATION_MODE_BATTERY_SAVING = 2
+    const val LOCATION_MODE_DEVICE_SENSORS = 3
 }

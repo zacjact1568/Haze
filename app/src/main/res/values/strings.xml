@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name" translatable="false">Cold</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -93,37 +94,22 @@
     <string name="title_activity_guide">Guide</string>
     <string name="title_page_welcome">Welcome</string>
     <string name="dscpt_page_welcome">Touch the right arrow to continue</string>
-    <string name="title_page_location">Location Service</string>
-    <string name="dscpt_disabled_page_location">Enable AMap Location Service?</string>
-    <string name="dscpt_enabled_page_location">AMap Location Service Enabled.</string>
-    <string name="btn_page_location">Enable</string>
-    <string name="toast_ls_success">Location service enabled successfully</string>
-    <string name="toast_ls_failure">Failure</string>
-    <string name="title_dialog_ls_failure">Failed to enable location service</string>
-    <string name="msg_dialog_ls_failure">Without the essential permissions, we cannot enable the location service.</string>
-    <string name="btn_pos_dialog_ls_failure">OK</string>
     <string name="title_page_ready">Guide Ends</string>
     <string name="dscpt_page_ready">Enjoy Cold</string>
+    
+    <!-- LocationGuidePageFragment -->
+    <string name="title_page_location">Location Service</string>
+    <string name="description_page_location_disabled">Enable AMap® Location Service to get the weather for your current place?</string>
+    <string name="description_page_location_enabled">AMap® Location Service has been enabled successfully</string>
+    <string name="btn_page_location">Enable</string>
+    <string name="title_dialog_pre_request_permissions">Permissions</string>
+    <string name="msg_dialog_pre_request_permissions">The AMap® Location Service requires 3 essential permissions that need you to grant, they are Location, Phone State and Storage. Let\'s do that.</string>
+    <string name="pos_btn_dialog_pre_request_permissions">Continue</string>
+    <string name="title_dialog_permissions_denied">Failed</string>
+    <string name="msg_dialog_permissions_denied">AMap® Location Service can\'t be enabled without these permissions, but you can grant Cold these permissions in System Settings later manually.</string>
 
     <!--通用-->
     <string name="text_network_not_available">Network is not available</string>
     <string name="action_network_settings">Settings</string>
-
-    <!--NOTE：已废弃-->
-    <!--权限 (NOTE: rps == request permissions, ac == add city)-->
-    <string name="title_dialog_pre_rps">Enable Location Service?</string>
-    <string name="msg_dialog_pre_rps">
-        If you want us to show you the weather of the city you are currently in, you can enable the location service.\n
-        The location service is provided by AMap, and some essential permissions were needed.\n\n
-        NOTE: If you click \"No\", you can enable it in Settings anytime.
-    </string>
-    <string name="btn_pos_pre_rps">Sure</string>
-    <string name="btn_neg_pre_rps">No</string>
-    <string name="title_dialog_ac_req">Add a City?</string>
-    <string name="msg_dialog_ac_req">
-        Since you has rejected to grant us the permissions, you should add a city first.
-    </string>
-    <string name="btn_pos_ac_req">OK</string>
-    <string name="btn_neg_ac_req">Later</string>
 
 </resources>

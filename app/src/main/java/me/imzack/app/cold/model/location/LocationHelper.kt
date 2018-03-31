@@ -2,39 +2,38 @@ package me.imzack.app.cold.model.location
 
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
-import com.amap.api.location.AMapLocationListener
 import me.imzack.app.cold.App
+import me.imzack.app.cold.common.Constant
+import me.imzack.app.cold.model.bean.Location
+import me.imzack.app.cold.util.LogUtil
+import me.imzack.app.cold.util.SystemUtil
 
 class LocationHelper {
 
-    companion object {
-
-        val LOC_MODE_BATTERY_SAVING = -1
-        val LOC_MODE_DEVICE_SENSORS = 0
-        val LOC_MODE_HIGH_ACCURACY = 1
-    }
-
-    /** 异步获取高德定位数据  */
-    fun getAMapLocationDataAsync(locationMode: Int) {
-        val aMapLocationClient = AMapLocationClient(App.context)
-        aMapLocationClient.setLocationOption(AMapLocationClientOption()
-                .setLocationMode(getAMapLocationMode(locationMode))
-                //TODO 设置定位参数
+    /** 异步获取高德定位数据 */
+    fun getAMapLocationDataAsync(callback: (Location) -> Unit) {
+        val client = AMapLocationClient(App.context)
+        client.setLocationOption(
+                AMapLocationClientOption()
+                        .setLocationMode(when (SystemUtil.locationMode) {
+                            Constant.LOCATION_MODE_NONE -> TODO("未打开系统位置服务")
+                            Constant.LOCATION_MODE_HIGH_ACCURACY -> AMapLocationClientOption.AMapLocationMode.Hight_Accuracy
+                            Constant.LOCATION_MODE_BATTERY_SAVING -> AMapLocationClientOption.AMapLocationMode.Battery_Saving
+                            Constant.LOCATION_MODE_DEVICE_SENSORS -> AMapLocationClientOption.AMapLocationMode.Device_Sensors
+                            else -> throw IllegalArgumentException("Wrong location mode")
+                        })
+                        .setOnceLocationLatest(true)
         )
-        aMapLocationClient.startLocation()
-        aMapLocationClient.setLocationListener(AMapLocationListener { aMapLocation ->
-            if (aMapLocation == null) {
-                return@AMapLocationListener
+        client.setLocationListener {
+            when {
+                it == null -> TODO("处理 AMapLocation 对象为空的情况")
+                it.errorCode == 0 -> callback(Location(it.longitude, it.latitude))
+                else -> LogUtil.e("AMapError","location Error, ErrCode: ${it.errorCode}, errInfo: ${it.errorInfo}")
             }
-            //TODO ...
-        })
+            // 销毁定位客户端
+            client.onDestroy()
+        }
+        client.startLocation()
     }
 
-    private fun getAMapLocationMode(locationMode: Int) =
-            when (locationMode) {
-                LOC_MODE_BATTERY_SAVING -> AMapLocationClientOption.AMapLocationMode.Battery_Saving
-                LOC_MODE_DEVICE_SENSORS -> AMapLocationClientOption.AMapLocationMode.Device_Sensors
-                LOC_MODE_HIGH_ACCURACY -> AMapLocationClientOption.AMapLocationMode.Hight_Accuracy
-                else -> throw RuntimeException("Invalid location mode")
-            }
 }

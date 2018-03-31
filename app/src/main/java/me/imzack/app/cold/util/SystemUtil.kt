@@ -1,10 +1,12 @@
 package me.imzack.app.cold.util
 
-import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.os.Build
+import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import me.imzack.app.cold.App
 import me.imzack.app.cold.common.Constant
@@ -12,13 +14,31 @@ import java.util.*
 
 object SystemUtil {
 
-    val isPermissionsGranted: Boolean
-        get() {
-            val context = App.context
-            return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                    && ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
-                    && ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-        }
+    fun checkPermission(permission: String) = ContextCompat.checkSelfPermission(App.context, permission) == PackageManager.PERMISSION_GRANTED
+
+    /** 检查 permissions 中的权限，只要有一个未授予，返回 false */
+    fun checkPermissions(permissions: Array<String>) = permissions.find { !checkPermission(it) } == null
+
+    /**
+     * 检查是否可以弹授权窗口
+     * @return
+     * - Android 6.0 以下，总是返回 false
+     * - Android 6.0 及以上，若用户在授权窗口勾选了“不再询问”，返回 false，否则返回 true
+     */
+    fun isPermissionRequestable(permission: String, activity: Activity) = ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)
+
+    /** 获取 permissions 中未被授予的权限 */
+    fun getNotGrantedPermissions(permissions: Array<String>) = permissions.filterNotTo(mutableListOf()) { checkPermission(it) }.toTypedArray()
+
+    /**
+     * 获取 permissions 中未被授予的权限及各权限是否可以弹授权窗口
+     * @return 未授予的权限 to 是否可以弹授权窗口
+     */
+    fun getNotGrantedPermissionAndRequestableMap(permissions: Array<String>, activity: Activity): Map<String, Boolean> {
+        val map = mutableMapOf<String, Boolean>()
+        permissions.filterNot { checkPermission(it) }.forEach { map[it] = isPermissionRequestable(it, activity) }
+        return map
+    }
 
     val isNetworkAvailable: Boolean
         get() {
@@ -30,8 +50,7 @@ object SystemUtil {
         get() {
             val context = App.context
             return try {
-                val info = context.packageManager.getPackageInfo(context.packageName, 0)
-                info.versionName
+                context.packageManager.getPackageInfo(context.packageName, 0).versionName
             } catch (e: PackageManager.NameNotFoundException) {
                 "null"
             }
@@ -68,4 +87,17 @@ object SystemUtil {
         Locale.TRADITIONAL_CHINESE -> Constant.ZH_TW
         else -> null
     }
+
+    val locationMode: Int
+        get() {
+            val manager = App.context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            val gps = manager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+            val network = manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+            return when {
+                gps && network -> Constant.LOCATION_MODE_HIGH_ACCURACY
+                gps -> Constant.LOCATION_MODE_DEVICE_SENSORS
+                network -> Constant.LOCATION_MODE_BATTERY_SAVING
+                else -> Constant.LOCATION_MODE_NONE
+            }
+        }
 }

@@ -5,7 +5,6 @@
     android:id="@+id/vSwipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground"
     tools:context=".view.fragment.WeatherPageFragment">
 
     <ScrollView
