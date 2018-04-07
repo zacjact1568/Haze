@@ -28,7 +28,7 @@ class CitiesPresenter(private var citiesViewContract: CitiesViewContract?) : Bas
             }
         }
         cityAdapter.onDeleteButtonClickListener = {
-            citiesViewContract!!.showCityDeletionAlertDialog(DataManager.getWeather(it).cityName, it)
+            citiesViewContract!!.showCityDeletionConfirmationDialog(DataManager.getWeather(it).cityName, it)
         }
         citiesViewContract!!.showInitialView(cityAdapter)
     }

@@ -34,11 +34,9 @@
     <string name="text_tuesday">周二</string>
     <string name="text_yesterday">昨天</string>
     <string name="text_invalid_data">没有可用数据</string>
-    <string name="msg_dialog_delete_city_confirm_tail">”将会被立即删除</string>
-    <string name="btn_delete">删除</string>
-    <string name="btn_cancel">取消</string>
-    <string name="title_dialog_delete_city_confirm">你确定吗？</string>
-    <string name="msg_dialog_delete_city_confirm_head">城市“</string>
+    <string name="pos_btn_city_deletion_confirmation">删除</string>
+    <string name="title_dialog_city_deletion_confirmation">你确定吗？</string>
+    <string name="msg_dialog_city_deletion_confirmation">城市“%s”将会被立即删除</string>
     <string name="toast_weather_update_successfully">天气更新成功</string>
     <string name="toast_weather_update_failed">天气更新失败</string>
     <string name="toast_weather_update_requested">已请求更新天气</string>

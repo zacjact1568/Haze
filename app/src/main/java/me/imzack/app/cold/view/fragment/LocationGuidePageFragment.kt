@@ -3,9 +3,9 @@ package me.imzack.app.cold.view.fragment
 import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.view.View
 import me.imzack.app.cold.R
 import me.imzack.app.cold.model.DataManager
@@ -18,6 +18,8 @@ import me.imzack.lib.baseguideactivity.SimpleGuidePageFragment
 class LocationGuidePageFragment : SimpleGuidePageFragment() {
 
     companion object {
+
+        private const val TAG_PRE_REQUEST_PERMISSIONS = "pre_request_permissions"
 
         fun newInstance(): LocationGuidePageFragment {
             val fragment = LocationGuidePageFragment()
@@ -34,6 +36,8 @@ class LocationGuidePageFragment : SimpleGuidePageFragment() {
             Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
+    /** 还未授予的权限 */
+    private val notGrantedPermissions = SystemUtil.getNotGrantedPermissions(permissions)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,6 +59,14 @@ class LocationGuidePageFragment : SimpleGuidePageFragment() {
         buttonClickListener = { requestPermissions() }
     }
 
+    override fun onAttachFragment(childFragment: Fragment) {
+        super.onAttachFragment(childFragment)
+
+        if (childFragment.tag == TAG_PRE_REQUEST_PERMISSIONS) {
+            (childFragment as MessageDialogFragment).okButtonClickListener = { requestPermissions(notGrantedPermissions, _permissionRequestCode) }
+        }
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if (requestCode == _permissionRequestCode) {
             if (grantResults.isNotEmpty()) {
@@ -74,20 +86,19 @@ class LocationGuidePageFragment : SimpleGuidePageFragment() {
     }
 
     private fun requestPermissions() {
-        val notGrantedPermissions = SystemUtil.getNotGrantedPermissions(permissions)
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || notGrantedPermissions.isEmpty()) {
             // 说明不需要动态授权，或用户打开 app 之前已手动开启所有权限
             onPermissionsGranted()
         } else {
             // 说明需要动态授权，且开启 app 前没给权限，弹确认授权窗口
-            MessageDialogFragment.newInstance(
-                    getString(R.string.msg_dialog_pre_request_permissions),
-                    getString(R.string.title_dialog_pre_request_permissions),
-                    getString(R.string.pos_btn_dialog_pre_request_permissions),
-                    { requestPermissions(notGrantedPermissions, _permissionRequestCode) }
-                    //"Check Permissions",
-                    //{ ... }
-            ).show(fragmentManager!!)
+            MessageDialogFragment.Builder()
+                    .setTitle(R.string.title_dialog_pre_request_permissions)
+                    .setMessage(R.string.msg_dialog_pre_request_permissions)
+                    .setOkButtonText(R.string.pos_btn_dialog_pre_request_permissions)
+                    .showCancelButton()
+                    //.setThirdButtonText("Check Permissions")
+                    // 必须用 childFragmentManager，否则 onAttachFragment 不会回调
+                    .show(childFragmentManager, TAG_PRE_REQUEST_PERMISSIONS)
         }
     }
 
@@ -98,11 +109,10 @@ class LocationGuidePageFragment : SimpleGuidePageFragment() {
     }
 
     private fun onPermissionsDenied() {
-        MessageDialogFragment.newInstance(
-                getString(R.string.msg_dialog_permissions_denied),
-                getString(R.string.title_dialog_permissions_denied),
-                getString(android.R.string.ok),
-                showCancelButton = false
-        ).show(fragmentManager!!)
+        MessageDialogFragment.Builder()
+                .setTitle(R.string.title_dialog_permissions_denied)
+                .setMessage(R.string.msg_dialog_permissions_denied)
+                .setOkButtonText(android.R.string.ok)
+                .show(childFragmentManager)
     }
 }

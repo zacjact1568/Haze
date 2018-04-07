@@ -8,5 +8,5 @@ interface CitiesViewContract : BaseViewContract {
 
     fun onDetectedNetworkNotAvailable()
 
-    fun showCityDeletionAlertDialog(cityName: String, position: Int)
+    fun showCityDeletionConfirmationDialog(cityName: String, position: Int)
 }

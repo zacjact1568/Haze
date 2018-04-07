@@ -4,14 +4,13 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 27
-    // 当前 AS 内置版本为 26.0.2，必须手动指定为 27.0.3
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 'android-P'
+    buildToolsVersion '28.0.0-rc1'
 
     defaultConfig {
         applicationId "me.imzack.app.cold"
         minSdkVersion 21
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode Math.ceil((new Date().time - 1462636800000) / 86400000) as int
         versionName new Date().format('yyyyMMdd')
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -55,9 +54,11 @@ dependencies {
     implementation 'com.github.zacjact1568:CircleColorView:0.1'
     implementation 'com.github.zacjact1568:BaseGuideActivity:0.5'
     implementation 'com.amap.api:location:3.8.0'
-    implementation 'com.github.zacjact1568:BaseDialogFragment:0.6'
+    implementation 'com.github.zacjact1568:BaseDialogFragment:0.9'
     implementation "com.facebook.stetho:stetho:$stetho_version"
     implementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
+    implementation "com.android.support:preference-v7:$android_support_version"
+    implementation "com.android.support:preference-v14:$android_support_version"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'

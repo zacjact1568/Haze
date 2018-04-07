@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
 import android.support.design.widget.Snackbar
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,13 @@ import me.imzack.app.cold.view.dialog.MessageDialogFragment
 
 class CitiesFragment : BaseFragment(), CitiesViewContract {
 
+    companion object {
+
+        private const val TAG_CITY_DELETION = "city_deletion"
+
+        private const val KEY_CITY_DELETION_POSITION = "city_deletion_position"
+    }
+
     private val citiesPresenter = CitiesPresenter(this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
@@ -24,6 +32,17 @@ class CitiesFragment : BaseFragment(), CitiesViewContract {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         citiesPresenter.attach()
+    }
+
+    override fun onAttachFragment(childFragment: Fragment) {
+        super.onAttachFragment(childFragment)
+
+        if (childFragment.tag == TAG_CITY_DELETION) {
+            val dialogFragment = childFragment as MessageDialogFragment
+            dialogFragment.okButtonClickListener = {
+                citiesPresenter.notifyCityDeleted(dialogFragment.arguments!!.getInt(KEY_CITY_DELETION_POSITION))
+            }
+        }
     }
 
     override fun onDetach() {
@@ -42,12 +61,16 @@ class CitiesFragment : BaseFragment(), CitiesViewContract {
                 .show()
     }
 
-    override fun showCityDeletionAlertDialog(cityName: String, position: Int) {
-        MessageDialogFragment.newInstance(
-                getString(R.string.msg_dialog_delete_city_confirm_head) + cityName + getString(R.string.msg_dialog_delete_city_confirm_tail),
-                getString(R.string.title_dialog_delete_city_confirm),
-                getString(R.string.btn_delete),
-                { citiesPresenter.notifyCityDeleted(position) }
-        ).show(fragmentManager!!)
+    override fun showCityDeletionConfirmationDialog(cityName: String, position: Int) {
+        val dialogFragment = MessageDialogFragment.Builder()
+                .setTitle(R.string.title_dialog_city_deletion_confirmation)
+                .setMessage(String.format(getString(R.string.msg_dialog_city_deletion_confirmation), cityName))
+                .setOkButtonText(R.string.pos_btn_city_deletion_confirmation)
+                .showCancelButton()
+                .build()
+        // 将要删除城市的 position 存入 MessageDialogFragment 的 arguments
+        // 只要此 DialogFragment 未手动关闭，就一定能取到这个值
+        dialogFragment.arguments!!.putInt(KEY_CITY_DELETION_POSITION, position)
+        dialogFragment.show(childFragmentManager, TAG_CITY_DELETION)
     }
 }

@@ -47,11 +47,9 @@
 
     <!--CitiesFragment-->
     <string name="title_fragment_cities">Cities</string>
-    <string name="title_dialog_delete_city_confirm">Are you sure?</string>
-    <string name="msg_dialog_delete_city_confirm_head">The city \"</string>
-    <string name="msg_dialog_delete_city_confirm_tail">\" will be deleted immediately</string>
-    <string name="btn_delete">Delete</string>
-    <string name="btn_cancel">Cancel</string>
+    <string name="title_dialog_city_deletion_confirmation">Are you sure?</string>
+    <string name="msg_dialog_city_deletion_confirmation">The city \"%s\" will be deleted immediately</string>
+    <string name="pos_btn_city_deletion_confirmation">Delete</string>
     <string name="toast_weather_update_requested">Weather updating requested</string>
     <string name="toast_weather_update_successfully">Weather updated successfully</string>
     <string name="toast_weather_update_failed">Weather updating failed</string>
