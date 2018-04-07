@@ -28,10 +28,22 @@ class WeatherPageFragment : BaseFragment(), WeatherPageViewContract {
     }
 
     private val weatherPagePresenter by lazy {
-        WeatherPagePresenter(this, arguments!!.getInt(Constant.WEATHER_LIST_POSITION, -1))
+        WeatherPagePresenter(this, position)
     }
 
+    /**
+     * 将此属性置为 true 表示此 page 的位置已改变，为下次刷新 ViewPager 做准备。
+     * 在下次刷新 ViewPager 时，此属性又会被置为 false
+     */
+    var isPositionChanged = false
+
+    /** 将此属性置为 true 表示此 page 对应的城市已被删除，在下次刷新 ViewPager 时将被 destroy */
     var isCityDeleted = false
+
+    /** 此 page 在 ViewPager 中的位置 */
+    var position
+        get() = arguments!!.getInt(Constant.WEATHER_LIST_POSITION, -1)
+        set(value) = arguments!!.putInt(Constant.WEATHER_LIST_POSITION, value)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
             inflater.inflate(R.layout.fragment_weather_page, container, false)!!
@@ -82,6 +94,11 @@ class WeatherPageFragment : BaseFragment(), WeatherPageViewContract {
 
     override fun onCityDeleted() {
         isCityDeleted = true
+    }
+
+    override fun onPositionChanged(newPosition: Int) {
+        position = newPosition
+        isPositionChanged = true
     }
 
     private fun setWeatherOnView(formattedWeather: FormattedWeather) {

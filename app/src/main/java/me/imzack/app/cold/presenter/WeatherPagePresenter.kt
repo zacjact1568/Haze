@@ -15,9 +15,10 @@ import me.imzack.app.cold.util.WeatherUtil
 import me.imzack.app.cold.view.contract.WeatherPageViewContract
 import org.greenrobot.eventbus.Subscribe
 
-class WeatherPagePresenter(private var weatherPageViewContract: WeatherPageViewContract?, weatherListPosition: Int) : BasePresenter() {
+class WeatherPagePresenter(private var weatherPageViewContract: WeatherPageViewContract?, private var weatherListPosition: Int) : BasePresenter() {
 
     private val weather = DataManager.getWeather(weatherListPosition)
+
     private val eventBus = App.eventBus
     
     //private var isVisible = false
@@ -70,14 +71,14 @@ class WeatherPagePresenter(private var weatherPageViewContract: WeatherPageViewC
             }
         }
 
-    /** 判断是否不是当前城市 */
-    private fun isNotThisCity(cityId: String) = weather.basic.cityId != cityId
+    /** 判断是否是当前城市 */
+    private fun isThisCity(cityId: String) = weather.basic.cityId == cityId
 
     @Subscribe
     fun onWeatherUpdateStatusChanged(event: WeatherUpdateStatusChangedEvent) {
         // 当 WeatherUpdated 事件发生时，这个方法总会被调用，但 MyCitiesPresenter 中的订阅方法不一定被执行
         // 如果更新事件不是针对当前城市的，返回
-        if (isNotThisCity(event.cityId)) return
+        if (!isThisCity(event.cityId)) return
         when (event.status) {
             WeatherUpdateStatusChangedEvent.STATUS_ON_UPDATING -> { }
             WeatherUpdateStatusChangedEvent.STATUS_UPDATED_SUCCESSFUL -> weatherPageViewContract!!.onWeatherUpdatedSuccessfully(formattedWeather)
@@ -86,10 +87,18 @@ class WeatherPagePresenter(private var weatherPageViewContract: WeatherPageViewC
         //weatherPageViewContract!!.onChangeSwipeRefreshingStatus(isVisible) TODO 未触发，isVisible为false
     }
 
-    @Subscribe
+    // 将优先级设为 1（默认为 0），否则将优先通知 WeatherPresenter 中的订阅者（可能是因为先注册），将先调用 notifyDataSetChanged，达不到更新 ViewPager 的效果
+    @Subscribe(priority = 1)
     fun onCityDeleted(event: CityDeletedEvent) {
-        // 如果删除事件不是针对当前城市的，返回
-        if (isNotThisCity(event.cityId)) return
-        weatherPageViewContract!!.onCityDeleted()
+        if (isThisCity(event.cityId)) {
+            // Same as "event.position == weatherListPosition"
+            // 如果删除的是当前城市
+            weatherPageViewContract!!.onCityDeleted()
+        } else if (event.position < weatherListPosition) {
+            // 如果删除的城市的位置在当前城市之前
+            // 此城市在 weather list 中的位置前进了一位，因此需要将 weatherListPosition 减 1
+            weatherPageViewContract!!.onPositionChanged(--weatherListPosition)
+        }
+        // 如果删除的城市的位置在当前城市之后，不做任何操作
     }
 }
