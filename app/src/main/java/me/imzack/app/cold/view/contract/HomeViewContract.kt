@@ -15,4 +15,6 @@ interface HomeViewContract : BaseViewContract {
     fun closeDrawer()
 
     fun onPressBackKey()
+
+    fun onDetectedLocationServicePermissionsDenied()
 }

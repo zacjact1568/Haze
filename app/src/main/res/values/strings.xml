@@ -20,6 +20,9 @@
     <string name="text_empty_city">No cities here</string>
     <string name="btn_add_city">Add a city</string>
     <string name="toast_double_press_exit">Press once again to exit Cold</string>
+    <string name="title_dialog_detected_location_service_permissions_denied">Location Service</string>
+    <string name="msg_dialog_detected_location_service_permissions_denied">It seems that you have denied some essential permissions in System Settings, AMap® Location Service has been disabled.</string>
+    <string name="pos_btn_dialog_detected_location_service_permissions_denied">Re-grant</string>
 
     <!--WeatherPageFragment-->
     <string name="text_update_time">Updated at %s</string>
@@ -105,6 +108,9 @@
     <string name="pos_btn_dialog_pre_request_permissions">Continue</string>
     <string name="title_dialog_permissions_denied">Failed</string>
     <string name="msg_dialog_permissions_denied">AMap® Location Service can\'t be enabled without these permissions, but you can grant Cold these permissions in System Settings later manually.</string>
+    <string name="title_dialog_no_requestable_permissions">Permissions</string>
+    <string name="msg_dialog_no_requestable_permissions">Please go to System Settings and grant Cold 3 essential permissions, they are Location, Phone State and Storage.</string>
+    <string name="pos_btn_dialog_no_requestable_permissions">System Settings</string>
 
     <!--通用-->
     <string name="text_network_not_available">Network is not available</string>

@@ -13,11 +13,10 @@ abstract class BaseFragment : Fragment() {
         Toast.makeText(context, msgResId, Toast.LENGTH_SHORT).show()
     }
 
-    protected fun remove() {
-        fragmentManager!!.beginTransaction().remove(this).commit()
-    }
-
     open fun exit() {
-        remove()
+        // 如果此 Fragment 附在某个 Activity 上，fragmentManager 是 Activity 的 fragmentManager
+        // 如果此 Fragment 作为子 Fragment 附在某个父 Fragment 上，fragmentManager 是父 Fragment 的 childFragmentManager
+        // 总之，该语句的确可以将此 Fragment 从宿主类中移除（异步）
+        fragmentManager!!.beginTransaction().remove(this).commit()
     }
 }

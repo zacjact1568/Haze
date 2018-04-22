@@ -6,12 +6,15 @@ import me.imzack.app.cold.R
 import me.imzack.app.cold.common.Constant
 import me.imzack.app.cold.event.CitySelectedEvent
 import me.imzack.app.cold.model.DataManager
+import me.imzack.app.cold.util.SystemUtil
 import me.imzack.app.cold.view.contract.HomeViewContract
+import me.imzack.app.cold.view.fragment.LocationServicePermissionsFragment
 import org.greenrobot.eventbus.Subscribe
 
 class HomePresenter(private var homeViewContract: HomeViewContract?) : BasePresenter() {
 
     private val eventBus = App.eventBus
+    private val preferenceHelper = DataManager.preferenceHelper
     private var lastBackKeyPressedTime = 0L
     /** 指示此 activity 是否是重建过的 */
     private var isRestored = false
@@ -36,8 +39,17 @@ class HomePresenter(private var homeViewContract: HomeViewContract?) : BasePrese
 
     fun notifyStartingUpCompleted() {
         // 初次启动，进入引导界面
-        if (DataManager.preferenceHelper.needGuideValue) {
+        if (preferenceHelper.needGuideValue) {
             homeViewContract!!.startActivity(Constant.GUIDE)
+        }
+        // 如果用户在系统设置中改变了权限，app 会被杀死，而 HomeActivity 又是此 app 的唯一入口，因此在这里检测是否还拥有权限
+        if (preferenceHelper.locationServiceValue && !SystemUtil.checkPermissions(LocationServicePermissionsFragment.PERMISSIONS)) {
+            // 如果设置中开启了位置服务，而又有权限未授予
+            // 关闭位置服务
+            preferenceHelper.locationServiceValue = false
+            // TODO 移除第一页（当前位置）天气
+            // 弹 dialog 提醒
+            homeViewContract!!.onDetectedLocationServicePermissionsDenied()
         }
         // 初始化主页的所有 fragment
         homeViewContract!!.showInitialFragment(isRestored, currentFragmentTag)
@@ -65,6 +77,14 @@ class HomePresenter(private var homeViewContract: HomeViewContract?) : BasePrese
                 homeViewContract!!.showToast(R.string.toast_double_press_exit)
             }
         }
+    }
+    
+    fun notifyLocationServicePermissionsRequestFinished(granted: Boolean) {
+        if (granted) {
+            preferenceHelper.locationServiceValue = true
+            // TODO 添加第一页（当前位置）天气
+        }
+        // 若未授予权限，不执行任何操作
     }
 
     private fun switchFragment(toTag: String) {

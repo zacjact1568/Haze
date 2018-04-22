@@ -47,8 +47,8 @@
     <string name="pref_category_title_others">其他</string>
     <string name="pref_category_title_theme">主题</string>
     <string name="pref_category_title_weather">天气</string>
-    <string name="pref_summary_location_service_off">高德定位服务已关闭</string>
-    <string name="pref_summary_location_service_on">高德定位服务已开启</string>
+    <string name="pref_summary_location_service_off">高德位置服务已关闭</string>
+    <string name="pref_summary_location_service_on">高德位置服务已开启</string>
     <string name="pref_title_language">语言</string>
     <string name="pref_title_location_service">定位服务</string>
     <string name="pref_title_night_mode">夜间模式</string>
@@ -84,4 +84,10 @@
     <string name="title_dialog_pre_request_permissions">权限</string>
     <string name="msg_dialog_pre_request_permissions">高德®位置服务需要你授予 3 个必要权限，它们是位置、手机状态和存储。让我们开始吧。</string>
     <string name="pos_btn_dialog_pre_request_permissions">继续</string>
+    <string name="title_dialog_detected_location_service_permissions_denied">位置服务</string>
+    <string name="msg_dialog_detected_location_service_permissions_denied">看起来你在系统设置中取消了一些必要权限，高德®位置服务已关闭。</string>
+    <string name="pos_btn_dialog_detected_location_service_permissions_denied">重新授予</string>
+    <string name="title_dialog_no_requestable_permissions">权限</string>
+    <string name="msg_dialog_no_requestable_permissions">请转到系统设置，授予 Cold 3 个必要权限，它们是位置、手机状态和存储。</string>
+    <string name="pos_btn_dialog_no_requestable_permissions">系统设置</string>
 </resources>

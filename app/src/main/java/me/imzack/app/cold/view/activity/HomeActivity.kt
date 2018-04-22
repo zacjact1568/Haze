@@ -14,12 +14,16 @@ import me.imzack.app.cold.R
 import me.imzack.app.cold.common.Constant
 import me.imzack.app.cold.presenter.HomePresenter
 import me.imzack.app.cold.view.contract.HomeViewContract
+import me.imzack.app.cold.view.dialog.MessageDialogFragment
 import me.imzack.app.cold.view.fragment.CitiesFragment
+import me.imzack.app.cold.view.fragment.LocationServicePermissionsFragment
 import me.imzack.app.cold.view.fragment.WeatherFragment
 
 class HomeActivity : BaseActivity(), HomeViewContract {
 
     companion object {
+
+        private const val TAG_DETECTED_LOC_SER_PER_DENIED = "detected_loc_ser_per_denied"
 
         fun start(context: Context) {
             context.startActivity(Intent(context, HomeActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
@@ -66,6 +70,25 @@ class HomeActivity : BaseActivity(), HomeViewContract {
         when (resultCode) {
             RESULT_OK -> { }
             RESULT_CANCELED -> exit()
+        }
+    }
+
+    override fun onAttachFragment(fragment: Fragment) {
+        super.onAttachFragment(fragment)
+
+        when (fragment.tag) {
+            TAG_DETECTED_LOC_SER_PER_DENIED -> (fragment as MessageDialogFragment).okButtonClickListener = {
+                var lspFragment = supportFragmentManager.findFragmentByTag(LocationServicePermissionsFragment.TAG_LOCATION_SERVICE_PERMISSIONS) as LocationServicePermissionsFragment?
+                if (lspFragment == null) {
+                    lspFragment = LocationServicePermissionsFragment()
+                    supportFragmentManager.beginTransaction().add(lspFragment, LocationServicePermissionsFragment.TAG_LOCATION_SERVICE_PERMISSIONS).commitNow()
+                }
+                lspFragment.requestPermissions()
+            }
+            LocationServicePermissionsFragment.TAG_LOCATION_SERVICE_PERMISSIONS ->
+                (fragment as LocationServicePermissionsFragment).permissionsRequestFinishedListener = {
+                    homePresenter.notifyLocationServicePermissionsRequestFinished(it)
+                }
         }
     }
 
@@ -144,6 +167,15 @@ class HomeActivity : BaseActivity(), HomeViewContract {
         super.onBackPressed()
     }
 
+    override fun onDetectedLocationServicePermissionsDenied() {
+        MessageDialogFragment.Builder()
+                .setTitle(R.string.title_dialog_detected_location_service_permissions_denied)
+                .setMessage(R.string.msg_dialog_detected_location_service_permissions_denied)
+                .setOkButtonText(R.string.pos_btn_dialog_detected_location_service_permissions_denied)
+                .showCancelButton()
+                .show(supportFragmentManager, TAG_DETECTED_LOC_SER_PER_DENIED)
+    }
+
     private fun updateAfterUpdatingFragment(tag: String) {
         val title: String
         val visibility: Int
@@ -169,12 +201,12 @@ class HomeActivity : BaseActivity(), HomeViewContract {
         vNavigator.setCheckedItem(checkedItemId)
     }
 
-    private fun findFragmentByTag(tag: String): Fragment? = supportFragmentManager.findFragmentByTag(tag)
+    private fun findFragment(tag: String): Fragment? = supportFragmentManager.findFragmentByTag(tag)
 
-    private fun isFragmentExist(tag: String) = findFragmentByTag(tag) != null
+    private fun isFragmentExist(tag: String) = findFragment(tag) != null
 
     private fun isFragmentShowing(tag: String): Boolean {
-        val fragment = findFragmentByTag(tag)
+        val fragment = findFragment(tag)
         return fragment != null && !fragment.isHidden
     }
 
@@ -193,12 +225,12 @@ class HomeActivity : BaseActivity(), HomeViewContract {
     }
 
     private fun FragmentTransaction.hide(tag: String): FragmentTransaction {
-        hide(findFragmentByTag(tag))
+        hide(findFragment(tag))
         return this
     }
 
     private fun FragmentTransaction.show(tag: String): FragmentTransaction {
-        show(findFragmentByTag(tag))
+        show(findFragment(tag))
         return this
     }
 }

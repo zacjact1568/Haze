@@ -24,21 +24,15 @@ object SystemUtil {
      * @return
      * - Android 6.0 以下，总是返回 false
      * - Android 6.0 及以上，若用户在授权窗口勾选了“不再询问”，返回 false，否则返回 true
+     * - 若设备不支持该权限，返回 false
      */
     fun isPermissionRequestable(permission: String, activity: Activity) = ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)
 
     /** 获取 permissions 中未被授予的权限 */
     fun getNotGrantedPermissions(permissions: Array<String>) = permissions.filterNotTo(mutableListOf()) { checkPermission(it) }.toTypedArray()
 
-    /**
-     * 获取 permissions 中未被授予的权限及各权限是否可以弹授权窗口
-     * @return 未授予的权限 to 是否可以弹授权窗口
-     */
-    fun getNotGrantedPermissionAndRequestableMap(permissions: Array<String>, activity: Activity): Map<String, Boolean> {
-        val map = mutableMapOf<String, Boolean>()
-        permissions.filterNot { checkPermission(it) }.forEach { map[it] = isPermissionRequestable(it, activity) }
-        return map
-    }
+    /** 获取 permissions 中可请求的权限 */
+    fun getRequestablePermissions(permissions: Array<String>, activity: Activity) = permissions.filterTo(mutableListOf()) { isPermissionRequestable(it, activity) }.toTypedArray()
 
     val isNetworkAvailable: Boolean
         get() {

@@ -30,7 +30,23 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.preferences)
 
-        locationServicePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ -> TODO() }
+        locationServicePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
+            // 在触摸 Location Service Preference 时才检查 LocationServicePermissionsFragment 是否已创建过
+            // 若 Activity 从重建中恢复，且以前创建过 LocationServicePermissionsFragment，则 lspFragment 一定不为空
+            var lspFragment = childFragmentManager.findFragmentByTag(LocationServicePermissionsFragment.TAG_LOCATION_SERVICE_PERMISSIONS) as LocationServicePermissionsFragment?
+            if (lspFragment == null) {
+                // 如果没有创建过 LocationServicePermissionsFragment，创建
+                lspFragment = LocationServicePermissionsFragment()
+                // 使用 commitNow 来立即执行，否则后面可能会找不到
+                childFragmentManager.beginTransaction().add(lspFragment, LocationServicePermissionsFragment.TAG_LOCATION_SERVICE_PERMISSIONS).commitNow()
+            }
+            if (newValue as Boolean) {
+                lspFragment.requestPermissions()
+                false
+            } else {
+                true
+            }
+        }
 
         nightModePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
             MessageDialogFragment.Builder()
@@ -52,8 +68,16 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     override fun onAttachFragment(childFragment: Fragment) {
         super.onAttachFragment(childFragment)
 
-        if (childFragment.tag == TAG_SWITCH_NIGHT_MODE) {
-            (childFragment as MessageDialogFragment).okButtonClickListener = { nightModePreference.isChecked = !nightModePreference.isChecked }
+        when (childFragment.tag) {
+            TAG_SWITCH_NIGHT_MODE -> (childFragment as MessageDialogFragment).okButtonClickListener = { nightModePreference.isChecked = !nightModePreference.isChecked }
+            LocationServicePermissionsFragment.TAG_LOCATION_SERVICE_PERMISSIONS ->
+                (childFragment as LocationServicePermissionsFragment).permissionsRequestFinishedListener = {
+                    if (it) {
+                        // 如果成功授权，更改 preference 状态
+                        locationServicePreference.isChecked = !locationServicePreference.isChecked
+                    }
+                    // 如果授权被拒绝，不做任何操作
+                }
         }
     }
 
@@ -64,7 +88,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         when (key) {
-            Constant.PREF_KEY_LOCATION_SERVICE -> { TODO() }
+            Constant.PREF_KEY_LOCATION_SERVICE -> { }
             Constant.PREF_KEY_NIGHT_MODE -> {
                 AppCompatDelegate.setDefaultNightMode(if (DataManager.preferenceHelper.nightModeValue) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO)
                 // 返回并重新创建 HomeActivity
