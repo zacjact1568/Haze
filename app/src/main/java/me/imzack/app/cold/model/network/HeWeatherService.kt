@@ -1,8 +1,7 @@
 package me.imzack.app.cold.model.network
 
-import io.reactivex.Observable
+import io.reactivex.Single
 import me.imzack.app.cold.model.bean.HeWeather
-
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -11,9 +10,9 @@ interface HeWeatherService {
 
     /** 常规天气数据集合 */
     @GET("weather")
-    fun getHeWeatherCommonData(@Query("location") location: String, @Query("username") username: String, @Query("t") t: String, @Query("sign") sign: String): Observable<HeWeather.Common>
+    fun getHeWeatherCommonData(@Query("location") location: String, @Query("username") username: String, @Query("t") t: String, @Query("sign") sign: String): Single<HeWeather.Common>
 
     /** 空气质量数据集合 */
     @GET("air")
-    fun getHeWeatherAirData(@Query("location") location: String, @Query("username") username: String, @Query("t") t: String, @Query("sign") sign: String): Observable<HeWeather.Air>
+    fun getHeWeatherAirData(@Query("location") location: String, @Query("username") username: String, @Query("t") t: String, @Query("sign") sign: String): Single<HeWeather.Air>
 }

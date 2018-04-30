@@ -1,7 +1,7 @@
 package me.imzack.app.cold.model.network
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
-import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
@@ -11,7 +11,6 @@ import me.imzack.app.cold.util.LogUtil
 import me.imzack.app.cold.util.WeatherUtil
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -36,7 +35,7 @@ class NetworkHelper {
                 "username" to Constant.HE_WEATHER_USER_ID,
                 "t" to time
         ))
-        Observable.zip(
+        Single.zip(
                 service.getHeWeatherCommonData(cityId, Constant.HE_WEATHER_USER_ID, time, sign),
                 service.getHeWeatherAirData(cityId, Constant.HE_WEATHER_USER_ID, time, sign),
                 // SAM 转换
