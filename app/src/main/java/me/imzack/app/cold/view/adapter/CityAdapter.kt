@@ -25,10 +25,10 @@ class CityAdapter : RecyclerView.Adapter<CityAdapter.ItemViewHolder>() {
             ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_city, parent, false))
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val (basic, current, _, _, status) = DataManager.getWeather(position)
+        val (_, cityName, current, _, _, updateTime, status) = DataManager.getWeather(position)
 
-        holder.vCityNameText.text = basic.cityName
-        holder.vWeatherText.text = if (basic.updateTime == 0L) "${Constant.UNKNOWN_DATA} | ${Constant.UNKNOWN_DATA}" else "${current.temperature} | ${DataManager.getConditionByCode(current.conditionCode)}"
+        holder.vCityNameText.text = cityName
+        holder.vWeatherText.text = if (updateTime == 0L) "${Constant.UNKNOWN_DATA} | ${Constant.UNKNOWN_DATA}" else "${current.temperature} | ${DataManager.getConditionByCode(current.conditionCode)}"
 
         if (status == Weather.STATUS_ON_UPDATING) {
             holder.vUpdateButton.startAnimation(updateAnim)

@@ -35,7 +35,7 @@ class WeatherPagePresenter(private var weatherPageViewContract: WeatherPageViewC
 
     fun notifyWeatherUpdating() {
         if (SystemUtil.isNetworkAvailable) {
-            DataManager.getWeatherDataFromInternet(weather.basic.cityId)
+            DataManager.getWeatherDataFromInternet(weather.cityId)
         } else {
             //不会和HomeActivity、MyCitiesFragment中的SnackBar同时出现
             weatherPageViewContract!!.onDetectedNetworkNotAvailable()
@@ -50,15 +50,15 @@ class WeatherPagePresenter(private var weatherPageViewContract: WeatherPageViewC
 
     private val formattedWeather: FormattedWeather
         get() {
-            return if (weather.basic.updateTime == 0L) {
+            return if (weather.updateTime == 0L) {
                 //说明数据为空
-                FormattedWeather(weather.basic.cityName)
+                FormattedWeather(weather.cityName)
             } else {
                 FormattedWeather(
-                        weather.basic.cityName,
+                        weather.cityName,
                         DataManager.getConditionByCode(weather.current.conditionCode),
                         weather.current.temperature.toString(),
-                        String.format(ResourceUtil.getString(R.string.text_update_time), TimeUtil.formatTime(weather.basic.updateTime)),
+                        String.format(ResourceUtil.getString(R.string.text_update_time), TimeUtil.formatTime(weather.updateTime)),
                         weather.current.feelsLike.toString(),
                         // 今天的最高温和最低温
                         "${weather.dailyForecasts[0].temperatureMin} | ${weather.dailyForecasts[0].temperatureMax}",
@@ -72,7 +72,7 @@ class WeatherPagePresenter(private var weatherPageViewContract: WeatherPageViewC
         }
 
     /** 判断是否是当前城市 */
-    private fun isThisCity(cityId: String) = weather.basic.cityId == cityId
+    private fun isThisCity(cityId: String) = weather.cityId == cityId
 
     @Subscribe
     fun onWeatherUpdateStatusChanged(event: WeatherUpdateStatusChangedEvent) {

@@ -1,178 +1,100 @@
 package me.imzack.app.cold.model.database
 
-import android.content.ContentValues
+import android.arch.persistence.room.Room
 import android.database.sqlite.SQLiteDatabase
-import io.reactivex.Observable
-import io.reactivex.ObservableOnSubscribe
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Function4
 import io.reactivex.schedulers.Schedulers
-
 import me.imzack.app.cold.App
 import me.imzack.app.cold.common.Constant
 import me.imzack.app.cold.model.bean.*
+import me.imzack.app.cold.model.database.entity.BasicEntity
+import me.imzack.app.cold.model.database.entity.CurrentEntity
+import me.imzack.app.cold.model.database.entity.DailyForecastEntity
+import me.imzack.app.cold.model.database.entity.HourlyForecastEntity
 import me.imzack.app.cold.util.SystemUtil
 
 class DatabaseHelper {
 
-    private val DB_NAME = "${App.context.packageName}.db"
-
-    private val DB_VERSION = 1
-
-    private val database = DatabaseOpenHelper(App.context, DB_NAME, null, DB_VERSION).writableDatabase
+    private val weatherDatabase = Room.databaseBuilder(App.context, WeatherDatabase::class.java, WeatherDatabase.NAME).allowMainThreadQueries().build()
 
     // ***************** Weather *****************
 
     fun loadWeatherAsync(callback: (List<Weather>) -> Unit) {
-        Observable.create(ObservableOnSubscribe<List<Weather>> { it.onNext(loadWeather()) })
+        Single.zip(
+                weatherDatabase.basicDao().loadAll(),
+                weatherDatabase.currentDao().loadAll(),
+                weatherDatabase.hourlyForecastDao().loadAll(),
+                weatherDatabase.dailyForecastDao().loadAll(),
+                Function4<Array<BasicEntity>, Array<CurrentEntity>, Array<HourlyForecastEntity>, Array<DailyForecastEntity>, List<Weather>>
+                { basicEntities, currentEntities, hourlyForecastEntities, dailyForecastEntities ->
+                    val weatherList = mutableListOf<Weather>()
+                    for (i in 0 until basicEntities.size) {
+                        // 因为对所有表的操作都是同时进行的，各个表中各个城市的顺序一定是相同的，可以直接按序处理
+                        val (cityId, cityName, updateTime) = basicEntities[i]
+                        val (_, conditionCode, currentTemperature, feelsLike, airQualityIndex) = currentEntities[i]
+                        weatherList.add(Weather(
+                                cityId,
+                                cityName,
+                                Weather.Current(conditionCode, currentTemperature, feelsLike, airQualityIndex),
+                                Array(Weather.HOURLY_FORECAST_LENGTH) {
+                                    val (_, _, time, hourlyTemperature, precipitationProbability) = hourlyForecastEntities[Weather.HOURLY_FORECAST_LENGTH * i + it]
+                                    Weather.HourlyForecast(time, hourlyTemperature, precipitationProbability)
+                                },
+                                Array(Weather.DAILY_FORECAST_LENGTH) {
+                                    val (_, _, date, temperatureMax, temperatureMin, conditionCodeDay, conditionCodeNight, precipitationProbability) = dailyForecastEntities[Weather.DAILY_FORECAST_LENGTH * i + it]
+                                    Weather.DailyForecast(date, temperatureMax, temperatureMin, conditionCodeDay, conditionCodeNight, precipitationProbability)
+                                },
+                                updateTime
+                        ))
+                    }
+                    weatherList
+                }
+        )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { callback(it) }
-    }
-
-    private fun loadWeather(): List<Weather> {
-        val weatherList = mutableListOf<Weather>()
-
-        val basicCursor = database.rawQuery("select * from ${Constant.BASIC}", null)
-        val currentCursor = database.rawQuery("select * from ${Constant.CURRENT}", null)
-        val hourlyForecastCursor = database.rawQuery("select * from ${Constant.HOURLY_FORECAST}", null)
-        val dailyForecastCursor = database.rawQuery("select * from ${Constant.DAILY_FORECAST}", null)
-
-        if (basicCursor.moveToFirst()) {
-            do {
-                val weather = Weather(
-                        basicCursor.getString(basicCursor.getColumnIndex(Constant.CITY_ID)),
-                        basicCursor.getString(basicCursor.getColumnIndex(Constant.CITY_NAME))
-                )
-                weather.basic.updateTime = basicCursor.getLong(basicCursor.getColumnIndex(Constant.UPDATE_TIME))
-                weatherList.add(weather)
-            } while (basicCursor.moveToNext())
-        }
-        basicCursor.close()
-
-        if (currentCursor.moveToFirst()) {
-            for (weather in weatherList) {
-                val current = weather.current
-                current.conditionCode = currentCursor.getInt(currentCursor.getColumnIndex(Constant.CONDITION_CODE))
-                current.temperature = currentCursor.getInt(currentCursor.getColumnIndex(Constant.TEMPERATURE))
-                current.feelsLike = currentCursor.getInt(currentCursor.getColumnIndex(Constant.FEELS_LIKE))
-                current.airQualityIndex = currentCursor.getInt(currentCursor.getColumnIndex(Constant.AIR_QUALITY_INDEX))
-                if (!currentCursor.moveToNext()) break
-            }
-        }
-        currentCursor.close()
-
-        if (hourlyForecastCursor.moveToFirst()) {
-            for (weather in weatherList) {
-                for (hourlyForecast in weather.hourlyForecasts) {
-                    hourlyForecast.time = hourlyForecastCursor.getLong(hourlyForecastCursor.getColumnIndex(Constant.TIME))
-                    hourlyForecast.temperature = hourlyForecastCursor.getInt(hourlyForecastCursor.getColumnIndex(Constant.TEMPERATURE))
-                    hourlyForecast.precipitationProbability = hourlyForecastCursor.getInt(hourlyForecastCursor.getColumnIndex(Constant.PRECIPITATION_PROBABILITY))
-                    if (!hourlyForecastCursor.moveToNext()) break
-                }
-            }
-        }
-        hourlyForecastCursor.close()
-
-        if (dailyForecastCursor.moveToFirst()) {
-            for (weather in weatherList) {
-                for (dailyForecast in weather.dailyForecasts) {
-                    dailyForecast.date = dailyForecastCursor.getLong(dailyForecastCursor.getColumnIndex(Constant.DATE))
-                    dailyForecast.temperatureMax = dailyForecastCursor.getInt(dailyForecastCursor.getColumnIndex(Constant.TEMPERATURE_MAX))
-                    dailyForecast.temperatureMin = dailyForecastCursor.getInt(dailyForecastCursor.getColumnIndex(Constant.TEMPERATURE_MIN))
-                    dailyForecast.conditionCodeDay = dailyForecastCursor.getInt(dailyForecastCursor.getColumnIndex(Constant.CONDITION_CODE_DAY))
-                    dailyForecast.conditionCodeNight = dailyForecastCursor.getInt(dailyForecastCursor.getColumnIndex(Constant.CONDITION_CODE_NIGHT))
-                    dailyForecast.precipitationProbability = dailyForecastCursor.getInt(dailyForecastCursor.getColumnIndex(Constant.PRECIPITATION_PROBABILITY))
-                    if (!dailyForecastCursor.moveToNext()) break
-                }
-            }
-        }
-        dailyForecastCursor.close()
-
-        return weatherList
+                // Lambda 表达式不能直接用 it，必须指定一个参数（weatherList）
+                // 这样才能推断出使用的是参数为 onSuccess 的那个方法，其类型 Consumer 接口中的方法只有一个参数，对应这里的 weatherList
+                // 因为还有一个参数为 onCallback 的方法，其类型 BiConsumer 接口中的方法有两个参数
+                .subscribe { weatherList -> callback(weatherList) }
     }
 
     fun insertWeather(weather: Weather) {
-        val values = ContentValues()
-
-        convert(weather.basic, values)
-        database.insert(Constant.BASIC, null, values)
-
-        convert(weather.current, values)
-        database.insert(Constant.CURRENT, null, values)
-
-        for (hourlyForecast in weather.hourlyForecasts) {
-            convert(hourlyForecast, values)
-            database.insert(Constant.HOURLY_FORECAST, null, values)
-        }
-
-        for (dailyForecast in weather.dailyForecasts) {
-            convert(dailyForecast, values)
-            database.insert(Constant.DAILY_FORECAST, null, values)
-        }
+        val cityId = weather.cityId
+        weatherDatabase.basicDao().insert(BasicEntity(cityId, weather.cityName, weather.updateTime))
+        val (conditionCode, currentTemperature, feelsLike, airQualityIndex) = weather.current
+        weatherDatabase.currentDao().insert(CurrentEntity(cityId, conditionCode, currentTemperature, feelsLike, airQualityIndex))
+        weatherDatabase.hourlyForecastDao().insert(Array(Weather.HOURLY_FORECAST_LENGTH) {
+            val (time, hourlyTemperature, precipitationProbability) = weather.hourlyForecasts[it]
+            HourlyForecastEntity(cityId, it, time, hourlyTemperature, precipitationProbability)
+        })
+        weatherDatabase.dailyForecastDao().insert(Array(Weather.DAILY_FORECAST_LENGTH) {
+            val (date, temperatureMax, temperatureMin, conditionCodeDay, conditionCodeNight, precipitationProbability) = weather.dailyForecasts[it]
+            DailyForecastEntity(cityId, it, date, temperatureMax, temperatureMin, conditionCodeDay, conditionCodeNight, precipitationProbability)
+        })
     }
 
     fun updateWeather(weather: Weather) {
-        val values = ContentValues()
-
-        convert(weather.basic, values)
-        database.update(Constant.BASIC, values, "${Constant.CITY_ID} = ?", arrayOf(weather.basic.cityId))
-
-        convert(weather.current, values)
-        database.update(Constant.CURRENT, values, "${Constant.CITY_ID} = ?", arrayOf(weather.current.cityId))
-
-        for (hourlyForecast in weather.hourlyForecasts) {
-            convert(hourlyForecast, values)
-            database.update(Constant.HOURLY_FORECAST, values, "${Constant.CITY_ID} = ? and ${Constant.SEQUENCE} = ?", arrayOf(hourlyForecast.cityId, hourlyForecast.sequence.toString()))
-        }
-
-        for (dailyForecast in weather.dailyForecasts) {
-            convert(dailyForecast, values)
-            database.update(Constant.DAILY_FORECAST, values, "${Constant.CITY_ID} = ? and ${Constant.SEQUENCE} = ?", arrayOf(dailyForecast.cityId, dailyForecast.sequence.toString()))
-        }
+        val cityId = weather.cityId
+        weatherDatabase.basicDao().update(BasicEntity(cityId, weather.cityName, weather.updateTime))
+        val (conditionCode, currentTemperature, feelsLike, airQualityIndex) = weather.current
+        weatherDatabase.currentDao().update(CurrentEntity(cityId, conditionCode, currentTemperature, feelsLike, airQualityIndex))
+        weatherDatabase.hourlyForecastDao().update(Array(Weather.HOURLY_FORECAST_LENGTH) {
+            val (time, hourlyTemperature, precipitationProbability) = weather.hourlyForecasts[it]
+            HourlyForecastEntity(cityId, it, time, hourlyTemperature, precipitationProbability)
+        })
+        weatherDatabase.dailyForecastDao().update(Array(Weather.DAILY_FORECAST_LENGTH) {
+            val (date, temperatureMax, temperatureMin, conditionCodeDay, conditionCodeNight, precipitationProbability) = weather.dailyForecasts[it]
+            DailyForecastEntity(cityId, it, date, temperatureMax, temperatureMin, conditionCodeDay, conditionCodeNight, precipitationProbability)
+        })
     }
 
     fun deleteWeather(cityId: String) {
-        database.delete(Constant.BASIC, "${Constant.CITY_ID} = ?", arrayOf(cityId))
-        database.delete(Constant.CURRENT, "${Constant.CITY_ID} = ?", arrayOf(cityId))
-        database.delete(Constant.HOURLY_FORECAST, "${Constant.CITY_ID} = ?", arrayOf(cityId))
-        database.delete(Constant.DAILY_FORECAST, "${Constant.CITY_ID} = ?", arrayOf(cityId))
-    }
-
-    private fun convert(basic: Basic, values: ContentValues) {
-        values.clear()
-        values.put(Constant.CITY_ID, basic.cityId)
-        values.put(Constant.CITY_NAME, basic.cityName)
-        values.put(Constant.UPDATE_TIME, basic.updateTime)
-    }
-
-    private fun convert(current: Current, values: ContentValues) {
-        values.clear()
-        values.put(Constant.CITY_ID, current.cityId)
-        values.put(Constant.CONDITION_CODE, current.conditionCode)
-        values.put(Constant.TEMPERATURE, current.temperature)
-        values.put(Constant.FEELS_LIKE, current.feelsLike)
-        values.put(Constant.AIR_QUALITY_INDEX, current.airQualityIndex)
-    }
-
-    private fun convert(hourlyForecast: HourlyForecast, values: ContentValues) {
-        values.clear()
-        values.put(Constant.CITY_ID, hourlyForecast.cityId)
-        values.put(Constant.SEQUENCE, hourlyForecast.sequence)
-        values.put(Constant.TIME, hourlyForecast.time)
-        values.put(Constant.TEMPERATURE, hourlyForecast.temperature)
-        values.put(Constant.PRECIPITATION_PROBABILITY, hourlyForecast.precipitationProbability)
-    }
-
-    private fun convert(dailyForecast: DailyForecast, values: ContentValues) {
-        values.clear()
-        values.put(Constant.CITY_ID, dailyForecast.cityId)
-        values.put(Constant.SEQUENCE, dailyForecast.sequence)
-        values.put(Constant.DATE, dailyForecast.date)
-        values.put(Constant.TEMPERATURE_MAX, dailyForecast.temperatureMax)
-        values.put(Constant.TEMPERATURE_MIN, dailyForecast.temperatureMin)
-        values.put(Constant.CONDITION_CODE_DAY, dailyForecast.conditionCodeDay)
-        values.put(Constant.CONDITION_CODE_NIGHT, dailyForecast.conditionCodeNight)
-        values.put(Constant.PRECIPITATION_PROBABILITY, dailyForecast.precipitationProbability)
+        weatherDatabase.basicDao().delete(cityId)
+        weatherDatabase.currentDao().delete(cityId)
+        weatherDatabase.hourlyForecastDao().delete(cityId)
+        weatherDatabase.dailyForecastDao().delete(cityId)
     }
 
     // ***************** City *****************
@@ -183,7 +105,7 @@ class DatabaseHelper {
      */
     fun queryCityLike(name: String, resultList: MutableList<City>) {
         val db = SQLiteDatabase.openDatabase(App.context.getDatabasePath(Constant.HE_WEATHER_LOCATION_DB_FN).path, null, SQLiteDatabase.OPEN_READONLY)
-        val cursor = db.rawQuery("select ${Constant.ID}, ${Constant.NAME_ZH_CN}, ${Constant.PROVINCE_ZH_CN}, ${Constant.PREFECTURE_ZH_CN} from ${Constant.CHINA_CITY} where (${Constant.NAME_EN} like ?) or (${Constant.NAME_ZH_CN} like ?)", arrayOf("$name%", "$name%"))
+        val cursor = db.rawQuery("SELECT ${Constant.ID}, ${Constant.NAME_ZH_CN}, ${Constant.PROVINCE_ZH_CN}, ${Constant.PREFECTURE_ZH_CN} FROM ${Constant.CHINA_CITY} WHERE (${Constant.NAME_EN} LIKE ?) OR (${Constant.NAME_ZH_CN} LIKE ?)", arrayOf("$name%", "$name%"))
         if (cursor.moveToFirst()) {
             do {
                 resultList.add(City(
@@ -207,7 +129,7 @@ class DatabaseHelper {
     fun queryConditionByCode(code: Int): String? {
         val db = SQLiteDatabase.openDatabase(App.context.getDatabasePath(Constant.HE_WEATHER_CONDITION_DB_FN).path, null, SQLiteDatabase.OPEN_READONLY)
         val nameColumn = String.format(Constant.NAME_LANG, SystemUtil.preferredLanguage)
-        val cursor = db.rawQuery("select $nameColumn from ${Constant.CONDITION} where ${Constant.CODE} = ?", arrayOf("$code"))
+        val cursor = db.rawQuery("SELECT $nameColumn FROM ${Constant.CONDITION} WHERE ${Constant.CODE} = ?", arrayOf("$code"))
         var condition: String? = null
         if (cursor.moveToFirst()) {
             condition = cursor.getString(cursor.getColumnIndex(nameColumn))

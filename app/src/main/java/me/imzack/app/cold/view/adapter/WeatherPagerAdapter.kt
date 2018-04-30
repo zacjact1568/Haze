@@ -25,5 +25,5 @@ class WeatherPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
         }
     }
 
-    override fun getPageTitle(position: Int) = DataManager.getWeather(position).basic.cityName
+    override fun getPageTitle(position: Int) = DataManager.getWeather(position).cityName
 }

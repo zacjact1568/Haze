@@ -14,7 +14,7 @@ object WeatherUtil {
         val commonApi = heWeather.common!!.heWeather6[0]
         val airApi = heWeather.air!!.heWeather6[0]
 
-        weather.basic.updateTime = TimeUtil.parseTime(commonApi.update.loc)
+        weather.updateTime = TimeUtil.parseTime(commonApi.update.loc)
 
         val now = commonApi.now
         val current = weather.current
