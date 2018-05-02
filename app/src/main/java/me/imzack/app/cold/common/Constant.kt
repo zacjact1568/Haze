@@ -5,6 +5,8 @@ object Constant {
     const val BASIC = "basic"
     const val CITY_ID = "city_id"
     const val CITY_NAME = "city_name"
+    const val LONGITUDE = "longitude"
+    const val LATITUDE = "latitude"
     const val UPDATE_TIME = "update_time"
 
     const val CURRENT = "current"

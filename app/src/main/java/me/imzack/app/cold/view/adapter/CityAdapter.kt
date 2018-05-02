@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_list_city.*
-
 import me.imzack.app.cold.R
 import me.imzack.app.cold.common.Constant
 import me.imzack.app.cold.model.DataManager
@@ -25,9 +24,9 @@ class CityAdapter : RecyclerView.Adapter<CityAdapter.ItemViewHolder>() {
             ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_city, parent, false))
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val (_, cityName, current, _, _, updateTime, status) = DataManager.getWeather(position)
+        val (city, current, _, _, updateTime, status) = DataManager.getWeather(position)
 
-        holder.vCityNameText.text = cityName
+        holder.vCityNameText.text = city.name
         holder.vWeatherText.text = if (updateTime == 0L) "${Constant.UNKNOWN_DATA} | ${Constant.UNKNOWN_DATA}" else "${current.temperature} | ${DataManager.getConditionByCode(current.conditionCode)}"
 
         if (status == Weather.STATUS_ON_UPDATING) {

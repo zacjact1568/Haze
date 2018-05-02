@@ -12,6 +12,10 @@ data class BasicEntity(
         val cityId: String,
         @ColumnInfo(name = Constant.CITY_NAME)
         val cityName: String,
+        @ColumnInfo(name = Constant.LONGITUDE)
+        val longitude: Double,
+        @ColumnInfo(name = Constant.LATITUDE)
+        val latitude: Double,
         @ColumnInfo(name = Constant.UPDATE_TIME)
         val updateTime: Long
 )

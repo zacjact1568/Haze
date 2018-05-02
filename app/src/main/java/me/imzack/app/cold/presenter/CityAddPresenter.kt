@@ -42,7 +42,7 @@ class CityAddPresenter(private var cityAddViewContract: CityAddViewContract?) : 
         if (DataManager.doesCityExist(city.id)) {
             cityAddViewContract!!.showToast(R.string.toast_city_exists)
         } else {
-            DataManager.notifyCityAdded(city.id, city.name)
+            DataManager.notifyCityAdded(city)
             App.eventBus.post(CityAddedEvent(
                     presenterName,
                     city.id,

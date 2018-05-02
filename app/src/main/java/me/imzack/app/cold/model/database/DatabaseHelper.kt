@@ -32,11 +32,10 @@ class DatabaseHelper {
                     val weatherList = mutableListOf<Weather>()
                     for (i in 0 until basicEntities.size) {
                         // 因为对所有表的操作都是同时进行的，各个表中各个城市的顺序一定是相同的，可以直接按序处理
-                        val (cityId, cityName, updateTime) = basicEntities[i]
+                        val (cityId, cityName, longitude, latitude, updateTime) = basicEntities[i]
                         val (_, conditionCode, currentTemperature, feelsLike, airQualityIndex) = currentEntities[i]
                         weatherList.add(Weather(
-                                cityId,
-                                cityName,
+                                City(cityId, cityName, longitude, latitude),
                                 Weather.Current(conditionCode, currentTemperature, feelsLike, airQualityIndex),
                                 Array(Weather.HOURLY_FORECAST_LENGTH) {
                                     val (_, _, time, hourlyTemperature, precipitationProbability) = hourlyForecastEntities[Weather.HOURLY_FORECAST_LENGTH * i + it]
@@ -62,7 +61,7 @@ class DatabaseHelper {
 
     fun insertWeather(weather: Weather) {
         val cityId = weather.cityId
-        weatherDatabase.basicDao().insert(BasicEntity(cityId, weather.cityName, weather.updateTime))
+        weatherDatabase.basicDao().insert(BasicEntity(cityId, weather.cityName, weather.city.longitude, weather.city.latitude, weather.updateTime))
         val (conditionCode, currentTemperature, feelsLike, airQualityIndex) = weather.current
         weatherDatabase.currentDao().insert(CurrentEntity(cityId, conditionCode, currentTemperature, feelsLike, airQualityIndex))
         weatherDatabase.hourlyForecastDao().insert(Array(Weather.HOURLY_FORECAST_LENGTH) {
@@ -77,7 +76,7 @@ class DatabaseHelper {
 
     fun updateWeather(weather: Weather) {
         val cityId = weather.cityId
-        weatherDatabase.basicDao().update(BasicEntity(cityId, weather.cityName, weather.updateTime))
+        weatherDatabase.basicDao().update(BasicEntity(cityId, weather.cityName, weather.city.longitude, weather.city.latitude, weather.updateTime))
         val (conditionCode, currentTemperature, feelsLike, airQualityIndex) = weather.current
         weatherDatabase.currentDao().update(CurrentEntity(cityId, conditionCode, currentTemperature, feelsLike, airQualityIndex))
         weatherDatabase.hourlyForecastDao().update(Array(Weather.HOURLY_FORECAST_LENGTH) {
@@ -103,14 +102,20 @@ class DatabaseHelper {
      * 从数据库中查询城市详细信息（暂时只支持国内城市，查询出中文结果）
      * @param name 输入的城市名称，中文或英文
      */
+    // TODO 结束所有查询再关闭数据库
     fun queryCityLike(name: String, resultList: MutableList<City>) {
         val db = SQLiteDatabase.openDatabase(App.context.getDatabasePath(Constant.HE_WEATHER_LOCATION_DB_FN).path, null, SQLiteDatabase.OPEN_READONLY)
-        val cursor = db.rawQuery("SELECT ${Constant.ID}, ${Constant.NAME_ZH_CN}, ${Constant.PROVINCE_ZH_CN}, ${Constant.PREFECTURE_ZH_CN} FROM ${Constant.CHINA_CITY} WHERE (${Constant.NAME_EN} LIKE ?) OR (${Constant.NAME_ZH_CN} LIKE ?)", arrayOf("$name%", "$name%"))
+        val cursor = db.rawQuery(
+                "SELECT ${Constant.ID}, ${Constant.NAME_ZH_CN}, ${Constant.PROVINCE_ZH_CN}, ${Constant.PREFECTURE_ZH_CN}, ${Constant.LATITUDE}, ${Constant.LONGITUDE} FROM ${Constant.CHINA_CITY} WHERE (${Constant.NAME_EN} LIKE ?) OR (${Constant.NAME_ZH_CN} LIKE ?)",
+                arrayOf("$name%", "$name%")
+        )
         if (cursor.moveToFirst()) {
             do {
                 resultList.add(City(
                         cursor.getString(cursor.getColumnIndex(Constant.ID)),
                         cursor.getString(cursor.getColumnIndex(Constant.NAME_ZH_CN)),
+                        cursor.getDouble(cursor.getColumnIndex(Constant.LONGITUDE)),
+                        cursor.getDouble(cursor.getColumnIndex(Constant.LATITUDE)),
                         cursor.getString(cursor.getColumnIndex(Constant.PREFECTURE_ZH_CN)),
                         cursor.getString(cursor.getColumnIndex(Constant.PROVINCE_ZH_CN))
                 ))

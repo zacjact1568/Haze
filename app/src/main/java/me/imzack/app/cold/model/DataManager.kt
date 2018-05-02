@@ -3,6 +3,7 @@ package me.imzack.app.cold.model
 import me.imzack.app.cold.App
 import me.imzack.app.cold.event.DataLoadedEvent
 import me.imzack.app.cold.event.WeatherUpdateStatusChangedEvent
+import me.imzack.app.cold.model.bean.City
 import me.imzack.app.cold.model.bean.Weather
 import me.imzack.app.cold.model.database.DatabaseHelper
 import me.imzack.app.cold.model.location.LocationHelper
@@ -50,8 +51,8 @@ object DataManager {
     /** 根据 cityId 找其在 weatherList 中的位置，若未找到，返回 -1 */
     fun getWeatherLocationInWeatherList(cityId: String) = (0 until cityCount).firstOrNull { getWeather(it).cityId == cityId } ?: -1
 
-    fun notifyCityAdded(cityId: String, cityName: String) {
-        val weather = Weather(cityId, cityName)
+    fun notifyCityAdded(city: City) {
+        val weather = Weather(city)
         // 产生空 weather 对象，添加到 weatherList
         weatherList.add(weather)
         // 存储数据到数据库

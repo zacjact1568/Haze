@@ -4,14 +4,13 @@ import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
 import me.imzack.app.cold.App
 import me.imzack.app.cold.common.Constant
-import me.imzack.app.cold.model.bean.Location
 import me.imzack.app.cold.util.LogUtil
 import me.imzack.app.cold.util.SystemUtil
 
 class LocationHelper {
 
     /** 异步获取高德定位数据 */
-    fun getAMapLocationDataAsync(callback: (Location) -> Unit) {
+    fun getAMapLocationDataAsync(callback: (longitude: Double, latitude: Double) -> Unit) {
         val client = AMapLocationClient(App.context)
         client.setLocationOption(
                 AMapLocationClientOption()
@@ -27,7 +26,7 @@ class LocationHelper {
         client.setLocationListener {
             when {
                 it == null -> TODO("处理 AMapLocation 对象为空的情况")
-                it.errorCode == 0 -> callback(Location(it.longitude, it.latitude))
+                it.errorCode == 0 -> callback(it.longitude, it.latitude)
                 else -> LogUtil.e("AMapError","location Error, ErrCode: ${it.errorCode}, errInfo: ${it.errorInfo}")
             }
             // 销毁定位客户端

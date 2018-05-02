@@ -1,8 +1,7 @@
 package me.imzack.app.cold.model.bean
 
 data class Weather(
-        val cityId: String,
-        val cityName: String,
+        val city: City,
         val current: Current = Current(),
         val hourlyForecasts: Array<HourlyForecast> = Array(HOURLY_FORECAST_LENGTH) { HourlyForecast() },
         val dailyForecasts: Array<DailyForecast> = Array(DAILY_FORECAST_LENGTH) { DailyForecast() },
@@ -23,6 +22,12 @@ data class Weather(
         const val STATUS_GENERAL = 0
         const val STATUS_DELETED = -1
     }
+
+    val cityId
+        get() = city.id
+
+    val cityName
+        get() = city.name
 
     val isOnUpdating
         get() = status == STATUS_ON_UPDATING

@@ -1,8 +1,11 @@
 package me.imzack.app.cold.model.bean
 
 data class City(
-        var id: String,
-        var name: String,
-        var prefecture: String,
-        var province: String
+        val id: String,
+        val name: String,
+        val longitude: Double,
+        val latitude: Double,
+        // 地和省不是必需的
+        val prefecture: String? = null,
+        val province: String? = null
 )
