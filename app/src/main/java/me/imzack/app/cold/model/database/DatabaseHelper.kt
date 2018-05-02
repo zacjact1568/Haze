@@ -19,6 +19,10 @@ class DatabaseHelper {
 
     private val weatherDatabase = Room.databaseBuilder(App.context, WeatherDatabase::class.java, WeatherDatabase.NAME).allowMainThreadQueries().build()
 
+    private val heWeatherLocationDatabase = SQLiteDatabase.openDatabase(App.context.getDatabasePath(Constant.HE_WEATHER_LOCATION_DB_FN).path, null, SQLiteDatabase.OPEN_READONLY)
+
+    private val heWeatherConditionDatabase = SQLiteDatabase.openDatabase(App.context.getDatabasePath(Constant.HE_WEATHER_CONDITION_DB_FN).path, null, SQLiteDatabase.OPEN_READONLY)
+
     // ***************** Weather *****************
 
     fun loadWeatherAsync(callback: (List<Weather>) -> Unit) {
@@ -102,10 +106,8 @@ class DatabaseHelper {
      * 从数据库中查询城市详细信息（暂时只支持国内城市，查询出中文结果）
      * @param name 输入的城市名称，中文或英文
      */
-    // TODO 结束所有查询再关闭数据库
     fun queryCityLike(name: String, resultList: MutableList<City>) {
-        val db = SQLiteDatabase.openDatabase(App.context.getDatabasePath(Constant.HE_WEATHER_LOCATION_DB_FN).path, null, SQLiteDatabase.OPEN_READONLY)
-        val cursor = db.rawQuery(
+        val cursor = heWeatherLocationDatabase.rawQuery(
                 "SELECT ${Constant.ID}, ${Constant.NAME_ZH_CN}, ${Constant.PROVINCE_ZH_CN}, ${Constant.PREFECTURE_ZH_CN}, ${Constant.LATITUDE}, ${Constant.LONGITUDE} FROM ${Constant.CHINA_CITY} WHERE (${Constant.NAME_EN} LIKE ?) OR (${Constant.NAME_ZH_CN} LIKE ?)",
                 arrayOf("$name%", "$name%")
         )
@@ -122,7 +124,6 @@ class DatabaseHelper {
             } while (cursor.moveToNext())
         }
         cursor.close()
-        db.close()
     }
 
     // ***************** Condition *****************
@@ -132,15 +133,13 @@ class DatabaseHelper {
      * @param code 输入的城市名称，中文或英文
      */
     fun queryConditionByCode(code: Int): String? {
-        val db = SQLiteDatabase.openDatabase(App.context.getDatabasePath(Constant.HE_WEATHER_CONDITION_DB_FN).path, null, SQLiteDatabase.OPEN_READONLY)
         val nameColumn = String.format(Constant.NAME_LANG, SystemUtil.preferredLanguage)
-        val cursor = db.rawQuery("SELECT $nameColumn FROM ${Constant.CONDITION} WHERE ${Constant.CODE} = ?", arrayOf("$code"))
+        val cursor = heWeatherConditionDatabase.rawQuery("SELECT $nameColumn FROM ${Constant.CONDITION} WHERE ${Constant.CODE} = ?", arrayOf("$code"))
         var condition: String? = null
         if (cursor.moveToFirst()) {
             condition = cursor.getString(cursor.getColumnIndex(nameColumn))
         }
         cursor.close()
-        db.close()
         return condition
     }
 }
