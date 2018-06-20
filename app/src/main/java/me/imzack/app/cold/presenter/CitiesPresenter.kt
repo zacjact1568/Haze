@@ -6,7 +6,6 @@ import me.imzack.app.cold.event.CityDeletedEvent
 import me.imzack.app.cold.event.CitySelectedEvent
 import me.imzack.app.cold.event.WeatherUpdateStatusChangedEvent
 import me.imzack.app.cold.model.DataManager
-import me.imzack.app.cold.util.SystemUtil
 import me.imzack.app.cold.view.adapter.CityAdapter
 import me.imzack.app.cold.view.contract.CitiesViewContract
 import org.greenrobot.eventbus.Subscribe
@@ -14,17 +13,20 @@ import org.greenrobot.eventbus.Subscribe
 class CitiesPresenter(private var citiesViewContract: CitiesViewContract?) : BasePresenter() {
     
     private val cityAdapter = CityAdapter()
+
     private val eventBus = App.eventBus
 
     override fun attach() {
         eventBus.register(this)
         cityAdapter.onCityItemClickListener = {
-            eventBus.post(CitySelectedEvent(presenterName, DataManager.getWeather(it).cityId, it))
+            eventBus.post(CitySelectedEvent(javaClass.simpleName, DataManager.getWeather(it).cityId, it))
         }
         cityAdapter.onUpdateButtonClickListener = {
             if (!DataManager.isWeatherDataOnUpdating(it)) {
-                // 说明现在未在更新，响应请求
-                updateWeather(it)
+                // 说明现在未在更新，开始更新数据
+                DataManager.updateWeatherDataFromInternet(DataManager.getWeather(it).cityId)
+                // 刷新适配器，显示出正在更新的状态
+                cityAdapter.notifyItemChanged(it)
             }
         }
         cityAdapter.onDeleteButtonClickListener = {
@@ -44,19 +46,7 @@ class CitiesPresenter(private var citiesViewContract: CitiesViewContract?) : Bas
         // 执行删除
         DataManager.notifyCityDeleted(position)
         cityAdapter.notifyItemRemoved(position)
-        eventBus.post(CityDeletedEvent(presenterName, cityId, position))
-    }
-
-    private fun updateWeather(position: Int) {
-        if (SystemUtil.isNetworkAvailable) {
-            // 开始更新数据
-            DataManager.getWeatherDataFromInternet(DataManager.getWeather(position).cityId)
-            // 刷新适配器（显示出正在更新的状态）
-            cityAdapter.notifyItemChanged(position)
-        } else {
-            // 显示网络不可用的 SnackBar
-            citiesViewContract!!.onDetectedNetworkNotAvailable()
-        }
+        eventBus.post(CityDeletedEvent(javaClass.simpleName, cityId, position))
     }
 
     @Subscribe

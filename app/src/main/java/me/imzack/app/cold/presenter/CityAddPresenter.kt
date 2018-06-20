@@ -6,6 +6,7 @@ import me.imzack.app.cold.R
 import me.imzack.app.cold.event.CityAddedEvent
 import me.imzack.app.cold.model.DataManager
 import me.imzack.app.cold.model.bean.City
+import me.imzack.app.cold.model.bean.Weather
 import me.imzack.app.cold.view.adapter.CitySearchResultAdapter
 import me.imzack.app.cold.view.contract.CityAddViewContract
 
@@ -38,14 +39,14 @@ class CityAddPresenter(private var cityAddViewContract: CityAddViewContract?) : 
     }
 
     fun notifyCityListItemClicked(position: Int) {
-        val city = citySearchList[position]
-        if (DataManager.doesCityExist(city.id)) {
+        val (id, name, prefecture) = citySearchList[position]
+        if (DataManager.doesCityExist(id)) {
             cityAddViewContract!!.showToast(R.string.toast_city_exists)
         } else {
-            DataManager.notifyCityAdded(city)
+            DataManager.notifyCityAdded(Weather.City(id, name, name == prefecture))
             App.eventBus.post(CityAddedEvent(
-                    presenterName,
-                    city.id,
+                    javaClass.simpleName,
+                    id,
                     DataManager.recentlyAddedCityLocation
             ))
             cityAddViewContract!!.exit()

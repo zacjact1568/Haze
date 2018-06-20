@@ -54,8 +54,6 @@ class LocationServicePermissionsFragment : BaseFragment() {
     private val requestableNotGrantedPermissions
         get() = SystemUtil.getRequestablePermissions(notGrantedPermissions, activity!!)
 
-    private val preferenceHelper = DataManager.preferenceHelper
-
     var permissionsRequestFinishedListener: ((Boolean) -> Unit)? = null
 
     override fun onAttachFragment(childFragment: Fragment) {
@@ -118,7 +116,6 @@ class LocationServicePermissionsFragment : BaseFragment() {
     }
 
     private fun onPermissionsGranted() {
-        preferenceHelper.locationServiceValue = true
         // 就算后面调用 exit 移除了 LocationServicePermissionsFragment，也不会影响到该回调函数中新建的 Fragment 等
         // 因为回调函数是在宿主类中定义的，和 LocationServicePermissionsFragment 无关
         // 就算要使用 Fragment Manager，使用的也是宿主类的

@@ -6,13 +6,11 @@ interface WeatherPageViewContract : BaseViewContract {
 
     fun showInitialView(formattedWeather: FormattedWeather)
 
-    fun onDetectedNetworkNotAvailable()
+    fun showWeatherView(formattedWeather: FormattedWeather)
 
-    fun onWeatherUpdatedSuccessfully(formattedWeather: FormattedWeather)
+    fun changeSwipeRefreshingStatus(isRefreshing: Boolean)
 
-    fun onWeatherUpdatedAbortively()
-
-    fun onChangeSwipeRefreshingStatus(isRefreshing: Boolean)
+    fun changeCityName(cityName: String)
 
     fun onCityDeleted()
 

@@ -1,19 +1,13 @@
-package me.imzack.app.cold.model.bean
+package me.imzack.app.cold.model.network.bean
 
 import com.google.gson.annotations.SerializedName
 
-/**
- * 和风天气
- * @param common 常规天气数据集合
- * @param air 空气质量数据集合
- */
-data class HeWeather(
-        val common: Common?,
-        val air: Air?
-) {
+/** 和风天气 API 接口数据 */
+// 按 API 组织
+class HeWeatherApi {
 
-    /** 常规天气数据集合 */
-    data class Common(
+    /** 常规天气数据 */
+    data class Weather(
             @SerializedName("HeWeather6")
             val heWeather6: List<HeWeather6>
     ) {
@@ -132,17 +126,18 @@ data class HeWeather(
         }
     }
 
-    /** 空气质量数据集合 */
+    /** 空气质量数据 */
     data class Air(
             @SerializedName("HeWeather6")
             val heWeather6: List<HeWeather6>
     ) {
+        // 县级城市返回的 status 为 permission denied，其他为空
         data class HeWeather6(
-                val basic: Basic,
-                val update: Update,
+                val basic: Basic?,
+                val update: Update?,
                 val status: String,
                 @SerializedName("air_now_city")
-                val airNowCity: AirNowCity,
+                val airNowCity: AirNowCity?,
                 @SerializedName("air_now_station")
                 val airNowStation: List<AirNowStation>?
         ) {

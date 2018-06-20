@@ -41,6 +41,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                 childFragmentManager.beginTransaction().add(lspFragment, LocationServicePermissionsFragment.TAG_LOCATION_SERVICE_PERMISSIONS).commitNow()
             }
             if (newValue as Boolean) {
+                // 只有当开启位置服务时才执行
                 lspFragment.requestPermissions()
                 false
             } else {
@@ -73,8 +74,8 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
             LocationServicePermissionsFragment.TAG_LOCATION_SERVICE_PERMISSIONS ->
                 (childFragment as LocationServicePermissionsFragment).permissionsRequestFinishedListener = {
                     if (it) {
-                        // 如果成功授权，更改 preference 状态
-                        locationServicePreference.isChecked = !locationServicePreference.isChecked
+                        // 如果成功授权，更改 preference 的显示状态为 true，这也会同时更改 Shared Preference 中的值
+                        locationServicePreference.isChecked = true
                     }
                     // 如果授权被拒绝，不做任何操作
                 }

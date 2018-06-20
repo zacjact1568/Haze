@@ -4,7 +4,12 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.View
+import me.imzack.app.cold.App
 import me.imzack.app.cold.R
+import me.imzack.app.cold.common.Constant
+import me.imzack.app.cold.event.CityAddedEvent
+import me.imzack.app.cold.model.DataManager
+import me.imzack.app.cold.model.bean.Weather
 import me.imzack.app.cold.util.ResourceUtil
 import me.imzack.app.cold.util.StringUtil
 import me.imzack.lib.baseguideactivity.SimpleGuidePageFragment
@@ -47,9 +52,21 @@ class LocationGuidePageFragment : SimpleGuidePageFragment() {
         if (childFragment.tag == LocationServicePermissionsFragment.TAG_LOCATION_SERVICE_PERMISSIONS) {
             (childFragment as LocationServicePermissionsFragment).permissionsRequestFinishedListener = {
                 if (it) {
-                    // 如果成功授权，更新界面
+                    // 如果成功授权
+                    // 开启位置服务
+                    DataManager.preferenceHelper.locationServiceValue = true
+                    // 更新界面
                     descriptionText = StringUtil.addWhiteColorSpan(getString(R.string.description_page_location_enabled))
                     buttonText = null
+                    // TODO 不用（放到 HomeActivity 中，不然中途退出引导又进入会重复存入数据库）因为后续“当前位置”只与preferenceHelper.locationServiceValue有关，而这个选项是无法在app外部修改的
+                    // 先添加“当前位置”占位，待后续获取到位置再更新
+                    // 在引导页添加的城市位置肯定是 0
+                    DataManager.notifyCityAdded(Weather.City(Constant.CITY_ID_CURRENT_LOCATION, getString(R.string.text_current_location)))
+                    App.eventBus.post(CityAddedEvent(
+                            javaClass.simpleName,
+                            Constant.CITY_ID_CURRENT_LOCATION,
+                            DataManager.recentlyAddedCityLocation
+                    ))
                 }
                 // 如果授权被拒绝，不做任何操作
             }

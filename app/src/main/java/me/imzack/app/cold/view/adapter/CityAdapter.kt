@@ -23,13 +23,14 @@ class CityAdapter : RecyclerView.Adapter<CityAdapter.ItemViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
             ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_city, parent, false))
 
+    // TODO use payloads
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val (city, current, _, _, updateTime, status) = DataManager.getWeather(position)
 
         holder.vCityNameText.text = city.name
         holder.vWeatherText.text = if (updateTime == 0L) "${Constant.UNKNOWN_DATA} | ${Constant.UNKNOWN_DATA}" else "${current.temperature} | ${DataManager.getConditionByCode(current.conditionCode)}"
 
-        if (status == Weather.STATUS_ON_UPDATING) {
+        if (status == Weather.STATUS_UPDATING) {
             holder.vUpdateButton.startAnimation(updateAnim)
         }
 

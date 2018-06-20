@@ -6,7 +6,5 @@ interface CitiesViewContract : BaseViewContract {
 
     fun showInitialView(cityAdapter: CityAdapter)
 
-    fun onDetectedNetworkNotAvailable()
-
     fun showCityDeletionConfirmationDialog(cityName: String, position: Int)
 }

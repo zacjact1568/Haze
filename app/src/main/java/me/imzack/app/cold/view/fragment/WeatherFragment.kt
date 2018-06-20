@@ -41,7 +41,7 @@ class WeatherFragment : BaseFragment(), WeatherViewContract {
 
     override fun onDetectedNetworkNotAvailable() {
         Snackbar.make(vWeatherPager, R.string.text_network_not_available, Snackbar.LENGTH_LONG)
-                .setAction(R.string.action_network_settings) { startActivity(Intent(Settings.ACTION_WIRELESS_SETTINGS)) }
+                .setAction(R.string.action_settings) { startActivity(Intent(Settings.ACTION_WIRELESS_SETTINGS)) }
                 .show()
     }
 

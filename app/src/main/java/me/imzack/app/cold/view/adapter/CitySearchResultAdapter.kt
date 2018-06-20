@@ -19,7 +19,7 @@ class CitySearchResultAdapter(private val citySearchList: List<City>) : BaseAdap
     override fun getItemId(position: Int) = position.toLong()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val (_, cityName, _, _, prefName, provName) = getItem(position)
+        val (_, cityName, prefName, provName) = getItem(position)
         val view: View
         val viewHolder: ViewHolder
         if (convertView == null) {

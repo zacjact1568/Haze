@@ -5,11 +5,18 @@ import me.imzack.app.cold.App
 import me.imzack.app.cold.R
 import me.imzack.app.cold.common.Constant
 import me.imzack.app.cold.event.CitySelectedEvent
+import me.imzack.app.cold.event.WeatherUpdateStatusChangedEvent
+import me.imzack.app.cold.exception.AMapLocationServiceException
+import me.imzack.app.cold.exception.HeWeatherServiceException
+import me.imzack.app.cold.exception.NetworkNotAvailableException
+import me.imzack.app.cold.exception.SystemLocationServiceDisabledException
 import me.imzack.app.cold.model.DataManager
-import me.imzack.app.cold.util.SystemUtil
+import me.imzack.app.cold.util.*
 import me.imzack.app.cold.view.contract.HomeViewContract
 import me.imzack.app.cold.view.fragment.LocationServicePermissionsFragment
 import org.greenrobot.eventbus.Subscribe
+import retrofit2.HttpException
+import java.io.IOException
 
 class HomePresenter(private var homeViewContract: HomeViewContract?) : BasePresenter() {
 
@@ -96,5 +103,28 @@ class HomePresenter(private var homeViewContract: HomeViewContract?) : BasePrese
     @Subscribe
     fun onCitySelected(event: CitySelectedEvent) {
         switchFragment(Constant.WEATHER)
+    }
+
+    // 集中处理 WeatherPageFragment 和 CitiesFragment 中的天气更新状态改变事件
+    @Subscribe
+    fun onWeatherUpdateStatusChanged(event: WeatherUpdateStatusChangedEvent) {
+        when (event.status) {
+            // TODO 更新成功的 toast 添加城市名称
+            WeatherUpdateStatusChangedEvent.STATUS_UPDATED -> homeViewContract!!.showToast(R.string.toast_weather_update_successfully)
+            WeatherUpdateStatusChangedEvent.STATUS_FAILED -> {
+                val error = event.error
+                when (error) {
+                    null -> throw IllegalArgumentException("The status of WeatherUpdateStatusChangedEvent is STATUS_FAILED but error property is null")
+                    is NetworkNotAvailableException -> homeViewContract!!.onDetectedNetworkNotAvailable()
+                    is SystemLocationServiceDisabledException -> homeViewContract!!.onDetectedSystemLocationServiceDisabled()
+                    is AMapLocationServiceException -> homeViewContract!!.showToast(AMapLocationUtil.parseErrorCode(error.code))
+                    is IOException -> homeViewContract!!.showToast(R.string.error_io_exception)
+                    is HttpException -> homeViewContract!!.showToast(R.string.error_http_exception)
+                    is HeWeatherServiceException -> homeViewContract!!.showToast(HeWeatherUtil.parseStatus(error.state))
+                    else -> homeViewContract!!.showToast(error.message ?: "null")
+                }
+                LogUtil.e(error.message!!, error.javaClass.simpleName)
+            }
+        }
     }
 }

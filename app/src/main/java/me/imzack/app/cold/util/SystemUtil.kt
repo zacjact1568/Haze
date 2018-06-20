@@ -23,7 +23,7 @@ object SystemUtil {
      * 检查是否可以弹授权窗口
      * @return
      * - Android 6.0 以下，总是返回 false
-     * - Android 6.0 及以上，若用户在授权窗口勾选了“不再询问”，返回 false，否则返回 true
+     * - Android 6.0 及以上，TODO 若还未弹过授权窗口，返回 false，若用户在授权窗口勾选了“不再询问”，返回 false，否则返回 true
      * - 若设备不支持该权限，返回 false
      */
     fun isPermissionRequestable(permission: String, activity: Activity) = ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)
@@ -94,4 +94,7 @@ object SystemUtil {
                 else -> Constant.LOCATION_MODE_NONE
             }
         }
+
+    val isSystemLocationServiceEnabled
+        get() = locationMode != Constant.LOCATION_MODE_NONE
 }

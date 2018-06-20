@@ -6,9 +6,6 @@ import android.widget.Toast
 
 abstract class BaseActivity : AppCompatActivity() {
 
-    protected val activityName
-        get() = javaClass.simpleName!!
-
     protected fun setupActionBar() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }

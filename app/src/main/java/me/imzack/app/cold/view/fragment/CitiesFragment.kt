@@ -55,12 +55,6 @@ class CitiesFragment : BaseFragment(), CitiesViewContract {
         vCityList.adapter = cityAdapter
     }
 
-    override fun onDetectedNetworkNotAvailable() {
-        Snackbar.make(vCityList, R.string.text_network_not_available, Snackbar.LENGTH_LONG)
-                .setAction(R.string.action_network_settings) { startActivity(Intent(Settings.ACTION_WIRELESS_SETTINGS)) }
-                .show()
-    }
-
     override fun showCityDeletionConfirmationDialog(cityName: String, position: Int) {
         val dialogFragment = MessageDialogFragment.Builder()
                 .setTitle(R.string.title_dialog_city_deletion_confirmation)

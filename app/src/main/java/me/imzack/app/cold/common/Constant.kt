@@ -5,8 +5,7 @@ object Constant {
     const val BASIC = "basic"
     const val CITY_ID = "city_id"
     const val CITY_NAME = "city_name"
-    const val LONGITUDE = "longitude"
-    const val LATITUDE = "latitude"
+    const val IS_PREFECTURE = "is_prefecture"
     const val UPDATE_TIME = "update_time"
 
     const val CURRENT = "current"
@@ -49,6 +48,7 @@ object Constant {
     const val CURRENT_FRAGMENT = "current_fragment"
 
     const val HE_WEATHER_API_URL = "https://free-api.heweather.com/s6/"
+    const val HE_WEATHER_SEARCH_URL = "https://search.heweather.com/"
     const val HE_WEATHER_USER_ID = "HE1605091919551466"
     const val HE_WEATHER_API_KEY = "b62ec297adac4f64a4aabdc2f86e1ce7"
 
@@ -81,4 +81,6 @@ object Constant {
     const val LOCATION_MODE_HIGH_ACCURACY = 1
     const val LOCATION_MODE_BATTERY_SAVING = 2
     const val LOCATION_MODE_DEVICE_SENSORS = 3
+
+    const val CITY_ID_CURRENT_LOCATION = "current_location"
 }

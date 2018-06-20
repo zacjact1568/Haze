@@ -8,10 +8,7 @@ import me.imzack.app.cold.event.WeatherUpdateStatusChangedEvent
 import me.imzack.app.cold.model.DataManager
 import me.imzack.app.cold.model.bean.FormattedWeather
 import me.imzack.app.cold.model.bean.Weather
-import me.imzack.app.cold.util.ResourceUtil
-import me.imzack.app.cold.util.SystemUtil
-import me.imzack.app.cold.util.TimeUtil
-import me.imzack.app.cold.util.WeatherUtil
+import me.imzack.app.cold.util.*
 import me.imzack.app.cold.view.contract.WeatherPageViewContract
 import org.greenrobot.eventbus.Subscribe
 
@@ -20,8 +17,6 @@ class WeatherPagePresenter(private var weatherPageViewContract: WeatherPageViewC
     private val weather = DataManager.getWeather(weatherListPosition)
 
     private val eventBus = App.eventBus
-    
-    //private var isVisible = false
 
     override fun attach() {
         eventBus.register(this)
@@ -33,28 +28,26 @@ class WeatherPagePresenter(private var weatherPageViewContract: WeatherPageViewC
         eventBus.unregister(this)
     }
 
-    fun notifyWeatherUpdating() {
-        if (SystemUtil.isNetworkAvailable) {
-            DataManager.getWeatherDataFromInternet(weather.cityId)
-        } else {
-            //不会和HomeActivity、MyCitiesFragment中的SnackBar同时出现
-            weatherPageViewContract!!.onDetectedNetworkNotAvailable()
+    fun notifyStartingUpCompleted() {
+        // 启动该 Fragment 后，检查该城市是否是刚添加且未被标记为正在更新的，如果是，自动更新天气
+        if (weather.isNewAdded && !weather.isUpdating) {
+            notifyUpdatingWeather()
+            updateWeatherUpdateStatus()
         }
+        // TODO 在这里检查上一次更新的时间，若相隔过长，也自动更新
     }
 
-    fun notifyVisibilityChanged(isVisible: Boolean) {
-        //this.isVisible = isVisible;
-        //如果当前fragment变为不可见，直接隐藏下拉刷新图标；如果当前fragment变为可见，且又是在刷新状态时，显示下拉刷新图标
-        weatherPageViewContract!!.onChangeSwipeRefreshingStatus(isVisible && weather.status == Weather.STATUS_ON_UPDATING)
+    fun notifyUpdatingWeather() {
+        DataManager.updateWeatherDataFromInternet(weather.cityId)
     }
 
     private val formattedWeather: FormattedWeather
         get() {
-            return if (weather.updateTime == 0L) {
-                //说明数据为空
-                FormattedWeather(weather.cityName)
+            return if (weather.isNewAdded) {
+                FormattedWeather(weather.isUpdating, weather.cityName)
             } else {
                 FormattedWeather(
+                        weather.isUpdating,
                         weather.cityName,
                         DataManager.getConditionByCode(weather.current.conditionCode),
                         weather.current.temperature.toString(),
@@ -62,7 +55,7 @@ class WeatherPagePresenter(private var weatherPageViewContract: WeatherPageViewC
                         weather.current.feelsLike.toString(),
                         // 今天的最高温和最低温
                         "${weather.dailyForecasts[0].temperatureMin} | ${weather.dailyForecasts[0].temperatureMax}",
-                        if (weather.current.airQualityIndex == 0) Constant.UNKNOWN_DATA else WeatherUtil.parseAqi(weather.current.airQualityIndex),
+                        if (weather.current.airQualityIndex == 0) Constant.UNKNOWN_DATA else HeWeatherUtil.parseAqi(weather.current.airQualityIndex),
                         TimeUtil.getWeeks(weather.dailyForecasts[0].date, Weather.DAILY_FORECAST_LENGTH_DISPLAY),
                         Array(Weather.DAILY_FORECAST_LENGTH_DISPLAY) { DataManager.getConditionByCode(weather.dailyForecasts[it].conditionCodeDay) },
                         IntArray(Weather.DAILY_FORECAST_LENGTH_DISPLAY) { weather.dailyForecasts[it].temperatureMax },
@@ -71,20 +64,23 @@ class WeatherPagePresenter(private var weatherPageViewContract: WeatherPageViewC
             }
         }
 
+    /** 更新界面上的更新状态 */
+    private fun updateWeatherUpdateStatus() {
+        weatherPageViewContract!!.changeSwipeRefreshingStatus(weather.isUpdating)
+    }
+
     /** 判断是否是当前城市 */
-    private fun isThisCity(cityId: String) = weather.cityId == cityId
+    private fun isThisCity(cityId: String) = weather.cityId == cityId || DataManager.isLocationCity(weatherListPosition)
 
     @Subscribe
     fun onWeatherUpdateStatusChanged(event: WeatherUpdateStatusChangedEvent) {
-        // 当 WeatherUpdated 事件发生时，这个方法总会被调用，但 MyCitiesPresenter 中的订阅方法不一定被执行
         // 如果更新事件不是针对当前城市的，返回
         if (!isThisCity(event.cityId)) return
         when (event.status) {
-            WeatherUpdateStatusChangedEvent.STATUS_ON_UPDATING -> { }
-            WeatherUpdateStatusChangedEvent.STATUS_UPDATED_SUCCESSFUL -> weatherPageViewContract!!.onWeatherUpdatedSuccessfully(formattedWeather)
-            WeatherUpdateStatusChangedEvent.STATUS_UPDATED_FAILED -> weatherPageViewContract!!.onWeatherUpdatedAbortively()
+            WeatherUpdateStatusChangedEvent.STATUS_UPDATING, WeatherUpdateStatusChangedEvent.STATUS_FAILED -> updateWeatherUpdateStatus()
+            WeatherUpdateStatusChangedEvent.STATUS_LOCATED -> weatherPageViewContract!!.changeCityName(weather.cityName)
+            WeatherUpdateStatusChangedEvent.STATUS_UPDATED -> weatherPageViewContract!!.showWeatherView(formattedWeather)
         }
-        //weatherPageViewContract!!.onChangeSwipeRefreshingStatus(isVisible) TODO 未触发，isVisible为false
     }
 
     // 将优先级设为 1（默认为 0），否则将优先通知 WeatherPresenter 中的订阅者（可能是因为先注册），将先调用 notifyDataSetChanged，达不到更新 ViewPager 的效果

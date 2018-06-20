@@ -3,6 +3,8 @@ package me.imzack.app.cold.view.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.GravityCompat
@@ -10,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.content_home.*
 import me.imzack.app.cold.R
 import me.imzack.app.cold.common.Constant
 import me.imzack.app.cold.presenter.HomePresenter
@@ -176,6 +179,18 @@ class HomeActivity : BaseActivity(), HomeViewContract {
                 .show(supportFragmentManager, TAG_DETECTED_LOC_SER_PER_DENIED)
     }
 
+    override fun onDetectedNetworkNotAvailable() {
+        Snackbar.make(vContentLayout, R.string.text_network_not_available, Snackbar.LENGTH_LONG)
+                .setAction(R.string.action_settings) { startActivity(Intent(Settings.ACTION_WIRELESS_SETTINGS)) }
+                .show()
+    }
+
+    override fun onDetectedSystemLocationServiceDisabled() {
+        Snackbar.make(vContentLayout, R.string.text_location_not_available, Snackbar.LENGTH_LONG)
+                .setAction(R.string.action_settings) { startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)) }
+                .show()
+    }
+
     private fun updateAfterUpdatingFragment(tag: String) {
         val title: String
         val visibility: Int
@@ -201,7 +216,7 @@ class HomeActivity : BaseActivity(), HomeViewContract {
         vNavigator.setCheckedItem(checkedItemId)
     }
 
-    private fun findFragment(tag: String): Fragment? = supportFragmentManager.findFragmentByTag(tag)
+    private fun findFragment(tag: String) = supportFragmentManager.findFragmentByTag(tag)
 
     private fun isFragmentExist(tag: String) = findFragment(tag) != null
 
@@ -225,12 +240,12 @@ class HomeActivity : BaseActivity(), HomeViewContract {
     }
 
     private fun FragmentTransaction.hide(tag: String): FragmentTransaction {
-        hide(findFragment(tag))
+        hide(findFragment(tag) ?: throw IllegalArgumentException("No Fragment with tag \"$tag\" found"))
         return this
     }
 
     private fun FragmentTransaction.show(tag: String): FragmentTransaction {
-        show(findFragment(tag))
+        show(findFragment(tag) ?: throw IllegalArgumentException("No Fragment with tag \"$tag\" found"))
         return this
     }
 }

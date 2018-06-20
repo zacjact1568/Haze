@@ -18,8 +18,11 @@ data class Weather(
         // 温度趋势图中只显示 5 个
         const val DAILY_FORECAST_LENGTH_DISPLAY = 5
 
-        const val STATUS_ON_UPDATING = 1
+        /** 状态：正在更新 */
+        const val STATUS_UPDATING = 1
+        /** 状态：未在更新 */
         const val STATUS_GENERAL = 0
+        /** 状态：已删除 */
         const val STATUS_DELETED = -1
     }
 
@@ -29,8 +32,23 @@ data class Weather(
     val cityName
         get() = city.name
 
-    val isOnUpdating
-        get() = status == STATUS_ON_UPDATING
+    val isPrefecture
+        get() = city.isPrefecture
+
+    val isNewAdded
+        get() = updateTime == 0L
+
+    // TODO 若上一次刷新时间过久，自动刷新；若上一次刷新时间过近，不执行刷新
+    // val isUpdatedLongAgo
+
+    val isUpdating
+        get() = status == STATUS_UPDATING
+
+    data class City(
+            var id: String = "",
+            var name: String = "",
+            var isPrefecture: Boolean = false
+    )
 
     data class Current(
             var conditionCode: Int = 0,

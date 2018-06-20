@@ -36,10 +36,10 @@ class DatabaseHelper {
                     val weatherList = mutableListOf<Weather>()
                     for (i in 0 until basicEntities.size) {
                         // 因为对所有表的操作都是同时进行的，各个表中各个城市的顺序一定是相同的，可以直接按序处理
-                        val (cityId, cityName, longitude, latitude, updateTime) = basicEntities[i]
+                        val (cityId, cityName, isPrefecture, updateTime) = basicEntities[i]
                         val (_, conditionCode, currentTemperature, feelsLike, airQualityIndex) = currentEntities[i]
                         weatherList.add(Weather(
-                                City(cityId, cityName, longitude, latitude),
+                                Weather.City(cityId, cityName, isPrefecture),
                                 Weather.Current(conditionCode, currentTemperature, feelsLike, airQualityIndex),
                                 Array(Weather.HOURLY_FORECAST_LENGTH) {
                                     val (_, _, time, hourlyTemperature, precipitationProbability) = hourlyForecastEntities[Weather.HOURLY_FORECAST_LENGTH * i + it]
@@ -65,7 +65,7 @@ class DatabaseHelper {
 
     fun insertWeather(weather: Weather) {
         val cityId = weather.cityId
-        weatherDatabase.basicDao().insert(BasicEntity(cityId, weather.cityName, weather.city.longitude, weather.city.latitude, weather.updateTime))
+        weatherDatabase.basicDao().insert(BasicEntity(cityId, weather.cityName, weather.isPrefecture, weather.updateTime))
         val (conditionCode, currentTemperature, feelsLike, airQualityIndex) = weather.current
         weatherDatabase.currentDao().insert(CurrentEntity(cityId, conditionCode, currentTemperature, feelsLike, airQualityIndex))
         weatherDatabase.hourlyForecastDao().insert(Array(Weather.HOURLY_FORECAST_LENGTH) {
@@ -80,7 +80,7 @@ class DatabaseHelper {
 
     fun updateWeather(weather: Weather) {
         val cityId = weather.cityId
-        weatherDatabase.basicDao().update(BasicEntity(cityId, weather.cityName, weather.city.longitude, weather.city.latitude, weather.updateTime))
+        weatherDatabase.basicDao().update(BasicEntity(cityId, weather.cityName, weather.isPrefecture, weather.updateTime))
         val (conditionCode, currentTemperature, feelsLike, airQualityIndex) = weather.current
         weatherDatabase.currentDao().update(CurrentEntity(cityId, conditionCode, currentTemperature, feelsLike, airQualityIndex))
         weatherDatabase.hourlyForecastDao().update(Array(Weather.HOURLY_FORECAST_LENGTH) {
@@ -102,13 +102,25 @@ class DatabaseHelper {
 
     // ***************** City *****************
 
+    fun queryCityNameById(id: String): String {
+        val cursor = heWeatherLocationDatabase.rawQuery("SELECT ${Constant.NAME_ZH_CN} FROM ${Constant.CHINA_CITY} WHERE ${Constant.CITY_ID} = ?", arrayOf(id))
+        val cityName: String
+        if (cursor.moveToFirst()) {
+            cityName = cursor.getString(cursor.getColumnIndex(Constant.NAME_ZH_CN))
+        } else {
+            throw IllegalArgumentException("No city corresponds to id \"$id\"")
+        }
+        cursor.close()
+        return cityName
+    }
+
     /**
      * 从数据库中查询城市详细信息（暂时只支持国内城市，查询出中文结果）
      * @param name 输入的城市名称，中文或英文
      */
     fun queryCityLike(name: String, resultList: MutableList<City>) {
         val cursor = heWeatherLocationDatabase.rawQuery(
-                "SELECT ${Constant.ID}, ${Constant.NAME_ZH_CN}, ${Constant.PROVINCE_ZH_CN}, ${Constant.PREFECTURE_ZH_CN}, ${Constant.LATITUDE}, ${Constant.LONGITUDE} FROM ${Constant.CHINA_CITY} WHERE (${Constant.NAME_EN} LIKE ?) OR (${Constant.NAME_ZH_CN} LIKE ?)",
+                "SELECT ${Constant.ID}, ${Constant.NAME_ZH_CN}, ${Constant.PROVINCE_ZH_CN}, ${Constant.PREFECTURE_ZH_CN} FROM ${Constant.CHINA_CITY} WHERE (${Constant.NAME_EN} LIKE ?) OR (${Constant.NAME_ZH_CN} LIKE ?)",
                 arrayOf("$name%", "$name%")
         )
         if (cursor.moveToFirst()) {
@@ -116,8 +128,6 @@ class DatabaseHelper {
                 resultList.add(City(
                         cursor.getString(cursor.getColumnIndex(Constant.ID)),
                         cursor.getString(cursor.getColumnIndex(Constant.NAME_ZH_CN)),
-                        cursor.getDouble(cursor.getColumnIndex(Constant.LONGITUDE)),
-                        cursor.getDouble(cursor.getColumnIndex(Constant.LATITUDE)),
                         cursor.getString(cursor.getColumnIndex(Constant.PREFECTURE_ZH_CN)),
                         cursor.getString(cursor.getColumnIndex(Constant.PROVINCE_ZH_CN))
                 ))
@@ -129,15 +139,17 @@ class DatabaseHelper {
     // ***************** Condition *****************
 
     /**
-     * 使用天气情况代码，从数据库中查询对应的描述文字
+     * 使用天气情况代码，从数据库中查询对应的描述文字（晴、雨等）
      * @param code 输入的城市名称，中文或英文
      */
-    fun queryConditionByCode(code: Int): String? {
+    fun queryConditionByCode(code: Int): String {
         val nameColumn = String.format(Constant.NAME_LANG, SystemUtil.preferredLanguage)
-        val cursor = heWeatherConditionDatabase.rawQuery("SELECT $nameColumn FROM ${Constant.CONDITION} WHERE ${Constant.CODE} = ?", arrayOf("$code"))
-        var condition: String? = null
+        val cursor = heWeatherConditionDatabase.rawQuery("SELECT $nameColumn FROM ${Constant.CONDITION} WHERE ${Constant.CODE} = ?", arrayOf(code.toString()))
+        val condition: String
         if (cursor.moveToFirst()) {
             condition = cursor.getString(cursor.getColumnIndex(nameColumn))
+        } else {
+            throw IllegalArgumentException("No condition corresponds to code \"$code\"")
         }
         cursor.close()
         return condition

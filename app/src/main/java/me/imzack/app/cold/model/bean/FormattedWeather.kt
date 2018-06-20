@@ -5,6 +5,7 @@ import me.imzack.app.cold.common.Constant
 import me.imzack.app.cold.util.ResourceUtil
 
 data class FormattedWeather(
+        var isUpdating: Boolean,
         var cityName: String,
         var condition: String = Constant.UNKNOWN_DATA,
         var temperature: String = Constant.UNKNOWN_DATA,
@@ -12,13 +13,8 @@ data class FormattedWeather(
         var feelsLike: String = Constant.UNKNOWN_DATA,
         var tempRange: String = "${Constant.UNKNOWN_DATA} | ${Constant.UNKNOWN_DATA}",
         var airQuality: String = Constant.UNKNOWN_DATA,
-        var weeks: Array<String> = trick(),
-        var conditions: Array<String> = trick(),
+        var weeks: Array<String> = Array(Weather.DAILY_FORECAST_LENGTH_DISPLAY) {""},
+        var conditions: Array<String> = Array(Weather.DAILY_FORECAST_LENGTH_DISPLAY) {""},
         var maxTemps: IntArray = IntArray(Weather.DAILY_FORECAST_LENGTH_DISPLAY),
         var minTemps: IntArray = IntArray(Weather.DAILY_FORECAST_LENGTH_DISPLAY)
-) {
-    companion object {
-        // 如果直接在构造函数中使用以下函数体，安装到手机时会报 DexArchiveBuilderException 的错误，可能是 Lambda 表达式的问题
-        private fun trick() = Array(Weather.DAILY_FORECAST_LENGTH_DISPLAY) {""}
-    }
-}
+)

@@ -1,9 +1,6 @@
 package me.imzack.app.cold.view.fragment
 
-import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
-import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,6 +50,11 @@ class WeatherPageFragment : BaseFragment(), WeatherPageViewContract {
         weatherPagePresenter.attach()
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        weatherPagePresenter.notifyStartingUpCompleted()
+    }
+
     override fun onDetach() {
         super.onDetach()
         weatherPagePresenter.detach()
@@ -60,49 +62,19 @@ class WeatherPageFragment : BaseFragment(), WeatherPageViewContract {
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
-        if (isResumed) {
-            // 当进入 resume 状态时，weatherPagePresenter 一定不为 null
-            weatherPagePresenter.notifyVisibilityChanged(isVisibleToUser)
-        }
+        // 在不同 page 之间切换时调用
     }
 
     override fun showInitialView(formattedWeather: FormattedWeather) {
         vSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent)
-        vSwipeRefreshLayout.setOnRefreshListener { weatherPagePresenter.notifyWeatherUpdating() }
-        setWeatherOnView(formattedWeather)
+        vSwipeRefreshLayout.setOnRefreshListener { weatherPagePresenter.notifyUpdatingWeather() }
+        showWeatherView(formattedWeather)
     }
 
-    override fun onDetectedNetworkNotAvailable() {
-        vSwipeRefreshLayout.isRefreshing = false
-        Snackbar.make(vSwipeRefreshLayout, R.string.text_network_not_available, Snackbar.LENGTH_LONG)
-                .setAction(R.string.action_network_settings) { startActivity(Intent(Settings.ACTION_WIRELESS_SETTINGS)) }
-                .show()
-    }
+    override fun showWeatherView(formattedWeather: FormattedWeather) {
+        changeSwipeRefreshingStatus(formattedWeather.isUpdating)
 
-    override fun onWeatherUpdatedSuccessfully(formattedWeather: FormattedWeather) {
-        setWeatherOnView(formattedWeather)
-        vSwipeRefreshLayout.isRefreshing = false
-    }
-
-    override fun onWeatherUpdatedAbortively() {
-        vSwipeRefreshLayout.isRefreshing = false
-    }
-
-    override fun onChangeSwipeRefreshingStatus(isRefreshing: Boolean) {
-        vSwipeRefreshLayout.isRefreshing = isRefreshing
-    }
-
-    override fun onCityDeleted() {
-        isCityDeleted = true
-    }
-
-    override fun onPositionChanged(newPosition: Int) {
-        position = newPosition
-        isPositionChanged = true
-    }
-
-    private fun setWeatherOnView(formattedWeather: FormattedWeather) {
-        vCityNameText.text = formattedWeather.cityName
+        changeCityName(formattedWeather.cityName)
         vTemperatureText.text = formattedWeather.temperature
         vConditionText.text = formattedWeather.condition
         vUpdateTimeText.text = formattedWeather.updateTime
@@ -112,5 +84,22 @@ class WeatherPageFragment : BaseFragment(), WeatherPageViewContract {
         vAirQualityText.text = formattedWeather.airQuality
 
         vTemperatureTrendChart.setTemperatureData(formattedWeather.weeks, formattedWeather.conditions, formattedWeather.maxTemps, formattedWeather.minTemps)
+    }
+
+    override fun changeSwipeRefreshingStatus(isRefreshing: Boolean) {
+        vSwipeRefreshLayout.isRefreshing = isRefreshing
+    }
+
+    override fun changeCityName(cityName: String) {
+        vCityNameText.text = cityName
+    }
+
+    override fun onCityDeleted() {
+        isCityDeleted = true
+    }
+
+    override fun onPositionChanged(newPosition: Int) {
+        position = newPosition
+        isPositionChanged = true
     }
 }

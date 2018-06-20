@@ -5,63 +5,57 @@ import me.imzack.app.cold.model.DataManager
 
 object LogUtil {
 
-    private val DEF_TAG = "____"
-
-    private val VERBOSE = 1
-    private val DEBUG = 2
-    private val INFO = 3
-    private val WARN = 4
-    private val ERROR = 5
-    private val NOTHING = 6
+    private const val VERBOSE = 1
+    private const val DEBUG = 2
+    private const val INFO = 3
+    private const val WARN = 4
+    private const val ERROR = 5
+    private const val NOTHING = 6
 
     private var level = VERBOSE
 
-    fun v(tag: String, msg: String) {
+    private val defaultTag: String
+        get() {
+            val element = Thread.currentThread().stackTrace[4]
+            return "${element.className.substringAfterLast('.')}/${element.methodName}/${element.lineNumber}"
+        }
+
+    fun v(msg: String, tag: String = defaultTag) {
         if (level <= VERBOSE) {
             Log.v(tag, msg)
         }
     }
 
-    fun d(tag: String, msg: String) {
+    fun d(msg: String, tag: String = defaultTag) {
         if (level <= DEBUG) {
             Log.d(tag, msg)
         }
     }
 
-    fun d(tag: String, msg: Int) {
-        if (level <= DEBUG) {
-            Log.d(tag, msg.toString())
-        }
-    }
-
-    fun i(tag: String, msg: String) {
+    fun i(msg: String, tag: String = defaultTag) {
         if (level <= INFO) {
             Log.i(tag, msg)
         }
     }
 
-    fun w(tag: String, msg: String) {
+    fun w(msg: String, tag: String = defaultTag) {
         if (level <= WARN) {
             Log.w(tag, msg)
         }
     }
 
-    fun e(tag: String, msg: String) {
+    fun e(msg: String, tag: String = defaultTag) {
         if (level <= ERROR) {
             Log.e(tag, msg)
         }
     }
 
-    fun d(msg: String) {
-        d(DEF_TAG, msg)
-    }
-
-    fun d(msg: Int) {
-        d(DEF_TAG, msg)
+    fun d(msg: Int, tag: String = defaultTag) {
+        d(msg.toString(), tag)
     }
 
     fun here() {
-        d("****HERE****")
+        d("**** HERE ****", defaultTag)
     }
 
     fun logAllSharedPreferences() {
