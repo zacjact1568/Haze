@@ -7,6 +7,7 @@ object Constant {
     const val CITY_NAME = "city_name"
     const val IS_PREFECTURE = "is_prefecture"
     const val UPDATE_TIME = "update_time"
+    const val ADD_TIME = "add_time"
 
     const val CURRENT = "current"
     const val CONDITION_CODE = "condition_code"
@@ -14,9 +15,8 @@ object Constant {
     const val FEELS_LIKE = "feels_like"
     const val AIR_QUALITY_INDEX = "air_quality_index"
 
-    const val SEQUENCE = "sequence"
-
     const val HOURLY_FORECAST = "hourly_forecast"
+    const val SEQUENCE = "sequence"
     const val TIME = "time"
     const val PRECIPITATION_PROBABILITY = "precipitation_probability"
 
@@ -30,6 +30,7 @@ object Constant {
     const val PREF_KEY_NEED_GUIDE = "need_guide"
     const val PREF_KEY_LOCATION_SERVICE = "location_service"
     const val PREF_KEY_NIGHT_MODE = "night_mode"
+    const val PREF_KEY_HAVE_REQUESTED_LOCATION_PERMISSIONS = "have_requested_location_permissions"
 
     const val UNKNOWN_DATA = "--"
 

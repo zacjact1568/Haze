@@ -16,5 +16,7 @@ data class HourlyForecastEntity(
         @ColumnInfo(name = Constant.TEMPERATURE)
         val temperature: Int,
         @ColumnInfo(name = Constant.PRECIPITATION_PROBABILITY)
-        val precipitationProbability: Int
+        val precipitationProbability: Int,
+        @ColumnInfo(name = Constant.ADD_TIME)
+        val addTime: Long
 )

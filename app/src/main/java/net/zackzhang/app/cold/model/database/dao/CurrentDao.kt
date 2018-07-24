@@ -17,6 +17,6 @@ interface CurrentDao {
     @Query("DELETE FROM ${Constant.CURRENT} WHERE ${Constant.CITY_ID} = :cityId")
     fun delete(cityId: String)
 
-    @Query("SELECT * FROM ${Constant.CURRENT}")
+    @Query("SELECT * FROM ${Constant.CURRENT} ORDER BY ${Constant.ADD_TIME}")
     fun loadAll(): Single<Array<CurrentEntity>>
 }

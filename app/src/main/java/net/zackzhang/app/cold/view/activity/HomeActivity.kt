@@ -26,7 +26,7 @@ class HomeActivity : BaseActivity(), HomeViewContract {
 
     companion object {
 
-        private const val TAG_DETECTED_LOC_SER_PER_DENIED = "detected_loc_ser_per_denied"
+        private const val TAG_LOCATION_SERVICE_PERMISSIONS = "location_service_permissions"
 
         fun start(context: Context) {
             context.startActivity(Intent(context, HomeActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
@@ -79,19 +79,10 @@ class HomeActivity : BaseActivity(), HomeViewContract {
     override fun onAttachFragment(fragment: Fragment) {
         super.onAttachFragment(fragment)
 
-        when (fragment.tag) {
-            TAG_DETECTED_LOC_SER_PER_DENIED -> (fragment as MessageDialogFragment).okButtonClickListener = {
-                var lspFragment = supportFragmentManager.findFragmentByTag(LocationServicePermissionsFragment.TAG_LOCATION_SERVICE_PERMISSIONS) as LocationServicePermissionsFragment?
-                if (lspFragment == null) {
-                    lspFragment = LocationServicePermissionsFragment()
-                    supportFragmentManager.beginTransaction().add(lspFragment, LocationServicePermissionsFragment.TAG_LOCATION_SERVICE_PERMISSIONS).commitNow()
-                }
-                lspFragment.requestPermissions()
+        if (fragment.tag == TAG_LOCATION_SERVICE_PERMISSIONS) {
+            (fragment as LocationServicePermissionsFragment).permissionsRequestFinishedListener = {
+                homePresenter.notifyLocationServicePermissionsRequestFinished(it)
             }
-            LocationServicePermissionsFragment.TAG_LOCATION_SERVICE_PERMISSIONS ->
-                (fragment as LocationServicePermissionsFragment).permissionsRequestFinishedListener = {
-                    homePresenter.notifyLocationServicePermissionsRequestFinished(it)
-                }
         }
     }
 
@@ -170,15 +161,6 @@ class HomeActivity : BaseActivity(), HomeViewContract {
         super.onBackPressed()
     }
 
-    override fun onDetectedLocationServicePermissionsDenied() {
-        MessageDialogFragment.Builder()
-                .setTitle(R.string.title_dialog_detected_location_service_permissions_denied)
-                .setMessage(R.string.msg_dialog_detected_location_service_permissions_denied)
-                .setOkButtonText(R.string.pos_btn_dialog_detected_location_service_permissions_denied)
-                .showCancelButton()
-                .show(supportFragmentManager, TAG_DETECTED_LOC_SER_PER_DENIED)
-    }
-
     override fun onDetectedNetworkNotAvailable() {
         Snackbar.make(vContentLayout, R.string.text_network_not_available, Snackbar.LENGTH_LONG)
                 .setAction(R.string.action_settings) { startActivity(Intent(Settings.ACTION_WIRELESS_SETTINGS)) }
@@ -188,6 +170,22 @@ class HomeActivity : BaseActivity(), HomeViewContract {
     override fun onDetectedSystemLocationServiceDisabled() {
         Snackbar.make(vContentLayout, R.string.text_location_not_available, Snackbar.LENGTH_LONG)
                 .setAction(R.string.action_settings) { startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)) }
+                .show()
+    }
+
+    override fun onDetectedNoEnoughPermissionsGranted() {
+        supportFragmentManager.beginTransaction().add(LocationServicePermissionsFragment(), TAG_LOCATION_SERVICE_PERMISSIONS).commit()
+    }
+
+    override fun onLocationServicePermissionsDenied() {
+        Snackbar.make(vContentLayout, R.string.text_no_enough_permissions_granted, Snackbar.LENGTH_LONG)
+                .setAction(R.string.action_detail) {
+                    MessageDialogFragment.Builder()
+                            .setTitle(R.string.title_dialog_permissions_denied)
+                            .setMessage(R.string.msg_dialog_permissions_denied)
+                            .setOkButtonText(android.R.string.ok)
+                            .show(supportFragmentManager)
+                }
                 .show()
     }
 

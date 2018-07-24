@@ -11,8 +11,4 @@ interface WeatherPageViewContract : BaseViewContract {
     fun changeSwipeRefreshingStatus(isRefreshing: Boolean)
 
     fun changeCityName(cityName: String)
-
-    fun onCityDeleted()
-
-    fun onPositionChanged(newPosition: Int)
 }

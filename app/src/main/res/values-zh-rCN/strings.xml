@@ -67,8 +67,8 @@
     <string name="title_page_location">位置服务</string>
     <string name="description_page_location_disabled">启用高德®位置服务以获取你当前所在地的天气？</string>
     <string name="description_page_location_enabled">高德®位置服务已成功启用</string>
-    <string name="msg_dialog_permissions_denied">若没有这些权限，高德®位置服务无法启用，但你可以稍后手动在系统设置中开启。</string>
-    <string name="title_dialog_permissions_denied">失败</string>
+    <string name="msg_dialog_permissions_denied">若没有这些权限，高德®位置服务无法获取到你的位置信息，但你可以稍后授予 Cold 这些权限。</string>
+    <string name="title_dialog_permissions_denied">没有足够权限</string>
     <string name="toast_double_press_exit">再次按下退出 Cold</string>
     <string name="msg_dialog_switch_night_mode">在白天和夜间模式之间切换需要重启 Cold。</string>
     <string name="title_dialog_switch_night_mode">重启 Cold？</string>
@@ -83,12 +83,9 @@
     <string name="title_dialog_pre_request_permissions">权限</string>
     <string name="msg_dialog_pre_request_permissions">高德®位置服务需要你授予 3 个必要权限，它们是位置、手机状态和存储。让我们开始吧。</string>
     <string name="pos_btn_dialog_pre_request_permissions">继续</string>
-    <string name="title_dialog_detected_location_service_permissions_denied">位置服务</string>
-    <string name="msg_dialog_detected_location_service_permissions_denied">看起来你在系统设置中取消了一些必要权限，高德®位置服务已关闭。</string>
-    <string name="pos_btn_dialog_detected_location_service_permissions_denied">重新授予</string>
-    <string name="title_dialog_no_requestable_permissions">权限</string>
-    <string name="msg_dialog_no_requestable_permissions">请转到系统设置，授予 Cold 3 个必要权限，它们是位置、手机状态和存储。</string>
-    <string name="pos_btn_dialog_no_requestable_permissions">系统设置</string>
+    <string name="title_dialog_never_request_permissions_again">权限</string>
+    <string name="msg_dialog_never_request_permissions_again">请转到系统设置，授予 Cold 3 个必要权限，它们是位置、手机状态和存储。</string>
+    <string name="pos_btn_dialog_never_request_permissions_again">系统设置</string>
     <string name="text_current_location">当前位置</string>
     <string name="text_location_not_available">系统位置服务未开启</string>
     <string name="error_amap_location_error_code_minus_1">返回了空对象</string>
@@ -121,4 +118,9 @@
     <string name="error_heweather_status_sign_error">认证签名错误</string>
     <string name="error_io_exception">网络连接错误</string>
     <string name="error_http_exception">HTTP 错误</string>
+    <string name="title_dialog_pre_enable_location_service">权限</string>
+    <string name="pos_btn_dialog_pre_enable_location_service">继续</string>
+    <string name="msg_dialog_pre_enable_location_service">高德®位置服务需要你授予 3 个必要权限，它们是位置、手机状态和存储。当第一次请求你的位置信息的时候，你会收到通知。</string>
+    <string name="action_detail">详细</string>
+    <string name="text_no_enough_permissions_granted">没有授予足够权限</string>
 </resources>

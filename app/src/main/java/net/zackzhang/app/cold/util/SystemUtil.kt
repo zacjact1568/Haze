@@ -14,25 +14,46 @@ import java.util.*
 
 object SystemUtil {
 
+    /**
+     * 检查 permission 权限是否已授予
+     * @return
+     * - Android 6.0 以下，总是返回 true TODO 验证
+     * - Android 6.0 及以上，若权限未授予，返回 false，否则返回 true
+     */
     fun checkPermission(permission: String) = ContextCompat.checkSelfPermission(App.context, permission) == PackageManager.PERMISSION_GRANTED
 
     /** 检查 permissions 中的权限，只要有一个未授予，返回 false */
     fun checkPermissions(permissions: Array<String>) = permissions.find { !checkPermission(it) } == null
 
-    /**
-     * 检查是否可以弹授权窗口
-     * @return
-     * - Android 6.0 以下，总是返回 false
-     * - Android 6.0 及以上，TODO 若还未弹过授权窗口，返回 false，若用户在授权窗口勾选了“不再询问”，返回 false，否则返回 true
-     * - 若设备不支持该权限，返回 false
-     */
-    fun isPermissionRequestable(permission: String, activity: Activity) = ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)
-
     /** 获取 permissions 中未被授予的权限 */
     fun getNotGrantedPermissions(permissions: Array<String>) = permissions.filterNotTo(mutableListOf()) { checkPermission(it) }.toTypedArray()
 
-    /** 获取 permissions 中可请求的权限 */
-    fun getRequestablePermissions(permissions: Array<String>, activity: Activity) = permissions.filterTo(mutableListOf()) { isPermissionRequestable(it, activity) }.toTypedArray()
+    /**
+     * 检查 permission 权限是否应该弹需求原因
+     * @return
+     * - Android 6.0 以下，总是返回 false
+     * - Android 6.0 及以上，若之前未弹过授权窗口，或者用户在授权窗口勾选了“不再询问”，或该权限已授予，返回 false，否则返回 true
+     * - 若设备不支持该权限，返回 false（暂时不考虑）
+     */
+    fun shouldShowRequestPermissionRationale(permission: String, activity: Activity) = ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)
+
+    /**
+     * 检查 permissions 中的权限，如果所有未授予的权限都应该弹需求原因，返回 true
+     * 这意味着：
+     * 1. permissions 中所有未授予的权限都被请求了一次（弹了一次系统授权窗口）
+     * 2. 对于每个未授予的权限，用户都没有勾选“不再询问”
+     * 3. 设备支持这里面每个未授予的权限
+     * 由于 permissions 中所有未授予的权限缺一不可，根据 2、3 点，有理由向用户展示未授予的权限需求原因
+     * 这是因为，如果用户对某个权限勾选了“不再询问”，或者设备不支持某个权限，调用 requestPermissions，系统都会直接拒绝 app 对那个权限的请求
+     * 反正都会被拒绝，就没有必要向用户展示权限需求原因了
+     * 如果某个权限已授予，shouldShowRequestPermissionRationale 也会返回 false
+     * 因此，应先将已授予的权限滤除，否则只要有一个权限已授予，即使其他未授予的权限都应该弹需求原因，该函数都会返回 false
+     */
+    fun shouldShowRequestPermissionsRationale(permissions: Array<String>, activity: Activity) =
+            permissions.filterNot { checkPermission(it) }.find { !shouldShowRequestPermissionRationale(it, activity) } == null
+
+    /** 获取 permissions 中应该弹需求原因的权限 */
+    fun getShouldShowRequestRationalePermissions(permissions: Array<String>, activity: Activity) = permissions.filterTo(mutableListOf()) { shouldShowRequestPermissionRationale(it, activity) }.toTypedArray()
 
     val isNetworkAvailable: Boolean
         get() {

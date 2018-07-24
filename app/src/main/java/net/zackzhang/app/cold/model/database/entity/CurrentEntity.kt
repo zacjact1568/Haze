@@ -17,5 +17,7 @@ data class CurrentEntity(
         @ColumnInfo(name = Constant.FEELS_LIKE)
         val feelsLike: Int,
         @ColumnInfo(name = Constant.AIR_QUALITY_INDEX)
-        val airQualityIndex: Int
+        val airQualityIndex: Int,
+        @ColumnInfo(name = Constant.ADD_TIME)
+        val addTime: Long
 )

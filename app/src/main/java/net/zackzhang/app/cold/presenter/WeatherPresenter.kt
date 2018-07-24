@@ -2,7 +2,6 @@ package net.zackzhang.app.cold.presenter
 
 import android.support.v4.app.FragmentManager
 import net.zackzhang.app.cold.App
-import net.zackzhang.app.cold.R
 import net.zackzhang.app.cold.event.*
 import net.zackzhang.app.cold.model.DataManager
 import net.zackzhang.app.cold.view.adapter.WeatherPagerAdapter

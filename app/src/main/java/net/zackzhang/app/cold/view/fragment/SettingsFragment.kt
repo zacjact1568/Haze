@@ -1,15 +1,20 @@
 package net.zackzhang.app.cold.view.fragment
 
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.support.v14.preference.SwitchPreference
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatDelegate
 import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
+import net.zackzhang.app.cold.App
 import net.zackzhang.app.cold.R
 import net.zackzhang.app.cold.common.Constant
+import net.zackzhang.app.cold.event.CityAddedEvent
+import net.zackzhang.app.cold.event.CityDeletedEvent
 import net.zackzhang.app.cold.model.DataManager
+import net.zackzhang.app.cold.model.bean.Weather
 import net.zackzhang.app.cold.view.activity.HomeActivity
 import net.zackzhang.app.cold.view.dialog.MessageDialogFragment
 
@@ -17,8 +22,13 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     companion object {
 
+        private const val TAG_PRE_ENABLE_LOCATION_SERVICE = "pre_enable_location_service"
         private const val TAG_SWITCH_NIGHT_MODE = "switch_night_mode"
     }
+
+    private val preferenceHelper = DataManager.preferenceHelper
+
+    private val eventBus = App.eventBus
 
     private val locationServicePreference by lazy {
         findPreference(Constant.PREF_KEY_LOCATION_SERVICE) as SwitchPreference
@@ -31,20 +41,21 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         addPreferencesFromResource(R.xml.preferences)
 
         locationServicePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
-            // 在触摸 Location Service Preference 时才检查 LocationServicePermissionsFragment 是否已创建过
-            // 若 Activity 从重建中恢复，且以前创建过 LocationServicePermissionsFragment，则 lspFragment 一定不为空
-            var lspFragment = childFragmentManager.findFragmentByTag(LocationServicePermissionsFragment.TAG_LOCATION_SERVICE_PERMISSIONS) as LocationServicePermissionsFragment?
-            if (lspFragment == null) {
-                // 如果没有创建过 LocationServicePermissionsFragment，创建
-                lspFragment = LocationServicePermissionsFragment()
-                // 使用 commitNow 来立即执行，否则后面可能会找不到
-                childFragmentManager.beginTransaction().add(lspFragment, LocationServicePermissionsFragment.TAG_LOCATION_SERVICE_PERMISSIONS).commitNow()
-            }
-            if (newValue as Boolean) {
-                // 只有当开启位置服务时才执行
-                lspFragment.requestPermissions()
+            if (newValue as Boolean && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                // 该操作是开启位置服务，且为 Android 6.0 及以上
+                // 先不执行更新 shared preference，待用户确认后更新
+                // 界面不会更新
+                MessageDialogFragment.Builder()
+                        .setTitle(R.string.title_dialog_pre_enable_location_service)
+                        .setMessage(R.string.msg_dialog_pre_enable_location_service)
+                        .setOkButtonText(R.string.pos_btn_dialog_pre_enable_location_service)
+                        .showCancelButton()
+                        .show(childFragmentManager, TAG_PRE_ENABLE_LOCATION_SERVICE)
                 false
             } else {
+                // 该操作是关闭位置服务，或者低于 Android 6.0
+                // 直接执行更新 shared preference，后续再在 onSharedPreferenceChanged 中判断是哪种
+                // 界面会更新
                 true
             }
         }
@@ -70,15 +81,11 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         super.onAttachFragment(childFragment)
 
         when (childFragment.tag) {
+            TAG_PRE_ENABLE_LOCATION_SERVICE -> (childFragment as MessageDialogFragment).okButtonClickListener = {
+                // 将位置服务设置项开启，触发 onSharedPreferenceChanged 回调，界面会更新
+                locationServicePreference.isChecked = true
+            }
             TAG_SWITCH_NIGHT_MODE -> (childFragment as MessageDialogFragment).okButtonClickListener = { nightModePreference.isChecked = !nightModePreference.isChecked }
-            LocationServicePermissionsFragment.TAG_LOCATION_SERVICE_PERMISSIONS ->
-                (childFragment as LocationServicePermissionsFragment).permissionsRequestFinishedListener = {
-                    if (it) {
-                        // 如果成功授权，更改 preference 的显示状态为 true，这也会同时更改 Shared Preference 中的值
-                        locationServicePreference.isChecked = true
-                    }
-                    // 如果授权被拒绝，不做任何操作
-                }
         }
     }
 
@@ -89,9 +96,32 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         when (key) {
-            Constant.PREF_KEY_LOCATION_SERVICE -> { }
+            Constant.PREF_KEY_LOCATION_SERVICE -> {
+                val eventSource = javaClass.simpleName
+                if (preferenceHelper.locationServiceValue) {
+                    // 如果触发此回调的操作是开启位置服务
+                    // 添加第一页“当前位置”城市页
+                    DataManager.notifyCityAdded(Weather(Constant.CITY_ID_CURRENT_LOCATION, getString(R.string.text_current_location), isLocationCity = true))
+                    eventBus.post(CityAddedEvent(
+                            eventSource,
+                            Constant.CITY_ID_CURRENT_LOCATION,
+                            0
+                    ))
+                } else {
+                    // 如果触发此回调的操作是关闭位置服务
+                    // 移除第一页“当前位置”城市页
+                    // 先保存 cityId，供发送事件使用，稍后删除后就获取不到了
+                    val cityId = DataManager.getWeather(0).cityId
+                    DataManager.notifyCityDeleted(0)
+                    eventBus.post(CityDeletedEvent(
+                            eventSource,
+                            cityId,
+                            0
+                    ))
+                }
+            }
             Constant.PREF_KEY_NIGHT_MODE -> {
-                AppCompatDelegate.setDefaultNightMode(if (DataManager.preferenceHelper.nightModeValue) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO)
+                AppCompatDelegate.setDefaultNightMode(if (preferenceHelper.nightModeValue) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO)
                 // 返回并重新创建 HomeActivity
                 HomeActivity.start(context!!)
             }

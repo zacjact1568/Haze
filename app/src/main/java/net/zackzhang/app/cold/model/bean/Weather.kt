@@ -1,11 +1,16 @@
 package net.zackzhang.app.cold.model.bean
 
+import java.util.*
+
 data class Weather(
         val city: City,
         val current: Current = Current(),
-        val hourlyForecasts: Array<HourlyForecast> = Array(HOURLY_FORECAST_LENGTH) { HourlyForecast() },
-        val dailyForecasts: Array<DailyForecast> = Array(DAILY_FORECAST_LENGTH) { DailyForecast() },
+        // time/date 必须不同，不然无法存进数据库，因此先放数组下标占位
+        val hourlyForecasts: Array<HourlyForecast> = Array(HOURLY_FORECAST_LENGTH) { HourlyForecast(it.toLong()) },
+        val dailyForecasts: Array<DailyForecast> = Array(DAILY_FORECAST_LENGTH) { DailyForecast(it.toLong()) },
         var updateTime: Long = 0L,
+        // 定位城市为 0，用户添加的城市为当前时间
+        var addTime: Long = System.currentTimeMillis(),
         // 当前更新状态
         var status: Int = STATUS_GENERAL
 ) {
@@ -26,6 +31,17 @@ data class Weather(
         const val STATUS_DELETED = -1
     }
 
+    // 在用户手动添加城市或 app 添加定位城市的时候使用
+    // 从数据库中载入城市使用主构造函数
+    constructor(
+            cityId: String,
+            cityName: String,
+            isPrefectureCity: Boolean = false,
+            isLocationCity: Boolean = false
+    ) : this(City(cityId, cityName, isPrefectureCity)) {
+        if (isLocationCity) addTime = 0L
+    }
+
     val cityId
         get() = city.id
 
@@ -43,6 +59,34 @@ data class Weather(
 
     val isUpdating
         get() = status == STATUS_UPDATING
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Weather
+
+        if (city != other.city) return false
+        if (current != other.current) return false
+        if (!Arrays.equals(hourlyForecasts, other.hourlyForecasts)) return false
+        if (!Arrays.equals(dailyForecasts, other.dailyForecasts)) return false
+        if (updateTime != other.updateTime) return false
+        if (addTime != other.addTime) return false
+        if (status != other.status) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = city.hashCode()
+        result = 31 * result + current.hashCode()
+        result = 31 * result + Arrays.hashCode(hourlyForecasts)
+        result = 31 * result + Arrays.hashCode(dailyForecasts)
+        result = 31 * result + updateTime.hashCode()
+        result = 31 * result + addTime.hashCode()
+        result = 31 * result + status
+        return result
+    }
 
     data class City(
             var id: String = "",

@@ -6,8 +6,10 @@ import io.reactivex.Single
 import net.zackzhang.app.cold.App
 import net.zackzhang.app.cold.common.Constant
 import net.zackzhang.app.cold.exception.AMapLocationServiceException
+import net.zackzhang.app.cold.exception.NoEnoughPermissionsGrantedException
 import net.zackzhang.app.cold.exception.SystemLocationServiceDisabledException
 import net.zackzhang.app.cold.util.SystemUtil
+import net.zackzhang.app.cold.view.fragment.LocationServicePermissionsFragment
 
 class LocationHelper {
 
@@ -17,6 +19,9 @@ class LocationHelper {
         if (locationMode == Constant.LOCATION_MODE_NONE) {
             // 系统位置服务未开启
             emitter.onError(SystemLocationServiceDisabledException())
+        } else if (!SystemUtil.checkPermissions(LocationServicePermissionsFragment.PERMISSIONS)) {
+            // 未授予全部必要权限
+            emitter.onError(NoEnoughPermissionsGrantedException())
         } else {
             val client = AMapLocationClient(App.context)
             // 当外部调用 dispose 时，停止定位服务

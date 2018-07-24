@@ -54,7 +54,7 @@ dependencies {
     implementation 'com.github.zacjact1568:CircleColorView:0.1'
     implementation 'com.github.zacjact1568:BaseGuideActivity:0.5'
     implementation 'com.amap.api:location:3.8.0'
-    implementation 'com.github.zacjact1568:BaseDialogFragment:0.9'
+    implementation 'com.github.zacjact1568:BaseDialogFragment:0.11'
     implementation "com.facebook.stetho:stetho:$stetho_version"
     implementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
     implementation "com.android.support:preference-v7:$android_support_version"

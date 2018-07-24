@@ -17,6 +17,6 @@ interface HourlyForecastDao {
     @Query("DELETE FROM ${Constant.HOURLY_FORECAST} WHERE ${Constant.CITY_ID} = :cityId")
     fun delete(cityId: String)
 
-    @Query("SELECT * FROM ${Constant.HOURLY_FORECAST}")
+    @Query("SELECT * FROM ${Constant.HOURLY_FORECAST} ORDER BY ${Constant.ADD_TIME}, ${Constant.TIME}")
     fun loadAll(): Single<Array<HourlyForecastEntity>>
 }

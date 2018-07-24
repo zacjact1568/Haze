@@ -36,7 +36,8 @@ class DatabaseHelper {
                     val weatherList = mutableListOf<Weather>()
                     for (i in 0 until basicEntities.size) {
                         // 因为对所有表的操作都是同时进行的，各个表中各个城市的顺序一定是相同的，可以直接按序处理
-                        val (cityId, cityName, isPrefecture, updateTime) = basicEntities[i]
+                        // 每张表的 add_time 字段是相同的，只使用一张表的即可
+                        val (cityId, cityName, isPrefecture, updateTime, addTime) = basicEntities[i]
                         val (_, conditionCode, currentTemperature, feelsLike, airQualityIndex) = currentEntities[i]
                         weatherList.add(Weather(
                                 Weather.City(cityId, cityName, isPrefecture),
@@ -49,7 +50,8 @@ class DatabaseHelper {
                                     val (_, _, date, temperatureMax, temperatureMin, conditionCodeDay, conditionCodeNight, precipitationProbability) = dailyForecastEntities[Weather.DAILY_FORECAST_LENGTH * i + it]
                                     Weather.DailyForecast(date, temperatureMax, temperatureMin, conditionCodeDay, conditionCodeNight, precipitationProbability)
                                 },
-                                updateTime
+                                updateTime,
+                                addTime
                         ))
                     }
                     weatherList
@@ -65,31 +67,33 @@ class DatabaseHelper {
 
     fun insertWeather(weather: Weather) {
         val cityId = weather.cityId
-        weatherDatabase.basicDao().insert(BasicEntity(cityId, weather.cityName, weather.isPrefecture, weather.updateTime))
+        val addTime = weather.addTime
+        weatherDatabase.basicDao().insert(BasicEntity(cityId, weather.cityName, weather.isPrefecture, weather.updateTime, addTime))
         val (conditionCode, currentTemperature, feelsLike, airQualityIndex) = weather.current
-        weatherDatabase.currentDao().insert(CurrentEntity(cityId, conditionCode, currentTemperature, feelsLike, airQualityIndex))
+        weatherDatabase.currentDao().insert(CurrentEntity(cityId, conditionCode, currentTemperature, feelsLike, airQualityIndex, addTime))
         weatherDatabase.hourlyForecastDao().insert(Array(Weather.HOURLY_FORECAST_LENGTH) {
             val (time, hourlyTemperature, precipitationProbability) = weather.hourlyForecasts[it]
-            HourlyForecastEntity(cityId, it, time, hourlyTemperature, precipitationProbability)
+            HourlyForecastEntity(cityId, it, time, hourlyTemperature, precipitationProbability, addTime)
         })
         weatherDatabase.dailyForecastDao().insert(Array(Weather.DAILY_FORECAST_LENGTH) {
             val (date, temperatureMax, temperatureMin, conditionCodeDay, conditionCodeNight, precipitationProbability) = weather.dailyForecasts[it]
-            DailyForecastEntity(cityId, it, date, temperatureMax, temperatureMin, conditionCodeDay, conditionCodeNight, precipitationProbability)
+            DailyForecastEntity(cityId, it, date, temperatureMax, temperatureMin, conditionCodeDay, conditionCodeNight, precipitationProbability, addTime)
         })
     }
 
     fun updateWeather(weather: Weather) {
         val cityId = weather.cityId
-        weatherDatabase.basicDao().update(BasicEntity(cityId, weather.cityName, weather.isPrefecture, weather.updateTime))
+        val addTime = weather.addTime
+        weatherDatabase.basicDao().update(BasicEntity(cityId, weather.cityName, weather.isPrefecture, weather.updateTime, addTime))
         val (conditionCode, currentTemperature, feelsLike, airQualityIndex) = weather.current
-        weatherDatabase.currentDao().update(CurrentEntity(cityId, conditionCode, currentTemperature, feelsLike, airQualityIndex))
+        weatherDatabase.currentDao().update(CurrentEntity(cityId, conditionCode, currentTemperature, feelsLike, airQualityIndex, addTime))
         weatherDatabase.hourlyForecastDao().update(Array(Weather.HOURLY_FORECAST_LENGTH) {
             val (time, hourlyTemperature, precipitationProbability) = weather.hourlyForecasts[it]
-            HourlyForecastEntity(cityId, it, time, hourlyTemperature, precipitationProbability)
+            HourlyForecastEntity(cityId, it, time, hourlyTemperature, precipitationProbability, addTime)
         })
         weatherDatabase.dailyForecastDao().update(Array(Weather.DAILY_FORECAST_LENGTH) {
             val (date, temperatureMax, temperatureMin, conditionCodeDay, conditionCodeNight, precipitationProbability) = weather.dailyForecasts[it]
-            DailyForecastEntity(cityId, it, date, temperatureMax, temperatureMin, conditionCodeDay, conditionCodeNight, precipitationProbability)
+            DailyForecastEntity(cityId, it, date, temperatureMax, temperatureMin, conditionCodeDay, conditionCodeNight, precipitationProbability, addTime)
         })
     }
 

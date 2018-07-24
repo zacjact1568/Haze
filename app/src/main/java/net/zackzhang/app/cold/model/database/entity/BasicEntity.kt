@@ -15,5 +15,7 @@ data class BasicEntity(
         @ColumnInfo(name = Constant.IS_PREFECTURE)
         val isPrefecture: Boolean,
         @ColumnInfo(name = Constant.UPDATE_TIME)
-        val updateTime: Long
+        val updateTime: Long,
+        @ColumnInfo(name = Constant.ADD_TIME)
+        val addTime: Long
 )

@@ -64,16 +64,12 @@ object DataManager {
     val cityCount
         get() = weatherList.size
 
-    val recentlyAddedCityLocation
-        get() = cityCount - 1
-
     fun getWeatherLocationInWeatherList(cityId: String) = (0 until cityCount).firstOrNull { getWeather(it).cityId == cityId } ?: throw IllegalArgumentException("No weather item matches city id \"$cityId\"")
 
-    fun notifyCityAdded(city: Weather.City) {
-        val weather = Weather(city)
-        // 产生空 weather 对象，添加到 weatherList
-        weatherList.add(weather)
-        // 存储数据到数据库
+    // 如果未指定 location，而且 weather 中 addTime 为 0，说明是定位城市，默认插入到表头，否则插入到表尾
+    // 在删除城市后恢复需要自行在删除前记录 location，在这里指定 TODO 待实现
+    fun notifyCityAdded(weather: Weather, location: Int = if (weather.addTime == 0L) 0 else cityCount) {
+        weatherList.add(location, weather)
         databaseHelper.insertWeather(weather)
     }
 

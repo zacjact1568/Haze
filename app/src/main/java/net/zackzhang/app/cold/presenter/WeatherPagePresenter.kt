@@ -3,7 +3,6 @@ package net.zackzhang.app.cold.presenter
 import net.zackzhang.app.cold.App
 import net.zackzhang.app.cold.R
 import net.zackzhang.app.cold.common.Constant
-import net.zackzhang.app.cold.event.CityDeletedEvent
 import net.zackzhang.app.cold.event.WeatherUpdateStatusChangedEvent
 import net.zackzhang.app.cold.model.DataManager
 import net.zackzhang.app.cold.model.bean.FormattedWeather
@@ -12,7 +11,7 @@ import net.zackzhang.app.cold.util.*
 import net.zackzhang.app.cold.view.contract.WeatherPageViewContract
 import org.greenrobot.eventbus.Subscribe
 
-class WeatherPagePresenter(private var weatherPageViewContract: WeatherPageViewContract?, private var weatherListPosition: Int) : BasePresenter() {
+class WeatherPagePresenter(private var weatherPageViewContract: WeatherPageViewContract?, weatherListPosition: Int) : BasePresenter() {
 
     private val weather = DataManager.getWeather(weatherListPosition)
 
@@ -30,10 +29,10 @@ class WeatherPagePresenter(private var weatherPageViewContract: WeatherPageViewC
 
     fun notifyStartingUpCompleted() {
         // 启动该 Fragment 后，检查该城市是否是刚添加且未被标记为正在更新的，如果是，自动更新天气
-        if (weather.isNewAdded && !weather.isUpdating) {
-            notifyUpdatingWeather()
-            updateWeatherUpdateStatus()
-        }
+//        if (weather.isNewAdded && !weather.isUpdating) {
+//            notifyUpdatingWeather()
+//            updateWeatherUpdateStatus()
+//        }
         // TODO 在这里检查上一次更新的时间，若相隔过长，也自动更新
     }
 
@@ -69,32 +68,14 @@ class WeatherPagePresenter(private var weatherPageViewContract: WeatherPageViewC
         weatherPageViewContract!!.changeSwipeRefreshingStatus(weather.isUpdating)
     }
 
-    /** 判断是否是当前城市 */
-    private fun isThisCity(cityId: String) = weather.cityId == cityId || DataManager.isLocationCity(weatherListPosition)
-
     @Subscribe
     fun onWeatherUpdateStatusChanged(event: WeatherUpdateStatusChangedEvent) {
         // 如果更新事件不是针对当前城市的，返回
-        if (!isThisCity(event.cityId)) return
+        if (weather.cityId != event.cityId && !DataManager.isLocationCity(event.position)) return
         when (event.status) {
             WeatherUpdateStatusChangedEvent.STATUS_UPDATING, WeatherUpdateStatusChangedEvent.STATUS_FAILED -> updateWeatherUpdateStatus()
             WeatherUpdateStatusChangedEvent.STATUS_LOCATED -> weatherPageViewContract!!.changeCityName(weather.cityName)
             WeatherUpdateStatusChangedEvent.STATUS_UPDATED -> weatherPageViewContract!!.showWeatherView(formattedWeather)
         }
-    }
-
-    // 将优先级设为 1（默认为 0），否则将优先通知 WeatherPresenter 中的订阅者（可能是因为先注册），将先调用 notifyDataSetChanged，达不到更新 ViewPager 的效果
-    @Subscribe(priority = 1)
-    fun onCityDeleted(event: CityDeletedEvent) {
-        if (isThisCity(event.cityId)) {
-            // Same as "event.position == weatherListPosition"
-            // 如果删除的是当前城市
-            weatherPageViewContract!!.onCityDeleted()
-        } else if (event.position < weatherListPosition) {
-            // 如果删除的城市的位置在当前城市之前
-            // 此城市在 weather list 中的位置前进了一位，因此需要将 weatherListPosition 减 1
-            weatherPageViewContract!!.onPositionChanged(--weatherListPosition)
-        }
-        // 如果删除的城市的位置在当前城市之后，不做任何操作
     }
 }

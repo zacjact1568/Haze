@@ -9,33 +9,37 @@ import net.zackzhang.app.cold.common.Constant
 
 class PreferenceHelper {
 
-    private val mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(App.context)
+    private val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(App.context)
 
     var needGuideValue
-        get() = mSharedPreferences.getBoolean(Constant.PREF_KEY_NEED_GUIDE, true)
-        set(value) = mSharedPreferences.edit().putBoolean(Constant.PREF_KEY_NEED_GUIDE, value).apply()
+        get() = sharedPreferences.getBoolean(Constant.PREF_KEY_NEED_GUIDE, true)
+        set(value) = sharedPreferences.edit().putBoolean(Constant.PREF_KEY_NEED_GUIDE, value).apply()
 
     var nightModeValue
-        get() = mSharedPreferences.getBoolean(Constant.PREF_KEY_NIGHT_MODE, false)
-        set(value) = mSharedPreferences.edit().putBoolean(Constant.PREF_KEY_NIGHT_MODE, value).apply()
+        get() = sharedPreferences.getBoolean(Constant.PREF_KEY_NIGHT_MODE, false)
+        set(value) = sharedPreferences.edit().putBoolean(Constant.PREF_KEY_NIGHT_MODE, value).apply()
 
     var locationServiceValue
-        get() = mSharedPreferences.getBoolean(Constant.PREF_KEY_LOCATION_SERVICE, false)
-        set(value) = mSharedPreferences.edit().putBoolean(Constant.PREF_KEY_LOCATION_SERVICE, value).apply()
+        get() = sharedPreferences.getBoolean(Constant.PREF_KEY_LOCATION_SERVICE, false)
+        set(value) = sharedPreferences.edit().putBoolean(Constant.PREF_KEY_LOCATION_SERVICE, value).apply()
+
+    var haveRequestedlocationPermissionsValue
+        get() = sharedPreferences.getBoolean(Constant.PREF_KEY_HAVE_REQUESTED_LOCATION_PERMISSIONS, false)
+        set(value) = sharedPreferences.edit().putBoolean(Constant.PREF_KEY_HAVE_REQUESTED_LOCATION_PERMISSIONS, value).apply()
 
     val allValues: Map<String, *>
-        get() = mSharedPreferences.all
+        get() = sharedPreferences.all
 
     fun resetAllValues() {
-        mSharedPreferences.edit().clear().putBoolean(Constant.PREF_KEY_NEED_GUIDE, false).apply()
+        sharedPreferences.edit().clear().putBoolean(Constant.PREF_KEY_NEED_GUIDE, false).apply()
         PreferenceManager.setDefaultValues(App.context, R.xml.preferences, true)
     }
 
     fun registerOnChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
-        mSharedPreferences.registerOnSharedPreferenceChangeListener(listener)
+        sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
     }
 
     fun unregisterOnChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
-        mSharedPreferences.unregisterOnSharedPreferenceChangeListener(listener)
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener)
     }
 }

@@ -11,19 +11,9 @@ class WeatherPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
     override fun getCount() = DataManager.cityCount
 
-    override fun getItemPosition(obj: Any): Int {
-        val fragment = obj as WeatherPageFragment
-        return when {
-            fragment.isPositionChanged -> {
-                // 在这里又将 isPositionChanged 属性置为 false
-                // PS：实在找不到更好的解决办法了
-                fragment.isPositionChanged = false
-                fragment.position
-            }
-            fragment.isCityDeleted -> POSITION_NONE
-            else -> POSITION_UNCHANGED
-        }
-    }
+    // 有城市的添加和删除，直接让所有已实例化的城市销毁重建，选择性更新会出问题
+    // 实际上开销也不大，因为最多只会实例化三个城市
+    override fun getItemPosition(obj: Any) = POSITION_NONE
 
     override fun getPageTitle(position: Int) = DataManager.getWeather(position).cityName
 }

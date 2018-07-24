@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.dialog_fragment_message.*
 import net.zackzhang.app.cold.R
 import net.zackzhang.app.cold.util.ResourceUtil
-import me.imzack.lib.basedialogfragment.BaseDialogFragment
+import net.zackzhang.lib.basedialogfragment.BaseDialogFragment
 
 /**
  * 显示一段文本信息的 dialog，左下一个按钮（third），右下两个按钮（cancel & ok），
@@ -39,7 +39,16 @@ class MessageDialogFragment : BaseDialogFragment() {
             thirdButtonClickListener?.invoke()
             true
         }
-        negativeButtonClickListener = { true }
+        // 使触摸 negative 按钮回调 onCancel 而不是 onDismiss
+        negativeButtonClickListener = {
+            // DialogFragment 中的 dismiss 除了调用 dialog 的 dismiss，还进行了一些其他的处理
+            // 但是 DialogFragment 中没有 cancel 函数，可以直接调用 dialog 的 cancel，也会进行相同的处理
+            // 因为调用 dialog 的 cancel 也会调用 dismiss，就会调用 DialogFragment 的 onDismiss 函数
+            // 在 DialogFragment 的 onDismiss 函数中就会调用 dismissInternal 函数进行处理
+            dialog.cancel()
+            // 返回 false，不调用 dismiss
+            false
+        }
         positiveButtonClickListener = {
             okButtonClickListener?.invoke()
             true

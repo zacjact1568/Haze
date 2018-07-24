@@ -16,9 +16,11 @@ interface HomeViewContract : BaseViewContract {
 
     fun onPressBackKey()
 
-    fun onDetectedLocationServicePermissionsDenied()
-
     fun onDetectedNetworkNotAvailable()
 
     fun onDetectedSystemLocationServiceDisabled()
+
+    fun onDetectedNoEnoughPermissionsGranted()
+
+    fun onLocationServicePermissionsDenied()
 }

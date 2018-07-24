@@ -6,14 +6,10 @@ import net.zackzhang.app.cold.R
 import net.zackzhang.app.cold.common.Constant
 import net.zackzhang.app.cold.event.CitySelectedEvent
 import net.zackzhang.app.cold.event.WeatherUpdateStatusChangedEvent
-import net.zackzhang.app.cold.exception.AMapLocationServiceException
-import net.zackzhang.app.cold.exception.HeWeatherServiceException
-import net.zackzhang.app.cold.exception.NetworkNotAvailableException
-import net.zackzhang.app.cold.exception.SystemLocationServiceDisabledException
+import net.zackzhang.app.cold.exception.*
 import net.zackzhang.app.cold.model.DataManager
 import net.zackzhang.app.cold.util.*
 import net.zackzhang.app.cold.view.contract.HomeViewContract
-import net.zackzhang.app.cold.view.fragment.LocationServicePermissionsFragment
 import org.greenrobot.eventbus.Subscribe
 import retrofit2.HttpException
 import java.io.IOException
@@ -49,15 +45,6 @@ class HomePresenter(private var homeViewContract: HomeViewContract?) : BasePrese
         if (preferenceHelper.needGuideValue) {
             homeViewContract!!.startActivity(Constant.GUIDE)
         }
-        // 如果用户在系统设置中改变了权限，app 会被杀死，而 HomeActivity 又是此 app 的唯一入口，因此在这里检测是否还拥有权限
-        if (preferenceHelper.locationServiceValue && !SystemUtil.checkPermissions(LocationServicePermissionsFragment.PERMISSIONS)) {
-            // 如果设置中开启了位置服务，而又有权限未授予
-            // 关闭位置服务
-            preferenceHelper.locationServiceValue = false
-            // TODO 移除第一页（当前位置）天气
-            // 弹 dialog 提醒
-            homeViewContract!!.onDetectedLocationServicePermissionsDenied()
-        }
         // 初始化主页的所有 fragment
         homeViewContract!!.showInitialFragment(isRestored, currentFragmentTag)
     }
@@ -85,13 +72,14 @@ class HomePresenter(private var homeViewContract: HomeViewContract?) : BasePrese
             }
         }
     }
-    
+
     fun notifyLocationServicePermissionsRequestFinished(granted: Boolean) {
         if (granted) {
-            preferenceHelper.locationServiceValue = true
-            // TODO 添加第一页（当前位置）天气
+            // 直接刷新列表首位城市的天气，这个城市一定是定位城市
+            DataManager.updateWeatherDataFromInternet(DataManager.getWeather(0).cityId)
+        } else {
+            homeViewContract!!.onLocationServicePermissionsDenied()
         }
-        // 若未授予权限，不执行任何操作
     }
 
     private fun switchFragment(toTag: String) {
@@ -117,6 +105,7 @@ class HomePresenter(private var homeViewContract: HomeViewContract?) : BasePrese
                     null -> throw IllegalArgumentException("The status of WeatherUpdateStatusChangedEvent is STATUS_FAILED but error property is null")
                     is NetworkNotAvailableException -> homeViewContract!!.onDetectedNetworkNotAvailable()
                     is SystemLocationServiceDisabledException -> homeViewContract!!.onDetectedSystemLocationServiceDisabled()
+                    is NoEnoughPermissionsGrantedException -> homeViewContract!!.onDetectedNoEnoughPermissionsGranted()
                     is AMapLocationServiceException -> homeViewContract!!.showToast(AMapLocationUtil.parseErrorCode(error.code))
                     is IOException -> homeViewContract!!.showToast(R.string.error_io_exception)
                     is HttpException -> homeViewContract!!.showToast(R.string.error_http_exception)

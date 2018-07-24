@@ -25,13 +25,17 @@ class CityAdapter : RecyclerView.Adapter<CityAdapter.ItemViewHolder>() {
 
     // TODO use payloads
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val (city, current, _, _, updateTime, status) = DataManager.getWeather(position)
+        val (city, current, _, _, updateTime, _, status) = DataManager.getWeather(position)
 
         holder.vCityNameText.text = city.name
         holder.vWeatherText.text = if (updateTime == 0L) "${Constant.UNKNOWN_DATA} | ${Constant.UNKNOWN_DATA}" else "${current.temperature} | ${DataManager.getConditionByCode(current.conditionCode)}"
 
         if (status == Weather.STATUS_UPDATING) {
             holder.vUpdateButton.startAnimation(updateAnim)
+        }
+
+        if (DataManager.isLocationCity(position)) {
+            holder.vDeleteButton.visibility = View.INVISIBLE
         }
 
         holder.itemView.setOnClickListener { onCityItemClickListener?.invoke(holder.layoutPosition) }

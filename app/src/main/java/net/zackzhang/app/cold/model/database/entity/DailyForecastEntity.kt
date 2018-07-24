@@ -9,6 +9,8 @@ import net.zackzhang.app.cold.common.Constant
 data class DailyForecastEntity(
         @ColumnInfo(name = Constant.CITY_ID)
         val cityId: String,
+        // 不能用 date 作为第二主键
+        // 因为如果添加城市后使用数组下标占位，稍后从网络获取到真正的 date，要更新此表的时候，在数据库中找不到对应的 date，就无法更新
         @ColumnInfo(name = Constant.SEQUENCE)
         val sequence: Int,
         @ColumnInfo(name = Constant.DATE)
@@ -22,5 +24,7 @@ data class DailyForecastEntity(
         @ColumnInfo(name = Constant.CONDITION_CODE_NIGHT)
         val conditionCodeNight: Int,
         @ColumnInfo(name = Constant.PRECIPITATION_PROBABILITY)
-        val precipitationProbability: Int
+        val precipitationProbability: Int,
+        @ColumnInfo(name = Constant.ADD_TIME)
+        val addTime: Long
 )

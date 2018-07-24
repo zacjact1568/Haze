@@ -51,7 +51,13 @@ class CitiesPresenter(private var citiesViewContract: CitiesViewContract?) : Bas
 
     @Subscribe
     fun onCityAdded(event: CityAddedEvent) {
-        cityAdapter.notifyItemInserted(DataManager.recentlyAddedCityLocation)
+        cityAdapter.notifyItemInserted(event.position)
+    }
+
+    @Subscribe
+    fun onCityDeleted(event: CityDeletedEvent) {
+        if (event.eventSource == javaClass.simpleName) return
+        cityAdapter.notifyItemRemoved(event.position)
     }
 
     @Subscribe
