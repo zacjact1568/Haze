@@ -28,6 +28,7 @@
     <string name="text_no_enough_permissions_granted">No enough permissions granted</string>
     <string name="title_dialog_permissions_denied">No Enough Permissions</string>
     <string name="msg_dialog_permissions_denied">AMap® Location Service can\'t get your location information without these permissions, but you can grant Cold these permissions later.</string>
+    <string name="neu_btn_dialog_permissions_denied">Disable Location Service</string>
 
     <!--WeatherPageFragment-->
     <string name="text_update_time">Updated at %s</string>

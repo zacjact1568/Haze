@@ -44,7 +44,7 @@ class CitiesPresenter(private var citiesViewContract: CitiesViewContract?) : Bas
         // 需要在执行删除前获取到 cityId
         val cityId = DataManager.getWeather(position).cityId
         // 执行删除
-        DataManager.notifyCityDeleted(position)
+        DataManager.notifyDeletingCity(position)
         cityAdapter.notifyItemRemoved(position)
         eventBus.post(CityDeletedEvent(javaClass.simpleName, cityId, position))
     }

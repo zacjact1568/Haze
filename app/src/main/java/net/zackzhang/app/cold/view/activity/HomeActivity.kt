@@ -27,6 +27,7 @@ class HomeActivity : BaseActivity(), HomeViewContract {
     companion object {
 
         private const val TAG_LOCATION_SERVICE_PERMISSIONS = "location_service_permissions"
+        private const val TAG_PERMISSIONS_DENIED = "permissions_denied"
 
         fun start(context: Context) {
             context.startActivity(Intent(context, HomeActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
@@ -79,9 +80,12 @@ class HomeActivity : BaseActivity(), HomeViewContract {
     override fun onAttachFragment(fragment: Fragment) {
         super.onAttachFragment(fragment)
 
-        if (fragment.tag == TAG_LOCATION_SERVICE_PERMISSIONS) {
-            (fragment as LocationServicePermissionsFragment).permissionsRequestFinishedListener = {
+        when (fragment.tag) {
+            TAG_LOCATION_SERVICE_PERMISSIONS -> (fragment as LocationServicePermissionsFragment).permissionsRequestFinishedListener = {
                 homePresenter.notifyLocationServicePermissionsRequestFinished(it)
+            }
+            TAG_PERMISSIONS_DENIED -> (fragment as MessageDialogFragment).thirdButtonClickListener = {
+                homePresenter.notifyDisablingLocationService()
             }
         }
     }
@@ -184,7 +188,8 @@ class HomeActivity : BaseActivity(), HomeViewContract {
                             .setTitle(R.string.title_dialog_permissions_denied)
                             .setMessage(R.string.msg_dialog_permissions_denied)
                             .setOkButtonText(android.R.string.ok)
-                            .show(supportFragmentManager)
+                            .setThirdButtonText(R.string.neu_btn_dialog_permissions_denied)
+                            .show(supportFragmentManager, TAG_PERMISSIONS_DENIED)
                 }
                 .show()
     }

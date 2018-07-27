@@ -4,6 +4,7 @@ import android.os.Bundle
 import net.zackzhang.app.cold.App
 import net.zackzhang.app.cold.R
 import net.zackzhang.app.cold.common.Constant
+import net.zackzhang.app.cold.event.CityDeletedEvent
 import net.zackzhang.app.cold.event.CitySelectedEvent
 import net.zackzhang.app.cold.event.WeatherUpdateStatusChangedEvent
 import net.zackzhang.app.cold.exception.*
@@ -80,6 +81,17 @@ class HomePresenter(private var homeViewContract: HomeViewContract?) : BasePrese
         } else {
             homeViewContract!!.onLocationServicePermissionsDenied()
         }
+    }
+
+    fun notifyDisablingLocationService() {
+        preferenceHelper.locationServiceValue = false
+        val cityId = DataManager.getWeather(0).cityId
+        DataManager.notifyDeletingCity(0)
+        eventBus.post(CityDeletedEvent(
+                javaClass.simpleName,
+                cityId,
+                0
+        ))
     }
 
     private fun switchFragment(toTag: String) {

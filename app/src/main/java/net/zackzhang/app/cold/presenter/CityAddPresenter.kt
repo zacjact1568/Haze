@@ -43,7 +43,7 @@ class CityAddPresenter(private var cityAddViewContract: CityAddViewContract?) : 
         if (DataManager.doesCityExist(id)) {
             cityAddViewContract!!.showToast(R.string.toast_city_exists)
         } else {
-            DataManager.notifyCityAdded(Weather(id, name, name == prefecture))
+            DataManager.notifyAddingCity(Weather(id, name, name == prefecture))
             App.eventBus.post(CityAddedEvent(
                     javaClass.simpleName,
                     id,

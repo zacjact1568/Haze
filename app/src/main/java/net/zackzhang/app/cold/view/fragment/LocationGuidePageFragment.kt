@@ -72,9 +72,9 @@ class LocationGuidePageFragment : SimpleGuidePageFragment() {
         descriptionText = StringUtil.addWhiteColorSpan(getString(R.string.description_page_location_enabled))
         buttonText = null
         // 先添加“当前位置”占位，待后续获取到位置再更新
-        // 在引导页添加的城市位置肯定是 0，因此不需要指定插入位置（notifyCityAdded 默认在尾部插入）
+        // 在引导页添加的城市位置肯定是 0，因此不需要指定插入位置（notifyAddingCity 默认在尾部插入）
         // TODO 定位到的城市都是县级？
-        DataManager.notifyCityAdded(Weather(Constant.CITY_ID_CURRENT_LOCATION, getString(R.string.text_current_location), isLocationCity = true))
+        DataManager.notifyAddingCity(Weather(Constant.CITY_ID_CURRENT_LOCATION, getString(R.string.text_current_location), isLocationCity = true))
         App.eventBus.post(CityAddedEvent(
                 javaClass.simpleName,
                 Constant.CITY_ID_CURRENT_LOCATION,

@@ -101,7 +101,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                 if (preferenceHelper.locationServiceValue) {
                     // 如果触发此回调的操作是开启位置服务
                     // 添加第一页“当前位置”城市页
-                    DataManager.notifyCityAdded(Weather(Constant.CITY_ID_CURRENT_LOCATION, getString(R.string.text_current_location), isLocationCity = true))
+                    DataManager.notifyAddingCity(Weather(Constant.CITY_ID_CURRENT_LOCATION, getString(R.string.text_current_location), isLocationCity = true))
                     eventBus.post(CityAddedEvent(
                             eventSource,
                             Constant.CITY_ID_CURRENT_LOCATION,
@@ -112,7 +112,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                     // 移除第一页“当前位置”城市页
                     // 先保存 cityId，供发送事件使用，稍后删除后就获取不到了
                     val cityId = DataManager.getWeather(0).cityId
-                    DataManager.notifyCityDeleted(0)
+                    DataManager.notifyDeletingCity(0)
                     eventBus.post(CityDeletedEvent(
                             eventSource,
                             cityId,

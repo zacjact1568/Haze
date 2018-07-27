@@ -68,12 +68,12 @@ object DataManager {
 
     // 如果未指定 location，而且 weather 中 addTime 为 0，说明是定位城市，默认插入到表头，否则插入到表尾
     // 在删除城市后恢复需要自行在删除前记录 location，在这里指定 TODO 待实现
-    fun notifyCityAdded(weather: Weather, location: Int = if (weather.addTime == 0L) 0 else cityCount) {
+    fun notifyAddingCity(weather: Weather, location: Int = if (weather.addTime == 0L) 0 else cityCount) {
         weatherList.add(location, weather)
         databaseHelper.insertWeather(weather)
     }
 
-    fun notifyCityDeleted(location: Int) {
+    fun notifyDeletingCity(location: Int) {
         val weather = getWeather(location)
         // 将天气数据标记为已删除
         weather.status = Weather.STATUS_DELETED
