@@ -55,7 +55,7 @@ class LocationServicePermissionsFragment : BaseFragment() {
             // 对于至少一个未授予的权限，shouldShowRequestPermissionRationale 为 false，没有必要弹权限需求原因窗口
             // 在这里判断是否已经弹过系统授权窗口
             // 如果弹过，则表示对于某个权限，用户勾选了“不再询问”再选择拒绝，或设备不支持某个权限（暂不考虑）
-            preferenceHelper.haveRequestedlocationPermissionsValue -> MessageDialogFragment.Builder()
+            preferenceHelper.haveRequestedLocationPermissionsValue -> MessageDialogFragment.Builder()
                     .setTitle(R.string.title_dialog_never_request_permissions_again)
                     .setMessage(R.string.msg_dialog_never_request_permissions_again)
                     .setOkButtonText(R.string.pos_btn_dialog_never_request_permissions_again)
@@ -99,7 +99,7 @@ class LocationServicePermissionsFragment : BaseFragment() {
                     // 说明全部权限都已授予
                     onPermissionsGranted()
                 }
-                preferenceHelper.haveRequestedlocationPermissionsValue = true
+                preferenceHelper.haveRequestedLocationPermissionsValue = true
             } else {
                 LogUtil.e("Permissions granting was interrupted")
             }

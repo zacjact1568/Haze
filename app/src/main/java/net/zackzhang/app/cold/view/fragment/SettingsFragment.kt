@@ -23,7 +23,6 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     companion object {
 
         private const val TAG_PRE_ENABLE_LOCATION_SERVICE = "pre_enable_location_service"
-        private const val TAG_SWITCH_NIGHT_MODE = "switch_night_mode"
     }
 
     private val preferenceHelper = DataManager.preferenceHelper
@@ -32,9 +31,6 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     private val locationServicePreference by lazy {
         findPreference(Constant.PREF_KEY_LOCATION_SERVICE) as SwitchPreference
-    }
-    private val nightModePreference by lazy {
-        findPreference(Constant.PREF_KEY_NIGHT_MODE) as SwitchPreference
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -51,6 +47,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                         .setOkButtonText(R.string.pos_btn_dialog_pre_enable_location_service)
                         .showCancelButton()
                         .show(childFragmentManager, TAG_PRE_ENABLE_LOCATION_SERVICE)
+                // 返回 false 表示不改变 preference 的值
                 false
             } else {
                 // 该操作是关闭位置服务，或者低于 Android 6.0
@@ -58,17 +55,6 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                 // 界面会更新
                 true
             }
-        }
-
-        nightModePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
-            MessageDialogFragment.Builder()
-                    .setTitle(R.string.title_dialog_switch_night_mode)
-                    .setMessage(R.string.msg_dialog_switch_night_mode)
-                    .setOkButtonText(R.string.button_restart)
-                    .showCancelButton()
-                    .show(childFragmentManager, TAG_SWITCH_NIGHT_MODE)
-            // 返回 false 表示不改变 preference 的值
-            false
         }
     }
 
@@ -85,7 +71,6 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                 // 将位置服务设置项开启，触发 onSharedPreferenceChanged 回调，界面会更新
                 locationServicePreference.isChecked = true
             }
-            TAG_SWITCH_NIGHT_MODE -> (childFragment as MessageDialogFragment).okButtonClickListener = { nightModePreference.isChecked = !nightModePreference.isChecked }
         }
     }
 
@@ -119,11 +104,6 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                             0
                     ))
                 }
-            }
-            Constant.PREF_KEY_NIGHT_MODE -> {
-                AppCompatDelegate.setDefaultNightMode(if (preferenceHelper.nightModeValue) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO)
-                // 返回并重新创建 HomeActivity
-                HomeActivity.start(context!!)
             }
         }
     }

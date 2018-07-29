@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import android.preference.PreferenceManager
 import android.support.annotation.RawRes
-import android.support.v7.app.AppCompatDelegate
 import com.facebook.stetho.Stetho
 import net.zackzhang.app.cold.common.Constant
 import net.zackzhang.app.cold.event.EventBusIndex
@@ -49,10 +48,8 @@ class App : Application() {
     }
 
     private fun initPreferences() {
-        //设定preferences默认值
+        // 设定 preferences 默认值
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
-        //设定白天夜间模式
-        AppCompatDelegate.setDefaultNightMode(if (DataManager.preferenceHelper.nightModeValue) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO)
     }
 
     /** 初始化数据库 */

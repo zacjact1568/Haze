@@ -43,15 +43,10 @@
     <string name="text_updating">正在刷新</string>
     <string name="developer">开发者</string>
     <string name="me">全杰是也</string>
-    <string name="pref_category_title_others">其他</string>
-    <string name="pref_category_title_theme">主题</string>
     <string name="pref_category_title_weather">天气</string>
     <string name="pref_summary_location_service_off">高德位置服务已关闭</string>
     <string name="pref_summary_location_service_on">高德位置服务已开启</string>
-    <string name="pref_title_language">语言</string>
     <string name="pref_title_location_service">定位服务</string>
-    <string name="pref_title_night_mode">夜间模式</string>
-    <string name="pref_title_theme">主题</string>
     <string name="title_activity_about">关于</string>
     <string name="title_activity_settings">设置</string>
     <string name="version">版本</string>
@@ -70,11 +65,7 @@
     <string name="msg_dialog_permissions_denied">若没有这些权限，高德®位置服务无法获取到你的位置信息，但你可以稍后授予 Cold 这些权限。</string>
     <string name="title_dialog_permissions_denied">没有足够权限</string>
     <string name="toast_double_press_exit">再次按下退出 Cold</string>
-    <string name="msg_dialog_switch_night_mode">在白天和夜间模式之间切换需要重启 Cold。</string>
-    <string name="title_dialog_switch_night_mode">重启 Cold？</string>
     <string name="button_restart">重启</string>
-    <string name="pref_summary_on">开启</string>
-    <string name="pref_summary_off">关闭</string>
     <string name="action_reset">重置</string>
     <string name="title_dialog_reset_settings">重置设置？</string>
     <string name="msg_dialog_reset_settings">设置将会被重置为默认，Cold 将会重启。</string>
