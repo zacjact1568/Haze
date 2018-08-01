@@ -5,7 +5,6 @@ import android.os.Build
 import android.os.Bundle
 import android.support.v14.preference.SwitchPreference
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatDelegate
 import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
 import net.zackzhang.app.cold.App
@@ -15,15 +14,9 @@ import net.zackzhang.app.cold.event.CityAddedEvent
 import net.zackzhang.app.cold.event.CityDeletedEvent
 import net.zackzhang.app.cold.model.DataManager
 import net.zackzhang.app.cold.model.bean.Weather
-import net.zackzhang.app.cold.view.activity.HomeActivity
-import net.zackzhang.app.cold.view.dialog.MessageDialogFragment
+import net.zackzhang.app.cold.view.dialog.PreEnableLocationServiceDialogFragment
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
-
-    companion object {
-
-        private const val TAG_PRE_ENABLE_LOCATION_SERVICE = "pre_enable_location_service"
-    }
 
     private val preferenceHelper = DataManager.preferenceHelper
 
@@ -41,12 +34,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                 // 该操作是开启位置服务，且为 Android 6.0 及以上
                 // 先不执行更新 shared preference，待用户确认后更新
                 // 界面不会更新
-                MessageDialogFragment.Builder()
-                        .setTitle(R.string.title_dialog_pre_enable_location_service)
-                        .setMessage(R.string.msg_dialog_pre_enable_location_service)
-                        .setOkButtonText(R.string.pos_btn_dialog_pre_enable_location_service)
-                        .showCancelButton()
-                        .show(childFragmentManager, TAG_PRE_ENABLE_LOCATION_SERVICE)
+                PreEnableLocationServiceDialogFragment().show(childFragmentManager)
                 // 返回 false 表示不改变 preference 的值
                 false
             } else {
@@ -67,10 +55,11 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         super.onAttachFragment(childFragment)
 
         when (childFragment.tag) {
-            TAG_PRE_ENABLE_LOCATION_SERVICE -> (childFragment as MessageDialogFragment).okButtonClickListener = {
-                // 将位置服务设置项开启，触发 onSharedPreferenceChanged 回调，界面会更新
-                locationServicePreference.isChecked = true
-            }
+            PreEnableLocationServiceDialogFragment.TAG_PRE_ENABLE_LOCATION_SERVICE ->
+                (childFragment as PreEnableLocationServiceDialogFragment).okButtonClickListener = {
+                    // 将位置服务设置项开启，触发 onSharedPreferenceChanged 回调，界面会更新
+                    locationServicePreference.isChecked = true
+                }
         }
     }
 

@@ -14,14 +14,13 @@ import net.zackzhang.app.cold.model.bean.Weather
 import net.zackzhang.app.cold.util.ResourceUtil
 import net.zackzhang.app.cold.util.StringUtil
 import me.imzack.lib.baseguideactivity.SimpleGuidePageFragment
-import net.zackzhang.app.cold.view.dialog.MessageDialogFragment
+import net.zackzhang.app.cold.view.dialog.PreEnableLocationServiceDialogFragment
 
 class LocationGuidePageFragment : SimpleGuidePageFragment() {
 
     companion object {
 
-        private const val TAG_PRE_ENABLE_LOCATION_SERVICE = "pre_enable_location_service"
-
+        // TODO 没必要，改成 BaseDialogFragment 的形式
         fun newInstance(): LocationGuidePageFragment {
             val fragment = LocationGuidePageFragment()
             fragment.arguments = Bundle()
@@ -36,7 +35,7 @@ class LocationGuidePageFragment : SimpleGuidePageFragment() {
 
         val isLocationServiceEnabled = preferenceHelper.locationServiceValue
 
-        imageResId = R.drawable.ic_place_black_24dp
+        imageResId = R.drawable.ic_location
         imageTint = Color.WHITE
         titleText = StringUtil.addWhiteColorSpan(ResourceUtil.getString(R.string.title_page_location))
         descriptionText = StringUtil.addWhiteColorSpan(ResourceUtil.getString(if (isLocationServiceEnabled) R.string.description_page_location_enabled else R.string.description_page_location_disabled))
@@ -47,12 +46,7 @@ class LocationGuidePageFragment : SimpleGuidePageFragment() {
                 // Android 6.0 以下，直接开启位置服务，因为不需要授权
                 enableLocationService()
             } else {
-                MessageDialogFragment.Builder()
-                        .setTitle(R.string.title_dialog_pre_enable_location_service)
-                        .setMessage(R.string.msg_dialog_pre_enable_location_service)
-                        .setOkButtonText(R.string.pos_btn_dialog_pre_enable_location_service)
-                        .showCancelButton()
-                        .show(childFragmentManager, TAG_PRE_ENABLE_LOCATION_SERVICE)
+                PreEnableLocationServiceDialogFragment().show(childFragmentManager)
             }
         }
     }
@@ -60,8 +54,8 @@ class LocationGuidePageFragment : SimpleGuidePageFragment() {
     override fun onAttachFragment(childFragment: Fragment) {
         super.onAttachFragment(childFragment)
 
-        if (childFragment.tag == TAG_PRE_ENABLE_LOCATION_SERVICE) {
-            (childFragment as MessageDialogFragment).okButtonClickListener = { enableLocationService() }
+        if (childFragment.tag == PreEnableLocationServiceDialogFragment.TAG_PRE_ENABLE_LOCATION_SERVICE) {
+            (childFragment as PreEnableLocationServiceDialogFragment).okButtonClickListener = { enableLocationService() }
         }
     }
 

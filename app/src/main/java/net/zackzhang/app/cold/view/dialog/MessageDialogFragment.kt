@@ -16,7 +16,7 @@ import net.zackzhang.lib.basedialogfragment.BaseDialogFragment
  * 可控制 cancel 按钮显示与否，但其文本不可更改。
  * 无论是否为按钮设置监听事件，触摸按钮后都关闭 dialog。
  */
-class MessageDialogFragment : BaseDialogFragment() {
+open class MessageDialogFragment : BaseDialogFragment() {
 
     companion object {
 
@@ -33,7 +33,7 @@ class MessageDialogFragment : BaseDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        vMessageText.text = arguments!!.getCharSequence(ARG_MESSAGE)
+        vMessageText.text = arguments?.getCharSequence(ARG_MESSAGE)
 
         neutralButtonClickListener = {
             thirdButtonClickListener?.invoke()

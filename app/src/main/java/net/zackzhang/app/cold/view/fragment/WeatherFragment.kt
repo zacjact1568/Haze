@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_weather.*
 import net.zackzhang.app.cold.R
 import net.zackzhang.app.cold.presenter.WeatherPresenter
-import net.zackzhang.app.cold.view.activity.CityAddActivity
 import net.zackzhang.app.cold.view.adapter.WeatherPagerAdapter
 import net.zackzhang.app.cold.view.contract.WeatherViewContract
 
@@ -18,6 +17,14 @@ class WeatherFragment : BaseFragment(), WeatherViewContract {
 
     // 需要延迟初始化，否则一开始此 fragment 还未附到 activity 上，无法获取 fragmentManager
     private val weatherPresenter by lazy { WeatherPresenter(this, fragmentManager!!) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (savedInstanceState == null) {
+            // 先直接添加 EmptyCityFragment，后续改变其可见性即可
+            childFragmentManager.beginTransaction().add(R.id.vEmptyCityLayout, EmptyCityFragment()).commit()
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
             inflater.inflate(R.layout.fragment_weather, container, false)!!
@@ -34,9 +41,8 @@ class WeatherFragment : BaseFragment(), WeatherViewContract {
 
     override fun showInitialView(weatherPagerAdapter: WeatherPagerAdapter, isCityEmpty: Boolean) {
         vWeatherPager.adapter = weatherPagerAdapter
-        vAddCityButton.setOnClickListener { CityAddActivity.start(context!!) }
 
-        onPageEmptyStateChanged(isCityEmpty)
+        onCityEmptyStateChanged(isCityEmpty)
     }
 
     override fun onDetectedNetworkNotAvailable() {
@@ -49,8 +55,9 @@ class WeatherFragment : BaseFragment(), WeatherViewContract {
         vWeatherPager.currentItem = position
     }
 
-    override fun onPageEmptyStateChanged(isEmpty: Boolean) {
+    override fun onCityEmptyStateChanged(isEmpty: Boolean) {
         vWeatherPager.visibility = if (isEmpty) View.GONE else View.VISIBLE
-        vEmptyLayout.visibility = if (isEmpty) View.VISIBLE else View.GONE
+        // 通过改变容器 view 的可见性来改变 EmptyCityFragment 的可见性
+        vEmptyCityLayout.visibility = if (isEmpty) View.VISIBLE else View.GONE
     }
 }

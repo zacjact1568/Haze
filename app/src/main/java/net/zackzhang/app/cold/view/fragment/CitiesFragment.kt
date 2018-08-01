@@ -1,9 +1,6 @@
 package net.zackzhang.app.cold.view.fragment
 
-import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +22,13 @@ class CitiesFragment : BaseFragment(), CitiesViewContract {
     }
 
     private val citiesPresenter = CitiesPresenter(this)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (savedInstanceState == null) {
+            childFragmentManager.beginTransaction().add(R.id.vEmptyCityLayout, EmptyCityFragment()).commit()
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
             inflater.inflate(R.layout.fragment_cities, container, false)!!
@@ -50,9 +54,11 @@ class CitiesFragment : BaseFragment(), CitiesViewContract {
         citiesPresenter.detach()
     }
 
-    override fun showInitialView(cityAdapter: CityAdapter) {
+    override fun showInitialView(cityAdapter: CityAdapter, isCityEmpty: Boolean) {
         vCityList.setHasFixedSize(true)
         vCityList.adapter = cityAdapter
+
+        onCityEmptyStateChanged(isCityEmpty)
     }
 
     override fun showCityDeletionConfirmationDialog(cityName: String, position: Int) {
@@ -66,5 +72,10 @@ class CitiesFragment : BaseFragment(), CitiesViewContract {
         // 只要此 DialogFragment 未手动关闭，就一定能取到这个值
         dialogFragment.arguments!!.putInt(KEY_CITY_DELETION_POSITION, position)
         dialogFragment.show(childFragmentManager, TAG_CITY_DELETION)
+    }
+
+    override fun onCityEmptyStateChanged(isEmpty: Boolean) {
+        vCityList.visibility = if (isEmpty) View.GONE else View.VISIBLE
+        vEmptyCityLayout.visibility = if (isEmpty) View.VISIBLE else View.GONE
     }
 }

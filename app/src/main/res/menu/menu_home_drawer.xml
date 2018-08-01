@@ -8,7 +8,7 @@
             android:title="@string/action_weather" />
         <item
             android:id="@+id/nav_cities"
-            android:icon="@drawable/ic_location_city_black_24dp"
+            android:icon="@drawable/ic_city"
             android:title="@string/action_cities" />
     </group>
 

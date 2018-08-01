@@ -10,5 +10,5 @@ interface WeatherViewContract : BaseViewContract {
 
     fun onSwitchPage(position: Int)
 
-    fun onPageEmptyStateChanged(isEmpty: Boolean)
+    fun onCityEmptyStateChanged(isEmpty: Boolean)
 }

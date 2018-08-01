@@ -32,7 +32,7 @@ class SettingsActivity : BaseActivity() {
 
         if (savedInstanceState == null) {
             // 说明 Activity 是新启动的，添加 SettingsFragment；否则 SettingsFragment 会自动恢复，不需要重复添加
-            supportFragmentManager.beginTransaction().add(R.id.frame_layout, SettingsFragment()).commit()
+            supportFragmentManager.beginTransaction().add(R.id.vContentLayout, SettingsFragment()).commit()
         }
     }
 

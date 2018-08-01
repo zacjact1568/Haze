@@ -4,9 +4,7 @@ import android.os.Bundle
 import net.zackzhang.app.cold.App
 import net.zackzhang.app.cold.R
 import net.zackzhang.app.cold.common.Constant
-import net.zackzhang.app.cold.event.CityDeletedEvent
-import net.zackzhang.app.cold.event.CitySelectedEvent
-import net.zackzhang.app.cold.event.WeatherUpdateStatusChangedEvent
+import net.zackzhang.app.cold.event.*
 import net.zackzhang.app.cold.exception.*
 import net.zackzhang.app.cold.model.DataManager
 import net.zackzhang.app.cold.util.*
@@ -24,10 +22,11 @@ class HomePresenter(private var homeViewContract: HomeViewContract?) : BasePrese
     private var isRestored = false
     // 需要设置默认为 weather 界面，因为正常启动不会更新此变量
     private var currentFragmentTag = Constant.WEATHER
+    private var isCityEmpty = DataManager.cityCount == 0
 
     override fun attach() {
         eventBus.register(this)
-        homeViewContract!!.showInitialView()
+        homeViewContract!!.showInitialView(currentFragmentTag, isCityEmpty)
     }
 
     override fun detach() {
@@ -47,7 +46,7 @@ class HomePresenter(private var homeViewContract: HomeViewContract?) : BasePrese
             homeViewContract!!.startActivity(Constant.GUIDE)
         }
         // 初始化主页的所有 fragment
-        homeViewContract!!.showInitialFragment(isRestored, currentFragmentTag)
+        homeViewContract!!.showInitialFragment(isRestored, currentFragmentTag, isCityEmpty)
     }
 
     fun notifySavingInstanceState(outState: Bundle) {
@@ -96,13 +95,42 @@ class HomePresenter(private var homeViewContract: HomeViewContract?) : BasePrese
 
     private fun switchFragment(toTag: String) {
         if (currentFragmentTag == toTag) return
-        homeViewContract!!.switchFragment(currentFragmentTag, toTag)
+        homeViewContract!!.switchFragment(currentFragmentTag, toTag, isCityEmpty)
         currentFragmentTag = toTag
+    }
+
+    /** 统一处理城市是否为空的状态变化事件 */
+    private fun updateCityEmptyState() {
+        val isCityEmptyNow = DataManager.cityCount == 0
+        if (isCityEmpty != isCityEmptyNow) {
+            isCityEmpty = isCityEmptyNow
+            eventBus.post(CityEmptyStateChangedEvent(isCityEmpty))
+        }
+    }
+
+    @Subscribe
+    fun onDataLoaded(event: DataLoadedEvent) {
+        updateCityEmptyState()
+    }
+
+    @Subscribe
+    fun onCityAdded(event: CityAddedEvent) {
+        updateCityEmptyState()
+    }
+
+    @Subscribe
+    fun onCityDeleted(event: CityDeletedEvent) {
+        updateCityEmptyState()
     }
 
     @Subscribe
     fun onCitySelected(event: CitySelectedEvent) {
         switchFragment(Constant.WEATHER)
+    }
+
+    @Subscribe
+    fun onCityEmptyStateChanged(event: CityEmptyStateChangedEvent) {
+        homeViewContract!!.onCityEmptyStateChanged(event.isEmpty, currentFragmentTag)
     }
 
     // 集中处理 WeatherPageFragment 和 CitiesFragment 中的天气更新状态改变事件

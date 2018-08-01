@@ -12,12 +12,11 @@ class WeatherPresenter(private var weatherViewContract: WeatherViewContract?, fr
 
     private val eventBus = App.eventBus
     private val weatherPagerAdapter = WeatherPagerAdapter(fragmentManager)
-    private val isCityEmpty
-        get() = DataManager.cityCount == 0
 
     override fun attach() {
         eventBus.register(this)
-        weatherViewContract!!.showInitialView(weatherPagerAdapter, isCityEmpty)
+        // 由于在 WeatherFragment 中初始化该类后会马上调用该函数，因此 isCityEmpty 就是真实值
+        weatherViewContract!!.showInitialView(weatherPagerAdapter, DataManager.cityCount == 0)
     }
 
     override fun detach() {
@@ -25,31 +24,29 @@ class WeatherPresenter(private var weatherViewContract: WeatherViewContract?, fr
         eventBus.unregister(this)
     }
 
-    private fun updatePageEmptyState() {
-        weatherViewContract!!.onPageEmptyStateChanged(isCityEmpty)
-    }
-
     @Subscribe
     fun onDataLoaded(event: DataLoadedEvent) {
         weatherPagerAdapter.notifyDataSetChanged()
-        updatePageEmptyState()
     }
 
     @Subscribe
     fun onCityAdded(event: CityAddedEvent) {
         // 刷新 pager，先将无天气数据的城市放到界面上
         weatherPagerAdapter.notifyDataSetChanged()
-        updatePageEmptyState()
     }
 
     @Subscribe
     fun onCityDeleted(event: CityDeletedEvent) {
         weatherPagerAdapter.notifyDataSetChanged()
-        updatePageEmptyState()
     }
 
     @Subscribe
     fun onCitySelected(event: CitySelectedEvent) {
         weatherViewContract!!.onSwitchPage(event.position)
+    }
+
+    @Subscribe
+    fun onCityEmptyStateChanged(event: CityEmptyStateChangedEvent) {
+        weatherViewContract!!.onCityEmptyStateChanged(event.isEmpty)
     }
 }

@@ -1,10 +1,7 @@
 package net.zackzhang.app.cold.presenter
 
 import net.zackzhang.app.cold.App
-import net.zackzhang.app.cold.event.CityAddedEvent
-import net.zackzhang.app.cold.event.CityDeletedEvent
-import net.zackzhang.app.cold.event.CitySelectedEvent
-import net.zackzhang.app.cold.event.WeatherUpdateStatusChangedEvent
+import net.zackzhang.app.cold.event.*
 import net.zackzhang.app.cold.model.DataManager
 import net.zackzhang.app.cold.view.adapter.CityAdapter
 import net.zackzhang.app.cold.view.contract.CitiesViewContract
@@ -32,7 +29,7 @@ class CitiesPresenter(private var citiesViewContract: CitiesViewContract?) : Bas
         cityAdapter.onDeleteButtonClickListener = {
             citiesViewContract!!.showCityDeletionConfirmationDialog(DataManager.getWeather(it).cityName, it)
         }
-        citiesViewContract!!.showInitialView(cityAdapter)
+        citiesViewContract!!.showInitialView(cityAdapter, DataManager.cityCount == 0)
     }
 
     override fun detach() {
@@ -58,6 +55,11 @@ class CitiesPresenter(private var citiesViewContract: CitiesViewContract?) : Bas
     fun onCityDeleted(event: CityDeletedEvent) {
         if (event.eventSource == javaClass.simpleName) return
         cityAdapter.notifyItemRemoved(event.position)
+    }
+
+    @Subscribe
+    fun onCityEmptyStateChanged(event: CityEmptyStateChangedEvent) {
+        citiesViewContract!!.onCityEmptyStateChanged(event.isEmpty)
     }
 
     @Subscribe

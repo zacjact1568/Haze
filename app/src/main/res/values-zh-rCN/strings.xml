@@ -51,8 +51,8 @@
     <string name="title_activity_settings">设置</string>
     <string name="version">版本</string>
     <string name="title_fragment_cities">城市</string>
-    <string name="btn_add_city">添加城市</string>
-    <string name="text_empty_city">这里没有城市</string>
+    <string name="btn_select_a_city">选择城市</string>
+    <string name="title_empty_city">这里没有城市</string>
     <string name="dscpt_page_welcome">触摸右箭头以继续</string>
     <string name="title_activity_guide">欢迎</string>
     <string name="title_page_welcome">欢迎</string>
@@ -115,4 +115,7 @@
     <string name="action_detail">详细</string>
     <string name="text_no_enough_permissions_granted">没有授予足够权限</string>
     <string name="neu_btn_dialog_permissions_denied">关闭位置服务</string>
+    <string name="dscpt_empty_city">你可以开启位置服务来获取你当前城市的天气，或者从城市列表中选择一个城市。</string>
+    <string name="btn_location_service">位置服务</string>
+    <string name="title_fragment_weather">天气</string>
 </resources>

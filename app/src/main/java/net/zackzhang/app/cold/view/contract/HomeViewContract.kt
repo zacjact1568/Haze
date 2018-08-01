@@ -2,13 +2,13 @@ package net.zackzhang.app.cold.view.contract
 
 interface HomeViewContract : BaseViewContract {
 
-    fun showInitialView()
+    fun showInitialView(currentFragmentTag: String, isCityEmpty: Boolean)
 
-    fun showInitialFragment(restored: Boolean, shownTag: String)
+    fun showInitialFragment(restored: Boolean, shownTag: String, isCityEmpty: Boolean)
 
     fun showToast(msg: String)
 
-    fun switchFragment(fromTag: String, toTag: String)
+    fun switchFragment(fromTag: String, toTag: String, isCityEmpty: Boolean)
 
     fun startActivity(tag: String)
 
@@ -23,4 +23,6 @@ interface HomeViewContract : BaseViewContract {
     fun onDetectedNoEnoughPermissionsGranted()
 
     fun onLocationServicePermissionsDenied()
+
+    fun onCityEmptyStateChanged(isEmpty: Boolean, currentFragmentTag: String)
 }

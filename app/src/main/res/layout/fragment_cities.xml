@@ -6,13 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".view.fragment.CitiesFragment">
 
-    <!-- TODO 添加 empty view -->
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/vCityList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="never"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+
+    <FrameLayout
+        android:id="@+id/vEmptyCityLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </FrameLayout>

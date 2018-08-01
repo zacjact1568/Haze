@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
-import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.content_home.*
@@ -90,7 +89,7 @@ class HomeActivity : BaseActivity(), HomeViewContract {
         }
     }
 
-    override fun showInitialView() {
+    override fun showInitialView(currentFragmentTag: String, isCityEmpty: Boolean) {
         setContentView(R.layout.activity_home)
 
         setSupportActionBar(vToolbar)
@@ -111,9 +110,11 @@ class HomeActivity : BaseActivity(), HomeViewContract {
         }
 
         vAddFab.setOnClickListener { startActivity(Constant.ADD_CITY) }
+
+        onCityEmptyStateChanged(isCityEmpty, currentFragmentTag)
     }
 
-    override fun showInitialFragment(restored: Boolean, shownTag: String) {
+    override fun showInitialFragment(restored: Boolean, shownTag: String, isCityEmpty: Boolean) {
         val transaction = supportFragmentManager.beginTransaction()
         if (restored) {
             // 如果 activity 重建过，所有 fragment 都会变为显示状态并且重叠在一起，需要隐藏除 shownTag 对应的 fragment 外的其他 fragment
@@ -128,14 +129,14 @@ class HomeActivity : BaseActivity(), HomeViewContract {
         }
         transaction.commit()
 
-        updateAfterUpdatingFragment(shownTag)
+        updateAfterUpdatingFragment(shownTag, isCityEmpty)
     }
 
     override fun showToast(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 
-    override fun switchFragment(fromTag: String, toTag: String) {
+    override fun switchFragment(fromTag: String, toTag: String, isCityEmpty: Boolean) {
         if (!isFragmentExist(toTag)) {
             // 如果要显示的 fragment 还未创建，创建
             supportFragmentManager.beginTransaction().hide(fromTag).add(toTag).commit()
@@ -145,7 +146,7 @@ class HomeActivity : BaseActivity(), HomeViewContract {
         }
         // 如果要显示的 fragment 已创建且已显示，不做任何操作
 
-        updateAfterUpdatingFragment(toTag)
+        updateAfterUpdatingFragment(toTag, isCityEmpty)
     }
 
     override fun startActivity(tag: String) {
@@ -194,29 +195,33 @@ class HomeActivity : BaseActivity(), HomeViewContract {
                 .show()
     }
 
-    private fun updateAfterUpdatingFragment(tag: String) {
-        val title: String
-        val visibility: Int
-        val checkedItemId: Int
+    override fun onCityEmptyStateChanged(isEmpty: Boolean, currentFragmentTag: String) {
+        updateAfterUpdatingFragment(currentFragmentTag, isEmpty)
+    }
+
+    private fun updateAfterUpdatingFragment(tag: String, isCityEmpty: Boolean) {
+        val toolbarTitle: String
+        val isFabVisible: Boolean
+        val navCheckedItemId: Int
         when (tag) {
             Constant.WEATHER -> {
-                title = " "
-                visibility = View.GONE
-                checkedItemId = R.id.nav_weather
+                toolbarTitle = if (isCityEmpty) getString(R.string.title_fragment_weather) else " "
+                isFabVisible = false
+                navCheckedItemId = R.id.nav_weather
             }
             Constant.CITIES -> {
-                title = getString(R.string.title_fragment_cities)
-                visibility = View.VISIBLE
-                checkedItemId = R.id.nav_cities
+                toolbarTitle = getString(R.string.title_fragment_cities)
+                isFabVisible = !isCityEmpty
+                navCheckedItemId = R.id.nav_cities
             }
             // 在这里添加新 fragment
-            else -> throw IllegalArgumentException("The argument tag cannot be \"$tag\"")
+            else -> throw IllegalArgumentException("The argument \"tag\" cannot be \"$tag\"")
         }
-        vToolbar.title = title
-        vAddFab.visibility = visibility
+        vToolbar.title = toolbarTitle
+        if (isFabVisible) vAddFab.show() else vAddFab.hide()
         // FAB 归位
         vAddFab.translationY = 0f
-        vNavigator.setCheckedItem(checkedItemId)
+        vNavigator.setCheckedItem(navCheckedItemId)
     }
 
     private fun findFragment(tag: String) = supportFragmentManager.findFragmentByTag(tag)
@@ -235,7 +240,7 @@ class HomeActivity : BaseActivity(), HomeViewContract {
                     Constant.WEATHER -> WeatherFragment()
                     Constant.CITIES -> CitiesFragment()
                     // 在这里添加新 fragment
-                    else -> throw IllegalArgumentException("The argument tag cannot be \"$tag\"")
+                    else -> throw IllegalArgumentException("The argument \"tag\" cannot be \"$tag\"")
                 },
                 tag
         )

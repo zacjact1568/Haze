@@ -20,8 +20,10 @@
 
     <!--HomeActivity-->
     <string name="title_activity_home">Home</string>
-    <string name="text_empty_city">No cities here</string>
-    <string name="btn_add_city">Add a city</string>
+    <string name="title_empty_city">No Cities Here</string>
+    <string name="dscpt_empty_city">You can enable location service to get the weather of your current city, or select a city from the city list.</string>
+    <string name="btn_location_service">Location Service</string>
+    <string name="btn_select_a_city">Select a City</string>
     <string name="toast_double_press_exit">Press once again to exit Cold</string>
     <string name="text_network_not_available">Network is not available</string>
     <string name="text_location_not_available">System location service is disabled</string>
@@ -29,6 +31,9 @@
     <string name="title_dialog_permissions_denied">No Enough Permissions</string>
     <string name="msg_dialog_permissions_denied">AMap® Location Service can\'t get your location information without these permissions, but you can grant Cold these permissions later.</string>
     <string name="neu_btn_dialog_permissions_denied">Disable Location Service</string>
+
+    <!-- WeatherFragment -->
+    <string name="title_fragment_weather">Weather</string>
 
     <!--WeatherPageFragment-->
     <string name="text_update_time">Updated at %s</string>
