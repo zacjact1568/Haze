@@ -36,7 +36,7 @@ class GuideActivity : BaseGuideActivity(), GuideViewContract {
                     .setTitle(StringUtil.addWhiteColorSpan(getString(R.string.title_page_welcome)))
                     .setDescription(StringUtil.addWhiteColorSpan(getString(R.string.dscpt_page_welcome)))
                     .build(),
-            LocationGuidePageFragment.newInstance(),
+            LocationGuidePageFragment(),
             SimpleGuidePageFragment.Builder()
                     .setImage(R.drawable.ic_check_black_24dp, Color.WHITE)
                     .setTitle(StringUtil.addWhiteColorSpan(getString(R.string.title_page_ready)))

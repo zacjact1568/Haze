@@ -18,16 +18,6 @@ import net.zackzhang.app.cold.view.dialog.PreEnableLocationServiceDialogFragment
 
 class LocationGuidePageFragment : SimpleGuidePageFragment() {
 
-    companion object {
-
-        // TODO 没必要，改成 BaseDialogFragment 的形式
-        fun newInstance(): LocationGuidePageFragment {
-            val fragment = LocationGuidePageFragment()
-            fragment.arguments = Bundle()
-            return fragment
-        }
-    }
-
     private val preferenceHelper = DataManager.preferenceHelper
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
