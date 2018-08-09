@@ -13,7 +13,7 @@ import net.zackzhang.app.cold.model.DataManager
 import net.zackzhang.app.cold.model.bean.Weather
 import net.zackzhang.app.cold.util.ResourceUtil
 import net.zackzhang.app.cold.util.StringUtil
-import me.imzack.lib.baseguideactivity.SimpleGuidePageFragment
+import net.zackzhang.lib.baseguideactivity.SimpleGuidePageFragment
 import net.zackzhang.app.cold.view.dialog.PreEnableLocationServiceDialogFragment
 
 class LocationGuidePageFragment : SimpleGuidePageFragment() {

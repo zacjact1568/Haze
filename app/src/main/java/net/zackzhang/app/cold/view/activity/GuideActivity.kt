@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.widget.Toast
 import net.zackzhang.app.cold.R
 import net.zackzhang.app.cold.presenter.GuidePresenter
@@ -12,8 +11,8 @@ import net.zackzhang.app.cold.util.ResourceUtil
 import net.zackzhang.app.cold.util.StringUtil
 import net.zackzhang.app.cold.view.contract.GuideViewContract
 import net.zackzhang.app.cold.view.fragment.LocationGuidePageFragment
-import me.imzack.lib.baseguideactivity.BaseGuideActivity
-import me.imzack.lib.baseguideactivity.SimpleGuidePageFragment
+import net.zackzhang.lib.baseguideactivity.BaseGuideActivity
+import net.zackzhang.lib.baseguideactivity.SimpleGuidePageFragment
 
 class GuideActivity : BaseGuideActivity(), GuideViewContract {
 
