@@ -5,6 +5,7 @@
     <SwitchPreference
         android:key="location_service"
         android:title="@string/pref_title_location_service"
+        android:icon="@drawable/ic_location"
         android:summaryOn="@string/pref_summary_location_service_on"
         android:summaryOff="@string/pref_summary_location_service_off"
         android:defaultValue="false"/>
