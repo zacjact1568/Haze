@@ -29,7 +29,6 @@ object Constant {
 
     const val PREF_KEY_NEED_GUIDE = "need_guide"
     const val PREF_KEY_LOCATION_SERVICE = "location_service"
-    const val PREF_KEY_NIGHT_MODE = "night_mode"
     const val PREF_KEY_HAVE_REQUESTED_LOCATION_PERMISSIONS = "have_requested_location_permissions"
 
     const val UNKNOWN_DATA = "--"
@@ -84,4 +83,10 @@ object Constant {
     const val LOCATION_MODE_DEVICE_SENSORS = 3
 
     const val CITY_ID_CURRENT_LOCATION = "current_location"
+
+    const val DEVELOPER_EMAIL = "zxjue@outlook.com"
+
+    const val APP_BAR_STATE_EXPANDED = 0
+    const val APP_BAR_STATE_INTERMEDIATE = 1
+    const val APP_BAR_STATE_COLLAPSED = 2
 }

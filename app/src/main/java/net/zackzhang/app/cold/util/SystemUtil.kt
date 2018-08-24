@@ -2,13 +2,18 @@ package net.zackzhang.app.cold.util
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.net.ConnectivityManager
+import android.net.Uri
 import android.os.Build
+import android.support.annotation.StringRes
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.widget.Toast
 import net.zackzhang.app.cold.App
+import net.zackzhang.app.cold.R
 import net.zackzhang.app.cold.common.Constant
 import java.util.*
 
@@ -118,4 +123,25 @@ object SystemUtil {
 
     val isSystemLocationServiceEnabled
         get() = locationMode != Constant.LOCATION_MODE_NONE
+
+    fun openLink(link: String, activity: Activity, @StringRes failedResId: Int = R.string.toast_no_link_app_found) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+        if (intent.resolveActivity(activity.packageManager) != null) {
+            activity.startActivity(intent)
+        } else {
+            Toast.makeText(activity, failedResId, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun sendEmail(email: String, subject: String, context: Context) {
+        val intent = Intent(Intent.ACTION_SENDTO)
+        intent.data = Uri.parse("mailto:")
+        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+        if (intent.resolveActivity(context.packageManager) != null) {
+            context.startActivity(intent)
+        } else {
+            Toast.makeText(context, R.string.toast_no_email_app_found, Toast.LENGTH_SHORT).show()
+        }
+    }
 }

@@ -89,9 +89,16 @@
 
     <!--AboutActivity-->
     <string name="title_activity_about">About</string>
-    <string name="version">Version</string>
-    <string name="developer">Developer</string>
-    <string name="me">Zack Zhang</string>
+    <string name="text_app_full_name" translatable="false">Cold for Weather</string>
+    <string name="text_developer" translatable="false">Written by Zack</string>
+    <string name="title_feedback">Feedback</string>
+    <string name="text_item_email">Send me an email</string>
+    <string name="subject_developer_email">Email from a Cold User</string>
+    <string name="toast_no_email_app_found">No email app found</string>
+    <string name="text_item_rate">Rate this app if you like</string>
+    <string name="toast_no_app_store_found">No app store found</string>
+    <string name="title_thanks">Thanks</string>
+    <string name="toast_no_link_app_found">No app can open a link</string>
 
     <!--GuideActivity-->
     <string name="title_activity_guide">Guide</string>

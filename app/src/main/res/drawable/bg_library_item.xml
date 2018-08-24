@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/colorPrimaryLight">
+
+    <item
+        android:id="@android:id/mask"
+        android:drawable="@drawable/bg_library_item_mask"/>
+
+    <item android:drawable="@drawable/bg_library_item_base"/>
+
+</ripple>
