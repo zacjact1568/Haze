@@ -11,7 +11,7 @@ object ResourceUtil {
 
     fun getColor(@ColorRes resId: Int) = ContextCompat.getColor(App.context, resId)
 
-    fun getString(@StringRes resId: Int) = App.context.getString(resId)!!
+    fun getString(@StringRes resId: Int): String = App.context.getString(resId)
 
     fun getAnimation(@AnimRes resId: Int) = AnimationUtils.loadAnimation(App.context, resId)!!
 

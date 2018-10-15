@@ -5,8 +5,9 @@ import net.zackzhang.app.cold.common.Constant
 import net.zackzhang.app.cold.util.ResourceUtil
 
 data class FormattedWeather(
-        var isUpdating: Boolean,
-        var cityName: String,
+        val isUpdating: Boolean,
+        val cityName: String,
+        val isLocationCity: Boolean,
         var condition: String = Constant.UNKNOWN_DATA,
         var temperature: String = Constant.UNKNOWN_DATA,
         var updateTime: String = ResourceUtil.getString(R.string.text_invalid_data),

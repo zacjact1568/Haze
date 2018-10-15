@@ -72,7 +72,7 @@ object HeWeatherUtil {
     }
 
     /** 将空气质量指数转换成对应的等级 */
-    fun parseAqi(aqi: Int) = App.context.resources.getString(when (aqi) {
+    fun parseAqi(aqi: Int): String = App.context.resources.getString(when (aqi) {
         in 0..50 -> R.string.aqi_level_1
         in 51..100 -> R.string.aqi_level_2
         in 101..150 -> R.string.aqi_level_3
@@ -80,7 +80,7 @@ object HeWeatherUtil {
         in 201..300 -> R.string.aqi_level_5
         in 301..Int.MAX_VALUE -> R.string.aqi_level_6
         else -> throw IllegalArgumentException("AQI should not be a negative number")
-    })!!
+    })
 
     fun makeApiSignature(paramsMap: Map<String, String>): String {
         val params = StringBuilder()

@@ -62,6 +62,8 @@ class WeatherPageFragment : BaseFragment(), WeatherPageViewContract {
         changeSwipeRefreshingStatus(formattedWeather.isUpdating)
 
         changeCityName(formattedWeather.cityName)
+        vLocationIcon.visibility = if (formattedWeather.isLocationCity) View.VISIBLE else View.GONE
+
         vTemperatureText.text = formattedWeather.temperature
         vConditionText.text = formattedWeather.condition
         vUpdateTimeText.text = formattedWeather.updateTime

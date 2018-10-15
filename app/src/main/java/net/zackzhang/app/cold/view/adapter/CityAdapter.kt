@@ -35,6 +35,7 @@ class CityAdapter : RecyclerView.Adapter<CityAdapter.ItemViewHolder>() {
         }
 
         if (DataManager.isLocationCity(position)) {
+            holder.vCityNameText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_location, 0)
             holder.vDeleteButton.visibility = View.INVISIBLE
         }
 

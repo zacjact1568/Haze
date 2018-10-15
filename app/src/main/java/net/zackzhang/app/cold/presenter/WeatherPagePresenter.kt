@@ -11,7 +11,7 @@ import net.zackzhang.app.cold.util.*
 import net.zackzhang.app.cold.view.contract.WeatherPageViewContract
 import org.greenrobot.eventbus.Subscribe
 
-class WeatherPagePresenter(private var weatherPageViewContract: WeatherPageViewContract?, weatherListPosition: Int) : BasePresenter() {
+class WeatherPagePresenter(private var weatherPageViewContract: WeatherPageViewContract?, private val weatherListPosition: Int) : BasePresenter() {
 
     private val weather = DataManager.getWeather(weatherListPosition)
 
@@ -42,12 +42,14 @@ class WeatherPagePresenter(private var weatherPageViewContract: WeatherPageViewC
 
     private val formattedWeather: FormattedWeather
         get() {
+            val isLocationCity = DataManager.isLocationCity(weatherListPosition)
             return if (weather.isNewAdded) {
-                FormattedWeather(weather.isUpdating, weather.cityName)
+                FormattedWeather(weather.isUpdating, weather.cityName, isLocationCity)
             } else {
                 FormattedWeather(
                         weather.isUpdating,
                         weather.cityName,
+                        isLocationCity,
                         DataManager.getConditionByCode(weather.current.conditionCode),
                         weather.current.temperature.toString(),
                         String.format(ResourceUtil.getString(R.string.text_update_time), TimeUtil.formatTime(weather.updateTime)),
