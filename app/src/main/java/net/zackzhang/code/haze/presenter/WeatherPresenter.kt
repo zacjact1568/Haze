@@ -1,6 +1,6 @@
 package net.zackzhang.code.haze.presenter
 
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.FragmentManager
 import net.zackzhang.code.haze.App
 import net.zackzhang.code.haze.event.*
 import net.zackzhang.code.haze.model.DataManager

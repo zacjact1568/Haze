@@ -8,9 +8,9 @@ import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
-import android.support.annotation.StringRes
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
+import androidx.annotation.StringRes
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import android.widget.Toast
 import net.zackzhang.code.haze.App
 import net.zackzhang.code.haze.R

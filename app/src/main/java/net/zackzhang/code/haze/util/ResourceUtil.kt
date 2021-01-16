@@ -1,9 +1,9 @@
 package net.zackzhang.code.haze.util
 
-import android.support.annotation.AnimRes
-import android.support.annotation.ColorRes
-import android.support.annotation.StringRes
-import android.support.v4.content.ContextCompat
+import androidx.annotation.AnimRes
+import androidx.annotation.ColorRes
+import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import android.view.animation.AnimationUtils
 import net.zackzhang.code.haze.App
 

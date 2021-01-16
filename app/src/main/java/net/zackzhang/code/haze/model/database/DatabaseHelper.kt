@@ -1,6 +1,6 @@
 package net.zackzhang.code.haze.model.database
 
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import android.database.sqlite.SQLiteDatabase
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers

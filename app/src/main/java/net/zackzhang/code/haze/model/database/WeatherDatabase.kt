@@ -1,7 +1,7 @@
 package net.zackzhang.code.haze.model.database
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.RoomDatabase
+import androidx.room.Database
+import androidx.room.RoomDatabase
 import net.zackzhang.code.haze.model.database.dao.BasicDao
 import net.zackzhang.code.haze.model.database.dao.CurrentDao
 import net.zackzhang.code.haze.model.database.dao.DailyForecastDao

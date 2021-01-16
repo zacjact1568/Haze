@@ -1,6 +1,6 @@
 package net.zackzhang.code.haze.model.database.dao
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import io.reactivex.Single
 import net.zackzhang.code.haze.common.Constant
 import net.zackzhang.code.haze.model.database.entity.DailyForecastEntity

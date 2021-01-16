@@ -9,17 +9,22 @@ android {
 
     defaultConfig {
         applicationId "net.zackzhang.code.haze"
-        minSdkVersion 21
+        minSdkVersion 26
         targetSdkVersion 28
         versionCode Math.ceil((new Date().time - 1462636800000) / 86400000) as int
         versionName new Date().format('yyyyMMdd')
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
@@ -36,18 +41,17 @@ kapt {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "com.android.support:appcompat-v7:$android_support_version"
-    implementation "com.android.support:design:$android_support_version"
-    implementation "com.android.support:support-v4:$android_support_version"
-    implementation "com.jakewharton:butterknife:$butterknife_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'org.greenrobot:eventbus:3.0.0'
-    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.google.code.gson:gson:2.8.6'
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation 'com.pacioianu.david:ink-page-indicator:1.2.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -57,15 +61,14 @@ dependencies {
     implementation 'com.github.zacjact1568:BaseDialogFragment:0.12'
     implementation "com.facebook.stetho:stetho:$stetho_version"
     implementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
-    implementation "com.android.support:preference-v7:$android_support_version"
-    implementation "com.android.support:preference-v14:$android_support_version"
-    implementation "android.arch.persistence.room:runtime:$room_version"
-    implementation "android.arch.persistence.room:rxjava2:$room_version"
+    implementation 'androidx.preference:preference-ktx:1.1.1'
+    implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-rxjava2:$room_version"
     implementation 'com.google.android:flexbox:1.0.0'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     kapt 'org.greenrobot:eventbus-annotation-processor:3.0.1'
-    kapt "android.arch.persistence.room:compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 }

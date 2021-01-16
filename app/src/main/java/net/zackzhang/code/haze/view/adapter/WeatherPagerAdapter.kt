@@ -1,7 +1,7 @@
 package net.zackzhang.code.haze.view.adapter
 
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
 import net.zackzhang.code.haze.model.DataManager
 import net.zackzhang.code.haze.view.fragment.WeatherPageFragment
 

@@ -1,6 +1,6 @@
 package net.zackzhang.code.haze.view.contract
 
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 
 interface BaseViewContract {
 

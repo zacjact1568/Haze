@@ -3,7 +3,7 @@ package net.zackzhang.code.haze
 import android.app.Application
 import android.content.Context
 import android.preference.PreferenceManager
-import android.support.annotation.RawRes
+import androidx.annotation.RawRes
 import com.facebook.stetho.Stetho
 import net.zackzhang.code.haze.common.Constant
 import net.zackzhang.code.haze.event.EventBusIndex

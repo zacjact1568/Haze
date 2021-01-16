@@ -1,8 +1,8 @@
 package net.zackzhang.code.haze.view.dialog
 
 import android.os.Bundle
-import android.support.annotation.StringRes
-import android.support.v4.app.FragmentManager
+import androidx.annotation.StringRes
+import androidx.fragment.app.FragmentManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,7 +45,7 @@ open class MessageDialogFragment : BaseDialogFragment() {
             // 但是 DialogFragment 中没有 cancel 函数，可以直接调用 dialog 的 cancel，也会进行相同的处理
             // 因为调用 dialog 的 cancel 也会调用 dismiss，就会调用 DialogFragment 的 onDismiss 函数
             // 在 DialogFragment 的 onDismiss 函数中就会调用 dismissInternal 函数进行处理
-            dialog.cancel()
+            dialog!!.cancel()
             // 返回 false，不调用 dismiss
             false
         }

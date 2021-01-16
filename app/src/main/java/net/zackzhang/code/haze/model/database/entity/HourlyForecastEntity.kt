@@ -1,7 +1,7 @@
 package net.zackzhang.code.haze.model.database.entity
 
-import android.arch.persistence.room.ColumnInfo
-import android.arch.persistence.room.Entity
+import androidx.room.ColumnInfo
+import androidx.room.Entity
 import net.zackzhang.code.haze.common.Constant
 
 @Entity(tableName = Constant.HOURLY_FORECAST, primaryKeys = [Constant.CITY_ID, Constant.SEQUENCE])

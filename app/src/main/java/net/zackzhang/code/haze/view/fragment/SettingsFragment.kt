@@ -3,10 +3,10 @@ package net.zackzhang.code.haze.view.fragment
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
-import android.support.v14.preference.SwitchPreference
-import android.support.v4.app.Fragment
-import android.support.v7.preference.Preference
-import android.support.v7.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreference
+import androidx.fragment.app.Fragment
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
 import net.zackzhang.code.haze.App
 import net.zackzhang.code.haze.R
 import net.zackzhang.code.haze.common.Constant
@@ -23,7 +23,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     private val eventBus = App.eventBus
 
     private val locationServicePreference by lazy {
-        findPreference(Constant.PREF_KEY_LOCATION_SERVICE) as SwitchPreference
+        findPreference<SwitchPreference>(Constant.PREF_KEY_LOCATION_SERVICE)!!
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

@@ -1,7 +1,7 @@
 package net.zackzhang.code.haze.view.dialog
 
 import android.os.Bundle
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.FragmentManager
 import android.view.View
 import kotlinx.android.synthetic.main.dialog_fragment_message.*
 import net.zackzhang.code.haze.R

@@ -3,7 +3,7 @@ package net.zackzhang.code.haze.view.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.AppBarLayout
+import com.google.android.material.appbar.AppBarLayout
 import android.view.MenuItem
 import android.view.ViewTreeObserver
 import com.google.android.flexbox.FlexboxItemDecoration

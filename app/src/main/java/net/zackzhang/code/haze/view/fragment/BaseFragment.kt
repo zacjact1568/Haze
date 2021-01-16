@@ -1,7 +1,7 @@
 package net.zackzhang.code.haze.view.fragment
 
-import android.support.annotation.StringRes
-import android.support.v4.app.Fragment
+import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
 import android.widget.Toast
 
 abstract class BaseFragment : Fragment() {

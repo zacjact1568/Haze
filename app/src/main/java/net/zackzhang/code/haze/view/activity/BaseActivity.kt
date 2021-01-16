@@ -1,7 +1,7 @@
 package net.zackzhang.code.haze.view.activity
 
-import android.support.annotation.StringRes
-import android.support.v7.app.AppCompatActivity
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 
 abstract class BaseActivity : AppCompatActivity() {
