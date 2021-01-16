@@ -168,7 +168,7 @@
 
             </LinearLayout>
 
-            <net.zackzhang.app.cold.widget.TemperatureTrendChartView
+            <net.zackzhang.code.haze.widget.TemperatureTrendChartView
                 android:id="@+id/vTemperatureTrendChart"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/temp_trend_chart_height"

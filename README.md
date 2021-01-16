@@ -1,7 +1,7 @@
-# Cold
+# Haze
 
-<img src="design/ic_launcher.png" width="100" align="right"/>
+<img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="100" align="right"/>
 
-**Cold** is a simple weather app, written by Zack Zhang.
+**Haze** is a simple weather app, written by Zack Zhang.
 
 *NOTE: This app is still under development, not a release version.*

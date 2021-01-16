@@ -8,7 +8,7 @@ android {
     buildToolsVersion '28.0.3'
 
     defaultConfig {
-        applicationId "net.zackzhang.app.cold"
+        applicationId "net.zackzhang.code.haze"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode Math.ceil((new Date().time - 1462636800000) / 86400000) as int
@@ -30,7 +30,7 @@ androidExtensions {
 
 kapt {
     arguments {
-        arg('eventBusIndex', 'net.zackzhang.app.cold.event.EventBusIndex')
+        arg('eventBusIndex', 'net.zackzhang.code.haze.event.EventBusIndex')
     }
 }
 
