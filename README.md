@@ -1,6 +1,6 @@
 # Haze
 
-<img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="100" align="right"/>
+<img src="app/src/main/res/drawable/ic_logo_playstore.png" width="100" align="right"/>
 
 **Haze** is a simple weather app, written by Zack Zhang.
 
