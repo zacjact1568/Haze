@@ -63,7 +63,8 @@ object SystemUtil {
     val isNetworkAvailable: Boolean
         get() {
             val manager = App.context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            return manager.activeNetworkInfo != null && manager.activeNetworkInfo.isAvailable
+            val ni = manager.activeNetworkInfo
+            return ni != null && ni.isAvailable
         }
 
     val versionName: String

@@ -4,13 +4,13 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
+    compileSdkVersion 30
+    buildToolsVersion '30.0.3'
 
     defaultConfig {
         applicationId "net.zackzhang.code.haze"
         minSdkVersion 26
-        targetSdkVersion 28
+        targetSdkVersion 30
         versionCode Math.ceil((new Date().time - 1462636800000) / 86400000) as int
         versionName new Date().format('yyyyMMdd')
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
