@@ -14,10 +14,4 @@
     <!-- Lime 500 -->
     <color name="colorAccent">#FFCDDC39</color>
 
-    <color name="grey_600">#FF757575</color>
-
-    <color name="feedback_item_background">#FFEEEEEE</color>
-
-    <color name="feedback_item_ripple">#FFDDDDDD</color>
-
 </resources>

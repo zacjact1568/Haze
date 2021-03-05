@@ -1,9 +1,12 @@
 buildscript {
-    ext.retrofit_version = '2.3.0'
-    ext.okhttp_version = '3.10.0'
-    ext.kotlin_version = '1.4.21'
-    ext.stetho_version = '1.5.0'
-    ext.room_version = '2.2.5'
+    ext {
+        retrofit_version = '2.9.0'
+        okhttp_version = '3.14.9'
+        kotlin_version = '1.5.21'
+        stetho_version = '1.5.0'
+        room_version = '2.3.0'
+        lifecycle_version = '2.3.1'
+    }
 
     repositories {
         jcenter()
@@ -12,7 +15,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.1'
+        classpath 'com.android.tools.build:gradle:7.0.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
