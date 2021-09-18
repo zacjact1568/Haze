@@ -17,7 +17,6 @@
         <activity
             android:name=".home.view.HomeActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -29,7 +28,6 @@
         <activity
             android:name=".city.view.CityActivity"
             android:label="@string/title_activity_city"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize"/>
 

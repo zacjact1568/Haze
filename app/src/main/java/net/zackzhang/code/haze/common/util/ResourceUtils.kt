@@ -1,5 +1,8 @@
 package net.zackzhang.code.haze.common.util
 
+import android.content.Context
+import androidx.annotation.DimenRes
+import androidx.annotation.IntegerRes
 import androidx.annotation.RawRes
 import net.zackzhang.code.haze.HazeApplication as App
 import java.io.File
@@ -33,4 +36,8 @@ object ResourceUtils {
             }
         }
     }
+
+    fun Context.getDimension(@DimenRes id: Int) = resources.getDimensionPixelSize(id)
+
+    fun Context.getInteger(@IntegerRes id: Int) = resources.getInteger(id)
 }

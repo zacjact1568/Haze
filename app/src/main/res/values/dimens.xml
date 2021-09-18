@@ -20,4 +20,12 @@
 
     <dimen name="search_bar_text_size">16sp</dimen>
 
+    <dimen name="color_gradient_bar_default_bar_height">16dp</dimen>
+    <dimen name="color_gradient_bar_default_ring_width">2dp</dimen>
+
+    <dimen name="temperature_min_max_margin_horizontal">40dp</dimen>
+
+    <dimen name="temperature_range_bar_margin_top">40dp</dimen>
+    <dimen name="temperature_range_bar_margin_horizontal">6dp</dimen>
+
 </resources>

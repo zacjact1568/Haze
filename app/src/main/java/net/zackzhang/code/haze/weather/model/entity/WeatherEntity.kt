@@ -12,7 +12,7 @@ data class WeatherEntity(
 
     companion object {
 
-        fun fromWeatherLoadingEntity(entity: WeatherLocalEntity) = WeatherEntity(
+        fun fromWeatherLocalEntity(entity: WeatherLocalEntity) = WeatherEntity(
             entity.hourlyList.first { it.isNow },
             entity.hourlyList.filterNot { it.isNow },
             entity.dailyList,
@@ -27,6 +27,17 @@ data class WeatherEntity(
     val dbDaily get() = daily
 
     val dbAir get() = mutableListOf(air.now).also { it += air.stations } as List<AirNowEntity>
+
+    val todayTemperatureRange: IntRange? get() {
+        if (daily.isEmpty()) {
+            return null
+        }
+        val today = daily[0]
+        if (today.temperatureMin == null || today.temperatureMax == null) {
+            return null
+        }
+        return today.temperatureMin..today.temperatureMax
+    }
 
     fun attachCityId(cityId: String) {
         now.cityId = cityId

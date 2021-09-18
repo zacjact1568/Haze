@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer name="color_gradient_bar_available_colors_size">12</integer>
+    <integer name="color_gradient_bar_range_start">-15</integer>
+    <integer name="color_gradient_bar_range_step">5</integer>
+
+</resources>

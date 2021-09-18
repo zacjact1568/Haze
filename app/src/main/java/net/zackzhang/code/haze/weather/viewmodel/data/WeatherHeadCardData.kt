@@ -4,7 +4,8 @@ import net.zackzhang.code.haze.common.Constants
 import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
 
 data class WeatherHeadCardData(
-    var temperatureNow: String,
-    var condition: String,
-    var airQuality: String,
+    val temperatureNow: Int?,
+    val condition: String?,
+    val airQuality: String?,
+    val temperatureRange: IntRange?
 ) : BaseCardData(Constants.CARD_TYPE_WEATHER_HEAD)

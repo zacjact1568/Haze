@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="color_gradient_bar_available_colors">
+        <item>@color/blue_500</item>
+        <item>@color/light_blue_500</item>
+        <item>@color/cyan_500</item>
+        <item>@color/teal_500</item>
+        <item>@color/green_500</item>
+        <item>@color/light_green_500</item>
+        <item>@color/lime_500</item>
+        <item>@color/yellow_500</item>
+        <item>@color/amber_500</item>
+        <item>@color/orange_500</item>
+        <item>@color/deep_orange_500</item>
+        <item>@color/red_500</item>
+    </array>
+
+</resources>

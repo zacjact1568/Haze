@@ -41,4 +41,36 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="良" />
 
+    <TextView
+        android:id="@+id/v_temperature_min"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/temperature_min_max_margin_horizontal"
+        app:layout_constraintTop_toTopOf="@+id/v_temperature_range_bar"
+        app:layout_constraintBottom_toBottomOf="@+id/v_temperature_range_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/v_temperature_range_bar"
+        tools:text="25" />
+
+    <net.zackzhang.code.haze.weather.view.ui.ColorGradientBar
+        android:id="@+id/v_temperature_range_bar"
+        android:layout_width="@dimen/match_constraint"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/temperature_range_bar_margin_top"
+        android:layout_marginHorizontal="@dimen/temperature_range_bar_margin_horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/v_air_quality"
+        app:layout_constraintStart_toEndOf="@+id/v_temperature_min"
+        app:layout_constraintEnd_toStartOf="@+id/v_temperature_max" />
+
+    <TextView
+        android:id="@+id/v_temperature_max"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/temperature_min_max_margin_horizontal"
+        app:layout_constraintTop_toTopOf="@+id/v_temperature_range_bar"
+        app:layout_constraintBottom_toBottomOf="@+id/v_temperature_range_bar"
+        app:layout_constraintStart_toEndOf="@+id/v_temperature_range_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="30" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

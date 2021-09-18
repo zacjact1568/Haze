@@ -34,7 +34,7 @@ class WeatherViewModel : EventViewModel() {
             val weather = WeatherLocalRepository.query()
             weather.getOrNull(weather.size - 1)?.let {
                 eventLiveData.value = Event(Constants.EVENT_DATA_LOADED, it.city)
-                entityLiveData.value = WeatherEntity.fromWeatherLoadingEntity(it)
+                entityLiveData.value = WeatherEntity.fromWeatherLocalEntity(it)
             }
         }
     }
@@ -50,9 +50,10 @@ class WeatherViewModel : EventViewModel() {
 
     private fun WeatherEntity.toCardDataList(): List<BaseCardData> {
         return listOf(WeatherHeadCardData(
-            now.temperature?.toString() ?: Constants.PLACEHOLDER,
-            now.conditionName ?: Constants.PLACEHOLDER,
-            air.now.category ?: Constants.PLACEHOLDER
+            now.temperature,
+            now.conditionName,
+            air.now.category,
+            todayTemperatureRange
         ))
     }
 }
