@@ -6,6 +6,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import net.zackzhang.code.haze.common.Constants
+import net.zackzhang.code.haze.common.util.DateTimeUtils.toPrettifiedRelativeToNow
 import net.zackzhang.code.haze.common.viewmodel.Event
 import net.zackzhang.code.haze.common.viewmodel.EventViewModel
 import net.zackzhang.code.haze.weather.model.local.WeatherLocalRepository
@@ -53,7 +54,8 @@ class WeatherViewModel : EventViewModel() {
             now.temperature,
             now.conditionName,
             air.now.category,
-            todayTemperatureRange
+            todayTemperatureRange,
+            updatedAt?.toPrettifiedRelativeToNow(),
         ))
     }
 }

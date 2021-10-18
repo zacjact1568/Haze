@@ -22,6 +22,7 @@ class WeatherHeadCard(parent: ViewGroup) : BaseCard(parent, R.layout.card_weathe
             vTemperatureMin.text = cardData.temperatureRange?.first.toStringOrPlaceholder()
             vTemperatureRangeBar.setData(cardData.temperatureRange, cardData.temperatureNow)
             vTemperatureMax.text = cardData.temperatureRange?.last.toStringOrPlaceholder()
+            vUpdatedAt.text = context.getString(R.string.updated_at_format, cardData.updatedAt.orPlaceholder())
         }
     }
 }

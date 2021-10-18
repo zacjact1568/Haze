@@ -7,5 +7,6 @@ data class WeatherHeadCardData(
     val temperatureNow: Int?,
     val condition: String?,
     val airQuality: String?,
-    val temperatureRange: IntRange?
+    val temperatureRange: IntRange?,
+    val updatedAt: String?,
 ) : BaseCardData(Constants.CARD_TYPE_WEATHER_HEAD)

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="title_activity_city">城市</string>
+
+    <string name="format_city_search_association_prefecture_province">%s，%s</string>
+
+    <string name="updated_at_format">更新%s</string>
+
+    <string name="datetime_prettified_relative_to_now_negative_format">于 %s</string>
+    <string name="datetime_prettified_relative_to_now_day">于一天前</string>
+    <plurals name="datetime_prettified_relative_to_now_hour_format">
+        <item quantity="other">于 %d 小时前</item>
+    </plurals>
+    <plurals name="datetime_prettified_relative_to_now_minute_format">
+        <item quantity="other">于 %d 分钟前</item>
+    </plurals>
+    <string name="datetime_prettified_relative_to_now_second">于刚才</string>
+
+</resources>

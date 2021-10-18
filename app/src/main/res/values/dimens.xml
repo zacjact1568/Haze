@@ -28,4 +28,7 @@
     <dimen name="temperature_range_bar_margin_top">40dp</dimen>
     <dimen name="temperature_range_bar_margin_horizontal">6dp</dimen>
 
+    <dimen name="updated_at_margin_top">20dp</dimen>
+    <dimen name="updated_at_margin_bottom">10dp</dimen>
+
 </resources>

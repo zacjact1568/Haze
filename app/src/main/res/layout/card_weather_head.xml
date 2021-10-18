@@ -15,6 +15,7 @@
         android:textStyle="bold"
         android:fontFamily="sans-serif-condensed"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/v_condition"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="28" />
@@ -26,6 +27,7 @@
         android:layout_marginTop="8dp"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@+id/v_temperature_now"
+        app:layout_constraintBottom_toTopOf="@+id/v_air_quality"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="多云" />
@@ -37,6 +39,7 @@
         android:layout_marginTop="4dp"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@+id/v_condition"
+        app:layout_constraintBottom_toTopOf="@+id/v_temperature_range_bar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="良" />
@@ -59,6 +62,7 @@
         android:layout_marginTop="@dimen/temperature_range_bar_margin_top"
         android:layout_marginHorizontal="@dimen/temperature_range_bar_margin_horizontal"
         app:layout_constraintTop_toBottomOf="@+id/v_air_quality"
+        app:layout_constraintBottom_toTopOf="@+id/v_updated_at"
         app:layout_constraintStart_toEndOf="@+id/v_temperature_min"
         app:layout_constraintEnd_toStartOf="@+id/v_temperature_max" />
 
@@ -72,5 +76,17 @@
         app:layout_constraintStart_toEndOf="@+id/v_temperature_range_bar"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="30" />
+
+    <TextView
+        android:id="@+id/v_updated_at"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/updated_at_margin_top"
+        android:layout_marginBottom="@dimen/updated_at_margin_bottom"
+        app:layout_constraintTop_toBottomOf="@+id/v_temperature_range_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="更新于 4 分钟前" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

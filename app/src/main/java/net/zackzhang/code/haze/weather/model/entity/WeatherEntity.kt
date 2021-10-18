@@ -39,6 +39,8 @@ data class WeatherEntity(
         return today.temperatureMin..today.temperatureMax
     }
 
+    val updatedAt = now.updatedAt
+
     fun attachCityId(cityId: String) {
         now.cityId = cityId
         hourly.forEach { it.cityId = cityId }
