@@ -38,8 +38,19 @@ object LogUtils {
     }
 
     fun w(msg: String, tag: String = defaultTag) {
-        if (level <= WARN) {
-            Log.w(tag, msg)
+        if (level > WARN) return
+        Log.w(tag, msg)
+    }
+
+    fun w(tr: Throwable) {
+        if (level > WARN) return
+        val name = tr::class.qualifiedName
+        val msg = tr.localizedMessage
+        when {
+            name != null && msg != null -> w("$name: $msg")
+            name != null -> w(name)
+            msg != null -> w(msg)
+            else -> w("**** WARNING ****")
         }
     }
 

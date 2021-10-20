@@ -35,6 +35,13 @@ object NetworkUtils {
         return GSON.fromJson(arr.toString(), type) ?: throw PlaceholderException(0, "null")
     }
 
+    fun <T : Any> JSONObject.getList(name: String, elmCls: KClass<T>) =
+        runCatching {
+            fromJsonArray(getJSONArray(name), elmCls)
+        }.onFailure {
+            LogUtils.w(it)
+        }.getOrNull()
+
     fun responseBodyToJsonObject(body: ResponseBody) = JSONObject(body.string()).apply {
         when (val code = getInt("code")) {
             200 -> {}

@@ -2,6 +2,7 @@ package net.zackzhang.code.haze.weather.model.entity
 
 import net.zackzhang.code.haze.air.model.entity.AirEntity
 import net.zackzhang.code.haze.air.model.entity.AirNowEntity
+import net.zackzhang.code.haze.common.util.plusAssign
 
 data class WeatherEntity(
     val now: WeatherHourlyEntity,
