@@ -5,6 +5,8 @@
 
     <string name="format_city_search_association_prefecture_province">%s，%s</string>
 
+    <string name="air_quality_format">空气质量%s</string>
+
     <string name="updated_at_format">更新%s</string>
 
     <string name="datetime_prettified_relative_to_now_negative_format">于 %s</string>

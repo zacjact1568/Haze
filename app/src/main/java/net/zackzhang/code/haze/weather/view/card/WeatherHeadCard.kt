@@ -27,7 +27,7 @@ class WeatherHeadCard(parent: ViewGroup) : BaseCard(parent, R.layout.card_weathe
                 cardData.theme.foregroundColor
             )
             vAirQuality.updateText(
-                cardData.airQuality.orPlaceholder(),
+                context.getString(R.string.air_quality_format, cardData.airQuality.orPlaceholder()),
                 cardData.theme.foregroundColor
             )
             vTemperatureMin.updateText(
