@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import androidx.annotation.ColorInt
 import net.zackzhang.code.haze.R
 import net.zackzhang.code.haze.common.util.ResourceUtils.getDimension
 import net.zackzhang.code.haze.common.util.ResourceUtils.getInteger
@@ -96,7 +97,6 @@ class ColorGradientBar @JvmOverloads constructor(
                 context.getDimension(R.dimen.color_gradient_bar_default_ring_width)
             )
             ringPaint.strokeWidth = ringWidth.toFloat()
-            ringPaint.color = getColor(R.styleable.ColorGradientBar_ringColor, Color.BLACK)
             recycle()
         }
     }
@@ -131,9 +131,10 @@ class ColorGradientBar @JvmOverloads constructor(
         }
     }
 
-    fun setData(range: IntRange?, key: Int? = null) {
+    fun setData(range: IntRange?, key: Int? = null, @ColorInt ringColor: Int = Color.BLACK) {
         this.range = range
         this.key = key
+        ringPaint.color = ringColor
         invalidate()
     }
 

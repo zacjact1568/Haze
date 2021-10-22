@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Green 200 -->
-    <color name="colorPrimaryLight">#FF72D572</color>
-    <!-- Green 500 -->
-    <color name="colorPrimary">#FF259B24</color>
-    <!-- Green 600 -->
-    <color name="colorPrimaryLightDark">#FF0A8F08</color>
-    <!-- Green 800 -->
-    <color name="colorPrimaryDark">#FF056F00</color>
-    <!-- Green 900 -->
-    <color name="colorPrimarySuperDark">#FF0D5302</color>
-    <!-- Lime 500 -->
-    <color name="colorAccent">#FFCDDC39</color>
+    <!-- 主题色，应以属性的形式引用，e.g. ?colorPrimary -->
+    <!-- NOTE：Launcher 图标里面不要用属性引用，否则显示不出来 -->
+    <color name="colorPrimary">#FFDD65</color>
+    <color name="colorPrimaryDark">#FFDD65</color>
+    <color name="colorAccent">#EB625E</color>
 
+    <!-- 饱和度 200 -->
+    <color name="amber_200">#FFE082</color>
+    <color name="yellow_200">#FFF59D</color>
+    <color name="light_green_200">#C5E1A5</color>
+    <color name="green_200">#A5D6A7</color>
+    <color name="teal_200">#80CBC4</color>
+    <color name="cyan_200">#80DEEA</color>
+    <color name="light_blue_200">#81D4FA</color>
+    <color name="blue_200">#90CAF9</color>
+    <color name="indigo_200">#9FA8DA</color>
+    <color name="deep_purple_200">#B39DDB</color>
+    <color name="purple_200">#CE93D8</color>
+    <color name="brown_200">#BCAAA4</color>
+    <color name="blue_gray_200">#B0BEC5</color>
+
+    <!-- 饱和度 500 -->
     <color name="red_500">#F44336</color>
     <color name="deep_orange_500">#FF5722</color>
     <color name="orange_500">#FF9800</color>

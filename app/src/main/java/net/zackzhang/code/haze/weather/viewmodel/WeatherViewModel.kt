@@ -1,11 +1,13 @@
 package net.zackzhang.code.haze.weather.viewmodel
 
+import android.graphics.Color
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import net.zackzhang.code.haze.common.Constants
+import net.zackzhang.code.haze.common.model.entity.ThemeEntity
 import net.zackzhang.code.haze.common.util.DateTimeUtils.toPrettifiedRelativeToNow
 import net.zackzhang.code.haze.common.viewmodel.Event
 import net.zackzhang.code.haze.common.viewmodel.EventViewModel
@@ -13,6 +15,7 @@ import net.zackzhang.code.haze.weather.model.local.WeatherLocalRepository
 import net.zackzhang.code.haze.weather.model.remote.WeatherRemoteRepository
 import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
 import net.zackzhang.code.haze.weather.model.entity.WeatherEntity
+import net.zackzhang.code.haze.weather.util.getThemeColorByConditionCode
 import net.zackzhang.code.haze.weather.viewmodel.data.WeatherHeadCardData
 
 class WeatherViewModel : EventViewModel() {
@@ -50,12 +53,19 @@ class WeatherViewModel : EventViewModel() {
     }
 
     private fun WeatherEntity.toCardDataList(): List<BaseCardData> {
+        val theme = ThemeEntity(
+            getThemeColorByConditionCode(now.conditionCode),
+            // 前景色暂时固定为白色
+            Color.WHITE,
+        )
+        eventLiveData.value = Event(Constants.EVENT_THEME_CHANGED, theme)
         return listOf(WeatherHeadCardData(
             now.temperature,
+            todayTemperatureRange,
             now.conditionName,
             air.now.category,
-            todayTemperatureRange,
             updatedAt?.toPrettifiedRelativeToNow(),
+            theme,
         ))
     }
 }

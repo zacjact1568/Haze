@@ -1,5 +1,6 @@
 package net.zackzhang.code.haze.common.view
 
+import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import net.zackzhang.code.haze.common.Constants
@@ -27,6 +28,7 @@ class CardAdapter(private val creator: (type: Int, parent: ViewGroup) -> BaseCar
 
     override fun getItemViewType(position: Int) = cardDataList[position].type
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setCardData(cardData: List<BaseCardData>) {
         cardDataList.clear()
         cardDataList.addAll(cardData)
