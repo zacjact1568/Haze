@@ -2,16 +2,11 @@ package net.zackzhang.code.haze.common.util
 
 import android.widget.TextView
 import androidx.annotation.ColorInt
-import net.zackzhang.code.haze.common.Constants
+import net.zackzhang.code.haze.common.constant.PLACEHOLDER
 
-object ViewUtils {
+fun String?.orPlaceholder() = this ?: PLACEHOLDER
 
-    fun Int?.toStringOrPlaceholder() = this?.toString() ?: Constants.PLACEHOLDER
-
-    fun String?.orPlaceholder() = this ?: Constants.PLACEHOLDER
-}
-
-fun TextView.updateText(text: String, @ColorInt color: Int) {
-    this.text = text
+fun TextView.updateTextOrPlaceholder(text: Any?, @ColorInt color: Int) {
+    this.text = text?.toString() ?: PLACEHOLDER
     setTextColor(color)
 }

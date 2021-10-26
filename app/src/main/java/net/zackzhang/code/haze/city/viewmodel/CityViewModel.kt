@@ -5,7 +5,9 @@ import androidx.activity.result.ActivityResult
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import net.zackzhang.code.haze.city.model.entity.CityWeatherEntity
-import net.zackzhang.code.haze.common.Constants
+import net.zackzhang.code.haze.common.constant.CITY
+import net.zackzhang.code.haze.common.constant.EVENT_ACTIVITY_FINISH
+import net.zackzhang.code.haze.common.constant.RESULT_CODE_CITY_NEW
 import net.zackzhang.code.haze.common.viewmodel.Event
 import net.zackzhang.code.haze.common.viewmodel.EventViewModel
 
@@ -24,9 +26,9 @@ class CityViewModel : EventViewModel() {
     }
 
     fun notifyFinish(city: CityWeatherEntity?) {
-        eventLiveData.value = Event(Constants.EVENT_ACTIVITY_FINISH,
-            ActivityResult(Constants.RESULT_CODE_CITY_NEW, if (city != null) {
-                Intent().apply { putExtra(Constants.CITY, city) }
+        eventLiveData.value = Event(EVENT_ACTIVITY_FINISH,
+            ActivityResult(RESULT_CODE_CITY_NEW, if (city != null) {
+                Intent().apply { putExtra(CITY, city) }
             } else null))
     }
 }

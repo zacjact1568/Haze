@@ -10,7 +10,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePaddingRelative
 import androidx.core.widget.addTextChangedListener
 import net.zackzhang.code.haze.city.viewmodel.CityViewModel
-import net.zackzhang.code.haze.common.Constants
+import net.zackzhang.code.haze.common.constant.EVENT_ACTIVITY_FINISH
 import net.zackzhang.code.haze.databinding.ActivityCityBinding
 
 class CityActivity : AppCompatActivity() {
@@ -32,7 +32,7 @@ class CityActivity : AppCompatActivity() {
         }
         viewModel.observeEvent(this) {
             when (it.name) {
-                Constants.EVENT_ACTIVITY_FINISH -> {
+                EVENT_ACTIVITY_FINISH -> {
                     val ar = it.data as ActivityResult
                     setResult(ar.resultCode, ar.data)
                     finish()

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.*
 import net.zackzhang.code.haze.city.model.entity.CityWeatherEntity
 import net.zackzhang.code.haze.city.view.CityActivity
-import net.zackzhang.code.haze.common.Constants
+import net.zackzhang.code.haze.common.constant.*
 import net.zackzhang.code.haze.common.model.entity.ThemeEntity
 import net.zackzhang.code.haze.databinding.ActivityHomeBinding
 import net.zackzhang.code.haze.home.viewmodel.HomeViewModel
@@ -20,8 +20,8 @@ class HomeActivity : AppCompatActivity() {
 
     private val cityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         when (it.resultCode) {
-            Constants.RESULT_CODE_CITY_NEW -> {
-                val city = it.data?.getParcelableExtra<CityWeatherEntity>(Constants.CITY)
+            RESULT_CODE_CITY_NEW -> {
+                val city = it.data?.getParcelableExtra<CityWeatherEntity>(CITY)
                 if (city != null) {
                     viewModel.notifyCityChanged(city)
                 }
@@ -45,10 +45,10 @@ class HomeActivity : AppCompatActivity() {
         binding.updateViewsTheme(viewModel.theme)
         viewModel.observeEvent(this) {
             when (it.name) {
-                Constants.EVENT_DATA_LOADED, Constants.EVENT_CITY_CHANGED -> {
+                EVENT_DATA_LOADED, EVENT_CITY_CHANGED -> {
                     binding.updateCityName((it.data as? CityWeatherEntity)?.name)
                 }
-                Constants.EVENT_THEME_CHANGED -> {
+                EVENT_THEME_CHANGED -> {
                     binding.updateViewsTheme(it.data as? ThemeEntity)
                 }
             }
@@ -56,7 +56,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun ActivityHomeBinding.updateCityName(cityName: String?) {
-        vCityName.text = cityName ?: Constants.PLACEHOLDER
+        vCityName.text = cityName ?: PLACEHOLDER
     }
 
     private fun ActivityHomeBinding.updateViewsTheme(theme: ThemeEntity?) {

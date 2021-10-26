@@ -11,7 +11,8 @@ import net.zackzhang.code.haze.city.model.entity.CityWeatherEntity
 import net.zackzhang.code.haze.city.view.card.CitySearchAssociationCard
 import net.zackzhang.code.haze.city.viewmodel.CitySearchAssociationViewModel
 import net.zackzhang.code.haze.city.viewmodel.CityViewModel
-import net.zackzhang.code.haze.common.Constants
+import net.zackzhang.code.haze.common.constant.CARD_TYPE_CITY_SEARCH_ASSOCIATION
+import net.zackzhang.code.haze.common.constant.EVENT_CITY_SELECTED
 import net.zackzhang.code.haze.common.view.CardAdapter
 import net.zackzhang.code.haze.databinding.FragmentCitySearchAssociationBinding
 
@@ -23,7 +24,7 @@ class CitySearchAssociationFragment : Fragment() {
 
     private val adapter = CardAdapter { type, parent ->
         when (type) {
-            Constants.CARD_TYPE_CITY_SEARCH_ASSOCIATION -> CitySearchAssociationCard(parent) {
+            CARD_TYPE_CITY_SEARCH_ASSOCIATION -> CitySearchAssociationCard(parent) {
                 viewModel.notifySelected(it)
             }
             else -> null
@@ -42,7 +43,7 @@ class CitySearchAssociationFragment : Fragment() {
         }
         viewModel.observeEvent(viewLifecycleOwner) {
             when (it.name) {
-                Constants.EVENT_CITY_SELECTED -> activityViewModel.notifyFinish(it.data as CityWeatherEntity?)
+                EVENT_CITY_SELECTED -> activityViewModel.notifyFinish(it.data as CityWeatherEntity?)
             }
         }
         activityViewModel.observeSearchInput(viewLifecycleOwner) {

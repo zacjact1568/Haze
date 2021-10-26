@@ -3,7 +3,7 @@ package net.zackzhang.code.haze.common.view
 import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import net.zackzhang.code.haze.common.Constants
+import net.zackzhang.code.haze.common.constant.CARD_COLUMN_DEFAULT
 import net.zackzhang.code.haze.common.view.card.BaseCard
 import net.zackzhang.code.haze.common.view.card.EmptyCard
 import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
@@ -35,5 +35,5 @@ class CardAdapter(private val creator: (type: Int, parent: ViewGroup) -> BaseCar
         notifyDataSetChanged()
     }
 
-    fun getColumn(position: Int) = columnMap[getItemViewType(position)] ?: Constants.CARD_COLUMN_DEFAULT
+    fun getColumn(position: Int) = columnMap[getItemViewType(position)] ?: CARD_COLUMN_DEFAULT
 }

@@ -9,7 +9,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import net.zackzhang.code.haze.city.model.entity.CityWeatherEntity
-import net.zackzhang.code.haze.common.Constants
+import net.zackzhang.code.haze.common.constant.CARD_TYPE_WEATHER_HEAD
+import net.zackzhang.code.haze.common.constant.EVENT_CITY_CHANGED
+import net.zackzhang.code.haze.common.constant.EVENT_DATA_LOADED
+import net.zackzhang.code.haze.common.constant.EVENT_THEME_CHANGED
 import net.zackzhang.code.haze.common.model.entity.ThemeEntity
 import net.zackzhang.code.haze.common.view.CardAdapter
 import net.zackzhang.code.haze.databinding.FragmentWeatherBinding
@@ -25,7 +28,7 @@ class WeatherFragment : Fragment() {
 
     private val cardAdapter = CardAdapter { type, parent ->
         when (type) {
-            Constants.CARD_TYPE_WEATHER_HEAD -> WeatherHeadCard(parent)
+            CARD_TYPE_WEATHER_HEAD -> WeatherHeadCard(parent)
             // Other cards
             else -> null
         }
@@ -53,13 +56,13 @@ class WeatherFragment : Fragment() {
         }
         viewModel.observeEvent(viewLifecycleOwner) {
             when (it.name) {
-                Constants.EVENT_DATA_LOADED -> activityViewModel.notifyDataLoaded(it.data as CityWeatherEntity)
-                Constants.EVENT_THEME_CHANGED -> activityViewModel.notifyThemeChanged(it.data as ThemeEntity)
+                EVENT_DATA_LOADED -> activityViewModel.notifyDataLoaded(it.data as CityWeatherEntity)
+                EVENT_THEME_CHANGED -> activityViewModel.notifyThemeChanged(it.data as ThemeEntity)
             }
         }
         activityViewModel.observeEvent(viewLifecycleOwner) {
             when (it.name) {
-                Constants.EVENT_CITY_CHANGED -> {
+                EVENT_CITY_CHANGED -> {
                     cardAdapter.setCardData(emptyList())
                     viewModel.notifyRefreshing((it.data as CityWeatherEntity).id)
                 }

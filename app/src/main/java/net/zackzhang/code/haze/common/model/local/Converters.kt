@@ -1,8 +1,7 @@
 package net.zackzhang.code.haze.common.model.local
 
 import androidx.room.TypeConverter
-import net.zackzhang.code.haze.common.util.DateTimeUtils
-import net.zackzhang.code.haze.common.util.NumberUtils
+import net.zackzhang.code.haze.common.util.*
 import java.time.*
 
 object Converters {
@@ -11,35 +10,35 @@ object Converters {
     fun dateToString(date: LocalDate?) = date?.toString()
 
     @TypeConverter
-    fun stringToDate(date: String?) = DateTimeUtils.parseDate(date)
+    fun stringToDate(date: String?) = parseDate(date)
 
     @TypeConverter
     fun timeToString(time: LocalTime?) = time?.toString()
 
     @TypeConverter
-    fun stringToTime(time: String?) = DateTimeUtils.parseTime(time)
+    fun stringToTime(time: String?) = parseTime(time)
 
     @TypeConverter
     fun dateTimeToString(dateTime: ZonedDateTime?) = dateTime?.toString()
 
     @TypeConverter
-    fun stringToDateTime(dateTime: String?) = DateTimeUtils.parseDateTime(dateTime)
+    fun stringToDateTime(dateTime: String?) = parseDateTime(dateTime)
 
     @TypeConverter
     fun timeZoneToString(timeZone: ZoneId?) = timeZone?.toString()
 
     @TypeConverter
-    fun stringToTimeZone(timeZone: String?) = DateTimeUtils.parseTimeZone(timeZone)
+    fun stringToTimeZone(timeZone: String?) = parseTimeZone(timeZone)
 
     @TypeConverter
     fun utcOffsetToString(utcOffset: ZoneOffset?) = utcOffset?.toString()
 
     @TypeConverter
-    fun stringToUtcOffset(utcOffset: String?) = DateTimeUtils.parseUtcOffset(utcOffset)
+    fun stringToUtcOffset(utcOffset: String?) = parseUtcOffset(utcOffset)
 
     @TypeConverter
-    fun intRangeToString(intRange: IntRange?) = NumberUtils.presentIntRange(intRange)
+    fun intRangeToString(intRange: IntRange?) = presentIntRange(intRange)
 
     @TypeConverter
-    fun stringToIntRange(intRange: String?) = NumberUtils.parseIntRange(intRange)
+    fun stringToIntRange(intRange: String?) = parseIntRange(intRange)
 }

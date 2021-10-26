@@ -4,7 +4,7 @@ import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
-import net.zackzhang.code.haze.common.util.DateTimeUtils
+import net.zackzhang.code.haze.common.util.parseDate
 import java.time.LocalDate
 
 class DateAdapter : TypeAdapter<LocalDate?>() {
@@ -22,6 +22,6 @@ class DateAdapter : TypeAdapter<LocalDate?>() {
             `in`.skipValue()
             return null
         }
-        return DateTimeUtils.parseDate(`in`.nextString())
+        return parseDate(`in`.nextString())
     }
 }

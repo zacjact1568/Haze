@@ -2,69 +2,66 @@ package net.zackzhang.code.haze.common.util
 
 import android.util.Log
 
-object LogUtils {
+private const val VERBOSE = 1
+private const val DEBUG = 2
+private const val INFO = 3
+private const val WARN = 4
+private const val ERROR = 5
+private const val NOTHING = 6
 
-    private const val VERBOSE = 1
-    private const val DEBUG = 2
-    private const val INFO = 3
-    private const val WARN = 4
-    private const val ERROR = 5
-    private const val NOTHING = 6
+var logLevel = VERBOSE
 
-    var level = VERBOSE
-
-    private val defaultTag: String
-        get() {
-            val element = Thread.currentThread().stackTrace[4]
-            return "${element.className.substringAfterLast('.')}/${element.methodName}/${element.lineNumber}"
-        }
-
-    fun v(msg: String, tag: String = defaultTag) {
-        if (level <= VERBOSE) {
-            Log.v(tag, msg)
-        }
+private val defaultTag: String
+    get() {
+        val element = Thread.currentThread().stackTrace[4]
+        return "${element.className.substringAfterLast('.')}/${element.methodName}/${element.lineNumber}"
     }
 
-    fun d(msg: String, tag: String = defaultTag) {
-        if (level <= DEBUG) {
-            Log.d(tag, msg)
-        }
+fun vLog(msg: String, tag: String = defaultTag) {
+    if (logLevel <= VERBOSE) {
+        Log.v(tag, msg)
     }
+}
 
-    fun i(msg: String, tag: String = defaultTag) {
-        if (level <= INFO) {
-            Log.i(tag, msg)
-        }
+fun dLog(msg: String, tag: String = defaultTag) {
+    if (logLevel <= DEBUG) {
+        Log.d(tag, msg)
     }
+}
 
-    fun w(msg: String, tag: String = defaultTag) {
-        if (level > WARN) return
-        Log.w(tag, msg)
+fun iLog(msg: String, tag: String = defaultTag) {
+    if (logLevel <= INFO) {
+        Log.i(tag, msg)
     }
+}
 
-    fun w(tr: Throwable) {
-        if (level > WARN) return
-        val name = tr::class.qualifiedName
-        val msg = tr.localizedMessage
-        when {
-            name != null && msg != null -> w("$name: $msg")
-            name != null -> w(name)
-            msg != null -> w(msg)
-            else -> w("**** WARNING ****")
-        }
-    }
+fun wLog(msg: String, tag: String = defaultTag) {
+    if (logLevel > WARN) return
+    Log.w(tag, msg)
+}
 
-    fun e(msg: String, tag: String = defaultTag) {
-        if (level <= ERROR) {
-            Log.e(tag, msg)
-        }
+fun wLog(tr: Throwable) {
+    if (logLevel > WARN) return
+    val name = tr::class.qualifiedName
+    val msg = tr.localizedMessage
+    when {
+        name != null && msg != null -> wLog("$name: $msg")
+        name != null -> wLog(name)
+        msg != null -> wLog(msg)
+        else -> wLog("**** WARNING ****")
     }
+}
 
-    fun d(msg: Int, tag: String = defaultTag) {
-        d(msg.toString(), tag)
+fun eLog(msg: String, tag: String = defaultTag) {
+    if (logLevel <= ERROR) {
+        Log.e(tag, msg)
     }
+}
 
-    fun here() {
-        d("**** HERE ****", defaultTag)
-    }
+fun dLog(msg: Int, tag: String = defaultTag) {
+    dLog(msg.toString(), tag)
+}
+
+fun logHere() {
+    dLog("**** HERE ****", defaultTag)
 }

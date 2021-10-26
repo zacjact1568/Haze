@@ -4,7 +4,7 @@ import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
-import net.zackzhang.code.haze.common.util.DateTimeUtils
+import net.zackzhang.code.haze.common.util.parseTimeZone
 import java.time.ZoneId
 
 class TimeZoneAdapter : TypeAdapter<ZoneId?>() {
@@ -22,6 +22,6 @@ class TimeZoneAdapter : TypeAdapter<ZoneId?>() {
             `in`.skipValue()
             return null
         }
-        return DateTimeUtils.parseTimeZone(`in`.nextString())
+        return parseTimeZone(`in`.nextString())
     }
 }

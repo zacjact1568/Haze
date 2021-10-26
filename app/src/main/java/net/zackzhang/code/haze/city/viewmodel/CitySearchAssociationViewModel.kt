@@ -11,7 +11,8 @@ import net.zackzhang.code.haze.city.model.entity.CityWeatherEntity
 import net.zackzhang.code.haze.city.model.local.CityLocalRepository
 import net.zackzhang.code.haze.city.model.remote.CityRemoteRepository
 import net.zackzhang.code.haze.city.viewmodel.data.CitySearchAssociationCardData
-import net.zackzhang.code.haze.common.Constants
+import net.zackzhang.code.haze.common.constant.EVENT_CITY_SELECTED
+import net.zackzhang.code.haze.common.constant.PLACEHOLDER
 import net.zackzhang.code.haze.common.exception.PlaceholderException
 import net.zackzhang.code.haze.common.viewmodel.Event
 import net.zackzhang.code.haze.common.viewmodel.EventViewModel
@@ -57,12 +58,12 @@ class CitySearchAssociationViewModel : EventViewModel() {
     fun notifySelected(position: Int) {
         val city = entityLiveData.value?.result?.get(position)
         if (city == null) {
-            eventLiveData.value = Event(Constants.EVENT_CITY_SELECTED, null)
+            eventLiveData.value = Event(EVENT_CITY_SELECTED, null)
             return
         }
         viewModelScope.launch {
             CityLocalRepository.replaceBy(city)
-            eventLiveData.value = Event(Constants.EVENT_CITY_SELECTED, CityWeatherEntity(city.id, city.name))
+            eventLiveData.value = Event(EVENT_CITY_SELECTED, CityWeatherEntity(city.id, city.name))
         }
     }
 
@@ -70,9 +71,9 @@ class CitySearchAssociationViewModel : EventViewModel() {
         val cardDataList = mutableListOf<CitySearchAssociationCardData>()
         forEach {
             cardDataList += CitySearchAssociationCardData(
-                it.name ?: Constants.PLACEHOLDER,
-                it.prefecture ?: Constants.PLACEHOLDER,
-                it.province ?: Constants.PLACEHOLDER
+                it.name ?: PLACEHOLDER,
+                it.prefecture ?: PLACEHOLDER,
+                it.province ?: PLACEHOLDER
             )
         }
         return cardDataList

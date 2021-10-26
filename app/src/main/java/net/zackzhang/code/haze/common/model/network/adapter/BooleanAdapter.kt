@@ -4,7 +4,6 @@ import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
-import net.zackzhang.code.haze.common.util.DateTimeUtils
 
 class BooleanAdapter : TypeAdapter<Boolean?>() {
 

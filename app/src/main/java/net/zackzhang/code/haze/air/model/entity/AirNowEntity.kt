@@ -5,59 +5,59 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import com.google.gson.annotations.SerializedName
 import net.zackzhang.code.haze.city.model.entity.CityEntity
-import net.zackzhang.code.haze.common.Constants
+import net.zackzhang.code.haze.common.constant.*
 import java.time.ZonedDateTime
 
-@Entity(tableName = Constants.AIR, foreignKeys = [ForeignKey(
+@Entity(tableName = AIR, foreignKeys = [ForeignKey(
     entity = CityEntity::class,
-    parentColumns = [Constants.ID],
-    childColumns = [Constants.CITY_ID],
+    parentColumns = [ID],
+    childColumns = [CITY_ID],
     onDelete = ForeignKey.CASCADE,
     onUpdate = ForeignKey.CASCADE,
-)], primaryKeys = [Constants.CITY_ID, Constants.STATION_ID])
+)], primaryKeys = [CITY_ID, STATION_ID])
 data class AirNowEntity(
-    @ColumnInfo(name = Constants.CITY_ID)
+    @ColumnInfo(name = CITY_ID)
     var cityId: String,
-    @ColumnInfo(name = Constants.UPDATED_AT)
+    @ColumnInfo(name = UPDATED_AT)
     var updatedAt: ZonedDateTime?,
     @SerializedName("pubTime")
-    @ColumnInfo(name = Constants.PUBLISHED_AT)
+    @ColumnInfo(name = PUBLISHED_AT)
     val publishedAt: ZonedDateTime?,
     @SerializedName("name")
-    @ColumnInfo(name = Constants.STATION_NAME)
+    @ColumnInfo(name = STATION_NAME)
     val stationName: String?,
     @SerializedName("id")
-    @ColumnInfo(name = Constants.STATION_ID)
+    @ColumnInfo(name = STATION_ID)
     var stationId: String,
     @SerializedName("aqi")
-    @ColumnInfo(name = Constants.INDEX)
+    @ColumnInfo(name = INDEX)
     val index: Int?,
     @SerializedName("level")
-    @ColumnInfo(name = Constants.LEVEL)
+    @ColumnInfo(name = LEVEL)
     val level: Int?,
     @SerializedName("category")
-    @ColumnInfo(name = Constants.CATEGORY)
+    @ColumnInfo(name = CATEGORY)
     val category: String?,
     @SerializedName("primary")
-    @ColumnInfo(name = Constants.PRIMARY)
+    @ColumnInfo(name = PRIMARY)
     val primary: String?,
     @SerializedName("pm10")
-    @ColumnInfo(name = Constants.PM_10)
+    @ColumnInfo(name = PM_10)
     val pm10: Float?,
     @SerializedName("pm2p5")
-    @ColumnInfo(name = Constants.PM_2_5)
+    @ColumnInfo(name = PM_2_5)
     val pm2p5: Float?,
     @SerializedName("no2")
-    @ColumnInfo(name = Constants.NO_2)
+    @ColumnInfo(name = NO_2)
     val no2: Float?,
     @SerializedName("so2")
-    @ColumnInfo(name = Constants.SO_2)
+    @ColumnInfo(name = SO_2)
     val so2: Float?,
     @SerializedName("co")
-    @ColumnInfo(name = Constants.CO)
+    @ColumnInfo(name = CO)
     val co: Float?,
     @SerializedName("o3")
-    @ColumnInfo(name = Constants.O_3)
+    @ColumnInfo(name = O_3)
     val o3: Float?,
 ) {
 

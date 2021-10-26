@@ -2,9 +2,8 @@ package net.zackzhang.code.haze.weather.view.card
 
 import android.view.ViewGroup
 import net.zackzhang.code.haze.R
-import net.zackzhang.code.haze.common.util.ViewUtils.orPlaceholder
-import net.zackzhang.code.haze.common.util.ViewUtils.toStringOrPlaceholder
-import net.zackzhang.code.haze.common.util.updateText
+import net.zackzhang.code.haze.common.util.orPlaceholder
+import net.zackzhang.code.haze.common.util.updateTextOrPlaceholder
 import net.zackzhang.code.haze.common.view.card.BaseCard
 import net.zackzhang.code.haze.databinding.CardWeatherHeadBinding
 import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
@@ -18,20 +17,20 @@ class WeatherHeadCard(parent: ViewGroup) : BaseCard(parent, R.layout.card_weathe
         if (cardData !is WeatherHeadCardData) return
         binding.run {
             root.setBackgroundColor(cardData.theme.backgroundColor)
-            vTemperatureNow.updateText(
-                cardData.temperatureNow.toStringOrPlaceholder(),
+            vTemperatureNow.updateTextOrPlaceholder(
+                cardData.temperatureNow,
                 cardData.theme.foregroundColor
             )
-            vCondition.updateText(
-                cardData.condition.orPlaceholder(),
+            vCondition.updateTextOrPlaceholder(
+                cardData.condition,
                 cardData.theme.foregroundColor
             )
-            vAirQuality.updateText(
+            vAirQuality.updateTextOrPlaceholder(
                 context.getString(R.string.air_quality_format, cardData.airQuality.orPlaceholder()),
                 cardData.theme.foregroundColor
             )
-            vTemperatureMin.updateText(
-                cardData.temperatureRange?.first.toStringOrPlaceholder(),
+            vTemperatureMin.updateTextOrPlaceholder(
+                cardData.temperatureRange?.first,
                 cardData.theme.foregroundColor
             )
             vTemperatureRangeBar.setData(
@@ -39,11 +38,11 @@ class WeatherHeadCard(parent: ViewGroup) : BaseCard(parent, R.layout.card_weathe
                 cardData.temperatureNow,
                 cardData.theme.foregroundColor
             )
-            vTemperatureMax.updateText(
-                cardData.temperatureRange?.last.toStringOrPlaceholder(),
+            vTemperatureMax.updateTextOrPlaceholder(
+                cardData.temperatureRange?.last,
                 cardData.theme.foregroundColor
             )
-            vUpdatedAt.updateText(
+            vUpdatedAt.updateTextOrPlaceholder(
                 context.getString(R.string.updated_at_format, cardData.updatedAt.orPlaceholder()),
                 cardData.theme.foregroundColor
             )

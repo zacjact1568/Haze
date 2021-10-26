@@ -5,7 +5,8 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import net.zackzhang.code.haze.city.model.entity.CityEntity
-import net.zackzhang.code.haze.common.Constants
+import net.zackzhang.code.haze.common.constant.CITY
+import net.zackzhang.code.haze.common.constant.ID
 
 @Dao
 interface CityDao {
@@ -14,10 +15,10 @@ interface CityDao {
     suspend fun insert(entity: CityEntity)
 
     // 有外键约束，会同时删除 weather 和 air 表中对应城市的列
-    @Query("DELETE FROM ${Constants.CITY} WHERE ${Constants.ID} = :id")
+    @Query("DELETE FROM $CITY WHERE $ID = :id")
     suspend fun delete(id: String)
 
-    @Query("DELETE FROM ${Constants.CITY}")
+    @Query("DELETE FROM $CITY")
     suspend fun deleteAll()
 
     @Transaction

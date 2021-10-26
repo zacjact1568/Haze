@@ -4,7 +4,8 @@ import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
-import net.zackzhang.code.haze.common.util.NumberUtils
+import net.zackzhang.code.haze.common.util.parseIntRange
+import net.zackzhang.code.haze.common.util.presentIntRange
 
 class IntRangeAdapter : TypeAdapter<IntRange?>() {
 
@@ -12,7 +13,7 @@ class IntRangeAdapter : TypeAdapter<IntRange?>() {
         if (value == null) {
             out.nullValue()
         } else {
-            out.jsonValue(NumberUtils.presentIntRange(value))
+            out.jsonValue(presentIntRange(value))
         }
     }
 
@@ -21,6 +22,6 @@ class IntRangeAdapter : TypeAdapter<IntRange?>() {
             `in`.skipValue()
             return null
         }
-        return NumberUtils.parseIntRange(`in`.nextString())
+        return parseIntRange(`in`.nextString())
     }
 }
