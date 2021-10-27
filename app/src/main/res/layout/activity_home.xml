@@ -32,7 +32,7 @@
         <ImageView
             android:id="@+id/v_settings"
             style="@style/ToolbarSideIconStyle"
-            android:src="@drawable/ic_settings_black_24dp"
+            android:src="@drawable/ic_settings"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

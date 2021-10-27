@@ -15,7 +15,7 @@
         <ImageView
             android:id="@+id/v_back"
             style="@style/ToolbarSideIconStyle"
-            android:src="@drawable/ic_arrow_back_black_24dp"
+            android:src="@drawable/ic_back"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

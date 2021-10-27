@@ -3,8 +3,8 @@
 
     <dimen name="match_constraint">0dp</dimen>
 
-    <dimen name="toolbar_side_icon_size">24dp</dimen>
-    <dimen name="toolbar_side_icon_margin">10dp</dimen>
+    <dimen name="toolbar_side_icon_size">20dp</dimen>
+    <dimen name="toolbar_side_icon_margin">16dp</dimen>
 
     <dimen name="toolbar_center_text_size">18sp</dimen>
     <dimen name="toolbar_center_text_margin_vertical">12dp</dimen>
