@@ -98,3 +98,6 @@ const val EVENT_CITY_CHANGED = "city_changed"
 const val EVENT_ACTIVITY_FINISH = "activity_finish"
 const val EVENT_CITY_SELECTED = "city_selected"
 const val EVENT_THEME_CHANGED = "theme_changed"
+const val EVENT_WINDOW_INSETS_APPLIED = "window_insets_applied"
+
+const val EXTRA_THEME = "theme"

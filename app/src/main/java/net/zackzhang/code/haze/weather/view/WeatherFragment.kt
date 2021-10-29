@@ -57,7 +57,10 @@ class WeatherFragment : Fragment() {
         viewModel.observeEvent(viewLifecycleOwner) {
             when (it.name) {
                 EVENT_DATA_LOADED -> activityViewModel.notifyDataLoaded(it.data as CityWeatherEntity)
-                EVENT_THEME_CHANGED -> activityViewModel.notifyThemeChanged(it.data as ThemeEntity)
+                EVENT_THEME_CHANGED -> (it.data as ThemeEntity).run {
+                    binding.root.setColorSchemeColors(backgroundColor)
+                    activityViewModel.notifyThemeChanged(this)
+                }
             }
         }
         activityViewModel.observeEvent(viewLifecycleOwner) {

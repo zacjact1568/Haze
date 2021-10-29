@@ -14,15 +14,16 @@
 
         <ImageView
             android:id="@+id/v_cities"
-            style="@style/ToolbarSideIconStyle"
+            style="@style/IconButtonStyle"
+            android:layout_marginStart="@dimen/toolbar_side_icon_margin_horizontal"
             android:src="@drawable/ic_city"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/v_city_name"
+            app:layout_constraintBottom_toBottomOf="@+id/v_city_name"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/v_city_name"
-            style="@style/ToolbarCenterTextStyle"
+            style="@style/ToolbarTitleStyle"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,10 +32,11 @@
 
         <ImageView
             android:id="@+id/v_settings"
-            style="@style/ToolbarSideIconStyle"
+            style="@style/IconButtonStyle"
+            android:layout_marginEnd="@dimen/toolbar_side_icon_margin_horizontal"
             android:src="@drawable/ic_settings"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/v_city_name"
+            app:layout_constraintBottom_toBottomOf="@+id/v_city_name"
             app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,21 +12,21 @@
 
     </style>
 
-    <style name="ToolbarSideIconStyle">
+    <style name="IconButtonStyle">
 
-        <item name="android:layout_width">@dimen/toolbar_side_icon_size</item>
-        <item name="android:layout_height">@dimen/toolbar_side_icon_size</item>
-        <item name="android:layout_margin">@dimen/toolbar_side_icon_margin</item>
+        <item name="android:layout_width">@dimen/icon_button_size</item>
+        <item name="android:layout_height">@dimen/icon_button_size</item>
         <item name="android:background">?android:selectableItemBackgroundBorderless</item>
+        <item name="android:padding">@dimen/icon_button_padding</item>
 
     </style>
 
-    <style name="ToolbarCenterTextStyle">
+    <style name="ToolbarTitleStyle">
 
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">@dimen/toolbar_center_text_margin_vertical</item>
-        <item name="android:textSize">@dimen/toolbar_center_text_size</item>
+        <item name="android:layout_margin">@dimen/toolbar_title_margin_vertical</item>
+        <item name="android:textSize">@dimen/toolbar_title_size</item>
         <item name="android:textStyle">bold</item>
 
     </style>

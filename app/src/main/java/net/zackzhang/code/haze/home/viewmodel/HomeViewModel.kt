@@ -6,9 +6,9 @@ import net.zackzhang.code.haze.common.constant.EVENT_DATA_LOADED
 import net.zackzhang.code.haze.common.constant.EVENT_THEME_CHANGED
 import net.zackzhang.code.haze.common.model.entity.ThemeEntity
 import net.zackzhang.code.haze.common.viewmodel.Event
-import net.zackzhang.code.haze.common.viewmodel.EventViewModel
+import net.zackzhang.code.haze.common.viewmodel.BaseViewModel
 
-class HomeViewModel : EventViewModel() {
+class HomeViewModel : BaseViewModel() {
 
     var cityName: String? = null
         private set

@@ -3,20 +3,24 @@
 
     <dimen name="match_constraint">0dp</dimen>
 
-    <dimen name="toolbar_side_icon_size">20dp</dimen>
-    <dimen name="toolbar_side_icon_margin">16dp</dimen>
+    <dimen name="icon_button_size">32dp</dimen>
+    <dimen name="icon_button_padding">6dp</dimen>
 
-    <dimen name="toolbar_center_text_size">18sp</dimen>
-    <dimen name="toolbar_center_text_margin_vertical">12dp</dimen>
+    <dimen name="toolbar_side_icon_margin_horizontal">8dp</dimen>
 
-    <dimen name="search_bar_corner_radius">16dp</dimen>
+    <dimen name="toolbar_title_size">18sp</dimen>
+    <dimen name="toolbar_title_margin_vertical">12dp</dimen>
 
-    <dimen name="search_bar_margin_end">16dp</dimen>
-    <dimen name="search_bar_margin_vertical">10dp</dimen>
-    <dimen name="search_bar_padding_vertical">4dp</dimen>
-    <dimen name="search_bar_padding_horizontal">14dp</dimen>
+    <dimen name="search_bar_corner_radius">4dp</dimen>
 
-    <dimen name="city_search_association_item_padding">12dp</dimen>
+    <dimen name="search_bar_margin_horizontal">36dp</dimen>
+    <dimen name="search_bar_margin_vertical">28dp</dimen>
+    <dimen name="search_bar_padding_vertical">10dp</dimen>
+    <dimen name="search_bar_padding_horizontal">40dp</dimen>
+
+    <dimen name="search_icon_margin">10dp</dimen>
+
+    <dimen name="search_clear_margin">6dp</dimen>
 
     <dimen name="search_bar_text_size">16sp</dimen>
 
@@ -30,5 +34,17 @@
 
     <dimen name="updated_at_margin_top">20dp</dimen>
     <dimen name="updated_at_margin_bottom">10dp</dimen>
+
+    <dimen name="dp_8">8dp</dimen>
+    <dimen name="dp_10">10dp</dimen>
+    <dimen name="dp_12">12dp</dimen>
+    <dimen name="dp_20">20dp</dimen>
+    <dimen name="dp_50">50dp</dimen>
+    <dimen name="dp_100">100dp</dimen>
+    <dimen name="dp_200">200dp</dimen>
+
+    <dimen name="sp_12">12sp</dimen>
+    <dimen name="sp_14">14sp</dimen>
+    <dimen name="sp_16">16sp</dimen>
 
 </resources>

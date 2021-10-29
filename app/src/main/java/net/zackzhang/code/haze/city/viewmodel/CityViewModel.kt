@@ -9,9 +9,9 @@ import net.zackzhang.code.haze.common.constant.CITY
 import net.zackzhang.code.haze.common.constant.EVENT_ACTIVITY_FINISH
 import net.zackzhang.code.haze.common.constant.RESULT_CODE_CITY_NEW
 import net.zackzhang.code.haze.common.viewmodel.Event
-import net.zackzhang.code.haze.common.viewmodel.EventViewModel
+import net.zackzhang.code.haze.common.viewmodel.BaseViewModel
 
-class CityViewModel : EventViewModel() {
+class CityViewModel : BaseViewModel() {
 
     private val searchInputLiveData by lazy {
         MutableLiveData<String>()

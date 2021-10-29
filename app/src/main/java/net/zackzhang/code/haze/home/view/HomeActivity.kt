@@ -11,6 +11,7 @@ import net.zackzhang.code.haze.city.model.entity.CityWeatherEntity
 import net.zackzhang.code.haze.city.view.CityActivity
 import net.zackzhang.code.haze.common.constant.*
 import net.zackzhang.code.haze.common.model.entity.ThemeEntity
+import net.zackzhang.code.haze.common.view.SystemBarInsets
 import net.zackzhang.code.haze.databinding.ActivityHomeBinding
 import net.zackzhang.code.haze.home.viewmodel.HomeViewModel
 
@@ -34,12 +35,13 @@ class HomeActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         val binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.vToolbar) { v, insets ->
-            v.updatePaddingRelative(top = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+            viewModel.notifyWindowInsetsApplied(SystemBarInsets.fromWindowInsets(insets))
             WindowInsetsCompat.CONSUMED
         }
         binding.vCities.setOnClickListener {
-            cityLauncher.launch(Intent(this, CityActivity::class.java))
+            cityLauncher.launch(Intent(this, CityActivity::class.java)
+                .putExtra(EXTRA_THEME, viewModel.theme))
         }
         binding.updateCityName(viewModel.cityName)
         binding.updateViewsTheme(viewModel.theme)
@@ -51,6 +53,8 @@ class HomeActivity : AppCompatActivity() {
                 EVENT_THEME_CHANGED -> {
                     binding.updateViewsTheme(it.data as? ThemeEntity)
                 }
+                EVENT_WINDOW_INSETS_APPLIED ->
+                    binding.vToolbar.updatePaddingRelative(top = (it.data as SystemBarInsets).status)
             }
         }
     }

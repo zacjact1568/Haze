@@ -11,7 +11,7 @@ import net.zackzhang.code.haze.common.constant.EVENT_THEME_CHANGED
 import net.zackzhang.code.haze.common.model.entity.ThemeEntity
 import net.zackzhang.code.haze.common.util.toPrettifiedRelativeToNow
 import net.zackzhang.code.haze.common.viewmodel.Event
-import net.zackzhang.code.haze.common.viewmodel.EventViewModel
+import net.zackzhang.code.haze.common.viewmodel.BaseViewModel
 import net.zackzhang.code.haze.weather.model.local.WeatherLocalRepository
 import net.zackzhang.code.haze.weather.model.remote.WeatherRemoteRepository
 import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
@@ -19,7 +19,7 @@ import net.zackzhang.code.haze.weather.model.entity.WeatherEntity
 import net.zackzhang.code.haze.weather.util.getThemeColorByConditionCode
 import net.zackzhang.code.haze.weather.viewmodel.data.WeatherHeadCardData
 
-class WeatherViewModel : EventViewModel() {
+class WeatherViewModel : BaseViewModel() {
 
     private val entityLiveData by lazy {
         MutableLiveData<WeatherEntity>()

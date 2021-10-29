@@ -2,8 +2,9 @@
 <resources>
 
     <string name="title_activity_city">城市</string>
-
-    <string name="format_city_search_association_prefecture_province">%s，%s</string>
+    <string name="hint_search_bar">按城市名搜索</string>
+    <string name="city_search_association_prefecture_province_country_format">%3$s，%2$s，%1$s</string>
+    <string name="city_search_not_found">没有找到相关城市</string>
 
     <string name="air_quality_format">空气质量%s</string>
 

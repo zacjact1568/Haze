@@ -4,8 +4,9 @@
     <string name="app_name" translatable="false">Haze</string>
 
     <string name="title_activity_city">City</string>
-
-    <string name="format_city_search_association_prefecture_province">%s, %s</string>
+    <string name="hint_search_bar">Search by city name</string>
+    <string name="city_search_association_prefecture_province_country_format">%1$s, %2$s, %3$s</string>
+    <string name="city_search_not_found">No associative cities found</string>
 
     <string name="air_quality_format">Air quality is %s</string>
 

@@ -16,9 +16,7 @@
 
         <activity
             android:name=".home.view.HomeActivity"
-            android:label="@string/app_name"
-            android:windowSoftInputMode="adjustNothing"
-            android:theme="@style/AppTheme">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -27,9 +25,7 @@
 
         <activity
             android:name=".city.view.CityActivity"
-            android:label="@string/title_activity_city"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustResize"/>
+            android:label="@string/title_activity_city" />
 
     </application>
 
