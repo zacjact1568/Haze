@@ -64,7 +64,7 @@ class WeatherViewModel : BaseViewModel() {
             now.temperature,
             todayTemperatureRange,
             now.conditionName,
-            air.now.category,
+            air?.now?.category,
             updatedAt?.toPrettifiedRelativeToNow(),
             theme,
         ))

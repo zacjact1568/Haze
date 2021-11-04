@@ -3,7 +3,6 @@ package net.zackzhang.code.haze.weather.model.local
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import net.zackzhang.code.haze.weather.model.entity.WeatherEntity
-import net.zackzhang.code.haze.weather.model.entity.WeatherHourlyEntity
 import net.zackzhang.code.haze.common.model.local.HazeDatabase.Companion.instance as db
 
 object WeatherLocalRepository {

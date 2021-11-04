@@ -8,7 +8,7 @@ data class WeatherEntity(
     val now: WeatherHourlyEntity,
     val hourly: List<WeatherHourlyEntity>,
     val daily: List<WeatherDailyEntity>,
-    val air: AirEntity,
+    val air: AirEntity?,
 ) {
 
     companion object {
@@ -23,11 +23,13 @@ data class WeatherEntity(
 
     val cityId get() = now.cityId
 
-    val dbHourly get() = mutableListOf(now).also { it += hourly } as List<WeatherHourlyEntity>
+    val dbHourly: List<WeatherHourlyEntity>
+        get() = mutableListOf(now).also { it += hourly }
 
     val dbDaily get() = daily
 
-    val dbAir get() = mutableListOf(air.now).also { it += air.stations } as List<AirNowEntity>
+    val dbAir: List<AirNowEntity>
+        get() = if (air == null) emptyList() else mutableListOf(air.now).also { it += air.stations }
 
     val todayTemperatureRange: IntRange? get() {
         if (daily.isEmpty()) {
@@ -46,6 +48,6 @@ data class WeatherEntity(
         now.cityId = cityId
         hourly.forEach { it.cityId = cityId }
         daily.forEach { it.cityId = cityId }
-        air.attachCityId(cityId)
+        air?.attachCityId(cityId)
     }
 }
