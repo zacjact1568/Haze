@@ -65,7 +65,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun ActivityHomeBinding.updateViewsTheme(theme: ThemeEntity?) {
         if (theme == null) return
-        vToolbar.setBackgroundColor(theme.backgroundColor)
+        root.setBackgroundColor(theme.backgroundColor)
         vCities.imageTintList = ColorStateList.valueOf(theme.foregroundColor)
         vCityName.setTextColor(theme.foregroundColor)
         vSettings.imageTintList = ColorStateList.valueOf(theme.foregroundColor)

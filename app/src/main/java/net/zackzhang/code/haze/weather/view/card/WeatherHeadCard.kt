@@ -16,7 +16,6 @@ class WeatherHeadCard(parent: ViewGroup) : BaseCard(parent, R.layout.card_weathe
     override fun updateViews(cardData: BaseCardData) {
         if (cardData !is WeatherHeadCardData) return
         binding.run {
-            root.setBackgroundColor(cardData.theme.backgroundColor)
             vTemperatureNow.updateTextOrPlaceholder(
                 cardData.temperatureNow,
                 cardData.theme.foregroundColor

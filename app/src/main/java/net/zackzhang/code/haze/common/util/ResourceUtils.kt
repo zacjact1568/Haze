@@ -1,10 +1,7 @@
 package net.zackzhang.code.haze.common.util
 
 import android.content.Context
-import androidx.annotation.DimenRes
-import androidx.annotation.IntegerRes
-import androidx.annotation.PluralsRes
-import androidx.annotation.RawRes
+import androidx.annotation.*
 import net.zackzhang.code.haze.HazeApplication as App
 import java.io.File
 import java.io.FileOutputStream
@@ -42,3 +39,5 @@ fun Context.getInteger(@IntegerRes id: Int) = resources.getInteger(id)
 
 fun Context.getFormattedQuantityString(@PluralsRes id: Int, quantity: Int) =
     resources.getQuantityString(id, quantity, quantity)
+
+fun getString(@StringRes id: Int) = App.context.getString(id)

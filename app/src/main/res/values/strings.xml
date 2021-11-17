@@ -24,4 +24,6 @@
     </plurals>
     <string name="datetime_prettified_relative_to_now_second">just now</string>
 
+    <string name="weather_hourly_item_time_now">Now</string>
+
 </resources>

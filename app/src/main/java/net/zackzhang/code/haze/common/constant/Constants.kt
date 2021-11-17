@@ -78,9 +78,9 @@ const val PATTERN_TIME = "HH:mm"
 const val PATTERN_DATE_TIME = "yyyy-MM-dd HH:mm"
 
 const val CARD_TYPE_WEATHER_HEAD = 0
-const val CARD_TYPE_WEATHER_DAILY = 1
-
+const val CARD_TYPE_WEATHER_HOURLY = 1
 const val CARD_TYPE_CITY_SEARCH_ASSOCIATION = 10
+const val CARD_TYPE_WEATHER_HOURLY_ITEM = 11
 
 const val CARD_COLUMN_DEFAULT = 1
 

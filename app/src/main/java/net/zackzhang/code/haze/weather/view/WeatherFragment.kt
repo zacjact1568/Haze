@@ -9,15 +9,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import net.zackzhang.code.haze.city.model.entity.CityWeatherEntity
-import net.zackzhang.code.haze.common.constant.CARD_TYPE_WEATHER_HEAD
-import net.zackzhang.code.haze.common.constant.EVENT_CITY_CHANGED
-import net.zackzhang.code.haze.common.constant.EVENT_DATA_LOADED
-import net.zackzhang.code.haze.common.constant.EVENT_THEME_CHANGED
+import net.zackzhang.code.haze.common.constant.*
 import net.zackzhang.code.haze.common.model.entity.ThemeEntity
 import net.zackzhang.code.haze.common.view.CardAdapter
 import net.zackzhang.code.haze.databinding.FragmentWeatherBinding
 import net.zackzhang.code.haze.home.viewmodel.HomeViewModel
 import net.zackzhang.code.haze.weather.view.card.WeatherHeadCard
+import net.zackzhang.code.haze.weather.view.card.WeatherHourlyCard
 import net.zackzhang.code.haze.weather.viewmodel.WeatherViewModel
 
 class WeatherFragment : Fragment() {
@@ -29,6 +27,7 @@ class WeatherFragment : Fragment() {
     private val cardAdapter = CardAdapter { type, parent ->
         when (type) {
             CARD_TYPE_WEATHER_HEAD -> WeatherHeadCard(parent)
+            CARD_TYPE_WEATHER_HOURLY -> WeatherHourlyCard(parent)
             // Other cards
             else -> null
         }

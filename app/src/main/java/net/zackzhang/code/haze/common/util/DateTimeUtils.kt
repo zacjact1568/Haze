@@ -19,6 +19,15 @@ private val FORMATTER by lazy {
     DateTimeFormatterBuilder()
         .append(DateTimeFormatter.ISO_LOCAL_DATE)
         .appendLiteral(' ')
+        .append(TIME_FORMATTER)
+        .toFormatter()!!
+}
+
+/**
+ * HH:mm 格式
+ */
+private val TIME_FORMATTER by lazy {
+    DateTimeFormatterBuilder()
         .appendValue(ChronoField.HOUR_OF_DAY, 2)
         .appendLiteral(':')
         .appendValue(ChronoField.MINUTE_OF_HOUR, 2)
@@ -67,6 +76,11 @@ fun parseUtcOffset(utcOffset: String?) = try {
  * 格式化为 yyyy-MM-dd HH:mm
  */
 fun TemporalAccessor.format() = FORMATTER.format(this)!!
+
+/**
+ * 格式化为 HH:mm
+ */
+fun TemporalAccessor.formatTime() = TIME_FORMATTER.format(this)!!
 
 /**
  * 转换为相对当前时间描述的字符串
