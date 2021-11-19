@@ -6,8 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 
 class PaddingItemDecoration(
     private val horizontal: Int,
-    private val vertical: Int,
+    private val top: Int,
+    private val bottom: Int,
 ) : RecyclerView.ItemDecoration() {
+
+    constructor(horizontal: Int, vertical: Int): this(horizontal, vertical, vertical)
 
     override fun getItemOffsets(
         outRect: Rect,
@@ -17,8 +20,8 @@ class PaddingItemDecoration(
     ) {
         when (parent.getChildLayoutPosition(view)) {
             RecyclerView.NO_POSITION -> return
-            0 -> outRect.set(horizontal, vertical, horizontal, vertical)
-            else -> outRect.set(0, vertical, horizontal, vertical)
+            0 -> outRect.set(horizontal, top, horizontal, bottom)
+            else -> outRect.set(0, top, horizontal, bottom)
         }
     }
 }

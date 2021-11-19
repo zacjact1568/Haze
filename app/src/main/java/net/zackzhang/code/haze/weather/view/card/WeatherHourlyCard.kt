@@ -28,7 +28,8 @@ class WeatherHourlyCard(parent: ViewGroup) : BaseCard(parent, R.layout.card_weat
             addItemDecoration(
                 PaddingItemDecoration(
                     context.getDimension(R.dimen.dp_10),
-                    context.getDimension(R.dimen.dp_12)
+                    context.getDimension(R.dimen.dp_12),
+                    0
                 )
             )
         }

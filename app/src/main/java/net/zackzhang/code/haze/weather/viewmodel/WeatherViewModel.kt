@@ -24,6 +24,7 @@ import net.zackzhang.code.haze.weather.util.getThemeColorByConditionCode
 import net.zackzhang.code.haze.weather.viewmodel.data.WeatherHeadCardData
 import net.zackzhang.code.haze.weather.viewmodel.data.WeatherHourlyCardData
 import net.zackzhang.code.haze.weather.viewmodel.data.WeatherHourlyItemCardData
+import net.zackzhang.code.haze.weather.viewmodel.data.WeatherTitleCardData
 import java.time.ZoneId
 
 class WeatherViewModel : BaseViewModel() {
@@ -76,7 +77,9 @@ class WeatherViewModel : BaseViewModel() {
                 updatedAt?.toPrettifiedRelativeToNow(),
                 theme,
             ),
+            WeatherTitleCardData("温度趋势"),
             toHourlyCardData(),
+            WeatherTitleCardData("实况数据"),
         )
     }
 

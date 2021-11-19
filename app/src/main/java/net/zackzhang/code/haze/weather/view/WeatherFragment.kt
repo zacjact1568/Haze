@@ -16,6 +16,7 @@ import net.zackzhang.code.haze.databinding.FragmentWeatherBinding
 import net.zackzhang.code.haze.home.viewmodel.HomeViewModel
 import net.zackzhang.code.haze.weather.view.card.WeatherHeadCard
 import net.zackzhang.code.haze.weather.view.card.WeatherHourlyCard
+import net.zackzhang.code.haze.weather.view.card.WeatherTitleCard
 import net.zackzhang.code.haze.weather.viewmodel.WeatherViewModel
 
 class WeatherFragment : Fragment() {
@@ -28,6 +29,7 @@ class WeatherFragment : Fragment() {
         when (type) {
             CARD_TYPE_WEATHER_HEAD -> WeatherHeadCard(parent)
             CARD_TYPE_WEATHER_HOURLY -> WeatherHourlyCard(parent)
+            CARD_TYPE_WEATHER_TITLE -> WeatherTitleCard(parent)
             // Other cards
             else -> null
         }
