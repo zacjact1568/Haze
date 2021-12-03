@@ -26,4 +26,8 @@
 
     <string name="weather_hourly_item_time_now">Now</string>
 
+    <string name="weather_daily_item_time_today">Today</string>
+
+    <string name="weather_daily_item_time_tomorrow">Tomorrow</string>
+
 </resources>

@@ -10,21 +10,16 @@ import net.zackzhang.code.haze.R
 import net.zackzhang.code.haze.common.constant.EVENT_DATA_LOADED
 import net.zackzhang.code.haze.common.constant.EVENT_THEME_CHANGED
 import net.zackzhang.code.haze.common.model.entity.ThemeEntity
-import net.zackzhang.code.haze.common.util.formatTime
-import net.zackzhang.code.haze.common.util.getString
-import net.zackzhang.code.haze.common.util.toPrettifiedRelativeToNow
-import net.zackzhang.code.haze.common.util.toStringOrPlaceholder
+import net.zackzhang.code.haze.common.util.*
 import net.zackzhang.code.haze.common.viewmodel.Event
 import net.zackzhang.code.haze.common.viewmodel.BaseViewModel
 import net.zackzhang.code.haze.weather.model.local.WeatherLocalRepository
 import net.zackzhang.code.haze.weather.model.remote.WeatherRemoteRepository
 import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
 import net.zackzhang.code.haze.weather.model.entity.WeatherEntity
+import net.zackzhang.code.haze.weather.util.getTemperatureRange
 import net.zackzhang.code.haze.weather.util.getThemeColorByConditionCode
-import net.zackzhang.code.haze.weather.viewmodel.data.WeatherHeadCardData
-import net.zackzhang.code.haze.weather.viewmodel.data.WeatherHourlyCardData
-import net.zackzhang.code.haze.weather.viewmodel.data.WeatherHourlyItemCardData
-import net.zackzhang.code.haze.weather.viewmodel.data.WeatherTitleCardData
+import net.zackzhang.code.haze.weather.viewmodel.data.*
 import java.time.ZoneId
 
 class WeatherViewModel : BaseViewModel() {
@@ -79,6 +74,7 @@ class WeatherViewModel : BaseViewModel() {
             ),
             WeatherTitleCardData("温度趋势"),
             toHourlyCardData(),
+            toDailyCardData(),
             WeatherTitleCardData("实况数据"),
         )
     }
@@ -100,6 +96,29 @@ class WeatherViewModel : BaseViewModel() {
                     it.time.withZoneSameInstant(ZoneId.systemDefault()).formatTime(),
                     0,
                     it.temperature.toStringOrPlaceholder()
+                )
+            }
+        )
+
+    private fun WeatherEntity.toDailyCardData() =
+        WeatherDailyCardData(
+            daily.mapIndexed { index, entity ->
+                WeatherDailyItemCardData(
+                    when (index) {
+                        0 -> getString(R.string.weather_daily_item_time_today)
+                        1 -> {
+                            if (supportShorterExpression) {
+                                getString(R.string.weather_daily_item_time_tomorrow)
+                            } else {
+                                entity.date.formatWeek()
+                            }
+                        }
+                        else -> entity.date.formatWeek()
+                    },
+                    0,
+                    now.temperature,
+                    entity.getTemperatureRange(),
+                    temperatureRangeAmongAllDates,
                 )
             }
         )

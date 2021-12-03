@@ -3,6 +3,9 @@ package net.zackzhang.code.haze.weather.model.entity
 import net.zackzhang.code.haze.air.model.entity.AirEntity
 import net.zackzhang.code.haze.air.model.entity.AirNowEntity
 import net.zackzhang.code.haze.common.util.plusAssign
+import net.zackzhang.code.haze.weather.util.getTemperatureRange
+import kotlin.math.max
+import kotlin.math.min
 
 data class WeatherEntity(
     val now: WeatherHourlyEntity,
@@ -31,15 +34,17 @@ data class WeatherEntity(
     val dbAir: List<AirNowEntity>
         get() = if (air == null) emptyList() else mutableListOf(air.now).also { it += air.stations }
 
-    val todayTemperatureRange: IntRange? get() {
-        if (daily.isEmpty()) {
-            return null
+    val todayTemperatureRange: IntRange?
+        get() = if (daily.isEmpty()) null else daily[0].getTemperatureRange()
+
+    val temperatureRangeAmongAllDates: IntRange? by lazy {
+        var min = Int.MAX_VALUE
+        var max = Int.MIN_VALUE
+        daily.forEach {
+            min = min(min, it.temperatureMin ?: min)
+            max = max(max, it.temperatureMax ?: max)
         }
-        val today = daily[0]
-        if (today.temperatureMin == null || today.temperatureMax == null) {
-            return null
-        }
-        return today.temperatureMin..today.temperatureMax
+        min..max
     }
 
     val updatedAt = now.updatedAt

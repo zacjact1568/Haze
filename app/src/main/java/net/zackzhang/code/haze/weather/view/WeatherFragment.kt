@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.updatePaddingRelative
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -12,8 +13,10 @@ import net.zackzhang.code.haze.city.model.entity.CityWeatherEntity
 import net.zackzhang.code.haze.common.constant.*
 import net.zackzhang.code.haze.common.model.entity.ThemeEntity
 import net.zackzhang.code.haze.common.view.CardAdapter
+import net.zackzhang.code.haze.common.view.SystemBarInsets
 import net.zackzhang.code.haze.databinding.FragmentWeatherBinding
 import net.zackzhang.code.haze.home.viewmodel.HomeViewModel
+import net.zackzhang.code.haze.weather.view.card.WeatherDailyCard
 import net.zackzhang.code.haze.weather.view.card.WeatherHeadCard
 import net.zackzhang.code.haze.weather.view.card.WeatherHourlyCard
 import net.zackzhang.code.haze.weather.view.card.WeatherTitleCard
@@ -30,6 +33,7 @@ class WeatherFragment : Fragment() {
             CARD_TYPE_WEATHER_HEAD -> WeatherHeadCard(parent)
             CARD_TYPE_WEATHER_HOURLY -> WeatherHourlyCard(parent)
             CARD_TYPE_WEATHER_TITLE -> WeatherTitleCard(parent)
+            CARD_TYPE_WEATHER_DAILY -> WeatherDailyCard(parent)
             // Other cards
             else -> null
         }
@@ -70,6 +74,8 @@ class WeatherFragment : Fragment() {
                     cardAdapter.setCardData(emptyList())
                     viewModel.notifyRefreshing((it.data as CityWeatherEntity).id)
                 }
+                EVENT_WINDOW_INSETS_APPLIED ->
+                    binding.vCardList.updatePaddingRelative(bottom = (it.data as SystemBarInsets).navigation)
             }
         }
         viewModel.notifyLoadingData()

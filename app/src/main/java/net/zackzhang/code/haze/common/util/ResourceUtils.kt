@@ -6,6 +6,18 @@ import net.zackzhang.code.haze.HazeApplication as App
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.util.*
+
+val supportShorterExpression: Boolean get() {
+    val locales = App.context.resources.configuration.locales
+    repeat(locales.size()) {
+        when (locales.get(it)) {
+            Locale.SIMPLIFIED_CHINESE -> return true
+            Locale.ENGLISH -> return false
+        }
+    }
+    return false
+}
 
 fun copyRawFile(@RawRes resId: Int, path: File) {
     if (path.exists()) return

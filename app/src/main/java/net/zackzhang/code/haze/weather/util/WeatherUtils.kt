@@ -3,6 +3,7 @@ package net.zackzhang.code.haze.weather.util
 import androidx.annotation.ColorInt
 import net.zackzhang.code.haze.HazeApplication
 import net.zackzhang.code.haze.R
+import net.zackzhang.code.haze.weather.model.entity.WeatherDailyEntity
 
 @ColorInt
 fun getThemeColorByConditionCode(code: Int?) =
@@ -30,3 +31,6 @@ fun getThemeColorByConditionCode(code: Int?) =
         // 未知（999、null）
         else -> R.color.colorPrimary
     })
+
+fun WeatherDailyEntity.getTemperatureRange() =
+    if (temperatureMin == null || temperatureMax == null) null else temperatureMin..temperatureMax

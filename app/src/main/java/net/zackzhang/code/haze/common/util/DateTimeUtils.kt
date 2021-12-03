@@ -6,6 +6,7 @@ import java.time.*
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
 import java.time.format.DateTimeParseException
+import java.time.format.TextStyle
 import java.time.temporal.ChronoField
 import java.time.temporal.TemporalAccessor
 import java.time.zone.ZoneRulesException
@@ -31,6 +32,15 @@ private val TIME_FORMATTER by lazy {
         .appendValue(ChronoField.HOUR_OF_DAY, 2)
         .appendLiteral(':')
         .appendValue(ChronoField.MINUTE_OF_HOUR, 2)
+        .toFormatter()!!
+}
+
+/**
+ * EE 格式
+ */
+private val WEEK_FORMATTER by lazy {
+    DateTimeFormatterBuilder()
+        .appendText(ChronoField.DAY_OF_WEEK, TextStyle.SHORT)
         .toFormatter()!!
 }
 
@@ -81,6 +91,11 @@ fun TemporalAccessor.format() = FORMATTER.format(this)!!
  * 格式化为 HH:mm
  */
 fun TemporalAccessor.formatTime() = TIME_FORMATTER.format(this)!!
+
+/**
+ * 格式化为 EE
+ */
+fun TemporalAccessor.formatWeek() = WEEK_FORMATTER.format(this)!!
 
 /**
  * 转换为相对当前时间描述的字符串
