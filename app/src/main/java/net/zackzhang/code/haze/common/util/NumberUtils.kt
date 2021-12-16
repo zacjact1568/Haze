@@ -1,5 +1,8 @@
 package net.zackzhang.code.haze.common.util
 
+import kotlin.math.max
+import kotlin.math.min
+
 fun ByteArray.toHexString() = joinToString("") { "%02x".format(it) }
 
 fun parseIntRange(intRange: String?): IntRange? {
@@ -19,3 +22,16 @@ fun presentIntRange(intRange: IntRange?): String? {
     val last = intRange.last
     return if (first == last) first.toString() else "$first-$last"
 }
+
+fun IntRange.ensureNotEmpty() = if (isEmpty()) null else this
+
+fun IntRange.intersection(other: IntRange) =
+    when {
+        // 没有交集
+        isEmpty() || other.isEmpty() || first > other.last || last < other.first -> null
+        // 包含
+        first <= other.first && last >= other.last -> other
+        first >= other.first && last <= other.last -> this
+        // 有交集
+        else -> max(first, other.first)..min(last, other.last)
+    }

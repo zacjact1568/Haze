@@ -45,20 +45,22 @@
         android:textStyle="bold"
         android:fontFamily="@font/family_d_din"
         app:layout_constraintStart_toEndOf="@+id/v_condition_icon"
-        app:layout_constraintEnd_toStartOf="@+id/v_bar"
+        app:layout_constraintEnd_toStartOf="@+id/v_temperature_range_bar"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:text="14" />
 
-    <View
-        android:id="@+id/v_bar"
+    <net.zackzhang.code.haze.weather.view.ui.DualColorBar
+        android:id="@+id/v_temperature_range_bar"
         android:layout_width="@dimen/match_constraint"
-        android:layout_height="@dimen/dp_8"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_10"
         app:layout_constraintStart_toEndOf="@+id/v_temperature_min"
         app:layout_constraintEnd_toStartOf="@+id/v_temperature_max"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:dcb_colorStart="@color/gray_500"
+        app:dcb_colorEnd="@color/red_500" />
 
     <TextView
         android:id="@+id/v_temperature_max"
@@ -69,7 +71,7 @@
         android:textColor="@color/gray_800"
         android:textStyle="bold"
         android:fontFamily="@font/family_d_din"
-        app:layout_constraintStart_toEndOf="@+id/v_bar"
+        app:layout_constraintStart_toEndOf="@+id/v_temperature_range_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

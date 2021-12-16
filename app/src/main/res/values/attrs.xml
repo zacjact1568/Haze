@@ -10,4 +10,10 @@
         <attr name="gapBetweenItems" format="dimension"/>
     </declare-styleable>
 
+    <declare-styleable name="DualColorBar">
+        <attr name="dcb_height" format="dimension"/>
+        <attr name="dcb_colorStart" format="color"/>
+        <attr name="dcb_colorEnd" format="color"/>
+    </declare-styleable>
+
 </resources>

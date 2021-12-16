@@ -18,6 +18,11 @@ class WeatherDailyItemCard(parent: ViewGroup) : InlineBaseCard(parent, R.layout.
             vDate.text = cardData.date
             vConditionIcon.setImageResource(cardData.conditionIconRes)
             vTemperatureMin.text = cardData.temperatureRange?.first.toStringOrPlaceholder()
+            vTemperatureRangeBar.setData(
+                cardData.temperatureRangeAmongAllDates,
+                cardData.temperatureNow,
+                cardData.temperatureRange,
+            )
             vTemperatureMax.text = cardData.temperatureRange?.last.toStringOrPlaceholder()
         }
     }
