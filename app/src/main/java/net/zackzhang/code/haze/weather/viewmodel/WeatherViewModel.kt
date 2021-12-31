@@ -63,7 +63,7 @@ class WeatherViewModel : BaseViewModel() {
             Color.WHITE,
         )
         eventLiveData.value = Event(EVENT_THEME_CHANGED, theme)
-        return listOf(
+        val list = mutableListOf(
             WeatherHeadCardData(
                 now.temperature,
                 todayTemperatureRange,
@@ -77,6 +77,8 @@ class WeatherViewModel : BaseViewModel() {
             toDailyCardData(),
             WeatherTitleCardData("实况数据"),
         )
+        list += toCurrentCardData()
+        return list
     }
 
     private fun WeatherEntity.toHourlyCardData() =
@@ -121,5 +123,21 @@ class WeatherViewModel : BaseViewModel() {
                     temperatureRangeAmongAllDates,
                 )
             }
+        )
+
+    private fun WeatherEntity.toCurrentCardData() =
+        listOf(
+            WeatherCurrentCardData(0, now.temperature?.toString(), "气温"),
+            WeatherCurrentCardData(0, now.conditionName, "天气状况"),
+            WeatherCurrentCardData(0, now.feelsLike?.toString(), "体感温度"),
+            WeatherCurrentCardData(0, now.humidity?.toString(), "湿度"),
+            WeatherCurrentCardData(0, air?.now?.category, "空气质量"),
+            WeatherCurrentCardData(0, air?.now?.primary, "主要污染物"),
+            WeatherCurrentCardData(0, now.precipitation?.toString(), "降水量"),
+            WeatherCurrentCardData(0, now.pressure?.toString(), "气压"),
+            WeatherCurrentCardData(0, now.visibility?.toString(), "能见度"),
+            WeatherCurrentCardData(0, presentIntRange(now.windScale), "风力"),
+            WeatherCurrentCardData(0, now.windAngle?.toString(), "风向"),
+            WeatherCurrentCardData(0, now.cloud?.toString(), "云量"),
         )
 }

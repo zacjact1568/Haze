@@ -3,6 +3,7 @@ package net.zackzhang.code.haze.weather.view.card
 import android.view.ViewGroup
 import net.zackzhang.code.haze.R
 import net.zackzhang.code.haze.common.constant.CARD_TYPE_WEATHER_HOURLY_ITEM
+import net.zackzhang.code.haze.common.util.Orientation
 import net.zackzhang.code.haze.common.util.getDimension
 import net.zackzhang.code.haze.common.view.CardAdapter
 import net.zackzhang.code.haze.common.view.card.BaseCard
@@ -28,8 +29,8 @@ class WeatherHourlyCard(parent: ViewGroup) : BaseCard(parent, R.layout.card_weat
             addItemDecoration(
                 PaddingItemDecoration(
                     context.getDimension(R.dimen.dp_10),
-                    context.getDimension(R.dimen.dp_12),
-                    0
+                    0,
+                    Orientation.HORIZONTAL
                 )
             )
         }

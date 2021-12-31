@@ -9,17 +9,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import net.zackzhang.code.haze.R
 import net.zackzhang.code.haze.city.model.entity.CityWeatherEntity
 import net.zackzhang.code.haze.common.constant.*
 import net.zackzhang.code.haze.common.model.entity.ThemeEntity
+import net.zackzhang.code.haze.common.util.getDimension
 import net.zackzhang.code.haze.common.view.CardAdapter
 import net.zackzhang.code.haze.common.view.SystemBarInsets
 import net.zackzhang.code.haze.databinding.FragmentWeatherBinding
 import net.zackzhang.code.haze.home.viewmodel.HomeViewModel
-import net.zackzhang.code.haze.weather.view.card.WeatherDailyCard
-import net.zackzhang.code.haze.weather.view.card.WeatherHeadCard
-import net.zackzhang.code.haze.weather.view.card.WeatherHourlyCard
-import net.zackzhang.code.haze.weather.view.card.WeatherTitleCard
+import net.zackzhang.code.haze.weather.view.card.*
+import net.zackzhang.code.haze.weather.view.ui.ColoredPaddingItemDecoration
 import net.zackzhang.code.haze.weather.viewmodel.WeatherViewModel
 
 class WeatherFragment : Fragment() {
@@ -34,6 +34,7 @@ class WeatherFragment : Fragment() {
             CARD_TYPE_WEATHER_HOURLY -> WeatherHourlyCard(parent)
             CARD_TYPE_WEATHER_TITLE -> WeatherTitleCard(parent)
             CARD_TYPE_WEATHER_DAILY -> WeatherDailyCard(parent)
+            CARD_TYPE_WEATHER_CURRENT -> WeatherCurrentCard(parent)
             // Other cards
             else -> null
         }
@@ -49,10 +50,16 @@ class WeatherFragment : Fragment() {
             viewModel.notifyRefreshing()
         }
         binding.vCardList.run {
-            (layoutManager as? GridLayoutManager)?.getSpanSizeByColumn {
-                cardAdapter.getColumn(it)
+            (layoutManager as? GridLayoutManager)?.run {
+                cardAdapter.spanCount = spanCount
+                spanSizeLookup { cardAdapter.getSpanSize(it) }
             }
             adapter = cardAdapter
+            addItemDecoration(ColoredPaddingItemDecoration(context.getDimension(R.dimen.dp_10), {
+                cardAdapter.isDecorationExists(it)
+            }, context.getColor(R.color.white_opacity_50), {
+                cardAdapter.needBackground(it)
+            }))
         }
 
         viewModel.observeCard(viewLifecycleOwner) {
@@ -83,9 +90,9 @@ class WeatherFragment : Fragment() {
         return binding.root
     }
 
-    private inline fun GridLayoutManager.getSpanSizeByColumn(crossinline getColumn: (Int) -> Int) {
+    private inline fun GridLayoutManager.spanSizeLookup(crossinline lookup: (Int) -> Int) {
         spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int) = spanCount / getColumn(position)
+            override fun getSpanSize(position: Int) = lookup(position)
         }
     }
 }

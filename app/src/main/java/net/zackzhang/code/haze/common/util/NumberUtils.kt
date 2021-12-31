@@ -3,6 +3,25 @@ package net.zackzhang.code.haze.common.util
 import kotlin.math.max
 import kotlin.math.min
 
+data class EndCoordinates2D(val startX: Int, val startY: Int, val endX: Int, val endY: Int)
+
+data class Coordinate2D(
+    var x: Int = 0,
+    var y: Int = 0,
+    private val column: Int,
+) {
+
+    operator fun plusAssign(distance: Int) {
+        val destination = x + distance
+        if (destination < column) {
+            x = destination
+        } else {
+            x = destination - column
+            y++
+        }
+    }
+}
+
 fun ByteArray.toHexString() = joinToString("") { "%02x".format(it) }
 
 fun parseIntRange(intRange: String?): IntRange? {

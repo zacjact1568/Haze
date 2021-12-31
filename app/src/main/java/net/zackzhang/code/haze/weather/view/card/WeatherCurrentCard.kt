@@ -1,0 +1,23 @@
+package net.zackzhang.code.haze.weather.view.card
+
+import android.view.ViewGroup
+import net.zackzhang.code.haze.R
+import net.zackzhang.code.haze.common.util.orPlaceholder
+import net.zackzhang.code.haze.common.view.card.BaseCard
+import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
+import net.zackzhang.code.haze.databinding.CardWeatherCurrentBinding
+import net.zackzhang.code.haze.weather.viewmodel.data.WeatherCurrentCardData
+
+class WeatherCurrentCard(parent: ViewGroup) : BaseCard(parent, R.layout.card_weather_current) {
+
+    private val binding = CardWeatherCurrentBinding.bind(itemView)
+
+    override fun updateViews(cardData: BaseCardData) {
+        if (cardData !is WeatherCurrentCardData) return
+        binding.run {
+            vIcon.setImageResource(cardData.iconResId)
+            vValue.text = cardData.value.orPlaceholder()
+            vDescription.text = cardData.description
+        }
+    }
+}
