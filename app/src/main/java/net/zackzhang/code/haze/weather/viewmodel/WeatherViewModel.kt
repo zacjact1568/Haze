@@ -16,6 +16,7 @@ import net.zackzhang.code.haze.common.viewmodel.BaseViewModel
 import net.zackzhang.code.haze.weather.model.local.WeatherLocalRepository
 import net.zackzhang.code.haze.weather.model.remote.WeatherRemoteRepository
 import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
+import net.zackzhang.code.haze.common.viewmodel.data.SourceCardData
 import net.zackzhang.code.haze.weather.model.entity.WeatherEntity
 import net.zackzhang.code.haze.weather.util.getTemperatureRange
 import net.zackzhang.code.haze.weather.util.getThemeColorByConditionCode
@@ -78,6 +79,7 @@ class WeatherViewModel : BaseViewModel() {
             WeatherTitleCardData("实况数据"),
         )
         list += toCurrentCardData()
+        list += SourceCardData()
         return list
     }
 

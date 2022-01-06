@@ -3,9 +3,11 @@ package net.zackzhang.code.haze.common.view
 import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import net.zackzhang.code.haze.common.constant.CARD_TYPE_SOURCE
 import net.zackzhang.code.haze.common.util.*
 import net.zackzhang.code.haze.common.view.card.BaseCard
 import net.zackzhang.code.haze.common.view.card.EmptyCard
+import net.zackzhang.code.haze.common.view.card.SourceCard
 import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
 
 class CardAdapter(private val creator: (type: Int, parent: ViewGroup) -> BaseCard?)
@@ -16,7 +18,11 @@ class CardAdapter(private val creator: (type: Int, parent: ViewGroup) -> BaseCar
     private val cardDataList = mutableListOf<BaseCardData>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        creator(viewType, parent) ?: EmptyCard(parent)
+        creator(viewType, parent) ?: when (viewType) {
+            CARD_TYPE_SOURCE -> SourceCard(parent)
+            // Other default cards
+            else -> EmptyCard(parent)
+        }
 
     override fun onBindViewHolder(holder: BaseCard, position: Int) {
         holder.updateViews(cardDataList[position])

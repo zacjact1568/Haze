@@ -26,4 +26,6 @@
 
     <string name="weather_daily_item_time_tomorrow">明天</string>
 
+    <string name="source_text">数据来源</string>
+
 </resources>

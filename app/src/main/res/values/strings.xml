@@ -30,4 +30,6 @@
 
     <string name="weather_daily_item_time_tomorrow">Tomorrow</string>
 
+    <string name="source_text">Data source</string>
+
 </resources>
