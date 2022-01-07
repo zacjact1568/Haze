@@ -10,10 +10,8 @@ import net.zackzhang.code.haze.common.viewmodel.BaseViewModel
 
 class HomeViewModel : BaseViewModel() {
 
+    // TODO 换成 notifyEvent
     var cityName: String? = null
-        private set
-
-    var theme: ThemeEntity? = null
         private set
 
     fun notifyDataLoaded(city: CityWeatherEntity) {
@@ -24,10 +22,5 @@ class HomeViewModel : BaseViewModel() {
     fun notifyCityChanged(city: CityWeatherEntity) {
         cityName = city.name
         eventLiveData.value = Event(EVENT_CITY_CHANGED, city)
-    }
-
-    fun notifyThemeChanged(theme: ThemeEntity) {
-        this.theme = theme
-        eventLiveData.value = Event(EVENT_THEME_CHANGED, theme)
     }
 }

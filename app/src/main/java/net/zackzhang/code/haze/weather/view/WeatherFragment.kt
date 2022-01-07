@@ -71,7 +71,7 @@ class WeatherFragment : Fragment() {
                 EVENT_DATA_LOADED -> activityViewModel.notifyDataLoaded(it.data as CityWeatherEntity)
                 EVENT_THEME_CHANGED -> (it.data as ThemeEntity).run {
                     binding.root.setColorSchemeColors(backgroundColor)
-                    activityViewModel.notifyThemeChanged(this)
+                    activityViewModel.notifyEvent(EVENT_THEME_CHANGED, this)
                 }
             }
         }

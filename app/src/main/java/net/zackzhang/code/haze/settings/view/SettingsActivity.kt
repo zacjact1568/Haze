@@ -1,34 +1,29 @@
-package net.zackzhang.code.haze.city.view
+package net.zackzhang.code.haze.settings.view
 
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.view.View
-import android.widget.EditText
-import androidx.activity.result.ActivityResult
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePaddingRelative
-import androidx.core.widget.addTextChangedListener
-import net.zackzhang.code.haze.city.viewmodel.CityViewModel
-import net.zackzhang.code.haze.common.constant.EVENT_ACTIVITY_FINISH
 import net.zackzhang.code.haze.common.constant.EVENT_THEME_CHANGED
 import net.zackzhang.code.haze.common.constant.EVENT_WINDOW_INSETS_APPLIED
 import net.zackzhang.code.haze.common.constant.EXTRA_THEME
 import net.zackzhang.code.haze.common.model.entity.ThemeEntity
 import net.zackzhang.code.haze.common.view.SystemBarInsets
-import net.zackzhang.code.haze.databinding.ActivityCityBinding
+import net.zackzhang.code.haze.databinding.ActivitySettingsBinding
+import net.zackzhang.code.haze.settings.viewmodel.SettingsViewModel
 
-class CityActivity : AppCompatActivity() {
+class SettingsActivity : AppCompatActivity() {
 
-    private val viewModel by viewModels<CityViewModel>()
+    private val viewModel by viewModels<SettingsViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        val binding = ActivityCityBinding.inflate(layoutInflater)
+        val binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         (intent.getParcelableExtra<ThemeEntity>(EXTRA_THEME))?.let {
@@ -41,45 +36,20 @@ class CityActivity : AppCompatActivity() {
         }
         binding.updateViewsTheme(viewModel.getSavedEvent<ThemeEntity>(EVENT_THEME_CHANGED))
         binding.vBack.setOnClickListener { finish() }
-        binding.vSearchBar.addAfterTextChangedListener {
-            binding.vSearchClear.visibility = if (it.isEmpty()) View.INVISIBLE else View.VISIBLE
-            viewModel.notifySearchInputChanged(it)
-        }
-        binding.vSearchClear.setOnClickListener {
-            binding.vSearchBar.clearText()
-        }
 
         viewModel.observeEvent(this) {
             when (it.name) {
-                EVENT_ACTIVITY_FINISH -> {
-                    val ar = it.data as ActivityResult
-                    setResult(ar.resultCode, ar.data)
-                    finish()
-                }
                 EVENT_THEME_CHANGED -> binding.updateViewsTheme(it.data as ThemeEntity)
                 EVENT_WINDOW_INSETS_APPLIED ->
                     binding.vToolbar.updatePaddingRelative(top = (it.data as SystemBarInsets).status)
             }
         }
-
-        // 请求焦点以弹出键盘
-        binding.vSearchBar.requestFocus()
     }
 
-    private fun ActivityCityBinding.updateViewsTheme(theme: ThemeEntity?) {
+    private fun ActivitySettingsBinding.updateViewsTheme(theme: ThemeEntity?) {
         if (theme == null) return
         vToolbar.setBackgroundColor(theme.backgroundColor)
         vBack.imageTintList = ColorStateList.valueOf(theme.foregroundColor)
         vTitle.setTextColor(theme.foregroundColor)
-        vSearchBar.backgroundTintList = ColorStateList.valueOf(theme.foregroundColor)
-        vSearchIcon.imageTintList = ColorStateList.valueOf(theme.backgroundColor)
-    }
-
-    private inline fun EditText.addAfterTextChangedListener(crossinline listener: (String) -> Unit) {
-        addTextChangedListener { listener(it?.toString().orEmpty()) }
-    }
-
-    private fun EditText.clearText() {
-        setText("")
     }
 }

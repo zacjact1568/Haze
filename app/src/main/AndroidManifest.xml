@@ -27,6 +27,10 @@
             android:name=".city.view.CityActivity"
             android:label="@string/title_activity_city" />
 
+        <activity
+            android:name=".settings.view.SettingsActivity"
+            android:label="@string/title_activity_settings" />
+
     </application>
 
 </manifest>

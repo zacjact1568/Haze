@@ -28,4 +28,12 @@
 
     <string name="source_text">数据来源</string>
 
+    <string name="title_activity_settings">设置</string>
+
+    <string name="preference_title_show_current_zone_time">显示当前所在地时间</string>
+    <string name="preference_summary_show_current_zone_time_on">对于时区不同于你当前所在地的城市，同时显示当前所在地时间</string>
+    <string name="preference_summary_show_current_zone_time_off">对于时区不同于你当前所在地的城市，仅显示该城市当地时间</string>
+    <string name="preference_title_about">关于 Haze</string>
+    <string name="preference_summary_about_format">版本 %s</string>
+
 </resources>

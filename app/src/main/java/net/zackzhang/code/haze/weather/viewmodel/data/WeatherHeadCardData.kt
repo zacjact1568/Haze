@@ -5,15 +5,16 @@ import net.zackzhang.code.haze.common.model.entity.ThemeEntity
 import net.zackzhang.code.haze.common.util.ItemDecorationRectInsets
 import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
 
-data class WeatherHeadCardData(
+class WeatherHeadCardData(
     val temperatureNow: Int?,
     val temperatureRange: IntRange?,
     val condition: String?,
     val airQuality: String?,
     val updatedAt: String?,
-    val theme: ThemeEntity,
+    theme: ThemeEntity,
 ) : BaseCardData(
     CARD_TYPE_WEATHER_HEAD,
+    theme,
     decorationRectInsets = ItemDecorationRectInsets(
         left = false,
         right = false,

@@ -2,11 +2,14 @@ package net.zackzhang.code.haze.common.util
 
 import android.content.Context
 import androidx.annotation.*
+import net.zackzhang.code.haze.R
 import net.zackzhang.code.haze.HazeApplication as App
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.*
+
+val appName = getString(R.string.app_name).lowercase()
 
 val supportShorterExpression: Boolean get() {
     val locales = App.context.resources.configuration.locales
@@ -53,3 +56,6 @@ fun Context.getFormattedQuantityString(@PluralsRes id: Int, quantity: Int) =
     resources.getQuantityString(id, quantity, quantity)
 
 fun getString(@StringRes id: Int) = App.context.getString(id)
+
+// 用 vararg 格式化后，String 变成了类 + 地址，不知道为啥
+fun getString(@StringRes id: Int, arg: String) = App.context.getString(id, arg)

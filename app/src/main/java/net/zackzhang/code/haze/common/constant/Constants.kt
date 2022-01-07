@@ -85,6 +85,8 @@ const val CARD_TYPE_WEATHER_CURRENT = 4
 const val CARD_TYPE_CITY_SEARCH_ASSOCIATION = 10
 const val CARD_TYPE_WEATHER_HOURLY_ITEM = 11
 const val CARD_TYPE_WEATHER_DAILY_ITEM = 12
+const val CARD_TYPE_SETTINGS_SWITCH_PREFERENCE = 13
+const val CARD_TYPE_SETTINGS_INFO_PREFERENCE = 14
 const val CARD_TYPE_SOURCE = 20
 
 const val RESULT_CODE_CITY_NEW = 20
@@ -104,3 +106,6 @@ const val EVENT_THEME_CHANGED = "theme_changed"
 const val EVENT_WINDOW_INSETS_APPLIED = "window_insets_applied"
 
 const val EXTRA_THEME = "theme"
+
+const val PREFERENCE_KEY_SHOW_CURRENT_ZONE_TIME = "show_current_zone_time"
+const val PREFERENCE_KEY_ABOUT = "about"

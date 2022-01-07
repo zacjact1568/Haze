@@ -16,34 +16,35 @@ class WeatherHeadCard(parent: ViewGroup) : BaseCard(parent, R.layout.card_weathe
     override fun updateViews(cardData: BaseCardData) {
         if (cardData !is WeatherHeadCardData) return
         binding.run {
+            val theme = cardData.theme!!
             vTemperatureNow.updateTextOrPlaceholder(
                 cardData.temperatureNow,
-                cardData.theme.foregroundColor
+                theme.foregroundColor
             )
             vCondition.updateTextOrPlaceholder(
                 cardData.condition,
-                cardData.theme.foregroundColor
+                theme.foregroundColor
             )
             vAirQuality.updateTextOrPlaceholder(
                 context.getString(R.string.air_quality_format, cardData.airQuality.orPlaceholder()),
-                cardData.theme.foregroundColor
+                theme.foregroundColor
             )
             vTemperatureMin.updateTextOrPlaceholder(
                 cardData.temperatureRange?.first,
-                cardData.theme.foregroundColor
+                theme.foregroundColor
             )
             vTemperatureRangeBar.setData(
                 cardData.temperatureRange,
                 cardData.temperatureNow,
-                cardData.theme.foregroundColor
+                theme.foregroundColor
             )
             vTemperatureMax.updateTextOrPlaceholder(
                 cardData.temperatureRange?.last,
-                cardData.theme.foregroundColor
+                theme.foregroundColor
             )
             vUpdatedAt.updateTextOrPlaceholder(
                 context.getString(R.string.updated_at_format, cardData.updatedAt.orPlaceholder()),
-                cardData.theme.foregroundColor
+                theme.foregroundColor
             )
         }
     }

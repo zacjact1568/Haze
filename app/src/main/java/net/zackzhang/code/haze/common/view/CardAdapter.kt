@@ -10,19 +10,31 @@ import net.zackzhang.code.haze.common.view.card.EmptyCard
 import net.zackzhang.code.haze.common.view.card.SourceCard
 import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
 
-class CardAdapter(private val creator: (type: Int, parent: ViewGroup) -> BaseCard?)
-    : RecyclerView.Adapter<BaseCard>() {
+class CardAdapter(
+    private val onItemClick: ((position: Int) -> Unit)? = null,
+    private val creator: (type: Int, parent: ViewGroup) -> BaseCard?,
+) : RecyclerView.Adapter<BaseCard>() {
 
     var spanCount = 1
 
     private val cardDataList = mutableListOf<BaseCardData>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        creator(viewType, parent) ?: when (viewType) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseCard {
+        val card = creator(viewType, parent) ?: when (viewType) {
             CARD_TYPE_SOURCE -> SourceCard(parent)
             // Other default cards
             else -> EmptyCard(parent)
         }
+        onItemClick?.let {
+            val v = card.itemView
+            if (!v.hasOnClickListeners()) {
+                v.setOnClickListener { _ ->
+                    it(card.layoutPosition)
+                }
+            }
+        }
+        return card
+    }
 
     override fun onBindViewHolder(holder: BaseCard, position: Int) {
         holder.updateViews(cardDataList[position])

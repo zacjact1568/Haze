@@ -8,6 +8,7 @@ import net.zackzhang.code.haze.HazeApplication
 import net.zackzhang.code.haze.air.model.entity.AirNowEntity
 import net.zackzhang.code.haze.city.model.entity.CityEntity
 import net.zackzhang.code.haze.city.model.local.CityDao
+import net.zackzhang.code.haze.common.util.appName
 import net.zackzhang.code.haze.weather.model.entity.WeatherDailyEntity
 import net.zackzhang.code.haze.weather.model.entity.WeatherHourlyEntity
 import net.zackzhang.code.haze.weather.model.local.WeatherDao
@@ -24,9 +25,7 @@ abstract class HazeDatabase : RoomDatabase() {
 
         const val VERSION = 1
 
-        private const val NAME = "haze.db"
-
-        val instance = Room.databaseBuilder(HazeApplication.context, HazeDatabase::class.java, NAME).build()
+        val instance = Room.databaseBuilder(HazeApplication.context, HazeDatabase::class.java, "$appName.db").build()
     }
 
     abstract fun cityDao(): CityDao

@@ -14,6 +14,7 @@ import net.zackzhang.code.haze.common.model.entity.ThemeEntity
 import net.zackzhang.code.haze.common.view.SystemBarInsets
 import net.zackzhang.code.haze.databinding.ActivityHomeBinding
 import net.zackzhang.code.haze.home.viewmodel.HomeViewModel
+import net.zackzhang.code.haze.settings.view.SettingsActivity
 
 class HomeActivity : AppCompatActivity() {
 
@@ -35,24 +36,28 @@ class HomeActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         val binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
-            viewModel.notifyWindowInsetsApplied(SystemBarInsets.fromWindowInsets(insets))
+            viewModel.notifyEvent(EVENT_WINDOW_INSETS_APPLIED, SystemBarInsets.fromWindowInsets(insets))
             WindowInsetsCompat.CONSUMED
         }
+        binding.updateViewsTheme(viewModel.getSavedEvent<ThemeEntity>(EVENT_THEME_CHANGED))
         binding.vCities.setOnClickListener {
             cityLauncher.launch(Intent(this, CityActivity::class.java)
-                .putExtra(EXTRA_THEME, viewModel.theme))
+                .putExtra(EXTRA_THEME, viewModel.getSavedEvent<ThemeEntity>(EVENT_THEME_CHANGED)))
         }
         binding.updateCityName(viewModel.cityName)
-        binding.updateViewsTheme(viewModel.theme)
+        binding.vSettings.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java)
+                .putExtra(EXTRA_THEME, viewModel.getSavedEvent<ThemeEntity>(EVENT_THEME_CHANGED)))
+        }
+
         viewModel.observeEvent(this) {
             when (it.name) {
                 EVENT_DATA_LOADED, EVENT_CITY_CHANGED -> {
                     binding.updateCityName((it.data as? CityWeatherEntity)?.name)
                 }
-                EVENT_THEME_CHANGED -> {
-                    binding.updateViewsTheme(it.data as? ThemeEntity)
-                }
+                EVENT_THEME_CHANGED -> binding.updateViewsTheme(it.data as ThemeEntity)
                 EVENT_WINDOW_INSETS_APPLIED ->
                     binding.vToolbar.updatePaddingRelative(top = (it.data as SystemBarInsets).status)
             }

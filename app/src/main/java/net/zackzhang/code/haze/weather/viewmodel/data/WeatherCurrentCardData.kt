@@ -8,4 +8,4 @@ data class WeatherCurrentCardData(
     @DrawableRes val iconResId: Int,
     val value: String?,
     val description: String,
-) : BaseCardData(CARD_TYPE_WEATHER_CURRENT, 1)
+) : BaseCardData(CARD_TYPE_WEATHER_CURRENT, spanSize = 1)

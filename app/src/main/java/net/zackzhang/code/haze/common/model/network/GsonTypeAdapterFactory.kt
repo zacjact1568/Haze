@@ -9,6 +9,7 @@ import java.time.*
 
 class GsonTypeAdapterFactory : TypeAdapterFactory {
 
+    @Suppress("UNCHECKED_CAST")
     override fun <T> create(gson: Gson, type: TypeToken<T>): TypeAdapter<T>? {
         return when (type.rawType) {
             Boolean::class.java -> BooleanAdapter()
