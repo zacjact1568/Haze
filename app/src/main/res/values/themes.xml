@@ -10,6 +10,8 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
 
+        <item name="android:fontFamily">@font/family_mi_sans</item>
+
     </style>
 
     <style name="IconButtonStyle">
