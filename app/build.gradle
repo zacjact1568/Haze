@@ -6,15 +6,15 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion '30.0.3'
+    compileSdkVersion 31
+    buildToolsVersion '31.0.0'
 
     defaultConfig {
         applicationId 'net.zackzhang.code.haze'
         minSdkVersion 26
-        targetSdkVersion 30
-        versionCode Math.ceil((new Date().time - 1462636800000) / 86400000) as int
-        versionName new Date().format('yyyyMMdd')
+        targetSdkVersion 31
+        versionCode generateVersionCode()
+        versionName generateVersionName()
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         javaCompileOptions {
             annotationProcessorOptions {
@@ -49,7 +49,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'org.greenrobot:eventbus:3.2.0'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
@@ -64,20 +64,28 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     implementation 'com.google.android:flexbox:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-    implementation 'androidx.fragment:fragment-ktx:1.3.6'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+    implementation 'androidx.fragment:fragment-ktx:1.4.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'com.airbnb.android:lottie:4.2.0'
     implementation 'androidx.datastore:datastore-preferences:1.0.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     kapt "androidx.room:room-compiler:$room_version"
+}
+
+static def generateVersionCode() {
+    return Math.ceil((new Date().time - 1462636800000) / 86400000) as int
+}
+
+static def generateVersionName() {
+    return new Date().format('yyyyMMdd')
 }
 
 def getSecretProperties() {
