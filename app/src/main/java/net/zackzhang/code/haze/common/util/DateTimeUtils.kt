@@ -1,6 +1,6 @@
 package net.zackzhang.code.haze.common.util
 
-import net.zackzhang.code.haze.HazeApplication
+import net.zackzhang.code.haze.App
 import net.zackzhang.code.haze.R
 import java.time.*
 import java.time.format.DateTimeFormatter
@@ -103,7 +103,7 @@ fun TemporalAccessor.formatWeek() = WEEK_FORMATTER.format(this)!!
  */
 fun ZonedDateTime.toPrettifiedRelativeToNow(): String {
     val duration = Duration.between(this, ZonedDateTime.now())
-    val context = HazeApplication.context
+    val context = App.context
     return when {
         // 该时间晚于当前设备时间，应该是设备时间调快了
         duration.isNegative -> context.getString(

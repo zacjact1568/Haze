@@ -1,13 +1,13 @@
 package net.zackzhang.code.haze.weather.util
 
 import androidx.annotation.ColorInt
-import net.zackzhang.code.haze.HazeApplication
+import net.zackzhang.code.haze.App
 import net.zackzhang.code.haze.R
 import net.zackzhang.code.haze.weather.model.entity.WeatherDailyEntity
 
 @ColorInt
 fun getThemeColorByConditionCode(code: Int?) =
-    HazeApplication.context.getColor(when (code) {
+    App.context.getColor(when (code) {
         // 晴（白天）、热
         100, 900 -> R.color.blue_200
         // 有云（白天）

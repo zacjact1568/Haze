@@ -3,7 +3,7 @@ package net.zackzhang.code.haze.common.util
 import android.content.Context
 import androidx.annotation.*
 import net.zackzhang.code.haze.R
-import net.zackzhang.code.haze.HazeApplication as App
+import net.zackzhang.code.haze.App
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
