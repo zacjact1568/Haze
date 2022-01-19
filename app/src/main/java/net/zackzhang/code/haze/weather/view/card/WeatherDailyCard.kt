@@ -2,7 +2,7 @@ package net.zackzhang.code.haze.weather.view.card
 
 import android.view.ViewGroup
 import net.zackzhang.code.haze.R
-import net.zackzhang.code.haze.common.view.InlineListAdapter
+import net.zackzhang.code.haze.common.util.toStringOrPlaceholder
 import net.zackzhang.code.haze.common.view.card.BaseCard
 import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
 import net.zackzhang.code.haze.databinding.CardWeatherDailyBinding
@@ -12,14 +12,18 @@ class WeatherDailyCard(parent: ViewGroup) : BaseCard(parent, R.layout.card_weath
 
     private val binding = CardWeatherDailyBinding.bind(itemView)
 
-    private val itemAdapter = InlineListAdapter { parent -> WeatherDailyItemCard(parent) }
-
-    init {
-        binding.root.adapter = itemAdapter
-    }
-
     override fun updateViews(cardData: BaseCardData) {
         if (cardData !is WeatherDailyCardData) return
-        itemAdapter.setCardData(cardData.daily)
+        binding.run {
+            vDate.text = cardData.date
+            vConditionIcon.setImageResource(cardData.conditionIconRes)
+            vTemperatureMin.text = cardData.temperatureRange?.first.toStringOrPlaceholder()
+            vTemperatureRangeBar.setData(
+                cardData.temperatureRangeAmongAllDates,
+                cardData.temperatureNow,
+                cardData.temperatureRange,
+            )
+            vTemperatureMax.text = cardData.temperatureRange?.last.toStringOrPlaceholder()
+        }
     }
 }

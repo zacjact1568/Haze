@@ -31,7 +31,7 @@ class WeatherFragment : Fragment() {
     private val cardAdapter = CardAdapter { type, parent ->
         when (type) {
             CARD_TYPE_WEATHER_HEAD -> WeatherHeadCard(parent)
-            CARD_TYPE_WEATHER_HOURLY -> WeatherHourlyCard(parent)
+            CARD_TYPE_WEATHER_HOURLY_ROW -> WeatherHourlyRowCard(parent)
             CARD_TYPE_WEATHER_TITLE -> WeatherTitleCard(parent)
             CARD_TYPE_WEATHER_DAILY -> WeatherDailyCard(parent)
             CARD_TYPE_WEATHER_CURRENT -> WeatherCurrentCard(parent)

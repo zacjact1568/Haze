@@ -64,37 +64,36 @@ class WeatherViewModel : BaseViewModel() {
             Color.WHITE,
         )
         eventLiveData.value = Event(EVENT_THEME_CHANGED, theme)
-        val list = mutableListOf(
-            WeatherHeadCardData(
-                now.temperature,
-                todayTemperatureRange,
-                now.conditionName,
-                air?.now?.category,
-                updatedAt?.toPrettifiedRelativeToNow(),
-                theme,
-            ),
-            WeatherTitleCardData("温度趋势"),
-            toHourlyCardData(),
-            toDailyCardData(),
-            WeatherTitleCardData("实况数据"),
+        val list = mutableListOf<BaseCardData>()
+        list += WeatherHeadCardData(
+            now.temperature,
+            todayTemperatureRange,
+            now.conditionName,
+            air?.now?.category,
+            updatedAt?.toPrettifiedRelativeToNow(),
+            theme,
         )
-        list += toCurrentCardData()
+        list += WeatherTitleCardData("温度趋势")
+        list += toHourlyCardRowData()
+        list += toDailyCardDataList()
+        list += WeatherTitleCardData("实况数据")
+        list += toCurrentCardDataList()
         list += SourceCardData()
         return list
     }
 
-    private fun WeatherEntity.toHourlyCardData() =
-        WeatherHourlyCardData(
+    private fun WeatherEntity.toHourlyCardRowData() =
+        WeatherHourlyRowCardData(
             hourly.mapTo(
                 mutableListOf(
-                    WeatherHourlyItemCardData(
+                    WeatherHourlyCardData(
                         getString(R.string.weather_hourly_item_time_now),
                         0,
                         now.temperature.toStringOrPlaceholder()
                     )
                 )
             ) {
-                WeatherHourlyItemCardData(
+                WeatherHourlyCardData(
                     // 换算成了用户所在地的时间，而不是当地时间
                     // TODO 提供选项
                     it.time.withZoneSameInstant(ZoneId.systemDefault()).formatTime(),
@@ -104,30 +103,28 @@ class WeatherViewModel : BaseViewModel() {
             }
         )
 
-    private fun WeatherEntity.toDailyCardData() =
-        WeatherDailyCardData(
-            daily.mapIndexed { index, entity ->
-                WeatherDailyItemCardData(
-                    when (index) {
-                        0 -> getString(R.string.weather_daily_item_time_today)
-                        1 -> {
-                            if (supportShorterExpression) {
-                                getString(R.string.weather_daily_item_time_tomorrow)
-                            } else {
-                                entity.date.formatWeek()
-                            }
+    private fun WeatherEntity.toDailyCardDataList() =
+        daily.mapIndexed { index, entity ->
+            WeatherDailyCardData(
+                when (index) {
+                    0 -> getString(R.string.weather_daily_item_time_today)
+                    1 -> {
+                        if (supportShorterExpression) {
+                            getString(R.string.weather_daily_item_time_tomorrow)
+                        } else {
+                            entity.date.formatWeek()
                         }
-                        else -> entity.date.formatWeek()
-                    },
-                    0,
-                    now.temperature,
-                    entity.getTemperatureRange(),
-                    temperatureRangeAmongAllDates,
-                )
-            }
-        )
+                    }
+                    else -> entity.date.formatWeek()
+                },
+                0,
+                now.temperature,
+                entity.getTemperatureRange(),
+                temperatureRangeAmongAllDates,
+            )
+        }
 
-    private fun WeatherEntity.toCurrentCardData() =
+    private fun WeatherEntity.toCurrentCardDataList() =
         listOf(
             WeatherCurrentCardData(0, now.temperature?.toString(), "气温"),
             WeatherCurrentCardData(0, now.conditionName, "天气状况"),

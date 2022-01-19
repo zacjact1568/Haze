@@ -1,10 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-    tools:context=".weather.view.card.WeatherHourlyCard" />
+    android:background="@drawable/bg_weather_hourly_item_card"
+    android:paddingHorizontal="@dimen/dp_16"
+    android:paddingVertical="@dimen/dp_10"
+    tools:context=".weather.view.card.WeatherHourlyCard" >
+
+    <TextView
+        android:id="@+id/v_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/gray_800"
+        android:textAllCaps="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/v_condition_icon"
+        tools:text="12:00" />
+
+    <ImageView
+        android:id="@+id/v_condition_icon"
+        android:layout_width="@dimen/dp_48"
+        android:layout_height="@dimen/dp_48"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@drawable/bg_weather_hourly_item_condition"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_time"
+        app:layout_constraintBottom_toTopOf="@+id/v_temperature" />
+
+    <TextView
+        android:id="@+id/v_temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:textSize="@dimen/sp_22"
+        android:textColor="@color/gray_800"
+        android:textStyle="bold"
+        android:fontFamily="@font/family_d_din"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_condition_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="24" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
