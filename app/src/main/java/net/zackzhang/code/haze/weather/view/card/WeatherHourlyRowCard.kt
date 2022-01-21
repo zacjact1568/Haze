@@ -24,7 +24,7 @@ class WeatherHourlyRowCard(parent: ViewGroup) : BaseCard(parent, R.layout.card_w
     }
 
     init {
-        binding.root.run {
+        binding.vCardList.run {
             adapter = cardAdapter
             addItemDecoration(
                 PaddingItemDecoration(

@@ -8,8 +8,8 @@ import androidx.annotation.ColorInt
 import net.zackzhang.code.haze.common.constant.PLACEHOLDER
 
 enum class Orientation {
-    VERTICAL,
     HORIZONTAL,
+    VERTICAL,
 }
 
 enum class Direction {
@@ -78,3 +78,9 @@ fun Canvas.drawRoundRect(
 enum class RoundPosition {
     START, END, TOP, BOTTOM,
 }
+
+inline fun <T> Orientation.switch(horizontal: () -> T, vertical: () -> T) =
+    when (this) {
+        Orientation.HORIZONTAL -> horizontal()
+        Orientation.VERTICAL -> vertical()
+    }

@@ -42,7 +42,7 @@ class SettingsContentFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentSettingsContentBinding.inflate(inflater, container, false)
-        binding.root.adapter = cardAdapter
+        binding.vPreferenceList.adapter = cardAdapter
 
         (activityViewModel.getSavedEvent<ThemeEntity>(EVENT_THEME_CHANGED))?.let {
             viewModel.notifyThemeChanged(it)

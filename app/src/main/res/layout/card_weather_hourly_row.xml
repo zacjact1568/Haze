@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView
+<net.zackzhang.code.haze.common.view.ui.spring.SpringLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-    tools:context=".weather.view.card.WeatherHourlyRowCard" />
+    app:orientation="horizontal"
+    tools:context=".weather.view.card.WeatherHourlyRowCard">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/v_card_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:overScrollMode="never"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+</net.zackzhang.code.haze.common.view.ui.spring.SpringLayout>
