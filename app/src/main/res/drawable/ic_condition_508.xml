@@ -1,0 +1,18 @@
+<vector android:height="128dp" android:viewportHeight="200"
+    android:viewportWidth="200" android:width="128dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="@color/condition_sand" android:pathData="M66,49m-4,0a4,4 0,1 1,8 0a4,4 0,1 1,-8 0"/>
+    <path android:fillColor="@color/condition_sand" android:pathData="M85,151m-4,0a4,4 0,1 1,8 0a4,4 0,1 1,-8 0"/>
+    <path android:fillColor="@color/condition_sand" android:pathData="M143,135m-4,0a4,4 0,1 1,8 0a4,4 0,1 1,-8 0"/>
+    <path android:fillColor="@color/condition_sand" android:pathData="M61,123m-4,0a4,4 0,1 1,8 0a4,4 0,1 1,-8 0"/>
+    <path android:fillColor="@color/condition_sand" android:pathData="M151,98m-4,0a4,4 0,1 1,8 0a4,4 0,1 1,-8 0"/>
+    <path android:fillColor="@color/condition_sand" android:pathData="M49,83m-4,0a4,4 0,1 1,8 0a4,4 0,1 1,-8 0"/>
+    <path android:fillColor="@color/condition_sand" android:pathData="M107,83m-4,0a4,4 0,1 1,8 0a4,4 0,1 1,-8 0"/>
+    <path android:fillColor="@color/condition_sand" android:pathData="M86,66m-4,0a4,4 0,1 1,8 0a4,4 0,1 1,-8 0"/>
+    <path android:fillColor="@color/condition_sand" android:pathData="M134,46m-4,0a4,4 0,1 1,8 0a4,4 0,1 1,-8 0"/>
+    <path android:fillColor="@color/condition_sand" android:fillType="evenOdd" android:pathData="M151,76C151,62.745 129.51,52 103,52C76.49,52 55,62.745 55,76C55,89.255 76.49,100 103,100C129.51,100 151,89.255 151,76ZM62,76C62,66.059 80.356,58 103,58C125.644,58 144,66.059 144,76C144,85.941 125.644,94 103,94C80.356,94 62,85.941 62,76Z"/>
+    <path android:fillColor="@color/condition_sand" android:fillType="evenOdd" android:pathData="M143,92C143,80.402 124.196,71 101,71C77.804,71 59,80.402 59,92C59,103.598 77.804,113 101,113C124.196,113 143,103.598 143,92ZM65,92C65,83.163 81.118,76 101,76C120.882,76 137,83.163 137,92C137,100.837 120.882,108 101,108C81.118,108 65,100.837 65,92Z"/>
+    <path android:fillColor="@color/condition_sand" android:fillType="evenOdd" android:pathData="M139,108C139,97.507 121.987,89 101,89C80.013,89 63,97.507 63,108C63,118.493 80.013,127 101,127C121.987,127 139,118.493 139,108ZM69,108C69,100.268 83.327,94 101,94C118.673,94 133,100.268 133,108C133,115.732 118.673,122 101,122C83.327,122 69,115.732 69,108Z"/>
+    <path android:fillColor="@color/condition_sand" android:fillType="evenOdd" android:pathData="M139,125C139,115.611 123.778,108 105,108C86.222,108 71,115.611 71,125C71,134.389 86.222,142 105,142C123.778,142 139,134.389 139,125ZM76,125C76,118.373 88.984,113 105,113C121.016,113 134,118.373 134,125C134,131.627 121.016,137 105,137C88.984,137 76,131.627 76,125Z"/>
+    <path android:fillColor="@color/condition_sand" android:fillType="evenOdd" android:pathData="M132,138C132,131.373 121.255,126 108,126C94.745,126 84,131.373 84,138C84,144.627 94.745,150 108,150C121.255,150 132,144.627 132,138ZM88,138C88,133.582 96.954,130 108,130C119.046,130 128,133.582 128,138C128,142.418 119.046,146 108,146C96.954,146 88,142.418 88,138Z"/>
+    <path android:fillColor="@color/condition_sand" android:fillType="evenOdd" android:pathData="M130,149C130,144.029 122.389,140 113,140C103.611,140 96,144.029 96,149C96,153.971 103.611,158 113,158C122.389,158 130,153.971 130,149ZM100,149C100,146.239 105.82,144 113,144C120.18,144 126,146.239 126,149C126,151.761 120.18,154 113,154C105.82,154 100,151.761 100,149Z"/>
+</vector>

@@ -1,0 +1,11 @@
+<vector android:height="128dp" android:viewportHeight="200"
+    android:viewportWidth="200" android:width="128dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="@color/condition_cloud" android:pathData="M133.139,65.452C131.178,48.013 119.731,33 100.754,33C82.124,33 71.316,47.3 69.158,60.457C53.825,60.457 41,71.198 41,86.132C41,103.251 55.231,114 70.42,114H131.959C145.853,114 159,103.862 159,89.588C159,75.934 144.877,65.452 133.139,65.452Z"/>
+    <path android:fillColor="@color/condition_rain" android:pathData="M126,141.836C126,149.955 121.629,153 117,153C112.371,153 108,150.209 108,141.836C108,133.716 117,119 117,119C117,119 126,133.716 126,141.836Z"/>
+    <path android:fillColor="@color/condition_rain" android:pathData="M160,141.836C160,149.955 155.629,153 151,153C146.371,153 142,150.209 142,141.836C142,133.716 151,119 151,119C151,119 160,133.716 160,141.836Z"/>
+    <path android:fillColor="@color/condition_rain" android:pathData="M92,141.836C92,149.955 87.629,153 83,153C78.371,153 74,150.209 74,141.836C74,133.716 83,119 83,119C83,119 92,133.716 92,141.836Z"/>
+    <path android:fillColor="@color/condition_rain" android:pathData="M58,141.836C58,149.955 53.629,153 49,153C44.371,153 40,150.209 40,141.836C40,133.716 49,119 49,119C49,119 58,133.716 58,141.836Z"/>
+    <path android:fillColor="@color/condition_rain" android:pathData="M143,156.836C143,164.955 138.629,168 134,168C129.371,168 125,165.209 125,156.836C125,148.716 134,134 134,134C134,134 143,148.716 143,156.836Z"/>
+    <path android:fillColor="@color/condition_rain" android:pathData="M109,156.836C109,164.955 104.629,168 100,168C95.371,168 91,165.209 91,156.836C91,148.716 100,134 100,134C100,134 109,148.716 109,156.836Z"/>
+    <path android:fillColor="@color/condition_rain" android:pathData="M75,156.836C75,164.955 70.629,168 66,168C61.371,168 57,165.209 57,156.836C57,148.716 66,134 66,134C66,134 75,148.716 75,156.836Z"/>
+</vector>

@@ -1,12 +1,18 @@
 package net.zackzhang.code.haze.weather.util
 
 import androidx.annotation.ColorInt
+import androidx.annotation.DrawableRes
 import net.zackzhang.code.haze.App
 import net.zackzhang.code.haze.R
+import net.zackzhang.code.haze.common.util.dLog
 import net.zackzhang.code.haze.weather.model.entity.WeatherDailyEntity
 
+const val DEFAULT_CONDITION_COLOR = R.color.colorPrimary
+
+const val DEFAULT_CONDITION_ICON = R.drawable.ic_condition_999
+
 @ColorInt
-fun getThemeColorByConditionCode(code: Int?) =
+fun getConditionColorByCode(code: Int?) =
     App.context.getColor(when (code) {
         // 晴（白天）、热
         100, 900 -> R.color.blue_200
@@ -29,8 +35,33 @@ fun getThemeColorByConditionCode(code: Int?) =
         // 霾、沙尘
         in 502..508, in 511..513 -> R.color.brown_200
         // 未知（999、null）
-        else -> R.color.colorPrimary
+        else -> DEFAULT_CONDITION_COLOR
     })
 
 fun WeatherDailyEntity.getTemperatureRange() =
     if (temperatureMin == null || temperatureMax == null) null else temperatureMin..temperatureMax
+
+@DrawableRes
+fun getConditionIconResByCode(code: Int?): Int {
+    code ?: return DEFAULT_CONDITION_ICON
+    val prefix = when (code) {
+        in 151..153 -> "151_152_153"
+        200, in 202..204 -> "200_202_203_204"
+        in 205..207 -> "205_206_207"
+        in 208..213 -> "208_209_210_211_212_213"
+        306, 314 -> "306_314"
+        307, 315 -> "307_315"
+        308, 312, 318 -> "308_312_318"
+        310, 316 -> "310_316"
+        311, 317 -> "311_317"
+        401, 408 -> "401_408"
+        402, 409 -> "402_409"
+        403, 410 -> "403_410"
+        509, 510, 514, 515 -> "509_510_514_515"
+        else -> code.toString()
+    }
+    dLog("getConditionIconResByCode($code), prefix: $prefix", "WeatherUtils")
+    val context = App.context
+    val resId = context.resources.getIdentifier("ic_condition_$prefix", "drawable", context.packageName)
+    return if (resId == 0) DEFAULT_CONDITION_ICON else resId
+}

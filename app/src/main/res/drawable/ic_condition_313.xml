@@ -1,0 +1,9 @@
+<vector android:height="128dp" android:viewportHeight="200"
+    android:viewportWidth="200" android:width="128dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="@color/condition_cloud" android:pathData="M133.139,75.452C131.178,58.013 119.731,43 100.754,43C82.124,43 71.316,57.3 69.158,70.457C53.825,70.457 41,81.198 41,96.132C41,113.251 55.231,124 70.42,124H131.959C145.853,124 159,113.862 159,99.588C159,85.934 144.877,75.452 133.139,75.452Z"/>
+    <path android:fillColor="@color/condition_rain" android:fillType="evenOdd" android:pathData="M100,129L108,143L100,157L92,143L100,129Z"/>
+    <path android:fillColor="@color/condition_rain" android:fillType="evenOdd" android:pathData="M124,129L132,143L124,157L116,143L124,129Z"/>
+    <path android:fillColor="@color/condition_rain" android:fillType="evenOdd" android:pathData="M76,129L84,143L76,157L68,143L76,129Z"/>
+    <path android:fillColor="@color/condition_rain" android:fillType="evenOdd" android:pathData="M148,129L156,143L148,157L140,143L148,129Z"/>
+    <path android:fillColor="@color/condition_rain" android:fillType="evenOdd" android:pathData="M52,129L60,143L52,157L44,143L52,129Z"/>
+</vector>

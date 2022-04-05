@@ -1,0 +1,11 @@
+<vector android:height="128dp" android:viewportHeight="200"
+    android:viewportWidth="200" android:width="128dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="@color/condition_sand" android:fillType="evenOdd" android:pathData="M70,125C88.778,125 104,113.807 104,100C104,86.193 88.778,75 70,75C51.222,75 36,86.193 36,100C36,113.807 51.222,125 70,125ZM70,118C84.359,118 96,109.941 96,100C96,90.059 84.359,82 70,82C55.641,82 44,90.059 44,100C44,109.941 55.641,118 70,118Z"/>
+    <path android:fillColor="@color/condition_sand" android:fillType="evenOdd" android:pathData="M130,125C148.778,125 164,113.807 164,100C164,86.193 148.778,75 130,75C111.222,75 96,86.193 96,100C96,113.807 111.222,125 130,125ZM130,118C144.359,118 156,109.941 156,100C156,90.059 144.359,82 130,82C115.641,82 104,90.059 104,100C104,109.941 115.641,118 130,118Z"/>
+    <path android:fillColor="@color/condition_sand" android:pathData="M60,63m-6,0a6,6 0,1 1,12 0a6,6 0,1 1,-12 0"/>
+    <path android:fillColor="@color/condition_sand" android:pathData="M140,63m-6,0a6,6 0,1 1,12 0a6,6 0,1 1,-12 0"/>
+    <path android:fillColor="@color/condition_sand" android:pathData="M100,131m-6,0a6,6 0,1 1,12 0a6,6 0,1 1,-12 0"/>
+    <path android:fillColor="@color/condition_sand" android:pathData="M100,69m-6,0a6,6 0,1 1,12 0a6,6 0,1 1,-12 0"/>
+    <path android:fillColor="@color/condition_sand" android:pathData="M60,137m-6,0a6,6 0,1 1,12 0a6,6 0,1 1,-12 0"/>
+    <path android:fillColor="@color/condition_sand" android:pathData="M140,137m-6,0a6,6 0,1 1,12 0a6,6 0,1 1,-12 0"/>
+</vector>

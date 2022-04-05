@@ -1,0 +1,7 @@
+<vector android:height="128dp" android:viewportHeight="200"
+    android:viewportWidth="200" android:width="128dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="@color/condition_sand" android:fillType="evenOdd" android:pathData="M105,140C127.091,140 145,122.091 145,100C145,77.909 127.091,60 105,60C82.909,60 65,77.909 65,100C65,122.091 82.909,140 105,140ZM105,132C122.673,132 137,117.673 137,100C137,82.327 122.673,68 105,68C87.327,68 73,82.327 73,100C73,117.673 87.327,132 105,132Z"/>
+    <path android:fillColor="@color/condition_sand" android:pathData="M39,78L112,78A4,4 0,0 1,116 82L116,82A4,4 0,0 1,112 86L39,86A4,4 0,0 1,35 82L35,82A4,4 0,0 1,39 78z"/>
+    <path android:fillColor="@color/condition_sand" android:pathData="M39,114L149,114A4,4 0,0 1,153 118L153,118A4,4 0,0 1,149 122L39,122A4,4 0,0 1,35 118L35,118A4,4 0,0 1,39 114z"/>
+    <path android:fillColor="@color/condition_sand" android:pathData="M49,96L161,96A4,4 0,0 1,165 100L165,100A4,4 0,0 1,161 104L49,104A4,4 0,0 1,45 100L45,100A4,4 0,0 1,49 96z"/>
+</vector>

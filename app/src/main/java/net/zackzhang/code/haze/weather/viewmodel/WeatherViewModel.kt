@@ -19,7 +19,8 @@ import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
 import net.zackzhang.code.haze.common.viewmodel.data.SourceCardData
 import net.zackzhang.code.haze.weather.model.entity.WeatherEntity
 import net.zackzhang.code.haze.weather.util.getTemperatureRange
-import net.zackzhang.code.haze.weather.util.getThemeColorByConditionCode
+import net.zackzhang.code.haze.weather.util.getConditionColorByCode
+import net.zackzhang.code.haze.weather.util.getConditionIconResByCode
 import net.zackzhang.code.haze.weather.viewmodel.data.*
 import java.time.ZoneId
 
@@ -59,7 +60,7 @@ class WeatherViewModel : BaseViewModel() {
 
     private fun WeatherEntity.toCardDataList(): List<BaseCardData> {
         val theme = ThemeEntity(
-            getThemeColorByConditionCode(now.conditionCode),
+            getConditionColorByCode(now.conditionCode),
             // 前景色暂时固定为白色
             Color.WHITE,
         )
@@ -88,7 +89,7 @@ class WeatherViewModel : BaseViewModel() {
                 mutableListOf(
                     WeatherHourlyCardData(
                         getString(R.string.weather_hourly_item_time_now),
-                        0,
+                        getConditionIconResByCode(now.conditionCode),
                         now.temperature.toStringOrPlaceholder()
                     )
                 )
@@ -97,7 +98,7 @@ class WeatherViewModel : BaseViewModel() {
                     // 换算成了用户所在地的时间，而不是当地时间
                     // TODO 提供选项
                     it.time.withZoneSameInstant(ZoneId.systemDefault()).formatTime(),
-                    0,
+                    getConditionIconResByCode(it.conditionCode),
                     it.temperature.toStringOrPlaceholder()
                 )
             }
@@ -117,7 +118,8 @@ class WeatherViewModel : BaseViewModel() {
                     }
                     else -> entity.date.formatWeek()
                 },
-                0,
+                // TODO support night condition
+                getConditionIconResByCode(entity.conditionCodeDay),
                 now.temperature,
                 entity.getTemperatureRange(),
                 temperatureRangeAmongAllDates,

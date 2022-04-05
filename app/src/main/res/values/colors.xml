@@ -59,4 +59,9 @@
     <!-- 白色 50% 不透明度 -->
     <color name="white_opacity_50">#7FFFFFFF</color>
 
+    <color name="condition_rain">#FFFFFF</color>
+    <color name="condition_cloud">#A7D6FF</color>
+    <color name="condition_sand">#A1887F</color>
+    <color name="condition_clear">#FFE68C</color>
+
 </resources>

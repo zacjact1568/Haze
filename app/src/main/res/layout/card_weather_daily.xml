@@ -29,11 +29,12 @@
         android:layout_width="@dimen/dp_24"
         android:layout_height="@dimen/dp_24"
         android:layout_marginStart="@dimen/dp_10"
-        android:background="@drawable/bg_weather_hourly_item_condition"
+        android:background="@drawable/bg_weather_daily_item_condition"
         app:layout_constraintStart_toEndOf="@+id/v_date"
         app:layout_constraintEnd_toStartOf="@+id/v_temperature_min"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:src="@drawable/ic_condition_100" />
 
     <TextView
         android:id="@+id/v_temperature_min"
