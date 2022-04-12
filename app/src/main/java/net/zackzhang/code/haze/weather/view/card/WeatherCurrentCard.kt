@@ -3,6 +3,8 @@ package net.zackzhang.code.haze.weather.view.card
 import android.view.ViewGroup
 import net.zackzhang.code.haze.R
 import net.zackzhang.code.haze.common.util.orPlaceholder
+import net.zackzhang.code.haze.common.util.scale
+import net.zackzhang.code.haze.common.util.tintColor
 import net.zackzhang.code.haze.common.view.card.BaseCard
 import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
 import net.zackzhang.code.haze.databinding.CardWeatherCurrentBinding
@@ -16,6 +18,8 @@ class WeatherCurrentCard(parent: ViewGroup) : BaseCard(parent, R.layout.card_wea
         if (cardData !is WeatherCurrentCardData) return
         binding.run {
             vIcon.setImageResource(cardData.iconResId)
+            vIcon.tintColor = cardData.iconColor
+            vIcon.scale = cardData.iconScale
             vValue.text = cardData.value.orPlaceholder()
             vDescription.text = cardData.description
         }

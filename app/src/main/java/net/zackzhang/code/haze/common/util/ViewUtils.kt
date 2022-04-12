@@ -1,8 +1,12 @@
 package net.zackzhang.code.haze.common.util
 
+import android.content.res.ColorStateList
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
+import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import net.zackzhang.code.haze.common.constant.PLACEHOLDER
@@ -43,6 +47,22 @@ data class ItemDecorationRectInsets(
         if (bottom) ItemDecorationInset.FULL else ItemDecorationInset.NONE,
     )
 }
+
+var ImageView.tintColor
+    get() = imageTintList?.defaultColor ?: Color.TRANSPARENT
+    set(value) {
+        imageTintList = ColorStateList.valueOf(value)
+    }
+
+var View.scale
+    get() = run {
+        assert(scaleX == scaleY)
+        scaleX
+    }
+    set(value) {
+        scaleX = value
+        scaleY = value
+    }
 
 fun Int?.toStringOrPlaceholder() = this?.toString() ?: PLACEHOLDER
 

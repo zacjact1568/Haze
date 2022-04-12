@@ -128,17 +128,17 @@ class WeatherViewModel : BaseViewModel() {
 
     private fun WeatherEntity.toCurrentCardDataList() =
         listOf(
-            WeatherCurrentCardData(0, now.temperature?.toString(), "气温"),
-            WeatherCurrentCardData(0, now.conditionName, "天气状况"),
-            WeatherCurrentCardData(0, now.feelsLike?.toString(), "体感温度"),
-            WeatherCurrentCardData(0, now.humidity?.toString(), "湿度"),
-            WeatherCurrentCardData(0, air?.now?.category, "空气质量"),
-            WeatherCurrentCardData(0, air?.now?.primary, "主要污染物"),
-            WeatherCurrentCardData(0, now.precipitation?.toString(), "降水量"),
-            WeatherCurrentCardData(0, now.pressure?.toString(), "气压"),
-            WeatherCurrentCardData(0, now.visibility?.toString(), "能见度"),
-            WeatherCurrentCardData(0, presentIntRange(now.windScale), "风力"),
-            WeatherCurrentCardData(0, now.windAngle?.toString(), "风向"),
-            WeatherCurrentCardData(0, now.cloud?.toString(), "云量"),
+            WeatherCurrentCardData(R.drawable.ic_temperature_half, getAppColorRes(R.color.red_500), now.temperature?.toString(), "气温"),
+            WeatherCurrentCardData(getConditionIconResByCode(now.conditionCode), getAppColorRes(R.color.blue_500), now.conditionName, "天气状况", 1.4F),
+            WeatherCurrentCardData(R.drawable.ic_leaf, getAppColorRes(R.color.yellow_500), now.feelsLike?.toString(), "体感温度"),
+            WeatherCurrentCardData(R.drawable.ic_water, getAppColorRes(R.color.blue_500), now.humidity?.toString(), "湿度"),
+            WeatherCurrentCardData(R.drawable.ic_tree, getAppColorRes(R.color.green_500), air?.now?.category, "空气质量"),
+            WeatherCurrentCardData(R.drawable.ic_lungs, getAppColorRes(R.color.pink_700), air?.now?.primary, "主要污染物"),
+            WeatherCurrentCardData(R.drawable.ic_droplet, getAppColorRes(R.color.light_blue_200), now.precipitation?.toString(), "降水量"),
+            WeatherCurrentCardData(R.drawable.ic_panel, getAppColorRes(R.color.deep_purple_400), now.pressure?.toString(), "气压"),
+            WeatherCurrentCardData(R.drawable.ic_eye, getAppColorRes(R.color.brown_300), now.visibility?.toString(), "能见度"),
+            WeatherCurrentCardData(R.drawable.ic_wind, getAppColorRes(R.color.teal_a200), presentIntRange(now.windScale), "风力"),
+            WeatherCurrentCardData(R.drawable.ic_fan, getAppColorRes(R.color.light_green_400), now.windDirection, "风向"),
+            WeatherCurrentCardData(R.drawable.ic_cloud, getAppColorRes(R.color.cyan_300), now.cloud?.toString(), "云量"),
         )
 }

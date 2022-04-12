@@ -27,9 +27,13 @@
     <color name="blue_gray_200">#B0BEC5</color>
 
     <!-- 饱和度 300 -->
+    <color name="cyan_300">#4DD0E1</color>
+    <color name="brown_300">#A1887F</color>
     <color name="gray_300">#E0E0E0</color>
 
     <!-- 饱和度 400 -->
+    <color name="light_green_400">#9CCC65</color>
+    <color name="deep_purple_400">#7E57C2</color>
     <color name="gray_400">#BDBDBD</color>
 
     <!-- 饱和度 500 -->
@@ -51,10 +55,13 @@
     <color name="gray_600">#757575</color>
 
     <!-- 饱和度 700 -->
+    <color name="pink_700">#C2185B</color>
     <color name="gray_700">#616161</color>
 
     <!-- 饱和度 800 -->
     <color name="gray_800">#424242</color>
+
+    <color name="teal_a200">#64FFDA</color>
 
     <!-- 白色 50% 不透明度 -->
     <color name="white_opacity_50">#7FFFFFFF</color>

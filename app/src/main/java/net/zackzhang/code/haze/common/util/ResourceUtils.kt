@@ -59,3 +59,5 @@ fun getString(@StringRes id: Int) = App.context.getString(id)
 
 // 用 vararg 格式化后，String 变成了类 + 地址，不知道为啥
 fun getString(@StringRes id: Int, arg: String) = App.context.getString(id, arg)
+
+fun getAppColorRes(@ColorRes id: Int) = App.context.getColor(id)
