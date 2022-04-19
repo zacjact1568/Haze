@@ -11,11 +11,11 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import net.zackzhang.code.haze.R
 import net.zackzhang.code.haze.city.model.entity.CityWeatherEntity
-import net.zackzhang.code.haze.common.constant.*
-import net.zackzhang.code.haze.common.model.entity.ThemeEntity
-import net.zackzhang.code.haze.common.util.getDimension
+import net.zackzhang.code.haze.base.view.ThemeEntity
+import net.zackzhang.code.haze.base.util.getDimension
 import net.zackzhang.code.haze.common.view.CardAdapter
-import net.zackzhang.code.haze.common.view.SystemBarInsets
+import net.zackzhang.code.haze.base.view.SystemBarInsets
+import net.zackzhang.code.haze.common.constant.*
 import net.zackzhang.code.haze.databinding.FragmentWeatherBinding
 import net.zackzhang.code.haze.home.viewmodel.HomeViewModel
 import net.zackzhang.code.haze.weather.view.card.*

@@ -1,12 +1,10 @@
 package net.zackzhang.code.haze.home.viewmodel
 
 import net.zackzhang.code.haze.city.model.entity.CityWeatherEntity
+import net.zackzhang.code.haze.base.viewmodel.Event
+import net.zackzhang.code.haze.base.viewmodel.BaseViewModel
 import net.zackzhang.code.haze.common.constant.EVENT_CITY_CHANGED
 import net.zackzhang.code.haze.common.constant.EVENT_DATA_LOADED
-import net.zackzhang.code.haze.common.constant.EVENT_THEME_CHANGED
-import net.zackzhang.code.haze.common.model.entity.ThemeEntity
-import net.zackzhang.code.haze.common.viewmodel.Event
-import net.zackzhang.code.haze.common.viewmodel.BaseViewModel
 
 class HomeViewModel : BaseViewModel() {
 

@@ -2,9 +2,7 @@ package net.zackzhang.code.haze.settings.view.card
 
 import android.view.ViewGroup
 import net.zackzhang.code.haze.R
-import net.zackzhang.code.haze.common.util.createColorStateList
-import net.zackzhang.code.haze.common.util.reduceSaturation
-import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
+import net.zackzhang.code.haze.base.viewmodel.data.BaseCardData
 import net.zackzhang.code.haze.databinding.WidgetSettingsSwitchPreferenceBinding
 import net.zackzhang.code.haze.settings.viewmodel.data.SettingsSwitchPreferenceCardData
 

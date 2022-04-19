@@ -1,8 +1,8 @@
 package net.zackzhang.code.haze.city.model.remote.converter
 
 import net.zackzhang.code.haze.city.model.entity.CityEntity
-import net.zackzhang.code.haze.common.util.fromJsonArray
-import net.zackzhang.code.haze.common.util.responseBodyToJsonObject
+import net.zackzhang.code.haze.base.util.fromJsonArray
+import net.zackzhang.code.haze.base.util.responseBodyToJsonObject
 import okhttp3.ResponseBody
 import retrofit2.Converter
 

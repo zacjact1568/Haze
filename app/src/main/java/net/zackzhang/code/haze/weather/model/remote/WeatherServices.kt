@@ -1,9 +1,9 @@
 package net.zackzhang.code.haze.weather.model.remote
 
-import net.zackzhang.code.haze.common.constant.QWEATHER_PARAM_LOCATION
-import net.zackzhang.code.haze.common.constant.QWEATHER_PARAM_PUBLIC_ID
-import net.zackzhang.code.haze.common.constant.QWEATHER_PARAM_SIGNATURE
-import net.zackzhang.code.haze.common.constant.QWEATHER_PARAM_TIME
+import net.zackzhang.code.haze.base.constant.QWEATHER_PARAM_LOCATION
+import net.zackzhang.code.haze.base.constant.QWEATHER_PARAM_PUBLIC_ID
+import net.zackzhang.code.haze.base.constant.QWEATHER_PARAM_SIGNATURE
+import net.zackzhang.code.haze.base.constant.QWEATHER_PARAM_TIME
 import net.zackzhang.code.haze.weather.model.entity.WeatherDailyEntity
 import net.zackzhang.code.haze.weather.model.entity.WeatherHourlyEntity
 import retrofit2.http.GET

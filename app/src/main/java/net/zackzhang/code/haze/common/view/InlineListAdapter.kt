@@ -3,9 +3,9 @@ package net.zackzhang.code.haze.common.view
 import android.database.DataSetObservable
 import android.database.DataSetObserver
 import android.view.ViewGroup
-import net.zackzhang.code.haze.common.view.card.InlineBaseCard
+import net.zackzhang.code.haze.base.view.card.InlineBaseCard
+import net.zackzhang.code.haze.base.viewmodel.data.BaseCardData
 import net.zackzhang.code.haze.common.view.card.InlineEmptyCard
-import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
 
 class InlineListAdapter(
     private val creator: (parent: ViewGroup) -> InlineBaseCard?,

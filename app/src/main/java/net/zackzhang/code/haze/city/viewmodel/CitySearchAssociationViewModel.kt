@@ -14,11 +14,11 @@ import net.zackzhang.code.haze.city.model.entity.CityWeatherEntity
 import net.zackzhang.code.haze.city.model.local.CityLocalRepository
 import net.zackzhang.code.haze.city.model.remote.CityRemoteRepository
 import net.zackzhang.code.haze.city.viewmodel.data.CitySearchAssociationCardData
+import net.zackzhang.code.haze.base.exception.PlaceholderException
+import net.zackzhang.code.haze.base.util.iLog
+import net.zackzhang.code.haze.base.viewmodel.Event
+import net.zackzhang.code.haze.base.viewmodel.BaseViewModel
 import net.zackzhang.code.haze.common.constant.EVENT_CITY_SELECTED
-import net.zackzhang.code.haze.common.exception.PlaceholderException
-import net.zackzhang.code.haze.common.util.iLog
-import net.zackzhang.code.haze.common.viewmodel.Event
-import net.zackzhang.code.haze.common.viewmodel.BaseViewModel
 
 class CitySearchAssociationViewModel : BaseViewModel() {
 

@@ -8,11 +8,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePaddingRelative
+import net.zackzhang.code.haze.base.view.ThemeEntity
+import net.zackzhang.code.haze.base.view.SystemBarInsets
 import net.zackzhang.code.haze.common.constant.EVENT_THEME_CHANGED
 import net.zackzhang.code.haze.common.constant.EVENT_WINDOW_INSETS_APPLIED
 import net.zackzhang.code.haze.common.constant.EXTRA_THEME
-import net.zackzhang.code.haze.common.model.entity.ThemeEntity
-import net.zackzhang.code.haze.common.view.SystemBarInsets
 import net.zackzhang.code.haze.databinding.ActivitySettingsBinding
 import net.zackzhang.code.haze.settings.viewmodel.SettingsViewModel
 

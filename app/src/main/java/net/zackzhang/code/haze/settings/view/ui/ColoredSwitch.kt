@@ -4,8 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.SwitchCompat
 import net.zackzhang.code.haze.R
-import net.zackzhang.code.haze.common.util.createColorStateList
-import net.zackzhang.code.haze.common.util.reduceSaturation
+import net.zackzhang.code.haze.base.util.createColorStateList
+import net.zackzhang.code.haze.base.util.reduceSaturation
 import kotlin.properties.Delegates
 
 class ColoredSwitch @JvmOverloads constructor(

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name" translatable="false">Haze</string>
+
+    <string name="datetime_prettified_relative_to_now_negative_format">at %s</string>
+    <string name="datetime_prettified_relative_to_now_day">more than a day</string>
+    <plurals name="datetime_prettified_relative_to_now_hour_format">
+        <item quantity="one">%d hour ago</item>
+        <item quantity="other">%d hours ago</item>
+    </plurals>
+    <plurals name="datetime_prettified_relative_to_now_minute_format">
+        <item quantity="one">%d minute ago</item>
+        <item quantity="other">%d minutes ago</item>
+    </plurals>
+    <string name="datetime_prettified_relative_to_now_second">just now</string>
+
+</resources>

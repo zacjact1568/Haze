@@ -3,12 +3,12 @@ package net.zackzhang.code.haze.common.view
 import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import net.zackzhang.code.haze.base.util.*
+import net.zackzhang.code.haze.base.view.card.BaseCard
+import net.zackzhang.code.haze.base.viewmodel.data.BaseCardData
 import net.zackzhang.code.haze.common.constant.CARD_TYPE_SOURCE
-import net.zackzhang.code.haze.common.util.*
-import net.zackzhang.code.haze.common.view.card.BaseCard
 import net.zackzhang.code.haze.common.view.card.EmptyCard
 import net.zackzhang.code.haze.common.view.card.SourceCard
-import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
 
 class CardAdapter(
     private val onItemClick: ((position: Int) -> Unit)? = null,

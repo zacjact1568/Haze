@@ -15,11 +15,11 @@ import net.zackzhang.code.haze.city.model.entity.CityWeatherEntity
 import net.zackzhang.code.haze.city.view.card.CitySearchAssociationCard
 import net.zackzhang.code.haze.city.viewmodel.CitySearchAssociationViewModel
 import net.zackzhang.code.haze.city.viewmodel.CityViewModel
+import net.zackzhang.code.haze.common.view.CardAdapter
+import net.zackzhang.code.haze.base.view.SystemBarInsets
 import net.zackzhang.code.haze.common.constant.CARD_TYPE_CITY_SEARCH_ASSOCIATION
 import net.zackzhang.code.haze.common.constant.EVENT_CITY_SELECTED
 import net.zackzhang.code.haze.common.constant.EVENT_WINDOW_INSETS_APPLIED
-import net.zackzhang.code.haze.common.view.CardAdapter
-import net.zackzhang.code.haze.common.view.SystemBarInsets
 import net.zackzhang.code.haze.databinding.FragmentCitySearchAssociationBinding
 import kotlin.math.abs
 

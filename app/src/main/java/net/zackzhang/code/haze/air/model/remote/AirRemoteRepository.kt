@@ -2,7 +2,7 @@ package net.zackzhang.code.haze.air.model.remote
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import net.zackzhang.code.haze.BuildConfig
+import net.zackzhang.code.haze.base.util.QWEATHER_PUBLIC_ID
 import retrofit2.Retrofit
 
 object AirRemoteRepository {
@@ -21,7 +21,7 @@ object AirRemoteRepository {
         if (cityId.startsWith("10")) withContext(Dispatchers.IO) {
             SERVICES.getNow(
                 cityId,
-                BuildConfig.QWEATHER_PUBLIC_ID,
+                QWEATHER_PUBLIC_ID,
                 time,
                 sign
             )

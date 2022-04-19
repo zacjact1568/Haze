@@ -7,8 +7,8 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import net.zackzhang.code.haze.App
-import net.zackzhang.code.haze.common.util.appName
+import net.zackzhang.code.haze.base.util.appName
+import net.zackzhang.code.haze.base.util.context
 
 object SettingsLocalRepository {
 
@@ -17,7 +17,7 @@ object SettingsLocalRepository {
      */
     private val Context.dataStore by preferencesDataStore(appName)
 
-    private val dataStore = App.context.dataStore
+    private val dataStore = context.dataStore
 
     suspend fun getPreferences(keyList: List<Preferences.Key<out Any>?>) =
         dataStore.data.map {

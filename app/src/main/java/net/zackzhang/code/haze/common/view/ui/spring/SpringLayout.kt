@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.core.view.NestedScrollingParent3
 import net.zackzhang.code.haze.R
-import net.zackzhang.code.haze.common.util.Orientation
+import net.zackzhang.code.haze.base.util.Orientation
 
 class SpringLayout @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null

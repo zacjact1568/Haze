@@ -1,10 +1,10 @@
 package net.zackzhang.code.haze.city.model.remote
 
 import net.zackzhang.code.haze.city.model.entity.CityEntity
-import net.zackzhang.code.haze.common.constant.QWEATHER_PARAM_LOCATION
-import net.zackzhang.code.haze.common.constant.QWEATHER_PARAM_PUBLIC_ID
-import net.zackzhang.code.haze.common.constant.QWEATHER_PARAM_SIGNATURE
-import net.zackzhang.code.haze.common.constant.QWEATHER_PARAM_TIME
+import net.zackzhang.code.haze.base.constant.QWEATHER_PARAM_LOCATION
+import net.zackzhang.code.haze.base.constant.QWEATHER_PARAM_PUBLIC_ID
+import net.zackzhang.code.haze.base.constant.QWEATHER_PARAM_SIGNATURE
+import net.zackzhang.code.haze.base.constant.QWEATHER_PARAM_TIME
 import retrofit2.http.GET
 import retrofit2.http.Query
 

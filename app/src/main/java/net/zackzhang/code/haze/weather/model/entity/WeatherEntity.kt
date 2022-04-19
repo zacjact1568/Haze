@@ -2,7 +2,7 @@ package net.zackzhang.code.haze.weather.model.entity
 
 import net.zackzhang.code.haze.air.model.entity.AirEntity
 import net.zackzhang.code.haze.air.model.entity.AirNowEntity
-import net.zackzhang.code.haze.common.util.plusAssign
+import net.zackzhang.code.haze.base.util.plusAssign
 import net.zackzhang.code.haze.weather.util.getTemperatureRange
 import kotlin.math.max
 import kotlin.math.min

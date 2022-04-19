@@ -3,8 +3,8 @@ package net.zackzhang.code.haze.settings.view.card
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import net.zackzhang.code.haze.R
-import net.zackzhang.code.haze.common.view.card.BaseCard
-import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
+import net.zackzhang.code.haze.base.view.card.BaseCard
+import net.zackzhang.code.haze.base.viewmodel.data.BaseCardData
 import net.zackzhang.code.haze.databinding.CardSettingsPreferenceBaseBinding
 import net.zackzhang.code.haze.settings.viewmodel.data.SettingsPreferenceBaseCardData
 

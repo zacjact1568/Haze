@@ -73,10 +73,6 @@ const val SO_2 = "so_2"
 const val CO = "co"
 const val O_3 = "o_3"
 
-const val PATTERN_DATE = "yyyy-MM-dd"
-const val PATTERN_TIME = "HH:mm"
-const val PATTERN_DATE_TIME = "yyyy-MM-dd HH:mm"
-
 const val CARD_TYPE_WEATHER_HEAD = 0
 const val CARD_TYPE_WEATHER_HOURLY_ROW = 1
 const val CARD_TYPE_WEATHER_TITLE = 2
@@ -89,13 +85,6 @@ const val CARD_TYPE_SETTINGS_INFO_PREFERENCE = 13
 const val CARD_TYPE_SOURCE = 20
 
 const val RESULT_CODE_CITY_NEW = 20
-
-const val PLACEHOLDER = "--"
-
-const val QWEATHER_PARAM_LOCATION = "location"
-const val QWEATHER_PARAM_PUBLIC_ID = "publicid"
-const val QWEATHER_PARAM_TIME = "t"
-const val QWEATHER_PARAM_SIGNATURE = "sign"
 
 const val EVENT_DATA_LOADED = "data_loaded"
 const val EVENT_CITY_CHANGED = "city_changed"

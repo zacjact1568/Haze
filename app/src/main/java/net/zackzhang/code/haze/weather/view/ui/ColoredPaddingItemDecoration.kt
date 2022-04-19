@@ -5,7 +5,7 @@ import android.graphics.Paint
 import androidx.annotation.ColorInt
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
-import net.zackzhang.code.haze.common.util.ItemDecorationRectInsets
+import net.zackzhang.code.haze.base.util.ItemDecorationRectInsets
 
 class ColoredPaddingItemDecoration(
     left: Int,

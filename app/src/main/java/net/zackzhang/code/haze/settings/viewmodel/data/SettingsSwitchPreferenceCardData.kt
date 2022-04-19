@@ -4,8 +4,8 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
+import net.zackzhang.code.haze.base.util.getString
 import net.zackzhang.code.haze.common.constant.CARD_TYPE_SETTINGS_SWITCH_PREFERENCE
-import net.zackzhang.code.haze.common.util.getString
 
 class SettingsSwitchPreferenceCardData(
     key: Preferences.Key<Boolean>,

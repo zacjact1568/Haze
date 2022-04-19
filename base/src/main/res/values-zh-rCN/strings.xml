@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="datetime_prettified_relative_to_now_negative_format">于 %s</string>
+    <string name="datetime_prettified_relative_to_now_day">于一天前</string>
+    <plurals name="datetime_prettified_relative_to_now_hour_format">
+        <item quantity="other">于 %d 小时前</item>
+    </plurals>
+    <plurals name="datetime_prettified_relative_to_now_minute_format">
+        <item quantity="other">于 %d 分钟前</item>
+    </plurals>
+    <string name="datetime_prettified_relative_to_now_second">于刚才</string>
+
+</resources>

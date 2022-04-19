@@ -7,7 +7,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
 import net.zackzhang.code.haze.R
-import net.zackzhang.code.haze.common.util.*
+import net.zackzhang.code.haze.base.util.*
 import kotlin.properties.Delegates
 
 class DualColorBar @JvmOverloads constructor(

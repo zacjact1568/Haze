@@ -2,9 +2,9 @@ package net.zackzhang.code.haze.weather.util
 
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
-import net.zackzhang.code.haze.App
 import net.zackzhang.code.haze.R
-import net.zackzhang.code.haze.common.util.dLog
+import net.zackzhang.code.haze.base.util.context
+import net.zackzhang.code.haze.base.util.dLog
 import net.zackzhang.code.haze.weather.model.entity.WeatherDailyEntity
 
 const val DEFAULT_CONDITION_COLOR = R.color.colorPrimary
@@ -13,7 +13,7 @@ const val DEFAULT_CONDITION_ICON = R.drawable.ic_condition_999
 
 @ColorInt
 fun getConditionColorByCode(code: Int?) =
-    App.context.getColor(when (code) {
+    context.getColor(when (code) {
         // 晴（白天）、热
         100, 900 -> R.color.blue_200
         // 有云（白天）
@@ -61,7 +61,6 @@ fun getConditionIconResByCode(code: Int?): Int {
         else -> code.toString()
     }
     dLog("getConditionIconResByCode($code), prefix: $prefix", "WeatherUtils")
-    val context = App.context
     val resId = context.resources.getIdentifier("ic_condition_$prefix", "drawable", context.packageName)
     return if (resId == 0) DEFAULT_CONDITION_ICON else resId
 }
