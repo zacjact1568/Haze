@@ -7,12 +7,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.*
-import net.zackzhang.code.haze.city.model.entity.CityWeatherEntity
+import net.zackzhang.code.haze.core.city.model.entity.CityWeatherEntity
 import net.zackzhang.code.haze.city.view.CityActivity
 import net.zackzhang.code.haze.base.constant.*
 import net.zackzhang.code.haze.base.view.ThemeEntity
 import net.zackzhang.code.haze.base.view.SystemBarInsets
 import net.zackzhang.code.haze.common.constant.*
+import net.zackzhang.code.haze.core.common.constant.CITY
 import net.zackzhang.code.haze.databinding.ActivityHomeBinding
 import net.zackzhang.code.haze.home.viewmodel.HomeViewModel
 import net.zackzhang.code.haze.settings.view.SettingsActivity

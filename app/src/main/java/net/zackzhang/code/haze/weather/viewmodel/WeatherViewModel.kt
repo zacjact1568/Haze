@@ -11,16 +11,16 @@ import net.zackzhang.code.haze.base.view.ThemeEntity
 import net.zackzhang.code.haze.base.util.*
 import net.zackzhang.code.haze.base.viewmodel.Event
 import net.zackzhang.code.haze.base.viewmodel.BaseViewModel
-import net.zackzhang.code.haze.weather.model.local.WeatherLocalRepository
-import net.zackzhang.code.haze.weather.model.remote.WeatherRemoteRepository
+import net.zackzhang.code.haze.core.weather.model.local.WeatherLocalRepository
+import net.zackzhang.code.haze.core.weather.model.remote.WeatherRemoteRepository
 import net.zackzhang.code.haze.base.viewmodel.data.BaseCardData
 import net.zackzhang.code.haze.common.constant.EVENT_DATA_LOADED
 import net.zackzhang.code.haze.common.constant.EVENT_THEME_CHANGED
 import net.zackzhang.code.haze.common.viewmodel.data.SourceCardData
-import net.zackzhang.code.haze.weather.model.entity.WeatherEntity
-import net.zackzhang.code.haze.weather.util.getTemperatureRange
-import net.zackzhang.code.haze.weather.util.getConditionColorByCode
-import net.zackzhang.code.haze.weather.util.getConditionIconResByCode
+import net.zackzhang.code.haze.core.weather.model.entity.WeatherEntity
+import net.zackzhang.code.haze.core.weather.util.getTemperatureRange
+import net.zackzhang.code.haze.core.weather.util.getConditionColorByCode
+import net.zackzhang.code.haze.core.weather.util.getConditionIconResByCode
 import net.zackzhang.code.haze.weather.viewmodel.data.*
 import java.time.ZoneId
 

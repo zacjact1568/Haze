@@ -14,7 +14,7 @@ import net.zackzhang.code.haze.common.constant.CARD_TYPE_SETTINGS_INFO_PREFERENC
 import net.zackzhang.code.haze.common.constant.CARD_TYPE_SETTINGS_SWITCH_PREFERENCE
 import net.zackzhang.code.haze.common.constant.PREFERENCE_KEY_ABOUT
 import net.zackzhang.code.haze.common.constant.PREFERENCE_KEY_SHOW_CURRENT_ZONE_TIME
-import net.zackzhang.code.haze.settings.model.local.SettingsLocalRepository
+import net.zackzhang.code.haze.core.settings.model.local.SettingsLocalRepository
 import net.zackzhang.code.haze.settings.viewmodel.data.SettingsInfoPreferenceCardData
 import net.zackzhang.code.haze.settings.viewmodel.data.SettingsPreferenceBaseCardData
 import net.zackzhang.code.haze.settings.viewmodel.data.SettingsSwitchPreferenceCardData
