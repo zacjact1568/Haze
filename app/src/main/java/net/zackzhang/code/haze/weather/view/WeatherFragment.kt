@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.updatePaddingRelative
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -16,6 +15,7 @@ import net.zackzhang.code.haze.base.util.getDimension
 import net.zackzhang.code.haze.common.view.CardAdapter
 import net.zackzhang.code.haze.base.view.SystemBarInsets
 import net.zackzhang.code.haze.common.constant.*
+import net.zackzhang.code.haze.common.viewmodel.data.SpaceCardData
 import net.zackzhang.code.haze.databinding.FragmentWeatherBinding
 import net.zackzhang.code.haze.home.viewmodel.HomeViewModel
 import net.zackzhang.code.haze.weather.view.card.*
@@ -39,6 +39,8 @@ class WeatherFragment : Fragment() {
             else -> null
         }
     }
+
+    private var navigationInset = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,6 +67,7 @@ class WeatherFragment : Fragment() {
         viewModel.observeCard(viewLifecycleOwner) {
             binding.root.isRefreshing = false
             cardAdapter.setCardData(it)
+            leaveSpaceForNavigationInset()
         }
         viewModel.observeEvent(viewLifecycleOwner) {
             when (it.name) {
@@ -81,13 +84,26 @@ class WeatherFragment : Fragment() {
                     cardAdapter.setCardData(emptyList())
                     viewModel.notifyRefreshing((it.data as CityWeatherEntity).id)
                 }
-                EVENT_WINDOW_INSETS_APPLIED ->
-                    binding.vCardList.updatePaddingRelative(bottom = (it.data as SystemBarInsets).navigation)
+                EVENT_WINDOW_INSETS_APPLIED -> {
+                    navigationInset = (it.data as SystemBarInsets).navigation
+                    leaveSpaceForNavigationInset()
+                }
             }
         }
         viewModel.notifyLoadingData()
 
         return binding.root
+    }
+
+    private fun leaveSpaceForNavigationInset() {
+        if (navigationInset <= 0) return
+        val cd = SpaceCardData(vertical = navigationInset)
+        val pos = cardAdapter.lastCardPosition
+        if (pos < 0 || !cardAdapter.isCardTypeMatch(pos, CARD_TYPE_SPACE)) {
+            cardAdapter.addCard(cd)
+        } else {
+            cardAdapter.replaceCard(cd, pos)
+        }
     }
 
     private inline fun GridLayoutManager.spanSizeLookup(crossinline lookup: (Int) -> Int) {

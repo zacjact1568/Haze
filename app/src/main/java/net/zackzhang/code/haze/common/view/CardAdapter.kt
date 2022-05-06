@@ -7,8 +7,10 @@ import net.zackzhang.code.haze.base.util.*
 import net.zackzhang.code.haze.base.view.card.BaseCard
 import net.zackzhang.code.haze.base.viewmodel.data.BaseCardData
 import net.zackzhang.code.haze.common.constant.CARD_TYPE_SOURCE
+import net.zackzhang.code.haze.common.constant.CARD_TYPE_SPACE
 import net.zackzhang.code.haze.common.view.card.EmptyCard
 import net.zackzhang.code.haze.common.view.card.SourceCard
+import net.zackzhang.code.haze.common.view.card.SpaceCard
 
 class CardAdapter(
     private val onItemClick: ((position: Int) -> Unit)? = null,
@@ -17,11 +19,14 @@ class CardAdapter(
 
     var spanCount = 1
 
+    val lastCardPosition get() = cardDataList.lastIndex
+
     private val cardDataList = mutableListOf<BaseCardData>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseCard {
         val card = creator(viewType, parent) ?: when (viewType) {
             CARD_TYPE_SOURCE -> SourceCard(parent)
+            CARD_TYPE_SPACE -> SpaceCard(parent)
             // Other default cards
             else -> EmptyCard(parent)
         }
@@ -51,6 +56,16 @@ class CardAdapter(
         notifyDataSetChanged()
     }
 
+    fun addCard(cardData: BaseCardData, position: Int = itemCount) {
+        cardDataList.add(position, cardData)
+        notifyItemInserted(position)
+    }
+
+    fun replaceCard(cardData: BaseCardData, position: Int) {
+        cardDataList[position] = cardData
+        notifyItemChanged(position)
+    }
+
     fun getSpanSize(position: Int) = cardDataList[position].spanSize ?: spanCount
 
     fun isDecorationExists(position: Int): ItemDecorationRectInsets {
@@ -71,6 +86,8 @@ class CardAdapter(
     }
 
     fun needBackground(position: Int) = cardDataList[position].needBackground
+
+    fun isCardTypeMatch(position: Int, type: Int) = getItemViewType(position) == type
 
     /**
      * 假定除了末尾，卡片填满所有格子
