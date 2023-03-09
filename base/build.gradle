@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+    namespace 'net.zackzhang.code.haze.base'
     compileSdk 31
 
     defaultConfig {
