@@ -14,7 +14,7 @@ import net.zackzhang.code.haze.base.viewmodel.BaseViewModel
 import net.zackzhang.code.haze.core.weather.model.local.WeatherLocalRepository
 import net.zackzhang.code.haze.core.weather.model.remote.WeatherRemoteRepository
 import net.zackzhang.code.haze.base.viewmodel.data.BaseCardData
-import net.zackzhang.code.haze.common.constant.EVENT_DATA_LOADED
+import net.zackzhang.code.haze.common.constant.EVENT_CITY_LOADED
 import net.zackzhang.code.haze.common.constant.EVENT_THEME_CHANGED
 import net.zackzhang.code.haze.common.viewmodel.data.SourceCardData
 import net.zackzhang.code.haze.core.weather.model.entity.WeatherEntity
@@ -41,10 +41,17 @@ class WeatherViewModel : BaseViewModel() {
     fun notifyLoadingData() {
         if (entityLiveData.value != null) return
         viewModelScope.launch {
-            val weather = WeatherLocalRepository.query()
-            weather.getOrNull(weather.size - 1)?.let {
-                eventLiveData.value = Event(EVENT_DATA_LOADED, it.city)
-                entityLiveData.value = WeatherEntity.fromWeatherLocalEntity(it)
+            val weatherList = WeatherLocalRepository.query()
+            if (weatherList.isNotEmpty()) {
+                // 本地数据库中有缓存
+                val weatherLocal = weatherList.first()
+                eventLiveData.value = Event(EVENT_CITY_LOADED, weatherLocal.city)
+                entityLiveData.value = WeatherEntity.fromWeatherLocalEntity(weatherLocal)
+            } else {
+                // 要先设置主题色，再 EVENT_DATA_LOADED
+                // 否则打开城市页不会带着主题色
+                setupTheme(null)
+                eventLiveData.value = Event(EVENT_CITY_LOADED, null)
             }
         }
     }
@@ -59,12 +66,7 @@ class WeatherViewModel : BaseViewModel() {
     }
 
     private fun WeatherEntity.toCardDataList(): List<BaseCardData> {
-        val theme = ThemeEntity(
-            getConditionColorByCode(now.conditionCode),
-            // 前景色暂时固定为白色
-            Color.WHITE,
-        )
-        eventLiveData.value = Event(EVENT_THEME_CHANGED, theme)
+        val theme = setupTheme(now.conditionCode)
         val list = mutableListOf<BaseCardData>()
         list += WeatherHeadCardData(
             now.temperature,
@@ -141,4 +143,14 @@ class WeatherViewModel : BaseViewModel() {
             WeatherCurrentCardData(R.drawable.ic_fan, getAppColorRes(R.color.light_green_400), now.windDirection, "风向"),
             WeatherCurrentCardData(R.drawable.ic_cloud, getAppColorRes(R.color.cyan_300), now.cloud?.toString(), "云量"),
         )
+
+    private fun setupTheme(conditionCode: Int?): ThemeEntity {
+        val theme = ThemeEntity(
+            getConditionColorByCode(conditionCode),
+            // 前景色暂时固定为白色
+            Color.WHITE,
+        )
+        eventLiveData.value = Event(EVENT_THEME_CHANGED, theme)
+        return theme;
+    }
 }

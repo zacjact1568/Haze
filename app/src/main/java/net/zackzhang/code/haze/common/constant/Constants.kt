@@ -14,7 +14,16 @@ const val CARD_TYPE_SPACE = 30
 
 const val RESULT_CODE_CITY_NEW = 20
 
-const val EVENT_DATA_LOADED = "data_loaded"
+/**
+ * 本地数据库缓存中的城市加载通知
+ * 用于 WeatherFragment -> HomeActivity
+ */
+const val EVENT_CITY_LOADED = "city_loaded"
+
+/**
+ * 城市更改通知
+ * 用于 HomeActivity -> WeatherFragment
+ */
 const val EVENT_CITY_CHANGED = "city_changed"
 const val EVENT_ACTIVITY_FINISH = "activity_finish"
 const val EVENT_CITY_SELECTED = "city_selected"

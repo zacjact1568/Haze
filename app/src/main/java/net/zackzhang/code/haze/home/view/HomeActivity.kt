@@ -13,6 +13,8 @@ import net.zackzhang.code.haze.base.constant.*
 import net.zackzhang.code.haze.base.view.ThemeEntity
 import net.zackzhang.code.haze.base.view.SystemBarInsets
 import net.zackzhang.code.haze.common.constant.*
+import net.zackzhang.code.haze.common.util.pauseAnimationWhenPlaying
+import net.zackzhang.code.haze.common.util.resumeAnimationWhenPause
 import net.zackzhang.code.haze.core.common.constant.CITY
 import net.zackzhang.code.haze.databinding.ActivityHomeBinding
 import net.zackzhang.code.haze.home.viewmodel.HomeViewModel
@@ -20,14 +22,25 @@ import net.zackzhang.code.haze.settings.view.SettingsActivity
 
 class HomeActivity : AppCompatActivity() {
 
+    private val viewBinding by lazy {
+        ActivityHomeBinding.inflate(layoutInflater)
+    }
+
     private val viewModel by viewModels<HomeViewModel>()
 
     private val cityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         when (it.resultCode) {
+            RESULT_CANCELED -> {
+                if (!viewModel.hasCity) {
+                    finish()
+                }
+            }
             RESULT_CODE_CITY_NEW -> {
                 val city = it.data?.getParcelableExtra<CityWeatherEntity>(CITY)
                 if (city != null) {
                     viewModel.notifyCityChanged(city)
+                } else {
+                    throw IllegalArgumentException("RESULT_CODE_CITY_NEW result should have a CityWeatherEntity extra")
                 }
             }
         }
@@ -36,34 +49,51 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        val binding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(viewBinding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(viewBinding.root) { _, insets ->
             viewModel.notifyEvent(EVENT_WINDOW_INSETS_APPLIED, SystemBarInsets.fromWindowInsets(insets))
             WindowInsetsCompat.CONSUMED
         }
-        binding.updateViewsTheme(viewModel.getSavedEvent<ThemeEntity>(EVENT_THEME_CHANGED))
-        binding.vCities.setOnClickListener {
+        viewBinding.updateViewsTheme(viewModel.getSavedEvent<ThemeEntity>(EVENT_THEME_CHANGED))
+        viewBinding.vCities.setOnClickListener {
             cityLauncher.launch(Intent(this, CityActivity::class.java)
                 .putExtra(EXTRA_THEME, viewModel.getSavedEvent<ThemeEntity>(EVENT_THEME_CHANGED)))
         }
-        binding.updateCityName(viewModel.cityName)
-        binding.vSettings.setOnClickListener {
+        viewBinding.vSettings.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java)
                 .putExtra(EXTRA_THEME, viewModel.getSavedEvent<ThemeEntity>(EVENT_THEME_CHANGED)))
         }
 
-        viewModel.observeEvent(this) {
-            when (it.name) {
-                EVENT_DATA_LOADED, EVENT_CITY_CHANGED -> {
-                    binding.updateCityName((it.data as? CityWeatherEntity)?.name)
+        viewModel.observeCity(this) {
+            if (it != null) {
+                viewBinding.updateCityName(it.name)
+                viewBinding.vLoading.apply {
+                    cancelAnimation()
+                    isVisible = false
                 }
-                EVENT_THEME_CHANGED -> binding.updateViewsTheme(it.data as ThemeEntity)
-                EVENT_WINDOW_INSETS_APPLIED ->
-                    binding.vToolbar.updatePaddingRelative(top = (it.data as SystemBarInsets).status)
+                viewBinding.vWeatherGroup.isVisible = true
+            } else {
+                viewBinding.vCities.performClick()
             }
         }
+        viewModel.observeEvent(this) {
+            when (it.name) {
+                EVENT_THEME_CHANGED -> viewBinding.updateViewsTheme(it.data as ThemeEntity)
+                EVENT_WINDOW_INSETS_APPLIED ->
+                    viewBinding.vToolbar.updatePaddingRelative(top = (it.data as SystemBarInsets).status)
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewBinding.vLoading.resumeAnimationWhenPause()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewBinding.vLoading.pauseAnimationWhenPlaying()
     }
 
     private fun ActivityHomeBinding.updateCityName(cityName: String?) {

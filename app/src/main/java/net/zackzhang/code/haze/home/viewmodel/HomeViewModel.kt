@@ -1,24 +1,31 @@
 package net.zackzhang.code.haze.home.viewmodel
 
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
 import net.zackzhang.code.haze.core.city.model.entity.CityWeatherEntity
 import net.zackzhang.code.haze.base.viewmodel.Event
 import net.zackzhang.code.haze.base.viewmodel.BaseViewModel
 import net.zackzhang.code.haze.common.constant.EVENT_CITY_CHANGED
-import net.zackzhang.code.haze.common.constant.EVENT_DATA_LOADED
 
 class HomeViewModel : BaseViewModel() {
 
-    // TODO 换成 notifyEvent
-    var cityName: String? = null
-        private set
+    val hasCity get() = cityLiveData.value != null
 
-    fun notifyDataLoaded(city: CityWeatherEntity) {
-        cityName = city.name
-        eventLiveData.value = Event(EVENT_DATA_LOADED, city)
+    private val cityLiveData by lazy {
+        MutableLiveData<CityWeatherEntity?>()
+    }
+
+    fun observeCity(owner: LifecycleOwner, observer: (CityWeatherEntity?) -> Unit) {
+        cityLiveData.observe(owner, observer)
+    }
+
+    fun notifyCityLoaded(city: CityWeatherEntity?) {
+        cityLiveData.value = city
     }
 
     fun notifyCityChanged(city: CityWeatherEntity) {
-        cityName = city.name
+        cityLiveData.value = city
+        // 通知 WeatherFragment 获取数据 & 刷新列表
         eventLiveData.value = Event(EVENT_CITY_CHANGED, city)
     }
 }
