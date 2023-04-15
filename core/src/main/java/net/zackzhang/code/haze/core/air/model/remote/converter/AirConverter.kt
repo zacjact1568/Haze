@@ -17,8 +17,16 @@ class AirConverter : Converter<ResponseBody, AirEntity> {
         val now = fromJsonObject(response.getJSONObject("now"), AirNowEntity::class).apply {
             updatedAt = updateTime
         }
-        val stationList = response.getList("station", AirNowEntity::class)
-        stationList?.forEach { it.updatedAt = updateTime }
+        val rawStationList = response.getList("station", AirNowEntity::class)
+        val stationList = rawStationList?.run {
+            val map = linkedMapOf<String, AirNowEntity>()
+            forEach {
+                it.updatedAt = updateTime
+                // 服务端可能返回多个相同的 stationId，去重
+                map[it.stationId] = it
+            }
+            ArrayList(map.values)
+        }
         return AirEntity(now, stationList)
     }
 }
