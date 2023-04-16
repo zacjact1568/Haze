@@ -20,7 +20,8 @@ object WeatherRemoteRepository {
         .build()
         .create(WeatherServices::class.java)
 
-    suspend fun getWeather(cityId: String) = withContext(Dispatchers.IO) {
+    suspend fun getWeather(cityId: String) = withContext(Dispatchers.Main.immediate) {
+        // Retrofit 的协程实现调用了 enqueue，无需使用 Dispatchers.IO
         val time = seconds
         val sign = makeSignature(cityId, time)
         val now = async { SERVICES.getNow(cityId, QWEATHER_PUBLIC_ID, time, sign) }

@@ -1,10 +1,9 @@
 package net.zackzhang.code.haze.core.city.model.remote
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import net.zackzhang.code.haze.base.util.QWEATHER_PUBLIC_ID
 import net.zackzhang.code.haze.base.util.makeSignature
 import net.zackzhang.code.haze.base.util.seconds
+import net.zackzhang.code.haze.core.city.model.entity.CityEntity
 import retrofit2.Retrofit
 
 object CityRemoteRepository {
@@ -17,9 +16,9 @@ object CityRemoteRepository {
         .build()
         .create(CityServices::class.java)
 
-    suspend fun getCityList(location: String) = withContext(Dispatchers.IO) {
+    suspend fun getCityList(location: String): List<CityEntity> {
         val time = seconds
-        SERVICES.getSearchAssociation(
+        return SERVICES.getSearchAssociation(
             location,
             QWEATHER_PUBLIC_ID,
             time,

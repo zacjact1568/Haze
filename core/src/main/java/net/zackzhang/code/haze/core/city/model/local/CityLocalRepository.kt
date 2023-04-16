@@ -10,8 +10,6 @@ object CityLocalRepository {
 
     suspend fun replaceBy(city: CityEntity) {
         city.createdAt = ZonedDateTime.now()
-        withContext(Dispatchers.IO) {
-            db.cityDao().replaceBy(city)
-        }
+        db.cityDao().replaceBy(city)
     }
 }
