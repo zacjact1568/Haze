@@ -17,10 +17,21 @@ android {
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
 
+    signingConfigs {
+        release {
+            def sp = getSecretProperties()
+            keyAlias sp['android.signing.keyAlias']
+            keyPassword sp['android.signing.keystorePassword']
+            storeFile file(sp['android.signing.keystorePath'])
+            storePassword sp['android.signing.keyPassword']
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
@@ -65,4 +76,11 @@ static def generateVersionCode() {
 
 static def generateVersionName() {
     return new Date().format('yyyyMMdd')
+}
+
+def getSecretProperties() {
+    def sf = rootProject.file('secret.properties')
+    return new Properties().with(true) {
+        it.load(new FileInputStream(sf))
+    }
 }

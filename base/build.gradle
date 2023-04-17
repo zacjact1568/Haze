@@ -57,7 +57,9 @@ dependencies {
 }
 
 def getSecretProperties() {
+    // rootProject 必须放在外面不然是 null
+    def sf = rootProject.file('secret.properties')
     return new Properties().with(true) {
-        it.load(new FileInputStream(file('secret.properties')))
+        it.load(new FileInputStream(sf))
     }
 }
