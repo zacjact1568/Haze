@@ -12,6 +12,7 @@ import net.zackzhang.code.haze.R
 import net.zackzhang.code.haze.core.city.model.entity.CityWeatherEntity
 import net.zackzhang.code.haze.base.view.ThemeEntity
 import net.zackzhang.code.haze.base.util.getDimension
+import net.zackzhang.code.haze.base.util.showToast
 import net.zackzhang.code.haze.common.view.CardAdapter
 import net.zackzhang.code.haze.base.view.SystemBarInsets
 import net.zackzhang.code.haze.common.constant.*
@@ -78,6 +79,10 @@ class WeatherFragment : Fragment() {
                 EVENT_THEME_CHANGED -> (it.data as ThemeEntity).run {
                     binding.root.setColorSchemeColors(backgroundColor)
                     activityViewModel.notifyEvent(EVENT_THEME_CHANGED, this)
+                }
+                EVENT_NETWORK_FAILED -> {
+                    binding.root.isRefreshing = false
+                    showToast(R.string.toast_network_failed)
                 }
             }
         }

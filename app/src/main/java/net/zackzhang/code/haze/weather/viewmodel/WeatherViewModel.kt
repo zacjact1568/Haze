@@ -15,6 +15,7 @@ import net.zackzhang.code.haze.core.weather.model.local.WeatherLocalRepository
 import net.zackzhang.code.haze.core.weather.model.remote.WeatherRemoteRepository
 import net.zackzhang.code.haze.base.viewmodel.data.BaseCardData
 import net.zackzhang.code.haze.common.constant.EVENT_CITY_LOADED
+import net.zackzhang.code.haze.common.constant.EVENT_NETWORK_FAILED
 import net.zackzhang.code.haze.common.constant.EVENT_THEME_CHANGED
 import net.zackzhang.code.haze.common.viewmodel.data.SourceCardData
 import net.zackzhang.code.haze.core.weather.model.entity.WeatherEntity
@@ -60,8 +61,12 @@ class WeatherViewModel : BaseViewModel() {
         val id = cityId ?: (entityLiveData.value ?: return).now.cityId
         viewModelScope.launch {
             val weather = WeatherRemoteRepository.getWeather(id)
-            WeatherLocalRepository.insert(weather, cityId == null)
-            entityLiveData.value = weather
+            if (weather != null) {
+                WeatherLocalRepository.insert(weather, cityId == null)
+                entityLiveData.value = weather
+            } else {
+                eventLiveData.value = Event(EVENT_NETWORK_FAILED, null)
+            }
         }
     }
 

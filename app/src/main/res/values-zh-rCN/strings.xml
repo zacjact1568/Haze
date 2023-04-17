@@ -26,4 +26,6 @@
     <string name="preference_title_about">关于 Haze</string>
     <string name="preference_summary_about_format">版本 %s</string>
 
+    <string name="toast_network_failed">网络访问失败</string>
+
 </resources>

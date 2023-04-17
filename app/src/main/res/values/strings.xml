@@ -26,4 +26,6 @@
     <string name="preference_title_about">About Haze</string>
     <string name="preference_summary_about_format">Version %s</string>
 
+    <string name="toast_network_failed">Network access failed</string>
+
 </resources>

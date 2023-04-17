@@ -8,7 +8,9 @@ import android.graphics.RectF
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.ColorInt
+import androidx.annotation.StringRes
 import net.zackzhang.code.haze.base.constant.PLACEHOLDER
 
 enum class Orientation {
@@ -104,3 +106,7 @@ inline fun <T> Orientation.switch(horizontal: () -> T, vertical: () -> T) =
         Orientation.HORIZONTAL -> horizontal()
         Orientation.VERTICAL -> vertical()
     }
+
+fun showToast(@StringRes id: Int) {
+    Toast.makeText(context, id, Toast.LENGTH_SHORT).show()
+}
