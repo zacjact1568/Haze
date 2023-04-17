@@ -107,7 +107,8 @@ class WeatherFragment : Fragment() {
         if (navigationInset <= 0) return
         val cd = SpaceCardData(vertical = navigationInset)
         val pos = cardAdapter.lastCardPosition
-        if (pos < 0 || !cardAdapter.isCardTypeMatch(pos, CARD_TYPE_SPACE)) {
+        if (pos < 0) return
+        if (!cardAdapter.isCardTypeMatch(pos, CARD_TYPE_SPACE)) {
             cardAdapter.addCard(cd)
         } else {
             cardAdapter.replaceCard(cd, pos)
