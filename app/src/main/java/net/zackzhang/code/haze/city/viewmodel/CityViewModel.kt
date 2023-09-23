@@ -4,10 +4,10 @@ import android.content.Intent
 import androidx.activity.result.ActivityResult
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import net.zackzhang.code.haze.core.city.model.entity.CityWeatherEntity
-import net.zackzhang.code.haze.core.common.constant.CITY
-import net.zackzhang.code.haze.base.viewmodel.Event
-import net.zackzhang.code.haze.base.viewmodel.BaseViewModel
+import net.zackzhang.code.haze.city.model.entity.CityWeatherEntity
+import net.zackzhang.code.haze.common.constant.CITY
+import net.zackzhang.code.haze.common.viewmodel.Event
+import net.zackzhang.code.haze.common.viewmodel.BaseViewModel
 import net.zackzhang.code.haze.common.constant.EVENT_ACTIVITY_FINISH
 import net.zackzhang.code.haze.common.constant.RESULT_CODE_CITY_NEW
 

@@ -2,9 +2,9 @@ package net.zackzhang.code.haze.home.viewmodel
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import net.zackzhang.code.haze.core.city.model.entity.CityWeatherEntity
-import net.zackzhang.code.haze.base.viewmodel.Event
-import net.zackzhang.code.haze.base.viewmodel.BaseViewModel
+import net.zackzhang.code.haze.city.model.entity.CityWeatherEntity
+import net.zackzhang.code.haze.common.viewmodel.Event
+import net.zackzhang.code.haze.common.viewmodel.BaseViewModel
 import net.zackzhang.code.haze.common.constant.EVENT_CITY_CHANGED
 
 class HomeViewModel : BaseViewModel() {

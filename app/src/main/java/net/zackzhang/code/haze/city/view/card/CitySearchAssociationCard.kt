@@ -3,10 +3,10 @@ package net.zackzhang.code.haze.city.view.card
 import android.view.ViewGroup
 import net.zackzhang.code.haze.R
 import net.zackzhang.code.haze.city.viewmodel.data.CitySearchAssociationCardData
-import net.zackzhang.code.haze.base.util.orPlaceholder
-import net.zackzhang.code.haze.base.view.card.BaseCard
+import net.zackzhang.code.haze.common.util.orPlaceholder
+import net.zackzhang.code.haze.common.view.card.BaseCard
 import net.zackzhang.code.haze.databinding.CardCitySearchAssociationBinding
-import net.zackzhang.code.haze.base.viewmodel.data.BaseCardData
+import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
 
 class CitySearchAssociationCard(parent: ViewGroup, private var selectedCallback: (Int) -> Unit) :
     BaseCard(parent, R.layout.card_city_search_association) {

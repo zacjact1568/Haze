@@ -1,20 +1,29 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
 }
 
 android {
     namespace 'net.zackzhang.code.haze'
-    compileSdkVersion 31
-    buildToolsVersion '31.0.0'
+    compileSdk 31
 
     defaultConfig {
         applicationId 'net.zackzhang.code.haze'
-        minSdkVersion 26
-        targetSdkVersion 31
+        minSdk 26
+        targetSdk 31
         versionCode generateVersionCode()
         versionName generateVersionName()
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        javaCompileOptions {
+            annotationProcessorOptions {
+//                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+        def sp = getSecretProperties()
+        buildConfigField("String", "QWEATHER_PUBLIC_ID", "\"" + sp['qweather.publicId'] + "\"")
+        buildConfigField("String", "QWEATHER_KEY", "\"" + sp['qweather.key'] + "\"")
     }
 
     signingConfigs {
@@ -51,7 +60,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':core')
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.preference:preference-ktx:1.1.1'
@@ -65,9 +73,19 @@ dependencies {
     implementation "androidx.core:core-ktx:$core_version"
     implementation 'com.airbnb.android:lottie:4.2.0'
     implementation "androidx.datastore:datastore-preferences:$datastore_version"
+    implementation "com.google.code.gson:gson:$gson_version"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.facebook.stetho:stetho:$stetho_version"
+    implementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$android_junit_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    kapt "androidx.room:room-compiler:$room_version"
 }
 
 static def generateVersionCode() {
@@ -79,6 +97,7 @@ static def generateVersionName() {
 }
 
 def getSecretProperties() {
+    // rootProject 必须放在外面不然是 null
     def sf = rootProject.file('secret.properties')
     return new Properties().with(true) {
         it.load(new FileInputStream(sf))

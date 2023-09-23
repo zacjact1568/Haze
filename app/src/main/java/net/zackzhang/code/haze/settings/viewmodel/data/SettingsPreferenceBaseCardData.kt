@@ -2,7 +2,7 @@ package net.zackzhang.code.haze.settings.viewmodel.data
 
 import androidx.annotation.DrawableRes
 import androidx.datastore.preferences.core.Preferences
-import net.zackzhang.code.haze.base.viewmodel.data.BaseCardData
+import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
 
 abstract class SettingsPreferenceBaseCardData(
     val key: Preferences.Key<out Any>,

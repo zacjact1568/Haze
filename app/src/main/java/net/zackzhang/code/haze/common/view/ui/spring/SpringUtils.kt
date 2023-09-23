@@ -1,6 +1,6 @@
 package net.zackzhang.code.haze.common.view.ui.spring
 
-import net.zackzhang.code.haze.base.util.dLog
+import net.zackzhang.code.haze.common.util.dLog
 
 private const val LOG = false
 

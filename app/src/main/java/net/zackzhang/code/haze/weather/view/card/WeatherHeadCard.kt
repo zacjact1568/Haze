@@ -2,11 +2,11 @@ package net.zackzhang.code.haze.weather.view.card
 
 import android.view.ViewGroup
 import net.zackzhang.code.haze.R
-import net.zackzhang.code.haze.base.util.orPlaceholder
-import net.zackzhang.code.haze.base.util.updateTextOrPlaceholder
-import net.zackzhang.code.haze.base.view.card.BaseCard
+import net.zackzhang.code.haze.common.util.orPlaceholder
+import net.zackzhang.code.haze.common.util.updateTextOrPlaceholder
+import net.zackzhang.code.haze.common.view.card.BaseCard
 import net.zackzhang.code.haze.databinding.CardWeatherHeadBinding
-import net.zackzhang.code.haze.base.viewmodel.data.BaseCardData
+import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
 import net.zackzhang.code.haze.weather.viewmodel.data.WeatherHeadCardData
 
 class WeatherHeadCard(parent: ViewGroup) : BaseCard(parent, R.layout.card_weather_head) {

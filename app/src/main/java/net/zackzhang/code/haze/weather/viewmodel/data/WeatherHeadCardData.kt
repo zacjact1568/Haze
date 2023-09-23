@@ -1,8 +1,8 @@
 package net.zackzhang.code.haze.weather.viewmodel.data
 
-import net.zackzhang.code.haze.base.view.ThemeEntity
-import net.zackzhang.code.haze.base.util.ItemDecorationRectInsets
-import net.zackzhang.code.haze.base.viewmodel.data.BaseCardData
+import net.zackzhang.code.haze.common.view.ThemeEntity
+import net.zackzhang.code.haze.common.util.ItemDecorationRectInsets
+import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
 import net.zackzhang.code.haze.common.constant.CARD_TYPE_WEATHER_HEAD
 
 class WeatherHeadCardData(

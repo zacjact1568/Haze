@@ -3,8 +3,8 @@ package net.zackzhang.code.haze.weather.view.ui
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import net.zackzhang.code.haze.base.util.ItemDecorationRectInsets
-import net.zackzhang.code.haze.base.util.Orientation
+import net.zackzhang.code.haze.common.util.ItemDecorationRectInsets
+import net.zackzhang.code.haze.common.util.Orientation
 
 open class PaddingItemDecoration(
     protected val left: Int,

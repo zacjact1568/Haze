@@ -6,8 +6,8 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.annotation.ColorInt
 import net.zackzhang.code.haze.R
-import net.zackzhang.code.haze.base.util.getDimension
-import net.zackzhang.code.haze.base.util.getInteger
+import net.zackzhang.code.haze.common.util.getDimension
+import net.zackzhang.code.haze.common.util.getInteger
 
 class ColorGradientBar @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null

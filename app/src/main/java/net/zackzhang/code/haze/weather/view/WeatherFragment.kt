@@ -9,12 +9,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import net.zackzhang.code.haze.R
-import net.zackzhang.code.haze.core.city.model.entity.CityWeatherEntity
-import net.zackzhang.code.haze.base.view.ThemeEntity
-import net.zackzhang.code.haze.base.util.getDimension
-import net.zackzhang.code.haze.base.util.showToast
+import net.zackzhang.code.haze.city.model.entity.CityWeatherEntity
+import net.zackzhang.code.haze.common.view.ThemeEntity
+import net.zackzhang.code.haze.common.util.getDimension
+import net.zackzhang.code.haze.common.util.showToast
 import net.zackzhang.code.haze.common.view.CardAdapter
-import net.zackzhang.code.haze.base.view.SystemBarInsets
+import net.zackzhang.code.haze.common.view.SystemBarInsets
 import net.zackzhang.code.haze.common.constant.*
 import net.zackzhang.code.haze.common.viewmodel.data.SpaceCardData
 import net.zackzhang.code.haze.databinding.FragmentWeatherBinding

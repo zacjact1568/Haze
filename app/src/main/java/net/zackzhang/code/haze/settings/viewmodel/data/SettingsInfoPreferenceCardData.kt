@@ -4,7 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.intPreferencesKey
-import net.zackzhang.code.haze.base.util.getString
+import net.zackzhang.code.haze.common.util.getString
 import net.zackzhang.code.haze.common.constant.CARD_TYPE_SETTINGS_INFO_PREFERENCE
 
 class SettingsInfoPreferenceCardData(

@@ -3,8 +3,8 @@ package net.zackzhang.code.haze.common.view.ui.spring
 import android.view.View
 import android.widget.OverScroller
 import androidx.core.view.ViewCompat
-import net.zackzhang.code.haze.base.util.Orientation
-import net.zackzhang.code.haze.base.util.switch
+import net.zackzhang.code.haze.common.util.Orientation
+import net.zackzhang.code.haze.common.util.switch
 
 class SpringNestedScrollingDelegate(
     private val master: View,

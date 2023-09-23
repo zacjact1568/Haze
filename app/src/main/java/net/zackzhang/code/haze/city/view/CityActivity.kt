@@ -13,8 +13,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePaddingRelative
 import androidx.core.widget.addTextChangedListener
 import net.zackzhang.code.haze.city.viewmodel.CityViewModel
-import net.zackzhang.code.haze.base.view.ThemeEntity
-import net.zackzhang.code.haze.base.view.SystemBarInsets
+import net.zackzhang.code.haze.common.view.ThemeEntity
+import net.zackzhang.code.haze.common.view.SystemBarInsets
 import net.zackzhang.code.haze.common.constant.EVENT_ACTIVITY_FINISH
 import net.zackzhang.code.haze.common.constant.EVENT_THEME_CHANGED
 import net.zackzhang.code.haze.common.constant.EVENT_WINDOW_INSETS_APPLIED

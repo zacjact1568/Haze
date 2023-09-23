@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import net.zackzhang.code.haze.base.view.ThemeEntity
+import net.zackzhang.code.haze.common.view.ThemeEntity
 import net.zackzhang.code.haze.common.view.CardAdapter
 import net.zackzhang.code.haze.common.constant.CARD_TYPE_SETTINGS_INFO_PREFERENCE
 import net.zackzhang.code.haze.common.constant.CARD_TYPE_SETTINGS_SWITCH_PREFERENCE

@@ -2,11 +2,11 @@ package net.zackzhang.code.haze.weather.view.card
 
 import android.view.ViewGroup
 import net.zackzhang.code.haze.R
-import net.zackzhang.code.haze.base.util.Orientation
-import net.zackzhang.code.haze.base.util.getDimension
+import net.zackzhang.code.haze.common.util.Orientation
+import net.zackzhang.code.haze.common.util.getDimension
 import net.zackzhang.code.haze.common.view.CardAdapter
-import net.zackzhang.code.haze.base.view.card.BaseCard
-import net.zackzhang.code.haze.base.viewmodel.data.BaseCardData
+import net.zackzhang.code.haze.common.view.card.BaseCard
+import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
 import net.zackzhang.code.haze.common.constant.CARD_TYPE_WEATHER_HOURLY
 import net.zackzhang.code.haze.databinding.CardWeatherHourlyRowBinding
 import net.zackzhang.code.haze.weather.view.ui.PaddingItemDecoration

@@ -1,5 +1,20 @@
 package net.zackzhang.code.haze
 
-import net.zackzhang.code.haze.base.BaseApp
+import android.annotation.SuppressLint
+import android.app.Application
+import android.content.Context
 
-class App : BaseApp()
+class App : Application() {
+
+    companion object {
+
+        @SuppressLint("StaticFieldLeak")
+        lateinit var context: Context
+            private set
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        context = applicationContext
+    }
+}

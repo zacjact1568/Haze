@@ -8,16 +8,16 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import net.zackzhang.code.haze.core.city.model.entity.CityEntity
-import net.zackzhang.code.haze.core.city.model.entity.CitySearchEntity
-import net.zackzhang.code.haze.core.city.model.entity.CityWeatherEntity
-import net.zackzhang.code.haze.core.city.model.local.CityLocalRepository
-import net.zackzhang.code.haze.core.city.model.remote.CityRemoteRepository
+import net.zackzhang.code.haze.city.model.entity.CityEntity
+import net.zackzhang.code.haze.city.model.entity.CitySearchEntity
+import net.zackzhang.code.haze.city.model.entity.CityWeatherEntity
+import net.zackzhang.code.haze.city.model.local.CityLocalRepository
+import net.zackzhang.code.haze.city.model.remote.CityRemoteRepository
 import net.zackzhang.code.haze.city.viewmodel.data.CitySearchAssociationCardData
-import net.zackzhang.code.haze.base.exception.PlaceholderException
-import net.zackzhang.code.haze.base.util.iLog
-import net.zackzhang.code.haze.base.viewmodel.Event
-import net.zackzhang.code.haze.base.viewmodel.BaseViewModel
+import net.zackzhang.code.haze.common.exception.PlaceholderException
+import net.zackzhang.code.haze.common.util.iLog
+import net.zackzhang.code.haze.common.viewmodel.Event
+import net.zackzhang.code.haze.common.viewmodel.BaseViewModel
 import net.zackzhang.code.haze.common.constant.EVENT_CITY_SELECTED
 
 class CitySearchAssociationViewModel : BaseViewModel() {

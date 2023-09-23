@@ -7,7 +7,11 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
 import net.zackzhang.code.haze.R
-import net.zackzhang.code.haze.base.util.*
+import net.zackzhang.code.haze.common.util.RoundPosition
+import net.zackzhang.code.haze.common.util.drawRoundRect
+import net.zackzhang.code.haze.common.util.ensureNotEmpty
+import net.zackzhang.code.haze.common.util.getDimension
+import net.zackzhang.code.haze.common.util.intersection
 import kotlin.properties.Delegates
 
 class DualColorBar @JvmOverloads constructor(
