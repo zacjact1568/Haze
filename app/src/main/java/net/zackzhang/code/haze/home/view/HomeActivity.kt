@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.IntentCompat
 import androidx.core.view.*
 import net.zackzhang.code.haze.city.model.entity.CityWeatherEntity
 import net.zackzhang.code.haze.city.view.CityActivity
@@ -34,7 +35,9 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
             RESULT_CODE_CITY_NEW -> {
-                val city = it.data?.getParcelableExtra<CityWeatherEntity>(CITY)
+                val city = it.data?.let { intent ->
+                    IntentCompat.getParcelableExtra(intent, CITY, CityWeatherEntity::class.java)
+                }
                 if (city != null) {
                     viewModel.notifyCityChanged(city)
                 } else {

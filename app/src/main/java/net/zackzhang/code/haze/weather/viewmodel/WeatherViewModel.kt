@@ -3,7 +3,7 @@ package net.zackzhang.code.haze.weather.viewmodel
 import android.graphics.Color
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import net.zackzhang.code.haze.R
@@ -40,7 +40,7 @@ class WeatherViewModel : BaseViewModel() {
     }
 
     private val cardLiveData by lazy {
-        Transformations.map(entityLiveData) { it.toCardDataList() }
+        entityLiveData.map { it.toCardDataList() }
     }
 
     fun observeCard(owner: LifecycleOwner, observer: (List<BaseCardData>) -> Unit) {

@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.IntentCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -26,7 +27,7 @@ class SettingsActivity : AppCompatActivity() {
         val binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        (intent.getParcelableExtra<ThemeEntity>(EXTRA_THEME))?.let {
+        (IntentCompat.getParcelableExtra(intent, EXTRA_THEME, ThemeEntity::class.java))?.let {
             viewModel.notifyEvent(EVENT_THEME_CHANGED, it)
         }
 

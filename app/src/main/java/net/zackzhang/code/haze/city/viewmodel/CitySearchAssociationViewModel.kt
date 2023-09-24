@@ -2,7 +2,7 @@ package net.zackzhang.code.haze.city.viewmodel
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
@@ -31,7 +31,7 @@ class CitySearchAssociationViewModel : BaseViewModel() {
     }
 
     private val cardLiveData by lazy {
-        Transformations.map(entityLiveData) { it.result.toCardDataList() }
+        entityLiveData.map { it.result.toCardDataList() }
     }
 
     private var searchJob: Job? = null

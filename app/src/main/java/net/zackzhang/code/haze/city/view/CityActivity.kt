@@ -7,6 +7,7 @@ import android.widget.EditText
 import androidx.activity.result.ActivityResult
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.IntentCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -31,7 +32,7 @@ class CityActivity : AppCompatActivity() {
         val binding = ActivityCityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        (intent.getParcelableExtra<ThemeEntity>(EXTRA_THEME))?.let {
+        (IntentCompat.getParcelableExtra(intent, EXTRA_THEME, ThemeEntity::class.java))?.let {
             viewModel.notifyEvent(EVENT_THEME_CHANGED, it)
         }
 
