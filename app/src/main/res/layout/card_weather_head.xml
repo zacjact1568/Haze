@@ -8,12 +8,11 @@
 
     <TextView
         android:id="@+id/v_temperature_now"
+        style="@style/BarlowFont.ExtraBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:textSize="@dimen/sp_80"
-        android:textStyle="bold"
-        android:fontFamily="@font/family_d_din"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/v_condition"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,11 +45,11 @@
 
     <TextView
         android:id="@+id/v_temperature_min"
+        style="@style/BarlowFont.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/temperature_min_max_margin_horizontal"
         android:textSize="@dimen/sp_16"
-        android:fontFamily="@font/family_d_din_expanded"
         app:layout_constraintTop_toTopOf="@+id/v_temperature_range_bar"
         app:layout_constraintBottom_toBottomOf="@+id/v_temperature_range_bar"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,11 +69,11 @@
 
     <TextView
         android:id="@+id/v_temperature_max"
+        style="@style/BarlowFont.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/temperature_min_max_margin_horizontal"
         android:textSize="@dimen/sp_16"
-        android:fontFamily="@font/family_d_din_expanded"
         app:layout_constraintTop_toTopOf="@+id/v_temperature_range_bar"
         app:layout_constraintBottom_toBottomOf="@+id/v_temperature_range_bar"
         app:layout_constraintStart_toEndOf="@+id/v_temperature_range_bar"

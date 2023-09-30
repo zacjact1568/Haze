@@ -38,13 +38,12 @@
 
     <TextView
         android:id="@+id/v_temperature_min"
+        style="@style/BarlowFont.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_20"
         android:textSize="@dimen/sp_16"
         android:textColor="@color/gray_800"
-        android:textStyle="bold"
-        android:fontFamily="@font/family_d_din"
         app:layout_constraintStart_toEndOf="@+id/v_condition_icon"
         app:layout_constraintEnd_toStartOf="@+id/v_temperature_range_bar"
         app:layout_constraintTop_toTopOf="parent"
@@ -65,13 +64,12 @@
 
     <TextView
         android:id="@+id/v_temperature_max"
+        style="@style/BarlowFont.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_10"
         android:textSize="@dimen/sp_16"
         android:textColor="@color/gray_800"
-        android:textStyle="bold"
-        android:fontFamily="@font/family_d_din"
         app:layout_constraintStart_toEndOf="@+id/v_temperature_range_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
