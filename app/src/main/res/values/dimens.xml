@@ -20,6 +20,7 @@
     <dimen name="dp_100">100dp</dimen>
     <dimen name="dp_200">200dp</dimen>
 
+    <dimen name="sp_3">3sp</dimen>
     <dimen name="sp_12">12sp</dimen>
     <dimen name="sp_14">14sp</dimen>
     <dimen name="sp_16">16sp</dimen>
@@ -27,6 +28,7 @@
     <dimen name="sp_20">20sp</dimen>
     <dimen name="sp_22">22sp</dimen>
     <dimen name="sp_24">24sp</dimen>
+    <dimen name="sp_26">26sp</dimen>
     <dimen name="sp_80">80sp</dimen>
 
     <dimen name="match_constraint">0dp</dimen>
@@ -55,7 +57,7 @@
     <dimen name="color_gradient_bar_default_bar_height">16dp</dimen>
     <dimen name="color_gradient_bar_default_ring_width">2dp</dimen>
 
-    <dimen name="temperature_min_max_margin_horizontal">40dp</dimen>
+    <dimen name="temperature_min_max_margin_horizontal">38dp</dimen>
 
     <dimen name="temperature_range_bar_margin_top">40dp</dimen>
     <dimen name="temperature_range_bar_margin_horizontal">6dp</dimen>

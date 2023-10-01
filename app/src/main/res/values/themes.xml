@@ -67,4 +67,15 @@
 
     </style>
 
+    <style name="TemperatureRangeBarSideTemperatureStyle" parent="BarlowFont.Medium">
+
+        <!-- 26sp 应该足够显示三个字符了 -->
+        <item name="android:layout_width">@dimen/sp_26</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+        <!-- Barlow 字体有点矮，看起来没有居中，故将文字抬高一点 -->
+        <item name="android:paddingBottom">@dimen/sp_3</item>
+
+    </style>
+
 </resources>
