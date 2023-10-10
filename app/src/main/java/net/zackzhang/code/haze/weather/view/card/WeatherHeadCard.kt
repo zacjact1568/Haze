@@ -16,36 +16,15 @@ class WeatherHeadCard(parent: ViewGroup) : BaseCard(parent, R.layout.card_weathe
     override fun updateViews(cardData: BaseCardData) {
         if (cardData !is WeatherHeadCardData) return
         binding.run {
-            val theme = cardData.theme!!
-            vTemperatureNow.updateTextOrPlaceholder(
-                cardData.temperatureNow,
-                theme.foregroundColor
-            )
-            vCondition.updateTextOrPlaceholder(
-                cardData.condition,
-                theme.foregroundColor
-            )
+            vTemperatureNow.updateTextOrPlaceholder(cardData.temperatureNow)
+            vCondition.updateTextOrPlaceholder(cardData.condition)
             vAirQuality.updateTextOrPlaceholder(
-                context.getString(R.string.air_quality_format, cardData.airQuality.orPlaceholder()),
-                theme.foregroundColor
-            )
-            vTemperatureMin.updateTextOrPlaceholder(
-                cardData.temperatureRange?.first,
-                theme.foregroundColor
-            )
-            vTemperatureRangeBar.setData(
-                cardData.temperatureRange,
-                cardData.temperatureNow,
-                theme.foregroundColor
-            )
-            vTemperatureMax.updateTextOrPlaceholder(
-                cardData.temperatureRange?.last,
-                theme.foregroundColor
-            )
+                context.getString(R.string.air_quality_format, cardData.airQuality.orPlaceholder()))
+            vTemperatureMin.updateTextOrPlaceholder(cardData.temperatureRange?.first)
+            vTemperatureRangeBar.setData(cardData.temperatureRange, cardData.temperatureNow)
+            vTemperatureMax.updateTextOrPlaceholder(cardData.temperatureRange?.last)
             vUpdatedAt.updateTextOrPlaceholder(
-                context.getString(R.string.updated_at_format, cardData.updatedAt.orPlaceholder()),
-                theme.foregroundColor
-            )
+                context.getString(R.string.updated_at_format, cardData.updatedAt.orPlaceholder()))
         }
     }
 }

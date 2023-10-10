@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="background">@color/background_in_dark_100</color>
+
+    <color name="background_soft">#222222</color>
+
+    <color name="background_mute">#282828</color>
+
+    <color name="text_10">@color/text_in_dark_10</color>
+    <color name="text_20">@color/text_in_dark_20</color>
+    <color name="text_30">@color/text_in_dark_30</color>
+    <color name="text_40">@color/text_in_dark_40</color>
+    <color name="text_50">@color/text_in_dark_50</color>
+    <color name="text_60">@color/text_in_dark_60</color>
+    <color name="text_70">@color/text_in_dark_70</color>
+    <color name="text">@color/text_in_dark_80</color>
+    <color name="text_90">@color/text_in_dark_90</color>
+    <color name="text_100">@color/text_in_dark_100</color>
+
+    <color name="text_against_colorful_background">@color/text_in_dark_80</color>
+
+    <color name="weather_body_background">@color/black_20</color>
+
+    <color name="weather_card_background">@color/black_80</color>
+
+    <color name="condition_background">@color/white_10</color>
+
+    <color name="search_bar_background">@color/white_60</color>
+
+    <color name="accent_sunny">@color/blue_200_l15p</color>
+    <color name="accent_cloudy">@color/light_blue_200_l15p</color>
+    <color name="accent_overcast">@color/cyan_200_l15p</color>
+    <color name="accent_sunny_night">@color/purple_200_l15p</color>
+    <color name="accent_cloudy_night">@color/deep_purple_200_l15p</color>
+    <color name="accent_overcast_night">@color/indigo_200_l15p</color>
+    <color name="accent_rainy">@color/light_green_200_l15p</color>
+    <color name="accent_snowy">@color/green_200_l15p</color>
+    <color name="accent_foggy">@color/teal_200_l15p</color>
+    <color name="accent_hazy">@color/brown_200_l15p</color>
+
+    <color name="condition_rain">#6FBCFF</color>
+    <color name="condition_cloud">#8ECBFF</color>
+    <color name="condition_sand">#93766C</color>
+    <color name="condition_clear">#FFDF6C</color>
+
+    <color name="temperature_range_bar_ring">@color/text_in_dark_100</color>
+
+    <color name="loading_animation">@color/gray_800</color>
+
+</resources>

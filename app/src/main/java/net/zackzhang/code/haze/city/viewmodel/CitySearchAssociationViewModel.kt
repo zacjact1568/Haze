@@ -16,7 +16,6 @@ import net.zackzhang.code.haze.city.model.remote.CityRemoteRepository
 import net.zackzhang.code.haze.city.viewmodel.data.CitySearchAssociationCardData
 import net.zackzhang.code.haze.common.exception.PlaceholderException
 import net.zackzhang.code.haze.common.util.iLog
-import net.zackzhang.code.haze.common.viewmodel.Event
 import net.zackzhang.code.haze.common.viewmodel.BaseViewModel
 import net.zackzhang.code.haze.common.constant.EVENT_CITY_SELECTED
 
@@ -52,7 +51,12 @@ class CitySearchAssociationViewModel : BaseViewModel() {
         // 2. EditText 输入的文本恢复的时候
         // 通过判断 input 是否与 CitySearchEntity#input 相同，来过滤掉这两种情况
         val entity = entityLiveData.value
-        if (entity != null && entity.input == input) return
+        if (entity != null && entity.input == input) {
+            // 即便数据没有变化，也需要按原值重新通知一下 observer
+            // 否则 recreate 后无法正确设置 UI
+            entityLiveData.value = entityLiveData.value
+            return
+        }
         if (input.isEmpty()) {
             entityLiveData.value = CitySearchEntity(input, emptyList())
             return
@@ -78,12 +82,12 @@ class CitySearchAssociationViewModel : BaseViewModel() {
     fun notifySelected(position: Int) {
         val city = entityLiveData.value?.result?.get(position)
         if (city == null) {
-            eventLiveData.value = Event(EVENT_CITY_SELECTED, null)
+            notifyEvent(EVENT_CITY_SELECTED, null)
             return
         }
         viewModelScope.launch {
             CityLocalRepository.replaceBy(city)
-            eventLiveData.value = Event(EVENT_CITY_SELECTED, CityWeatherEntity(city.id, city.name))
+            notifyEvent(EVENT_CITY_SELECTED, CityWeatherEntity(city.id, city.name))
         }
     }
 

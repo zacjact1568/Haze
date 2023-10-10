@@ -37,17 +37,17 @@ data class WeatherEntity(
     val todayTemperatureRange: IntRange?
         get() = if (daily.isEmpty()) null else daily[0].getTemperatureRange()
 
-    val temperatureRangeAmongAllDates: IntRange? by lazy {
+    val temperatureRangeAmongAllDates: IntRange get() {
         var min = Int.MAX_VALUE
         var max = Int.MIN_VALUE
         daily.forEach {
             min = min(min, it.temperatureMin ?: min)
             max = max(max, it.temperatureMax ?: max)
         }
-        min..max
+        return min..max
     }
 
-    val updatedAt = now.updatedAt
+    val updatedAt get() = now.updatedAt
 
     fun attachCityId(cityId: String) {
         now.cityId = cityId

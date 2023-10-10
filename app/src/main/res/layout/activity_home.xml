@@ -4,9 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".home.view.HomeActivity"
+    tools:background="@color/logo_theme_b">
 
-    <com.airbnb.lottie.LottieAnimationView
+    <net.zackzhang.code.haze.common.view.ui.AppLottieAnimationView
         android:id="@+id/v_loading"
         android:layout_width="@dimen/dp_100"
         android:layout_height="@dimen/dp_100"
@@ -15,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:lottie_rawRes="@raw/anim_loading"
-        app:lottie_colorFilter="@color/gray_200"
+        app:lottie_colorFilter="@color/loading_animation"
         app:lottie_loop="true" />
 
     <androidx.constraintlayout.widget.Group

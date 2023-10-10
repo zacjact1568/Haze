@@ -97,6 +97,7 @@ class ColorGradientBar @JvmOverloads constructor(
                 context.getDimension(R.dimen.color_gradient_bar_default_ring_width)
             )
             ringPaint.strokeWidth = ringWidth.toFloat()
+            ringPaint.color = getColor(R.styleable.ColorGradientBar_ringColor, Color.BLACK)
             recycle()
         }
     }
@@ -131,10 +132,12 @@ class ColorGradientBar @JvmOverloads constructor(
         }
     }
 
-    fun setData(range: IntRange?, key: Int? = null, @ColorInt ringColor: Int = Color.BLACK) {
+    fun setData(range: IntRange?, key: Int? = null, @ColorInt ringColor: Int? = null) {
         this.range = range
         this.key = key
-        ringPaint.color = ringColor
+        if (ringColor != null) {
+            ringPaint.color = ringColor
+        }
         invalidate()
     }
 

@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import net.zackzhang.code.haze.BuildConfig
 import net.zackzhang.code.haze.R
-import net.zackzhang.code.haze.common.view.ThemeEntity
 import net.zackzhang.code.haze.common.util.dLog
 import net.zackzhang.code.haze.common.util.getString
 import net.zackzhang.code.haze.common.viewmodel.BaseViewModel
@@ -38,6 +37,17 @@ class SettingsContentViewModel : BaseViewModel() {
 
     private val cardLiveData by lazy {
         MutableLiveData<List<SettingsPreferenceBaseCardData>>()
+    }
+
+    override fun onThemeChanged() {
+        settingsCardDataList.forEach {
+            it.theme = theme
+        }
+        // 如果 cardLiveData 还未设置初值，表示 notifyLoadingData 还未执行完成，不通知 observer
+        // 因为要保证 notifyLoadingData 是第一个通知（即设置初值）的
+        if (cardLiveData.value != null) {
+            cardLiveData.value = settingsCardDataList
+        }
     }
 
     fun observeCard(owner: LifecycleOwner, observer: (List<SettingsPreferenceBaseCardData>) -> Unit) {
@@ -78,17 +88,6 @@ class SettingsContentViewModel : BaseViewModel() {
                     SettingsLocalRepository.putBooleanPreference(cd.key.name, value as Boolean)
                 }
             }
-        }
-    }
-
-    fun notifyThemeChanged(theme: ThemeEntity) {
-        settingsCardDataList.forEach {
-            it.theme = theme
-        }
-        // 如果 cardLiveData 还未设置初值，表示 notifyLoadingData 还未执行完成，不通知 observer
-        // 因为要保证 notifyLoadingData 是第一个通知（即设置初值）的
-        if (cardLiveData.value != null) {
-            cardLiveData.value = settingsCardDataList
         }
     }
 }

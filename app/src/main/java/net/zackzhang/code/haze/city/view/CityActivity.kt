@@ -17,9 +17,9 @@ import net.zackzhang.code.haze.city.viewmodel.CityViewModel
 import net.zackzhang.code.haze.common.view.ThemeEntity
 import net.zackzhang.code.haze.common.view.SystemBarInsets
 import net.zackzhang.code.haze.common.constant.EVENT_ACTIVITY_FINISH
-import net.zackzhang.code.haze.common.constant.EVENT_THEME_CHANGED
 import net.zackzhang.code.haze.common.constant.EVENT_WINDOW_INSETS_APPLIED
 import net.zackzhang.code.haze.common.constant.EXTRA_THEME
+import net.zackzhang.code.haze.common.util.showSoftInput
 import net.zackzhang.code.haze.databinding.ActivityCityBinding
 
 class CityActivity : AppCompatActivity() {
@@ -33,14 +33,13 @@ class CityActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         (IntentCompat.getParcelableExtra(intent, EXTRA_THEME, ThemeEntity::class.java))?.let {
-            viewModel.notifyEvent(EVENT_THEME_CHANGED, it)
+            viewModel.notifyThemeChanged(it)
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
             viewModel.notifyEvent(EVENT_WINDOW_INSETS_APPLIED, SystemBarInsets.fromWindowInsets(insets))
             WindowInsetsCompat.CONSUMED
         }
-        binding.updateViewsTheme(viewModel.getSavedEvent<ThemeEntity>(EVENT_THEME_CHANGED))
         binding.vBack.setOnClickListener { finish() }
         binding.vSearchBar.addAfterTextChangedListener {
             binding.vSearchClear.visibility = if (it.isEmpty()) View.INVISIBLE else View.VISIBLE
@@ -57,23 +56,20 @@ class CityActivity : AppCompatActivity() {
                     setResult(ar.resultCode, ar.data)
                     finish()
                 }
-                EVENT_THEME_CHANGED -> binding.updateViewsTheme(it.data as ThemeEntity)
                 EVENT_WINDOW_INSETS_APPLIED ->
                     binding.vToolbar.updatePaddingRelative(top = (it.data as SystemBarInsets).status)
+            }
+        }
+        viewModel.observeTheme(this) {
+            val accentColor = getColor(it.accentColor)
+            binding.run {
+                vToolbar.setBackgroundColor(accentColor)
+                vSearchIcon.imageTintList = ColorStateList.valueOf(accentColor)
             }
         }
 
         // 请求焦点以弹出键盘
         binding.vSearchBar.requestFocus()
-    }
-
-    private fun ActivityCityBinding.updateViewsTheme(theme: ThemeEntity?) {
-        if (theme == null) return
-        vToolbar.setBackgroundColor(theme.backgroundColor)
-        vBack.imageTintList = ColorStateList.valueOf(theme.foregroundColor)
-        vTitle.setTextColor(theme.foregroundColor)
-        vSearchBar.backgroundTintList = ColorStateList.valueOf(theme.foregroundColor)
-        vSearchIcon.imageTintList = ColorStateList.valueOf(theme.backgroundColor)
     }
 
     private inline fun EditText.addAfterTextChangedListener(crossinline listener: (String) -> Unit) {
@@ -82,5 +78,6 @@ class CityActivity : AppCompatActivity() {
 
     private fun EditText.clearText() {
         setText("")
+        showSoftInput()
     }
 }

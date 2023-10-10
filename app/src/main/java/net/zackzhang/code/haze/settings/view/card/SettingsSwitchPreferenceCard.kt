@@ -30,7 +30,7 @@ class SettingsSwitchPreferenceCard(
         widgetBinding.root.run {
             isChecked = cardData.checked
             cardData.theme?.let {
-                checkedColor = it.backgroundColor
+                checkedColor = context.getColor(it.accentColor)
             }
         }
     }

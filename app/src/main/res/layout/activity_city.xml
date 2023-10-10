@@ -5,12 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".city.view.CityActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/v_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:background="@color/logo_theme_b">
 
         <ImageView
             android:id="@+id/v_back"
@@ -38,7 +40,9 @@
             android:layout_marginHorizontal="@dimen/search_bar_margin_horizontal"
             android:background="@drawable/bg_search_bar"
             android:textSize="@dimen/search_bar_text_size"
+            android:textColor="@color/black_80"
             android:hint="@string/hint_search_bar"
+            android:textColorHint="@color/black_20"
             android:lines="1"
             app:layout_constraintTop_toBottomOf="@+id/v_title"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -55,7 +59,8 @@
             app:layout_constraintTop_toTopOf="@+id/v_search_bar"
             app:layout_constraintBottom_toBottomOf="@+id/v_search_bar"
             app:layout_constraintStart_toStartOf="@+id/v_search_bar"
-            app:layout_constraintDimensionRatio="w,1:1" />
+            app:layout_constraintDimensionRatio="w,1:1"
+            tools:tint="@color/logo_theme_b" />
 
         <ImageView
             android:id="@+id/v_search_clear"
@@ -70,7 +75,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/v_search_bar"
             app:layout_constraintEnd_toEndOf="@+id/v_search_bar"
             app:layout_constraintDimensionRatio="w,1:1"
-            app:tint="?android:textColorSecondary"
+            app:tint="@color/black_20"
             tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package net.zackzhang.code.haze.common.util
 
 import android.content.Context
+import android.content.res.Configuration
 import androidx.annotation.*
 import net.zackzhang.code.haze.App
 import net.zackzhang.code.haze.R
@@ -12,6 +13,12 @@ import java.util.*
 val context get() = App.context
 
 val appName = getString(R.string.app_name).lowercase()
+
+val Context.isInDarkMode
+    get() = resources.configuration.uiMode and
+            Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+
+val isAppInDarkMode get() = context.isInDarkMode
 
 val supportShorterExpression: Boolean get() {
     val locales = context.resources.configuration.locales

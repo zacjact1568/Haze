@@ -7,11 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import net.zackzhang.code.haze.common.view.ThemeEntity
 import net.zackzhang.code.haze.common.view.CardAdapter
 import net.zackzhang.code.haze.common.constant.CARD_TYPE_SETTINGS_INFO_PREFERENCE
 import net.zackzhang.code.haze.common.constant.CARD_TYPE_SETTINGS_SWITCH_PREFERENCE
-import net.zackzhang.code.haze.common.constant.EVENT_THEME_CHANGED
 import net.zackzhang.code.haze.databinding.FragmentSettingsContentBinding
 import net.zackzhang.code.haze.settings.view.card.SettingsPreferenceBaseCard
 import net.zackzhang.code.haze.settings.view.card.SettingsSwitchPreferenceCard
@@ -44,17 +42,11 @@ class SettingsContentFragment : Fragment() {
         val binding = FragmentSettingsContentBinding.inflate(inflater, container, false)
         binding.vPreferenceList.adapter = cardAdapter
 
-        (activityViewModel.getSavedEvent<ThemeEntity>(EVENT_THEME_CHANGED))?.let {
-            viewModel.notifyThemeChanged(it)
-        }
-
         viewModel.observeCard(viewLifecycleOwner) {
             cardAdapter.setCardData(it)
         }
-        activityViewModel.observeEvent(viewLifecycleOwner) {
-            when (it.name) {
-                EVENT_THEME_CHANGED -> viewModel.notifyThemeChanged(it.data as ThemeEntity)
-            }
+        activityViewModel.observeTheme(viewLifecycleOwner) {
+            viewModel.notifyThemeChanged(it)
         }
 
         viewModel.notifyLoadingData()

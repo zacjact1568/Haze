@@ -3,9 +3,54 @@
 
     <!-- 主题色，应以属性的形式引用，e.g. ?colorPrimary -->
     <!-- NOTE：Launcher 图标里面不要用属性引用，否则显示不出来 -->
-    <color name="colorPrimary">#FFDD65</color>
-    <color name="colorPrimaryDark">#FFDD65</color>
-    <color name="colorAccent">#EB625E</color>
+    <color name="accent">#444444</color>
+
+    <color name="logo_theme_a">#FFDD65</color>
+    <color name="logo_theme_b">#EB625E</color>
+
+    <!-- START：不分深浅色模式的颜色 -->
+
+    <!-- Black with various opacities -->
+    <color name="black_5">#0C000000</color>
+    <color name="black_10">#19000000</color>
+    <color name="black_20">#33000000</color>
+    <color name="black_30">#4C000000</color>
+    <color name="black_40">#66000000</color>
+    <color name="black_50">#7F000000</color>
+    <color name="black_60">#99000000</color>
+    <color name="black_70">#B2000000</color>
+    <color name="black_80">#CC000000</color>
+    <color name="black_90">#E5000000</color>
+    <color name="black_100">@android:color/black</color>
+
+    <!-- White with various opacities -->
+    <color name="white_5">#0CFFFFFF</color>
+    <color name="white_10">#19FFFFFF</color>
+    <color name="white_20">#33FFFFFF</color>
+    <color name="white_30">#4CFFFFFF</color>
+    <color name="white_40">#66FFFFFF</color>
+    <color name="white_50">#7FFFFFFF</color>
+    <color name="white_60">#99FFFFFF</color>
+    <color name="white_70">#B2FFFFFF</color>
+    <color name="white_80">#CCFFFFFF</color>
+    <color name="white_90">#E5FFFFFF</color>
+    <color name="white_100">@android:color/white</color>
+
+    <color name="text_in_dark_10">#19EBEBEB</color>
+    <color name="text_in_dark_20">#33EBEBEB</color>
+    <color name="text_in_dark_30">#4CEBEBEB</color>
+    <color name="text_in_dark_40">#66EBEBEB</color>
+    <color name="text_in_dark_50">#7FEBEBEB</color>
+    <color name="text_in_dark_60">#99EBEBEB</color>
+    <color name="text_in_dark_70">#B2EBEBEB</color>
+    <color name="text_in_dark_80">#CCEBEBEB</color>
+    <color name="text_in_dark_90">#E5EBEBEB</color>
+    <color name="text_in_dark_100">#EBEBEB</color>
+
+    <color name="background_in_dark_100">#181818</color>
+
+    <!-- Material Design V1 调色板 -->
+    <!-- https://m1.material.io/style/color.html#color-color-palette -->
 
     <!-- 饱和度 100 -->
     <color name="gray_100">#F5F5F5</color>
@@ -25,6 +70,22 @@
     <color name="brown_200">#BCAAA4</color>
     <color name="gray_200">#EEEEEE</color>
     <color name="blue_gray_200">#B0BEC5</color>
+
+    <!-- 饱和度 200，Lightness 是浅色模式的 15% -->
+    <color name="amber_200_l15p">#382A00</color>
+    <color name="yellow_200_l15p">#3D3700</color>
+    <color name="light_green_200_l15p">#1D2A0E</color>
+    <color name="green_200_l15p">#122712</color>
+    <color name="teal_200_l15p">#0D211F</color>
+    <color name="cyan_200_l15p">#07282C</color>
+    <color name="light_blue_200_l15p">#022636</color>
+    <color name="blue_200_l15p">#031F35</color>
+    <color name="indigo_200_l15p">#101328</color>
+    <color name="deep_purple_200_l15p">#180F29</color>
+    <color name="purple_200_l15p">#220E25</color>
+    <color name="brown_200_l15p">#1D1816</color>
+    <color name="gray_200_l15p">#212121</color>
+    <color name="blue_gray_200_l15p">#161B1D</color>
 
     <!-- 饱和度 300 -->
     <color name="cyan_300">#4DD0E1</color>
@@ -61,14 +122,62 @@
     <!-- 饱和度 800 -->
     <color name="gray_800">#424242</color>
 
+    <!-- 饱和度 900 -->
+    <color name="gray_900">#212121</color>
+
     <color name="teal_a200">#64FFDA</color>
 
-    <!-- 白色 50% 不透明度 -->
-    <color name="white_opacity_50">#7FFFFFFF</color>
+    <!-- END：不分深浅色模式的颜色 -->
 
-    <color name="condition_rain">#FFFFFF</color>
+    <color name="background">@color/white_100</color>
+
+    <color name="background_soft">#F8F8F8</color>
+
+    <color name="background_mute">#F2F2F2</color>
+
+    <color name="text_10">@color/black_10</color>
+    <color name="text_20">@color/black_20</color>
+    <color name="text_30">@color/black_30</color>
+    <color name="text_40">@color/black_40</color>
+    <color name="text_50">@color/black_50</color>
+    <color name="text_60">@color/black_60</color>
+    <color name="text_70">@color/black_70</color>
+    <color name="text">@color/black_80</color>
+    <color name="text_90">@color/black_90</color>
+    <color name="text_100">@color/black_100</color>
+
+    <!-- 多彩颜色为背景的前景色 -->
+    <color name="text_against_colorful_background">@color/white_100</color>
+
+    <color name="weather_body_background">@color/white_50</color>
+
+    <color name="weather_card_background">@color/white_90</color>
+
+    <color name="condition_background">@color/black_5</color>
+
+    <color name="search_bar_background">@color/white_100</color>
+
+    <!-- 天气主题色 -->
+    <color name="accent_sunny">@color/blue_200</color>
+    <color name="accent_cloudy">@color/light_blue_200</color>
+    <color name="accent_overcast">@color/cyan_200</color>
+    <color name="accent_sunny_night">@color/purple_200</color>
+    <color name="accent_cloudy_night">@color/deep_purple_200</color>
+    <color name="accent_overcast_night">@color/indigo_200</color>
+    <color name="accent_rainy">@color/light_green_200</color>
+    <color name="accent_snowy">@color/green_200</color>
+    <color name="accent_foggy">@color/teal_200</color>
+    <color name="accent_hazy">@color/brown_200</color>
+
+    <!-- 天气状况图标着色 -->
+    <color name="condition_rain">#83C5FF</color>
     <color name="condition_cloud">#A7D6FF</color>
     <color name="condition_sand">#A1887F</color>
     <color name="condition_clear">#FFE68C</color>
+
+    <color name="temperature_range_bar_ring">@color/white_100</color>
+
+    <!-- Lottie colorFilter 貌似不支持半透明颜色 -->
+    <color name="loading_animation">@color/gray_200</color>
 
 </resources>

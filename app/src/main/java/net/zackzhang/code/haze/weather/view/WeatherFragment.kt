@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import net.zackzhang.code.haze.R
 import net.zackzhang.code.haze.city.model.entity.CityWeatherEntity
-import net.zackzhang.code.haze.common.view.ThemeEntity
 import net.zackzhang.code.haze.common.util.getDimension
 import net.zackzhang.code.haze.common.util.showToast
 import net.zackzhang.code.haze.common.view.CardAdapter
@@ -60,7 +59,7 @@ class WeatherFragment : Fragment() {
             adapter = cardAdapter
             addItemDecoration(ColoredPaddingItemDecoration(context.getDimension(R.dimen.dp_10), {
                 cardAdapter.isDecorationExists(it)
-            }, context.getColor(R.color.white_opacity_50), {
+            }, context.getColor(R.color.weather_body_background), {
                 cardAdapter.needBackground(it)
             }))
         }
@@ -76,15 +75,17 @@ class WeatherFragment : Fragment() {
                     // 通知 HomeActivity 刷新城市
                     activityViewModel.notifyCityLoaded(it.data as? CityWeatherEntity)
                 }
-                EVENT_THEME_CHANGED -> (it.data as ThemeEntity).run {
-                    binding.root.setColorSchemeColors(backgroundColor)
-                    activityViewModel.notifyEvent(EVENT_THEME_CHANGED, this)
-                }
                 EVENT_NETWORK_FAILED -> {
                     binding.root.isRefreshing = false
                     showToast(R.string.toast_network_failed)
                 }
             }
+        }
+        viewModel.observeTheme(viewLifecycleOwner) {
+            binding.root.run {
+                setColorSchemeColors(context.getColor(it.accentColor))
+            }
+            activityViewModel.notifyThemeChanged(it)
         }
         activityViewModel.observeEvent(viewLifecycleOwner) {
             when (it.name) {

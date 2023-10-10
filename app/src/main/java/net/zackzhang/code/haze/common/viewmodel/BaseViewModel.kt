@@ -1,27 +1,44 @@
 package net.zackzhang.code.haze.common.viewmodel
 
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import net.zackzhang.code.haze.common.view.ThemeEntity
 
-open class BaseViewModel : ViewModel() {
+abstract class BaseViewModel : ViewModel() {
 
-    protected val eventLiveData by lazy {
+    val theme get() = themeLiveData.value
+
+    private val eventLiveData by lazy {
         EventLiveData()
     }
 
-    private val savedEventMap = hashMapOf<String, Any>()
+    private val themeLiveData by lazy {
+        MutableLiveData<ThemeEntity>()
+    }
 
     fun observeEvent(owner: LifecycleOwner, observer: (Event) -> Unit) {
         eventLiveData.observe(owner, observer)
     }
 
-    fun notifyEvent(name: String, data: Any, save: Boolean = true) {
-        if (save) {
-            savedEventMap[name] = data
-        }
+    fun observeTheme(owner: LifecycleOwner, observer: (ThemeEntity) -> Unit) {
+        themeLiveData.observe(owner, observer)
+    }
+
+    fun notifyEvent(name: String, data: Any?) {
         eventLiveData.value = Event(name, data)
     }
 
-    @Suppress("UNCHECKED_CAST")
-    fun <T> getSavedEvent(name: String) = savedEventMap[name] as? T
+    /**
+     * - 在主题改变时调用
+     * - 在新的 Activity 启动时向它的 ViewModel 设置主题
+     */
+    fun notifyThemeChanged(theme: ThemeEntity) {
+        themeLiveData.value = theme
+        onThemeChanged()
+    }
+
+    protected open fun onThemeChanged() {
+
+    }
 }

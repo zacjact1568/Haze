@@ -3,7 +3,6 @@ package net.zackzhang.code.haze.home.viewmodel
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import net.zackzhang.code.haze.city.model.entity.CityWeatherEntity
-import net.zackzhang.code.haze.common.viewmodel.Event
 import net.zackzhang.code.haze.common.viewmodel.BaseViewModel
 import net.zackzhang.code.haze.common.constant.EVENT_CITY_CHANGED
 
@@ -26,6 +25,6 @@ class HomeViewModel : BaseViewModel() {
     fun notifyCityChanged(city: CityWeatherEntity) {
         cityLiveData.value = city
         // 通知 WeatherFragment 获取数据 & 刷新列表
-        eventLiveData.value = Event(EVENT_CITY_CHANGED, city)
+        notifyEvent(EVENT_CITY_CHANGED, city)
     }
 }

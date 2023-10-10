@@ -41,14 +41,14 @@
     <dimen name="toolbar_title_size">18sp</dimen>
     <dimen name="toolbar_title_margin_vertical">12dp</dimen>
 
-    <dimen name="search_bar_corner_radius">4dp</dimen>
+    <dimen name="search_bar_corner_radius">10dp</dimen>
 
     <dimen name="search_bar_margin_horizontal">36dp</dimen>
     <dimen name="search_bar_margin_vertical">28dp</dimen>
     <dimen name="search_bar_padding_vertical">10dp</dimen>
     <dimen name="search_bar_padding_horizontal">40dp</dimen>
 
-    <dimen name="search_icon_margin">10dp</dimen>
+    <dimen name="search_icon_margin">13dp</dimen>
 
     <dimen name="search_clear_margin">6dp</dimen>
 

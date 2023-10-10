@@ -90,7 +90,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     implementation("androidx.recyclerview:recyclerview:1.3.1")
     implementation("androidx.core:core-ktx:1.12.0")
-    implementation("com.airbnb.android:lottie:4.2.0")
+    implementation("com.airbnb.android:lottie:6.1.0")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("com.google.code.gson:gson:2.9.0")
     implementation("com.squareup.okhttp3:okhttp:3.14.9")

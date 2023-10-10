@@ -9,10 +9,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
-import androidx.core.view.isVisible
-import com.airbnb.lottie.LottieAnimationView
 import net.zackzhang.code.haze.common.constant.PLACEHOLDER
 
 enum class Orientation {
@@ -72,9 +69,8 @@ fun Int?.toStringOrPlaceholder() = this?.toString() ?: PLACEHOLDER
 
 fun String?.orPlaceholder() = this ?: PLACEHOLDER
 
-fun TextView.updateTextOrPlaceholder(text: Any?, @ColorInt color: Int) {
+fun TextView.updateTextOrPlaceholder(text: Any?) {
     this.text = text?.toString() ?: PLACEHOLDER
-    setTextColor(color)
 }
 
 fun Canvas.drawRoundRect(
@@ -111,14 +107,4 @@ inline fun <T> Orientation.switch(horizontal: () -> T, vertical: () -> T) =
 
 fun showToast(@StringRes id: Int) {
     Toast.makeText(context, id, Toast.LENGTH_SHORT).show()
-}
-
-fun LottieAnimationView.resumeAnimationWhenPause() {
-    if (!isVisible || isAnimating) return
-    resumeAnimation()
-}
-
-fun LottieAnimationView.pauseAnimationWhenPlaying() {
-    if (!isVisible || !isAnimating) return
-    pauseAnimation()
 }

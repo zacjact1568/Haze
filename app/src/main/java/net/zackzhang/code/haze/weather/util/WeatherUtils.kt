@@ -1,42 +1,42 @@
 package net.zackzhang.code.haze.weather.util
 
-import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import net.zackzhang.code.haze.R
 import net.zackzhang.code.haze.common.util.context
 import net.zackzhang.code.haze.common.util.dLog
 import net.zackzhang.code.haze.weather.model.entity.WeatherDailyEntity
 
-private val DEFAULT_CONDITION_COLOR = R.color.colorPrimary
+private val DEFAULT_CONDITION_COLOR = R.color.logo_theme_a
 
 private val DEFAULT_CONDITION_ICON = R.drawable.ic_condition_999
 
-@ColorInt
+@ColorRes
 fun getConditionColorByCode(code: Int?) =
-    context.getColor(when (code) {
+    when (code) {
         // 晴（白天）、热
-        100, 900 -> R.color.blue_200
+        100, 900 -> R.color.accent_sunny
         // 有云（白天）
-        in 101..103 -> R.color.light_blue_200
+        in 101..103 -> R.color.accent_cloudy
         // 阴（白天）
-        104 -> R.color.cyan_200
+        104 -> R.color.accent_overcast
         // 晴（夜晚）、月相
-        150, in 800..807 -> R.color.purple_200
+        150, in 800..807 -> R.color.accent_sunny_night
         // 有云（夜晚）
-        in 151..153 -> R.color.deep_purple_200
+        in 151..153 -> R.color.accent_cloudy_night
         // 阴（夜晚）
-        154 -> R.color.indigo_200
+        154 -> R.color.accent_overcast_night
         // 雨
-        in 300..399 -> R.color.light_green_200
+        in 300..399 -> R.color.accent_rainy
         // 雪、冷
-        in 400..499, 901 -> R.color.green_200
+        in 400..499, 901 -> R.color.accent_snowy
         // 雾
-        500, 501, 509, 510, 514, 515 -> R.color.teal_200
+        500, 501, 509, 510, 514, 515 -> R.color.accent_foggy
         // 霾、沙尘
-        in 502..508, in 511..513 -> R.color.brown_200
+        in 502..508, in 511..513 -> R.color.accent_hazy
         // 未知（999、null）
         else -> DEFAULT_CONDITION_COLOR
-    })
+    }
 
 fun WeatherDailyEntity.getTemperatureRange() =
     if (temperatureMin == null || temperatureMax == null) null else temperatureMin..temperatureMax
