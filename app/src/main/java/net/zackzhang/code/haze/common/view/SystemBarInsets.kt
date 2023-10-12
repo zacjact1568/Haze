@@ -9,9 +9,11 @@ data class SystemBarInsets(
 
     companion object {
 
-        fun fromWindowInsets(insets: WindowInsetsCompat) = SystemBarInsets(
-            insets.getInsets(WindowInsetsCompat.Type.statusBars()).top,
-            insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
-        )
+        fun fromWindowInsets(insets: WindowInsetsCompat) =
+            // 不要用 WindowInsetsCompat.Type.statusBars()
+            // Freeform Window 模式的 top 是 0
+            insets.getInsets(WindowInsetsCompat.Type.systemBars()).run {
+                SystemBarInsets(top, bottom)
+            }
     }
 }
