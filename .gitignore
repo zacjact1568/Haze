@@ -6,3 +6,4 @@
 /build
 /captures
 secret.properties
+/app/src/main/res/font/*.ttf

@@ -9,12 +9,12 @@
 
     <TextView
         android:id="@+id/v_temperature_now"
-        style="@style/BarlowFont.ExtraBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:textSize="@dimen/sp_80"
         android:textColor="@color/text_against_colorful_background"
+        android:textFontWeight="800"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/v_condition"
         app:layout_constraintStart_toStartOf="parent"

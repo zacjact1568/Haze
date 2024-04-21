@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:textSize="@dimen/sp_14"
-    android:textStyle="bold"
+    android:textFontWeight="700"
     android:gravity="center_horizontal"
     tools:text="实况数据"
     tools:context=".weather.view.card.WeatherTitleCard" />

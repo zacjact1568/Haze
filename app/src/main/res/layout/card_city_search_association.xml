@@ -14,7 +14,7 @@
         android:layout_width="@dimen/match_constraint"
         android:layout_height="wrap_content"
         android:textSize="@dimen/sp_16"
-        android:textStyle="bold"
+        android:textFontWeight="700"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

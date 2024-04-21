@@ -13,6 +13,9 @@
         <item name="android:colorBackground">@color/background</item>
 
         <item name="android:textColor">@color/text</item>
+        <item name="android:fontFamily">@font/family_barlow_noto_sans_sc</item>
+        <!-- 需要加上这个，否则字体上下会有很高的留白 -->
+        <item name="android:includeFontPadding">false</item>
 
     </style>
 
@@ -32,7 +35,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/toolbar_title_margin_vertical</item>
         <item name="android:textSize">@dimen/toolbar_title_size</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textFontWeight">700</item>
         <item name="android:textColor">@color/text_against_colorful_background</item>
         <item name="android:textAllCaps">true</item>
 
@@ -44,38 +47,9 @@
 
     </style>
 
-    <style name="BarlowFont">
-
-        <item name="android:fontFamily">@font/family_barlow</item>
-
-    </style>
-
-    <style name="BarlowFont.Medium">
+    <style name="TemperatureRangeBarSideTemperatureStyle">
 
         <item name="android:textFontWeight">500</item>
-
-    </style>
-
-    <style name="BarlowFont.SemiBold">
-
-        <item name="android:textFontWeight">600</item>
-
-    </style>
-
-    <style name="BarlowFont.Bold">
-
-        <item name="android:textFontWeight">700</item>
-
-    </style>
-
-    <style name="BarlowFont.ExtraBold">
-
-        <item name="android:textFontWeight">800</item>
-
-    </style>
-
-    <style name="TemperatureRangeBarSideTemperatureStyle" parent="BarlowFont.Medium">
-
         <!-- 26sp 应该足够显示三个字符了 -->
         <item name="android:layout_width">@dimen/sp_26</item>
         <item name="android:layout_height">wrap_content</item>
