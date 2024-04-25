@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".home.view.HomeActivity"
-    tools:background="@color/logo_theme_b">
+    tools:background="@color/launcher_icon_b">
 
     <net.zackzhang.code.haze.common.view.ui.AppLottieAnimationView
         android:id="@+id/v_loading"

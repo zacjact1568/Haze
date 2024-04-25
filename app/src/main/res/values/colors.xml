@@ -5,8 +5,8 @@
     <!-- NOTE：Launcher 图标里面不要用属性引用，否则显示不出来 -->
     <color name="accent">#444444</color>
 
-    <color name="logo_theme_a">#FFDD65</color>
-    <color name="logo_theme_b">#EB625E</color>
+    <color name="launcher_icon_a">#FFDD65</color>
+    <color name="launcher_icon_b">#EB625E</color>
 
     <!-- START：不分深浅色模式的颜色 -->
 

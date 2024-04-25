@@ -12,7 +12,7 @@
         android:id="@+id/v_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:background="@color/logo_theme_b">
+        tools:background="@color/launcher_icon_b">
 
         <ImageView
             android:id="@+id/v_back"
@@ -60,7 +60,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/v_search_bar"
             app:layout_constraintStart_toStartOf="@+id/v_search_bar"
             app:layout_constraintDimensionRatio="w,1:1"
-            tools:tint="@color/logo_theme_b" />
+            tools:tint="@color/launcher_icon_b" />
 
         <ImageView
             android:id="@+id/v_search_clear"

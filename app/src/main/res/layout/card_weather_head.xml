@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:background="@color/logo_theme_b">
+    tools:background="@color/launcher_icon_b">
 
     <TextView
         android:id="@+id/v_temperature_now"

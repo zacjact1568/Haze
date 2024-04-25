@@ -7,7 +7,7 @@ import net.zackzhang.code.haze.common.util.context
 import net.zackzhang.code.haze.common.util.dLog
 import net.zackzhang.code.haze.weather.model.entity.WeatherDailyEntity
 
-private val DEFAULT_CONDITION_COLOR = R.color.logo_theme_a
+private val DEFAULT_CONDITION_COLOR = R.color.launcher_icon_a
 
 private val DEFAULT_CONDITION_ICON = R.drawable.ic_condition_999
 
