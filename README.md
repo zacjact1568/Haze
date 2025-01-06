@@ -1,7 +1,5 @@
 # Haze
 
-<img src="app/src/main/res/drawable/ic_logo_playstore.png" width="100" align="right"/>
+A simple weather app for Android, using QWeather backend and MVVM structure.
 
-**Haze** is a simple weather app, written by Zack Zhang.
-
-*NOTE: This app is still under development, not a release version.*
+This project is still under development, maybe for a long time and there will never be a release version.

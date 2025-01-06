@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import net.zackzhang.code.haze.BuildConfig
 import net.zackzhang.code.haze.R
-import net.zackzhang.code.haze.common.util.dLog
 import net.zackzhang.code.haze.common.util.getString
 import net.zackzhang.code.haze.common.viewmodel.BaseViewModel
 import net.zackzhang.code.haze.common.constant.CARD_TYPE_SETTINGS_INFO_PREFERENCE
@@ -17,6 +16,7 @@ import net.zackzhang.code.haze.settings.model.local.SettingsLocalRepository
 import net.zackzhang.code.haze.settings.viewmodel.data.SettingsInfoPreferenceCardData
 import net.zackzhang.code.haze.settings.viewmodel.data.SettingsPreferenceBaseCardData
 import net.zackzhang.code.haze.settings.viewmodel.data.SettingsSwitchPreferenceCardData
+import net.zackzhang.code.util.log
 
 class SettingsContentViewModel : BaseViewModel() {
 
@@ -77,7 +77,7 @@ class SettingsContentViewModel : BaseViewModel() {
 
     fun notifyPreferenceClicked(position: Int) {
         val cd = settingsCardDataList[position]
-        dLog(cd.title)
+        log(cd.title)
     }
 
     fun notifyPreferenceUpdated(position: Int, value: Any) {

@@ -1,4 +1,3 @@
-import java.io.FileInputStream
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatterBuilder
@@ -6,24 +5,24 @@ import java.time.temporal.ChronoField
 import java.util.Properties
 
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp")
-    id("org.jetbrains.kotlin.plugin.parcelize")
+    alias(libs.plugins.android)
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.ksp)
 }
 
 android {
     namespace = "net.zackzhang.code.haze"
-    compileSdk = 34
+    compileSdk = libs.versions.sdk.compile.get().toInt()
 
-    val secretProperties = Properties().apply {
-        load(FileInputStream(rootProject.file("secret.properties")))
+    val config = Properties().apply {
+        project.file("config.properties").inputStream().use(::load)
     }
 
     defaultConfig {
         applicationId = "net.zackzhang.code.haze"
-        minSdk = 29
-        targetSdk = 34
+        minSdk = libs.versions.sdk.min.get().toInt()
+        targetSdk = libs.versions.sdk.target.get().toInt()
 
         val now = LocalDateTime.now()
         versionCode = Duration.between(
@@ -42,19 +41,17 @@ android {
 //                arguments += "room.schemaLocation" to "$projectDir/schemas"
             }
         }
-        buildConfigField("String", "QWEATHER_PUBLIC_ID", "\"${secretProperties["qweather.publicId"]}\"")
-        buildConfigField("String", "QWEATHER_KEY", "\"${secretProperties["qweather.key"]}\"")
+        buildConfigField("String", "QWEATHER_PUBLIC_ID", "\"${config["qweather.publicId"]}\"")
+        buildConfigField("String", "QWEATHER_KEY", "\"${config["qweather.key"]}\"")
     }
-
     signingConfigs {
         create("release") {
-            keyAlias = secretProperties["android.signing.keyAlias"] as String
-            keyPassword = secretProperties["android.signing.keystorePassword"] as String
-            storeFile = file(secretProperties["android.signing.keystorePath"] as String)
-            storePassword = secretProperties["android.signing.keyPassword"] as String
+            keyAlias = config["android.signing.keyAlias"] as String
+            keyPassword = config["android.signing.keystorePassword"] as String
+            storeFile = file(config["android.signing.keystorePath"] as String)
+            storePassword = config["android.signing.keyPassword"] as String
         }
     }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -62,16 +59,13 @@ android {
             signingConfig = signingConfigs.getByName("release")
         }
     }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-
     kotlinOptions {
         jvmTarget = "17"
     }
-
     buildFeatures {
         // 编译时生成 BuildConfig.java
         buildConfig = true
@@ -85,30 +79,36 @@ kotlin {
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.23")
-    implementation("androidx.preference:preference-ktx:1.2.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
-    implementation("androidx.fragment:fragment-ktx:1.6.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
-    implementation("androidx.recyclerview:recyclerview:1.3.2")
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("com.airbnb.android:lottie:6.4.0")
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
-    implementation("com.google.code.gson:gson:2.10.1")
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
-    implementation("com.squareup.retrofit2:retrofit:2.11.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
-    implementation("com.facebook.stetho:stetho:1.6.0")
-    implementation("com.facebook.stetho:stetho-okhttp3:1.6.0")
-    implementation("androidx.room:room-runtime:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    ksp("androidx.room:room-compiler:2.6.1")
+
+    implementation(project(":util"))
+
+    implementation(platform(libs.kotlin))
+    implementation(libs.kotlinx.coroutines.android)
+
+    implementation(libs.appcompat)
+    implementation(libs.constraintlayout)
+    implementation(libs.swiperefreshlayout)
+    implementation(libs.recyclerview)
+    implementation(libs.preference.ktx)
+    implementation(libs.fragment.ktx)
+    implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.lifecycle.livedata.ktx)
+    implementation(libs.core.ktx)
+    implementation(libs.datastore.preferences)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+
+    implementation(libs.lottie)
+    implementation(libs.gson)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.stetho)
+    implementation(libs.stetho.okhttp3)
+
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.junit.test)
+    androidTestImplementation(libs.espresso)
 }

@@ -4,10 +4,10 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.supervisorScope
 import net.zackzhang.code.haze.air.model.remote.AirRemoteRepository
 import net.zackzhang.code.haze.common.util.QWEATHER_PUBLIC_ID
-import net.zackzhang.code.haze.common.util.eLog
 import net.zackzhang.code.haze.common.util.makeSignature
 import net.zackzhang.code.haze.common.util.seconds
 import net.zackzhang.code.haze.weather.model.entity.WeatherEntity
+import net.zackzhang.code.util.eLog
 import retrofit2.Retrofit
 
 object WeatherRemoteRepository {
