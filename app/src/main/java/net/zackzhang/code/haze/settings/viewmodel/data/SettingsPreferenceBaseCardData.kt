@@ -8,7 +8,7 @@ abstract class SettingsPreferenceBaseCardData(
     val key: Preferences.Key<out Any>,
     val title: String,
     var summary: String? = null,
-    @DrawableRes
+    @param:DrawableRes
     val iconResId: Int = 0,
     val persistent: Boolean = true,
     val default: Any? = null,

@@ -6,7 +6,7 @@ import net.zackzhang.code.haze.common.constant.CARD_TYPE_WEATHER_DAILY
 
 class WeatherDailyCardData(
     val date: String,
-    @DrawableRes
+    @param:DrawableRes
     val conditionIconRes: Int,
     val temperatureNow: Int?,
     val temperatureRange: IntRange?,

@@ -5,9 +5,9 @@ import net.zackzhang.code.haze.common.util.ItemDecorationRectInsets
 import net.zackzhang.code.haze.common.constant.CARD_TYPE_SPACE
 
 class SpaceCardData(
-    @Dimension
+    @param:Dimension
     val horizontal: Int = 0,
-    @Dimension
+    @param:Dimension
     val vertical: Int = 0,
 ) : BaseCardData(
     CARD_TYPE_SPACE,

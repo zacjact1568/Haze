@@ -13,9 +13,9 @@ class ColoredPaddingItemDecoration(
     top: Int,
     bottom: Int,
     getRectInsets: (position: Int) -> ItemDecorationRectInsets,
-    @ColorInt
+    @param:ColorInt
     private val color: Int,
-    @ColorInt
+    @param:ColorInt
     private val backgroundColor: Int,
     private val needBackground: (position: Int) -> Boolean,
 ) : PaddingItemDecoration(left, right, top, bottom, getRectInsets) {

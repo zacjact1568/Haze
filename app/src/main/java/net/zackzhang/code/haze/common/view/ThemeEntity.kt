@@ -8,5 +8,5 @@ import kotlinx.parcelize.Parcelize
 data class ThemeEntity(
     // ThemeEntity 会保存在 ViewModel 中，所以这里需要是与深浅色模式无关的资源 ID
     // 当深浅色模式切换后，重建时再去取对应的颜色
-    @ColorRes val accentColor: Int,
+    @param:ColorRes val accentColor: Int,
 ): Parcelable

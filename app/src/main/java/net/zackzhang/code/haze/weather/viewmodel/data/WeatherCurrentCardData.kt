@@ -6,8 +6,8 @@ import net.zackzhang.code.haze.common.viewmodel.data.BaseCardData
 import net.zackzhang.code.haze.common.constant.CARD_TYPE_WEATHER_CURRENT
 
 data class WeatherCurrentCardData(
-    @DrawableRes val iconResId: Int,
-    @ColorInt val iconColor: Int,
+    @param:DrawableRes val iconResId: Int,
+    @param:ColorInt val iconColor: Int,
     val value: String?,
     val description: String,
     val iconScale: Float = 1F,

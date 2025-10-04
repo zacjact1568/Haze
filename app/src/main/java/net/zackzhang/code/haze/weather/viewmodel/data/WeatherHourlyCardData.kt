@@ -6,7 +6,7 @@ import net.zackzhang.code.haze.common.constant.CARD_TYPE_WEATHER_HOURLY
 
 data class WeatherHourlyCardData(
     val time: String,
-    @DrawableRes
+    @param:DrawableRes
     val conditionIconRes: Int,
     val temperature: String,
 ) : BaseCardData(CARD_TYPE_WEATHER_HOURLY)
