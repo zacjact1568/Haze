@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "Haze"
 include(":app")
 include(":util")
-project(":util").projectDir = file("../Util-Android/util")
+project(":util").projectDir = file("../Util-KMP/util")

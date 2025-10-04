@@ -65,7 +65,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
-        // 编译时生成 BuildConfig.java
+        // 这里不要禁止生成 BuildConfig，因为上面使用了 buildConfigField
         buildConfig = true
         viewBinding = true
     }

@@ -1,6 +1,7 @@
 package net.zackzhang.code.haze.common.util
 
 import net.zackzhang.code.haze.R
+import net.zackzhang.code.util.AppContext
 import java.time.*
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
@@ -104,23 +105,23 @@ fun ZonedDateTime.toPrettifiedRelativeToNow(): String {
     val duration = Duration.between(this, ZonedDateTime.now())
     return when {
         // 该时间晚于当前设备时间，应该是设备时间调快了
-        duration.isNegative -> context.getString(
+        duration.isNegative -> AppContext.getString(
             R.string.datetime_prettified_relative_to_now_negative_format,
             format()
         )
         // 距离当前已不低于 1 天，显示"一天前"
-        duration.toHours() >= 24 -> context.getString(R.string.datetime_prettified_relative_to_now_day)
+        duration.toHours() >= 24 -> AppContext.getString(R.string.datetime_prettified_relative_to_now_day)
         // 距离当前低于 1 天，但不低于 1 小时，显示具体小时数
-        duration.toMinutes() >= 60 -> context.getFormattedQuantityString(
+        duration.toMinutes() >= 60 -> AppContext.getFormattedQuantityString(
             R.plurals.datetime_prettified_relative_to_now_hour_format,
             duration.toHours().toInt()
         )
         // 距离当前低于 1 小时，但不低于 1 分钟，显示具体分钟数
-        duration.seconds >= 60 -> context.getFormattedQuantityString(
+        duration.seconds >= 60 -> AppContext.getFormattedQuantityString(
             R.plurals.datetime_prettified_relative_to_now_minute_format,
             duration.toMinutes().toInt()
         )
         // 距离当前低于 1 分钟，显示"刚才"
-        else -> context.getString(R.string.datetime_prettified_relative_to_now_second)
+        else -> AppContext.getString(R.string.datetime_prettified_relative_to_now_second)
     }
 }

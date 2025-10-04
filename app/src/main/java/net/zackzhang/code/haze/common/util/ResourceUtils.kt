@@ -3,14 +3,12 @@ package net.zackzhang.code.haze.common.util
 import android.content.Context
 import android.content.res.Configuration
 import androidx.annotation.*
-import net.zackzhang.code.haze.App
 import net.zackzhang.code.haze.R
+import net.zackzhang.code.util.AppContext
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.*
-
-val context get() = App.context
 
 val appName = getString(R.string.app_name).lowercase()
 
@@ -18,10 +16,10 @@ val Context.isInDarkMode
     get() = resources.configuration.uiMode and
             Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 
-val isAppInDarkMode get() = context.isInDarkMode
+val isAppInDarkMode get() = AppContext.isInDarkMode
 
 val supportShorterExpression: Boolean get() {
-    val locales = context.resources.configuration.locales
+    val locales = AppContext.resources.configuration.locales
     repeat(locales.size()) {
         when (locales.get(it)) {
             Locale.SIMPLIFIED_CHINESE -> return true
@@ -39,7 +37,7 @@ fun copyRawFile(@RawRes resId: Int, path: File) {
         // 若目录已存在，exists 返回 true，就不会执行 mkdir 了
         // 若目录不存在，mkdir 也返回 false，不会执行下面的内容
         try {
-            val iStream = context.resources.openRawResource(resId)
+            val iStream = AppContext.resources.openRawResource(resId)
             // FileOutputStream 也有创建文件的功能
             val foStream = FileOutputStream(path)
             val buffer = ByteArray(400000)
@@ -64,9 +62,9 @@ fun Context.getInteger(@IntegerRes id: Int) = resources.getInteger(id)
 fun Context.getFormattedQuantityString(@PluralsRes id: Int, quantity: Int) =
     resources.getQuantityString(id, quantity, quantity)
 
-fun getString(@StringRes id: Int) = context.getString(id)
+fun getString(@StringRes id: Int) = AppContext.getString(id)
 
 // 用 vararg 格式化后，String 变成了类 + 地址，不知道为啥
-fun getString(@StringRes id: Int, arg: String) = context.getString(id, arg)
+fun getString(@StringRes id: Int, arg: String) = AppContext.getString(id, arg)
 
-fun getAppColorRes(@ColorRes id: Int) = context.getColor(id)
+fun getAppColorRes(@ColorRes id: Int) = AppContext.getColor(id)

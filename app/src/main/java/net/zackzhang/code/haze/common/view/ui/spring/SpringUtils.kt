@@ -8,5 +8,5 @@ private const val TAG = "Spring"
 
 internal fun log(msg: String) {
     if (!LOG) return
-    utilLog(msg, TAG)
+    utilLog(TAG, msg)
 }

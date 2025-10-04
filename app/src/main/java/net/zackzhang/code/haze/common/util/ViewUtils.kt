@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.StringRes
 import net.zackzhang.code.haze.common.constant.PLACEHOLDER
+import net.zackzhang.code.util.AppContext
 
 enum class Orientation {
     HORIZONTAL,
@@ -106,5 +107,5 @@ inline fun <T> Orientation.switch(horizontal: () -> T, vertical: () -> T) =
     }
 
 fun showToast(@StringRes id: Int) {
-    Toast.makeText(context, id, Toast.LENGTH_SHORT).show()
+    Toast.makeText(AppContext, id, Toast.LENGTH_SHORT).show()
 }

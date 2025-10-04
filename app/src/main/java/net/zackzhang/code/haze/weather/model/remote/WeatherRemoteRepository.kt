@@ -45,7 +45,7 @@ object WeatherRemoteRepository {
         }.onSuccess {
             it.attachCityId(cityId)
         }.onFailure {
-            eLog("getWeather onFailure: ${it.message}", "WeatherRemoteRepository")
+            eLog(this::class, "getWeather", "onFailure: ${it.message}")
             now.cancel()
             hourly.cancel()
             daily.cancel()

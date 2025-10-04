@@ -3,8 +3,8 @@ package net.zackzhang.code.haze.weather.util
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import net.zackzhang.code.haze.R
-import net.zackzhang.code.haze.common.util.context
 import net.zackzhang.code.haze.weather.model.entity.WeatherDailyEntity
+import net.zackzhang.code.util.AppContext
 import net.zackzhang.code.util.log
 
 private val DEFAULT_CONDITION_COLOR = R.color.launcher_icon_a
@@ -60,7 +60,7 @@ fun getConditionIconResByCode(code: Int?): Int {
         509, 510, 514, 515 -> "509_510_514_515"
         else -> code.toString()
     }
-    log("getConditionIconResByCode($code), prefix: $prefix", "WeatherUtils")
-    val resId = context.resources.getIdentifier("ic_condition_$prefix", "drawable", context.packageName)
+    log("WeatherUtils", "getConditionIconResByCode", "code = $code, prefix = $prefix")
+    val resId = AppContext.resources.getIdentifier("ic_condition_$prefix", "drawable", AppContext.packageName)
     return if (resId == 0) DEFAULT_CONDITION_ICON else resId
 }

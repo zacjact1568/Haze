@@ -4,7 +4,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import net.zackzhang.code.haze.BuildConfig
 import net.zackzhang.code.haze.R
 import net.zackzhang.code.haze.common.util.getString
 import net.zackzhang.code.haze.common.viewmodel.BaseViewModel
@@ -17,6 +16,7 @@ import net.zackzhang.code.haze.settings.viewmodel.data.SettingsInfoPreferenceCar
 import net.zackzhang.code.haze.settings.viewmodel.data.SettingsPreferenceBaseCardData
 import net.zackzhang.code.haze.settings.viewmodel.data.SettingsSwitchPreferenceCardData
 import net.zackzhang.code.util.log
+import net.zackzhang.code.util.versionName
 
 class SettingsContentViewModel : BaseViewModel() {
 
@@ -31,7 +31,7 @@ class SettingsContentViewModel : BaseViewModel() {
         SettingsInfoPreferenceCardData(
             PREFERENCE_KEY_ABOUT,
             R.string.preference_title_about,
-            getString(R.string.preference_summary_about_format, BuildConfig.VERSION_NAME),
+            getString(R.string.preference_summary_about_format, versionName),
         ),
     )
 
@@ -77,7 +77,7 @@ class SettingsContentViewModel : BaseViewModel() {
 
     fun notifyPreferenceClicked(position: Int) {
         val cd = settingsCardDataList[position]
-        log(cd.title)
+        log(this::class, "notifyPreferenceClicked", cd.title)
     }
 
     fun notifyPreferenceUpdated(position: Int, value: Any) {

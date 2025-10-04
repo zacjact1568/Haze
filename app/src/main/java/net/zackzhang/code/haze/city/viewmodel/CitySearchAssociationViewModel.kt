@@ -17,7 +17,7 @@ import net.zackzhang.code.haze.city.viewmodel.data.CitySearchAssociationCardData
 import net.zackzhang.code.haze.common.exception.PlaceholderException
 import net.zackzhang.code.haze.common.viewmodel.BaseViewModel
 import net.zackzhang.code.haze.common.constant.EVENT_CITY_SELECTED
-import net.zackzhang.code.util.iLog
+import net.zackzhang.code.util.log
 
 class CitySearchAssociationViewModel : BaseViewModel() {
 
@@ -73,7 +73,11 @@ class CitySearchAssociationViewModel : BaseViewModel() {
                     is PlaceholderException -> if (it.code == 404) {
                         entityLiveData.value = CitySearchEntity(input, emptyList())
                     }
-                    is CancellationException -> iLog(it.toString())
+                    is CancellationException -> log(
+                        this@CitySearchAssociationViewModel::class,
+                        "notifySearching",
+                        it.toString(),
+                    )
                 }
             }
         }

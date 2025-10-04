@@ -7,7 +7,7 @@ import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
 import net.zackzhang.code.haze.common.exception.PlaceholderException
 import net.zackzhang.code.haze.common.model.network.GsonTypeAdapterFactory
-import net.zackzhang.code.util.iLog
+import net.zackzhang.code.util.log
 import net.zackzhang.code.util.wLog
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
@@ -17,7 +17,7 @@ import org.json.JSONObject
 import kotlin.reflect.KClass
 
 fun getOkHttpClient(tag: String) = OkHttpClient.Builder()
-    .addInterceptor(HttpLoggingInterceptor { iLog(it, tag) }
+    .addInterceptor(HttpLoggingInterceptor { log(tag, it) }
         .setLevel(HttpLoggingInterceptor.Level.BODY))
     .addNetworkInterceptor(StethoInterceptor())
     .build()
@@ -39,7 +39,7 @@ fun <T : Any> JSONObject.getList(name: String, elmCls: KClass<T>) =
     runCatching {
         fromJsonArray(getJSONArray(name), elmCls)
     }.onFailure {
-        wLog(it)
+        wLog(this::class, "getList", it.toString())
     }.getOrNull()
 
 fun responseBodyToJsonObject(body: ResponseBody) = JSONObject(body.string()).apply {

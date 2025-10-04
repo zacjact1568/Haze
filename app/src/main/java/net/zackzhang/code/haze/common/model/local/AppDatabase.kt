@@ -8,10 +8,10 @@ import net.zackzhang.code.haze.air.model.entity.AirNowEntity
 import net.zackzhang.code.haze.city.model.entity.CityEntity
 import net.zackzhang.code.haze.city.model.local.CityDao
 import net.zackzhang.code.haze.common.util.appName
-import net.zackzhang.code.haze.common.util.context
 import net.zackzhang.code.haze.weather.model.entity.WeatherDailyEntity
 import net.zackzhang.code.haze.weather.model.entity.WeatherHourlyEntity
 import net.zackzhang.code.haze.weather.model.local.WeatherDao
+import net.zackzhang.code.util.AppContext
 
 @Database(
     entities = [CityEntity::class, WeatherHourlyEntity::class, WeatherDailyEntity::class, AirNowEntity::class],
@@ -25,7 +25,7 @@ abstract class AppDatabase : RoomDatabase() {
 
         const val VERSION = 1
 
-        val instance = Room.databaseBuilder(context, AppDatabase::class.java, "$appName.db").build()
+        val instance = Room.databaseBuilder(AppContext, AppDatabase::class.java, "$appName.db").build()
     }
 
     abstract fun cityDao(): CityDao
