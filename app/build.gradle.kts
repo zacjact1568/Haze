@@ -54,6 +54,10 @@ android {
         }
     }
     buildTypes {
+        debug {
+            applicationIdSuffix = ".debug"
+            manifestPlaceholders["ic_launcher"] = "ic_launcher_debug"
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
