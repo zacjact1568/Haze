@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_weather_current_card"
-    tools:context=".weather.view.card.WeatherCurrentCard">
+    tools:context=".components.recycler.cards.WeatherCurrentCard">
 
     <ImageView
         android:id="@+id/v_icon"

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<net.zackzhang.code.haze.common.view.ui.spring.SpringLayout
+<net.zackzhang.code.haze.components.spring.SpringLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:orientation="vertical"
-    tools:context=".settings.view.SettingsContentFragment">
+    tools:context=".pages.SettingsContentFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/v_preference_list"
@@ -16,4 +16,4 @@
         android:clipToPadding="false"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-</net.zackzhang.code.haze.common.view.ui.spring.SpringLayout>
+</net.zackzhang.code.haze.components.spring.SpringLayout>

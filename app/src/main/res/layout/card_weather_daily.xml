@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_weather_daily_item_card"
-    tools:context=".weather.view.card.WeatherDailyCard">
+    tools:context=".components.recycler.cards.WeatherDailyCard">
 
     <TextView
         android:id="@+id/v_date"
@@ -46,7 +46,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         tools:text="14" />
 
-    <net.zackzhang.code.haze.weather.view.ui.DualColorBar
+    <net.zackzhang.code.haze.components.DualColorBar
         android:id="@+id/v_temperature_range_bar"
         android:layout_width="@dimen/match_constraint"
         android:layout_height="wrap_content"

@@ -59,7 +59,7 @@
         app:layout_constraintEnd_toStartOf="@+id/v_temperature_range_bar"
         tools:text="25" />
 
-    <net.zackzhang.code.haze.weather.view.ui.ColorGradientBar
+    <net.zackzhang.code.haze.components.ColorGradientBar
         android:id="@+id/v_temperature_range_bar"
         android:layout_width="@dimen/match_constraint"
         android:layout_height="wrap_content"

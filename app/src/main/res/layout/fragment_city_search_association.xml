@@ -5,9 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".city.view.CitySearchAssociationFragment">
+    tools:context=".pages.CitySearchAssociationFragment">
 
-    <net.zackzhang.code.haze.common.view.ui.AppLottieAnimationView
+    <net.zackzhang.code.haze.components.AppLottieAnimationView
         android:id="@+id/v_search_status"
         android:layout_width="@dimen/dp_100"
         android:layout_height="@dimen/dp_100"
@@ -22,7 +22,7 @@
         app:lottie_loop="true"
         tools:visibility="visible" />
 
-    <net.zackzhang.code.haze.common.view.ui.spring.SpringLayout
+    <net.zackzhang.code.haze.components.spring.SpringLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:orientation="vertical">
@@ -36,7 +36,7 @@
             android:clipToPadding="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-    </net.zackzhang.code.haze.common.view.ui.spring.SpringLayout>
+    </net.zackzhang.code.haze.components.spring.SpringLayout>
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/v_not_found"

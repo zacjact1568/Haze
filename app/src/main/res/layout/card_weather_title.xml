@@ -8,4 +8,4 @@
     android:textFontWeight="700"
     android:gravity="center_horizontal"
     tools:text="实况数据"
-    tools:context=".weather.view.card.WeatherTitleCard" />
+    tools:context=".components.recycler.cards.WeatherTitleCard" />

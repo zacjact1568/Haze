@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".settings.view.SettingsActivity">
+    tools:context=".pages.SettingsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/v_toolbar"
@@ -38,6 +38,6 @@
         android:id="@+id/v_settings_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="net.zackzhang.code.haze.settings.view.SettingsContentFragment" />
+        android:name="net.zackzhang.code.haze.pages.SettingsContentFragment" />
 
 </LinearLayout>

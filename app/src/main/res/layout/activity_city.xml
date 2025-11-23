@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".city.view.CityActivity">
+    tools:context=".pages.CityActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/v_toolbar"
@@ -84,6 +84,6 @@
         android:id="@+id/v_city_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="net.zackzhang.code.haze.city.view.CitySearchAssociationFragment" />
+        android:name="net.zackzhang.code.haze.pages.CitySearchAssociationFragment" />
 
 </LinearLayout>

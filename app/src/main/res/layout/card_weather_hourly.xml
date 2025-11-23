@@ -8,7 +8,7 @@
     android:background="@drawable/bg_weather_hourly_item_card"
     android:paddingHorizontal="@dimen/dp_16"
     android:paddingVertical="@dimen/dp_10"
-    tools:context=".weather.view.card.WeatherHourlyCard" >
+    tools:context=".components.recycler.cards.WeatherHourlyCard" >
 
     <!-- 不知道为啥 lineHeight 没用，只能把高度设置为大一点的 sp，解决中西文字体高度不一致的问题 -->
     <TextView

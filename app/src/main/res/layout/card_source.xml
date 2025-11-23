@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".common.view.card.SourceCard">
+    tools:context=".components.recycler.cards.SourceCard">
 
     <TextView
         android:id="@+id/v_text"

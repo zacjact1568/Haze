@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<net.zackzhang.code.haze.common.view.ui.spring.SpringLayout
+<net.zackzhang.code.haze.components.spring.SpringLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:orientation="horizontal"
-    tools:context=".weather.view.card.WeatherHourlyRowCard">
+    tools:context=".components.recycler.cards.WeatherHourlyRowCard">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/v_card_list"
@@ -16,4 +16,4 @@
         android:overScrollMode="never"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-</net.zackzhang.code.haze.common.view.ui.spring.SpringLayout>
+</net.zackzhang.code.haze.components.spring.SpringLayout>

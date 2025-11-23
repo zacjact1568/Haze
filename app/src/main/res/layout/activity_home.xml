@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.view.HomeActivity"
+    tools:context=".pages.HomeActivity"
     tools:background="@color/launcher_icon_b">
 
-    <net.zackzhang.code.haze.common.view.ui.AppLottieAnimationView
+    <net.zackzhang.code.haze.components.AppLottieAnimationView
         android:id="@+id/v_loading"
         android:layout_width="@dimen/dp_100"
         android:layout_height="@dimen/dp_100"
@@ -68,7 +68,7 @@
         android:id="@+id/v_weather_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/match_constraint"
-        android:name="net.zackzhang.code.haze.weather.view.WeatherFragment"
+        android:name="net.zackzhang.code.haze.pages.WeatherFragment"
         app:layout_constraintTop_toBottomOf="@+id/v_toolbar"
         app:layout_constraintBottom_toBottomOf="parent" />
 

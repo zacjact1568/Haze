@@ -8,7 +8,7 @@
     </declare-styleable>
 
     <declare-styleable name="InlineListView">
-        <attr name="gapBetweenItems" format="dimension"/>
+        <attr name="spaceBetweenItems" format="dimension"/>
     </declare-styleable>
 
     <declare-styleable name="DualColorBar">
